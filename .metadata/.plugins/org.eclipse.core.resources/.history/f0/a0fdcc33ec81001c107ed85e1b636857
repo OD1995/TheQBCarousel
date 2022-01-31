@@ -1,0 +1,5 @@
+package mygroup.tqbcbackend.exception;
+
+public class ResourceNotFoundException {
+
+}
