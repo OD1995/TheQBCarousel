@@ -45,6 +45,7 @@ class ListTeamComponent extends Component {
                                         <td>
                                             <img
                                             src={window.location.origin + '/team_logos/' + team.season + '/' + team.location.replace(" ","") + team.nickname + '.png'}
+                                            alt={team.nickname}
                                             />
                                         </td>
                                     </tr>
