@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TeamService from '../services/TeamService';
+import SelectSearch from 'react-select-search';
 
 class QBSelectorComponent extends Component {
     constructor(props) {
@@ -10,16 +11,32 @@ class QBSelectorComponent extends Component {
     }
 
     render() {
-        console.log(this.props.team['nickname']);
-        return (
-            <div>
-                {/* <img 
-                src={window.location.origin + '/team_logos/' + this.props.team['season'] + '/' + this.props.team.location.replace(" ","") + this.team.props.nickname + '.png'}
-                alt={this.props.team.nickname}
-                /> */}
-                <h1>Hello</h1>
-            </div>
-        )
+        // Data only arrives after `componentDidMount` called in QBPredictionsComponent
+        //    so this component should only be rendered once that's happened
+        if (typeof this.props.team !== "undefined") {
+            let img_src = window.location.origin + '/team_logos/' + this.props.team['season'] + '/' + this.props.team.location.replace(" ","") + this.props.team.nickname + '.png' 
+            let options = [
+                {name: 'Swedish', value: 'sv'},
+                {name: 'English', value: 'en'}
+            ]
+            return (
+                <div>
+                    <img 
+                    src={img_src}
+                    alt={this.props.team.nickname}
+                    />
+                    <SelectSearch
+                    options={options}
+                    search
+                    // filterOptions={fuzzySearch}
+                    />
+                </div>
+            )
+        } else {
+            return (
+                null
+            )
+        }
     }
 }
 
