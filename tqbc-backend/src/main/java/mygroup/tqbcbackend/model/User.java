@@ -9,7 +9,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "Users")
+@Table(name="Users")
 public class User {
 	@Column(name="UserID")
 	private String userID;

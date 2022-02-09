@@ -5,4 +5,10 @@
     <fullyQualifiedTypeName name="antlr.collections.List"/>
     <fullyQualifiedTypeName name="org.apache.naming.java.javaURLContextFactory"/>
     <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="mygroup.tqbcbackend.model.Player"/>
+    <fullyQualifiedTypeName name="mygroup.tqbcbackend.model.PredictionPeriod"/>
+    <fullyQualifiedTypeName name="javax.persistence.Id"/>
+    <fullyQualifiedTypeName name="java.lang.String"/>
+    <fullyQualifiedTypeName name="javax.persistence.Column"/>
+    <fullyQualifiedTypeName name="mygroup.tqbcbackend.model.PeriodPrediction"/>
 </qualifiedTypeNameHistroy>

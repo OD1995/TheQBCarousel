@@ -6,31 +6,35 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Players")
+@Table(name="Players")
 public class Player {
 	@Id
-	@Column(name = "PlayerID")
+	@Column(name="PlayerID")
 	private String playerID;
 	
-	@Column(name = "FirstName")
+	@Column(name="FirstName")
 	private String firstName;
 	
-	@Column(name = "LastName")
+	@Column(name="LastName")
 	private String lastName;
 	
-	@Column(name = "DefaultTeamID")
+	@Column(name="DefaultTeamID")
 	private String defaultTeamID;
+	
+	@Column(name="IsActive")
+	private boolean isActive;
 	
 	public Player() {
 		
 	}
-	
-	public Player(String playerID, String firstName, String lastName, String defaultTeamID) {
+
+	public Player(String playerID, String firstName, String lastName, String defaultTeamID, boolean isActive) {
 		super();
 		this.playerID = playerID;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.defaultTeamID = defaultTeamID;
+		this.isActive = isActive;
 	}
 
 	public String getPlayerID() {
@@ -63,6 +67,14 @@ public class Player {
 
 	public void setDefaultTeamID(String defaultTeamID) {
 		this.defaultTeamID = defaultTeamID;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 	
 	
