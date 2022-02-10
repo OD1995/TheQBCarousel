@@ -61,11 +61,20 @@ class QBPredictionsComponent extends Component {
             this.setState({ teams : _dict_});
         });
         PlayerService.getActivePlayers().then((res) => {
-            let _list_ = res.data;
-            this.setState({ players : _list_});
-            // Create dict where key is teamID and value is row of each default QB from `players`
-            let _dict_ = Object.assign({}, ..._list_.map((x) => ({[x.defaultTeamID]: x})));
-            this.setState({ default_players : _dict_});
+            let players_array = [];
+            let default_team_dict = {};
+            for (const player_obj of res.data) {
+                const dropdown_data = {
+                    name : player_obj.name,
+                    value : player_obj.playerID
+                };
+                players_array.push(dropdown_data);
+                if (player_obj.defaultTeamID != null) {
+                    default_team_dict[player_obj.defaultTeamID] = dropdown_data;
+                }
+            }
+            this.setState({ players : players_array});
+            this.setState({ default_players : default_team_dict});
         });
     }
 
@@ -78,6 +87,8 @@ class QBPredictionsComponent extends Component {
                         <QBSelectorComponent
                         team={this.state.teams[teamID]}
                         key={teamID}
+                        player={this.props.players}
+                        default_player={this.props.default_players[teamID]}
                         ></QBSelectorComponent>
                     )
                 }
