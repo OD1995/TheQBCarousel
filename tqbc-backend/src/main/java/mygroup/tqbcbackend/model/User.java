@@ -4,38 +4,40 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="Users")
+@Table(name = "Users")
 public class User {
-	@Column(name="UserID")
+	@Id
+	@Column(name = "UserID")
 	private String userID;
 	
-	@Column(name="Username")
+	@Column(name = "Username")
 	private String username;
 	
-	@Column(name="EmailAddress")
+	@Column(name = "EmailAddress")
 	private String emailAddress;
 	
-	@Column(name="FavouriteTeamID")
+	@Column(name = "FavouriteTeamID")
 	private String favouriteTeamID;
 	
-	@Column(name="HashedPassword")
+	@Column(name = "HashedPassword")
 	private String hashedPassword;
 	
-	@Column(name="IsAuthenticated")
+	@Column(name = "IsAuthenticated")
 	private boolean isAuthenticated;
 	
-	@Column(name="IsActive")
+	@Column(name = "IsActive")
 	private boolean isActive;
 
-	@Column(name="IsAdmin")
+	@Column(name = "IsAdmin")
 	private boolean isAdmin;
 	
-	@Column(name="UserCreated")
+	@Column(name = "UserCreated")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date userCreated;
 

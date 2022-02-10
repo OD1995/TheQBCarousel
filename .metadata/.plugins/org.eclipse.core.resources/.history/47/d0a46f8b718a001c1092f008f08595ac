@@ -1,0 +1,28 @@
+package mygroup.tqbcbackend.model;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class WeekPredictionCompositeKey implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
+	private Date predictionAtDateTime;
+	private String predictionPeriodID;
+	private String userID;
+	private String teamID;
+	
+	public WeekPredictionCompositeKey() {
+		
+	}
+
+	public WeekPredictionCompositeKey(Date predictionAtDateTime, String predictionPeriodID, String userID,
+			String teamID) {
+		this.predictionAtDateTime = predictionAtDateTime;
+		this.predictionPeriodID = predictionPeriodID;
+		this.userID = userID;
+		this.teamID = teamID;
+	}
+	
+	
+}

@@ -1,0 +1,24 @@
+package mygroup.tqbcbackend.model;
+
+import java.io.Serializable;
+
+public class PeriodPredictionCompositeKey implements Serializable{
+
+    private static final long serialVersionUID = 1L;
+
+    private String periodPredictionID;
+    private String userID;
+    private String teamID;
+    
+    public PeriodPredictionCompositeKey() {
+    	
+    }
+
+	public PeriodPredictionCompositeKey(String periodPredictionID, String userID, String teamID) {
+		this.periodPredictionID = periodPredictionID;
+		this.userID = userID;
+		this.teamID = teamID;
+	}
+    
+    
+}

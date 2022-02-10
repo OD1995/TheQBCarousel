@@ -4,46 +4,48 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 
 @Entity
-@Table(name="PredictionPeriods")
+@Table(name = "PredictionPeriods")
 public class PredictionPeriod {
-	@Column(name="PredictionPeriodID")
+	@Id
+	@Column(name = "PredictionPeriodID")
 	private String predictionPeriodID;
 	
-	@Column(name="Season")
+	@Column(name = "Season")
 	private int season;
 	
-	@Column(name="SeasonPeriod")
-	private String seasonPeriod;
+	@Column(name = "SeasonPeriodID")
+	private String seasonPeriodID;
 	
-	@Column(name="DeadlineEvent")
+	@Column(name = "DeadlineEvent")
 	private String deadlineEvent;
 	
-	@Column(name="FromDateTime")
+	@Column(name = "FromDateTime")
 	private Date fromDateTime;
 	
-	@Column(name="ToDateTime")
+	@Column(name = "ToDateTime")
 	private Date toDateTime;
 	
-	@Column(name="Days")
+	@Column(name = "Days")
 	private int days;
 	
-	@Column(name="Weeks")
+	@Column(name = "Weeks")
 	private int weeks;
 	
 	public PredictionPeriod() {
 		
 	}
 
-	public PredictionPeriod(String predictionPeriodID, int season, String seasonPeriod, String deadlineEvent,
+	public PredictionPeriod(String predictionPeriodID, int season, String seasonPeriodID, String deadlineEvent,
 			Date fromDateTime, Date toDateTime, int days, int weeks) {
 		super();
 		this.predictionPeriodID = predictionPeriodID;
 		this.season = season;
-		this.seasonPeriod = seasonPeriod;
+		this.seasonPeriodID = seasonPeriodID;
 		this.deadlineEvent = deadlineEvent;
 		this.fromDateTime = fromDateTime;
 		this.toDateTime = toDateTime;
@@ -67,12 +69,12 @@ public class PredictionPeriod {
 		this.season = season;
 	}
 
-	public String getSeasonPeriod() {
-		return seasonPeriod;
+	public String getSeasonPeriodID() {
+		return seasonPeriodID;
 	}
 
-	public void setSeasonPeriod(String seasonPeriod) {
-		this.seasonPeriod = seasonPeriod;
+	public void setSeasonPeriodID(String seasonPeriodID) {
+		this.seasonPeriodID = seasonPeriodID;
 	}
 
 	public String getDeadlineEvent() {

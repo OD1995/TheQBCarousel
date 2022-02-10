@@ -1,0 +1,15 @@
+package mygroup.tqbcbackend.model;
+
+import javax.persistence.Column;
+
+public class UserScore {
+
+	@Column(name = "PredictionPeriodID")
+	private String predictionPeriodID;
+	
+	@Column(name = "UserID")
+	private String userID;
+	
+	@Column(name = "Score")
+	private float score;
+}

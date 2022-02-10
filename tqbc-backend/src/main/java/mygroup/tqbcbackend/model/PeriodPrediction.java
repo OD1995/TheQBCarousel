@@ -1,20 +1,28 @@
 package mygroup.tqbcbackend.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "PeriodPredictions")
+@IdClass(PeriodPredictionCompositeKey.class)
 public class PeriodPrediction {
 	@Id
-	@Column(name="PredictionPeriodID")
+	@Column(name = "PredictionPeriodID")
 	private String predictionPeriodID;
 	
-	@Column(name="UserID")
+	@Id
+	@Column(name = "UserID")
 	private String userID;
 	
-	@Column(name="TeamID")
+	@Id
+	@Column(name = "TeamID")
 	private String teamID;
 	
-	@Column(name="PlayerID")
+	@Column(name = "PlayerID")
 	private String playerID;
 	
 	public PeriodPrediction() {

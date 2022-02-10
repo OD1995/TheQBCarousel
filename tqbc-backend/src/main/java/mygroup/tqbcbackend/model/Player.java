@@ -6,22 +6,22 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Players")
+@Table(name = "Players")
 public class Player {
 	@Id
-	@Column(name="PlayerID")
+	@Column(name = "PlayerID")
 	private String playerID;
 	
-	@Column(name="FirstName")
+	@Column(name = "FirstName")
 	private String firstName;
 	
-	@Column(name="LastName")
+	@Column(name = "LastName")
 	private String lastName;
 	
-	@Column(name="DefaultTeamID")
+	@Column(name = "DefaultTeamID")
 	private String defaultTeamID;
 	
-	@Column(name="IsActive")
+	@Column(name = "IsActive")
 	private boolean isActive;
 	
 	public Player() {

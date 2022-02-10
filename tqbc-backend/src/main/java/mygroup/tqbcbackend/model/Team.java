@@ -4,33 +4,31 @@ package mygroup.tqbcbackend.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Teams")
+@Table(name = "Teams")
 public class Team {
 	@Id
-	@OneToMany(mappedBy="Teams")
-	@Column(name="TeamID")
+	@Column(name = "TeamID")
 	private String teamID;	
 	
-	@Column(name="Season")
+	@Column(name = "Season")
 	private int season;	
 	
-	@Column(name="Location")
+	@Column(name = "Location")
 	private String location;
 	
-	@Column(name="Nickname")
+	@Column(name = "Nickname")
 	private String nickname;	
 	
-	@Column(name="Conference")
+	@Column(name = "Conference")
 	private String conference;	
 	
-	@Column(name="Division")
+	@Column(name = "Division")
 	private String division;	
 	
-	@Column(name="IsActive")
+	@Column(name = "IsActive")
 	private boolean isActive;
 	
 	
