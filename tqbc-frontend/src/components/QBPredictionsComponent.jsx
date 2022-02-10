@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TeamService from '../services/TeamService';
 import SelectSearch from 'react-select-search';
+import PlayerService from '../services/PlayerService';
 
 class QBSelectorComponent extends Component {
     constructor(props) {
@@ -46,19 +47,25 @@ class QBPredictionsComponent extends Component {
 
         this.state = {
             teamID_list : ['T1'],
-            teams : {}
+            teams : {},
+            players : {},
+            default_players : {}
         }
     }
 
     componentDidMount() {
-        TeamService.getTeams().then((res) => {
+        TeamService.getActiveTeams().then((res) => {
             let _list_ = res.data;
-            console.log("_list_");
-            console.log(_list_);
+            // Create dict where key is teamID and value is row from `teams`
             let _dict_ = Object.assign({}, ..._list_.map((x) => ({[x.teamID]: x})));
-            console.log("_dict_");
-            console.log(_dict_);
             this.setState({ teams : _dict_});
+        });
+        PlayerService.getActivePlayers().then((res) => {
+            let _list_ = res.data;
+            this.setState({ players : _list_});
+            // Create dict where key is teamID and value is row of each default QB from `players`
+            let _dict_ = Object.assign({}, ..._list_.map((x) => ({[x.defaultTeamID]: x})));
+            this.setState({ default_players : _dict_});
         });
     }
 

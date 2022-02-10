@@ -28,6 +28,6 @@ public class TeamController {
 	// Get all active teams
 	@GetMapping("/activeteams")
 	public List<Team> getAllActiveTeams() {
-		return teamRepository.findByIsActive(true);
+		return teamRepository.findByIsActiveTrue();
 	} 
 }

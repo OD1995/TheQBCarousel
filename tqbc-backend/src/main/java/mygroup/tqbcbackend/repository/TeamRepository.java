@@ -11,6 +11,6 @@ import mygroup.tqbcbackend.model.Team;
 @Repository
 public interface TeamRepository extends JpaRepository<Team,String>{
 	
-	public List<Team> findByIsActive(boolean isActive);
+	public List<Team> findByIsActiveTrue();
 
 }

@@ -11,7 +11,7 @@ class ListTeamComponent extends Component {
     }
 
     componentDidMount() {
-        TeamService.getTeams().then((res) => {
+        TeamService.getActiveTeams().then((res) => {
             this.setState({ teams : res.data});
         });
     }

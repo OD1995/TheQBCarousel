@@ -28,6 +28,6 @@ public class PlayerController {
 	// Get all active players
 	@GetMapping("/activeplayers")
 	public List<Player> getAllActivePlayers() {
-		return playerRepository.findByIsActive(true);
+		return playerRepository.findByIsActiveTrueOrderByNameAsc();
 	}
 }
