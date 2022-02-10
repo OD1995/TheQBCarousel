@@ -7,7 +7,7 @@ public class PeriodPredictionCompositeKey implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    private String periodPredictionID;
+    private String predictionPeriodID;
     private String userID;
     private String teamID;
     
@@ -15,15 +15,15 @@ public class PeriodPredictionCompositeKey implements Serializable{
     	
     }
 
-	public PeriodPredictionCompositeKey(String periodPredictionID, String userID, String teamID) {
-		this.periodPredictionID = periodPredictionID;
+	public PeriodPredictionCompositeKey(String predictionPeriodID, String userID, String teamID) {
+		this.predictionPeriodID = predictionPeriodID;
 		this.userID = userID;
 		this.teamID = teamID;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(periodPredictionID, teamID, userID);
+		return Objects.hash(predictionPeriodID, teamID, userID);
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class PeriodPredictionCompositeKey implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		PeriodPredictionCompositeKey other = (PeriodPredictionCompositeKey) obj;
-		return Objects.equals(periodPredictionID, other.periodPredictionID) && Objects.equals(teamID, other.teamID)
+		return Objects.equals(predictionPeriodID, other.predictionPeriodID) && Objects.equals(teamID, other.teamID)
 				&& Objects.equals(userID, other.userID);
 	}
     

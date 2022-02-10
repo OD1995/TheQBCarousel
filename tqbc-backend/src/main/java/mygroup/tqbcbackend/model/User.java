@@ -41,7 +41,9 @@ public class User {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date userCreated;
 
-
+	public User() {
+		
+	}
 
 	public User(String userID, String username, String emailAddress, String favouriteTeamID, String hashedPassword,
 			boolean isAuthenticated, boolean isActive, boolean isAdmin, Date userCreated) {

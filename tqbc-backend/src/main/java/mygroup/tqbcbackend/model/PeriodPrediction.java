@@ -13,20 +13,20 @@ public class PeriodPrediction {
 	@Id
 	@Column(name = "PredictionPeriodID")
 	private String predictionPeriodID;
-	
+
 	@Id
 	@Column(name = "UserID")
 	private String userID;
-	
+
 	@Id
 	@Column(name = "TeamID")
 	private String teamID;
-	
+
 	@Column(name = "PlayerID")
 	private String playerID;
-	
+
 	public PeriodPrediction() {
-		
+
 	}
 
 	public PeriodPrediction(String predictionPeriodID, String userID, String teamID, String playerID) {
@@ -68,5 +68,5 @@ public class PeriodPrediction {
 	public void setPlayerID(String playerID) {
 		this.playerID = playerID;
 	}
-	
+
 }

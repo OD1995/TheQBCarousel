@@ -1,0 +1,5 @@
+package mygroup.tqbcbackend.controller;
+
+public class PlayerController {
+
+}

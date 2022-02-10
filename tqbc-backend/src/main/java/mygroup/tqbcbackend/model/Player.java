@@ -12,11 +12,8 @@ public class Player {
 	@Column(name = "PlayerID")
 	private String playerID;
 	
-	@Column(name = "FirstName")
-	private String firstName;
-	
-	@Column(name = "LastName")
-	private String lastName;
+	@Column(name = "Name")
+	private String name;
 	
 	@Column(name = "DefaultTeamID")
 	private String defaultTeamID;
@@ -28,11 +25,10 @@ public class Player {
 		
 	}
 
-	public Player(String playerID, String firstName, String lastName, String defaultTeamID, boolean isActive) {
+	public Player(String playerID, String name, String defaultTeamID, boolean isActive) {
 		super();
 		this.playerID = playerID;
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.name = name;
 		this.defaultTeamID = defaultTeamID;
 		this.isActive = isActive;
 	}
@@ -45,20 +41,12 @@ public class Player {
 		this.playerID = playerID;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getDefaultTeamID() {
@@ -76,6 +64,5 @@ public class Player {
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
-	
-	
+
 }
