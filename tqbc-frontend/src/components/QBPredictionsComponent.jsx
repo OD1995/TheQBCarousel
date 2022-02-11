@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import TeamService from '../services/TeamService';
-import SelectSearch from 'react-select-search';
+import SelectSearch, { fuzzySearch } from 'react-select-search';
 import PlayerService from '../services/PlayerService';
+// import fuzzySearch from '../assets/fuzzySearch';
 
 class QBSelectorComponent extends Component {
     constructor(props) {
@@ -14,12 +15,12 @@ class QBSelectorComponent extends Component {
     render() {
         // Data only arrives after `componentDidMount` called in QBPredictionsComponent
         //    so this component should only be rendered once that's happened
-        if (typeof this.props.team !== "undefined") {
+        if (
+            (typeof this.props.team !== "undefined")
+            &
+            (this.props.players !== [])
+        ) {
             let img_src = window.location.origin + '/team_logos/' + this.props.team['season'] + '/' + this.props.team.location.replace(" ","") + this.props.team.nickname + '.png' 
-            let options = [
-                {name: 'Swedish', value: 'sv'},
-                {name: 'English', value: 'en'}
-            ]
             return (
                 <div>
                     <img 
@@ -27,9 +28,10 @@ class QBSelectorComponent extends Component {
                     alt={this.props.team.nickname}
                     />
                     <SelectSearch
-                    options={options}
-                    search
-                    // filterOptions={fuzzySearch}
+                    options={this.props.players}
+                    search={true}
+                    filterOptions={fuzzySearch}
+                    value={this.props.default_player}
                     />
                 </div>
             )
@@ -48,7 +50,7 @@ class QBPredictionsComponent extends Component {
         this.state = {
             teamID_list : ['T1'],
             teams : {},
-            players : {},
+            players : [],
             default_players : {}
         }
     }
@@ -85,10 +87,11 @@ class QBPredictionsComponent extends Component {
                     this.state.teamID_list.map(
                         teamID =>
                         <QBSelectorComponent
+                        teamID={teamID}
                         team={this.state.teams[teamID]}
                         key={teamID}
-                        player={this.props.players}
-                        default_player={this.props.default_players[teamID]}
+                        players={this.state.players}
+                        default_player={this.state.default_players[teamID]}
                         ></QBSelectorComponent>
                     )
                 }
