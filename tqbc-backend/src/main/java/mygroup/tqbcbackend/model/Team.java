@@ -31,13 +31,18 @@ public class Team {
 	@Column(name = "IsActive")
 	private boolean isActive;
 	
+	@Column(name = "GridColumn")
+	private int gridColumn;
+	
+	@Column(name = "GridRow")
+	private int gridRow;
 	
 	public Team() {
 		
 	}
-	
+
 	public Team(String teamID, int season, String location, String nickname, String conference, String division,
-			boolean isActive) {
+			boolean isActive, int gridColumn, int gridRow) {
 		super();
 		this.teamID = teamID;
 		this.season = season;
@@ -46,49 +51,80 @@ public class Team {
 		this.conference = conference;
 		this.division = division;
 		this.isActive = isActive;
+		this.gridColumn = gridColumn;
+		this.gridRow = gridRow;
 	}
+
 	public String getTeamID() {
 		return teamID;
 	}
+
 	public void setTeamID(String teamID) {
 		this.teamID = teamID;
 	}
+
 	public int getSeason() {
 		return season;
 	}
+
 	public void setSeason(int season) {
 		this.season = season;
 	}
+
 	public String getLocation() {
 		return location;
 	}
+
 	public void setLocation(String location) {
 		this.location = location;
 	}
+
 	public String getNickname() {
 		return nickname;
 	}
+
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
+
 	public String getConference() {
 		return conference;
 	}
+
 	public void setConference(String conference) {
 		this.conference = conference;
 	}
+
 	public String getDivision() {
 		return division;
 	}
+
 	public void setDivision(String division) {
 		this.division = division;
 	}
+
 	public boolean isActive() {
 		return isActive;
 	}
+
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
-	
+
+	public int getGridColumn() {
+		return gridColumn;
+	}
+
+	public void setGridColumn(int gridColumn) {
+		this.gridColumn = gridColumn;
+	}
+
+	public int getGridRow() {
+		return gridRow;
+	}
+
+	public void setGridRow(int gridRow) {
+		this.gridRow = gridRow;
+	}
 	
 }

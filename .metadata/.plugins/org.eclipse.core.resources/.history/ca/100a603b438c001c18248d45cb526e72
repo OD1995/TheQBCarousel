@@ -1,0 +1,29 @@
+package mygroup.tqbcbackend.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import mygroup.tqbcbackend.model.Conference;
+import mygroup.tqbcbackend.model.Player;
+import mygroup.tqbcbackend.repository.ConferenceRepository;
+
+public class ConferenceController {
+	
+	@Autowired
+	private ConferenceRepository conferenceRepository;
+	
+	// Get all conferences
+	@GetMapping("/conferences")
+	public List<Conference> getAllConferences() {
+		return conferenceRepository.findAll();
+	}
+
+	// Get all active conferences
+	@GetMapping("/activeconferences")
+	public List<Player> getAllActivePlayers() {
+		return playerRepository.findByIsActiveTrueOrderByNameAsc();
+	}
+
+}

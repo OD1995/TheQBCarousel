@@ -1,62 +1,54 @@
-import React, { Component } from 'react';
-import TeamService from '../services/TeamService';
-// import SelectSearch, { fuzzySearch } from 'react-select-search';
+import React, { useState,Component } from 'react';
 import Select from 'react-select';
+import ConferenceService from '../services/ConferenceService';
+import TeamService from '../services/TeamService';
 import PlayerService from '../services/PlayerService';
-// import fuzzySearch from '../assets/fuzzySearch';
+import '../styles/QBPredictionsComponent.css';
 
-class QBSelectorComponent extends Component {
-    constructor(props) {
-        super(props)
+const QBSelector = (props) => {
+    var so = (typeof props.default_player === 'undefined') ? null : props.default_player;
+    const [selectedOption, setSelectedOption] = useState(so);
 
-        this.state = {
-            selectedOption: props.default_player,
-        }
+    if (
+        (selectedOption == null)
+        &
+        (typeof props.default_player !== 'undefined')
+    ) {
+        setSelectedOption(props.default_player)
     }
 
-    // componentDidMount() {
-    //     this.setState({selectedOption: this.props.default_player})
-    // }
-    
-    handleChange = (selectedOption) => {
-      this.setState({ selectedOption }, () =>
-        console.log(`Option selected:`, this.state.selectedOption)
-      );
-    };
-
-    render() {
-        // Data only arrives after `componentDidMount` called in QBPredictionsComponent
-        //    so this component should only be rendered once that's happened
-        if (
-            (typeof this.props.team !== "undefined")
-            &
-            (this.props.players !== [])
-            &
-            (this.state.selectedOption != null)
+    // console.log(props)
+    // console.log(selectedOption)
+    if (
+        (typeof props.team !== "undefined")
+        &
+        (typeof props.default_player !== "undefined")
+        &
+        (props.players !== [])
         ) {
-            let img_src = window.location.origin + '/team_logos/' + this.props.team['season'] + '/' + this.props.team.location.replace(" ","") + this.props.team.nickname + '.png' 
-            const { selectedOption } = this.state;
-            return (
-                <div>
-                    <img 
-                    src={img_src}
-                    alt={this.props.team.nickname}
-                    />
-                    <Select
-                    options={this.props.players}
-                    // search={true}
-                    // filterOptions={fuzzySearch}
-                    // value={this.props.default_player}
-                    value={selectedOption}
-                    onChange={this.handleChange}
-                    />
-                </div>
-            )
-        } else {
-            return (
-                null
-            )
+        let img_src = window.location.origin + '/team_logos/' + props.team['season'] + '/' + props.team.location.replace(" ","") + props.team.nickname + '.png' 
+        let grid_pos = {
+            gridRow: props.team.gridRow,
+            gridColumn: props.team.gridColumn
         }
+        return (
+            <div className={'qb_selector_box '+props.team.conference} style={grid_pos}>
+                <img 
+                src={img_src}
+                alt={props.team.nickname}
+                className='qb_selector_logo'
+                />
+                <Select
+                defaultValue={selectedOption}
+                onChange={setSelectedOption}
+                options={props.players}
+                isSearchable={true}
+                className='qb_selector_select'
+                />
+            </div>
+        )
+    } else {
+        return null
     }
 }
 
@@ -68,7 +60,8 @@ class QBPredictionsComponent extends Component {
             teamID_list : ['T1'],
             teams : {},
             players : [],
-            default_players : {}
+            default_players : {},
+            conferences : []
         }
     }
 
@@ -78,6 +71,7 @@ class QBPredictionsComponent extends Component {
             // Create dict where key is teamID and value is row from `teams`
             let _dict_ = Object.assign({}, ..._list_.map((x) => ({[x.teamID]: x})));
             this.setState({ teams : _dict_});
+            this.setState({ teamID_list : Object.keys(_dict_)})
         });
         PlayerService.getActivePlayers().then((res) => {
             let players_array = [];
@@ -95,25 +89,54 @@ class QBPredictionsComponent extends Component {
             this.setState({ players : players_array});
             this.setState({ default_players : default_team_dict});
         });
+        ConferenceService.getActiveConferences().then((res) => {
+            this.setState({ conferences : res.data})
+        });
     }
 
     render() {
-        return (
-            <div>
-                {
-                    this.state.teamID_list.map(
-                        teamID =>
-                        <QBSelectorComponent
-                        teamID={teamID}
-                        team={this.state.teams[teamID]}
-                        key={teamID}
-                        players={this.state.players}
-                        default_player={this.state.default_players[teamID]}
-                        ></QBSelectorComponent>
-                    )
-                }
-            </div>
-        )
+        if (
+            (this.state.teams !== {})
+            &
+            (this.state.players !== [])
+            &
+            (this.state.default_players !== {})
+        ) {
+            return (
+                <div className='qb_predictor_box'>
+                    <h1 className='area_title' style={{gridRow:1,gridColumn:2}}>North</h1>
+                    <h1 className='area_title' style={{gridRow:1,gridColumn:3}}>East</h1>
+                    <h1 className='area_title' style={{gridRow:1,gridColumn:4}}>South</h1>
+                    <h1 className='area_title' style={{gridRow:1,gridColumn:5}}>West</h1>
+                    {
+                        this.state.conferences.map(
+                            conf =>
+                            <img
+                            className='conference_logo'
+                            src={window.location.origin + '/conference_logos/' + conf.season + '/' + conf.name + '.png' }
+                            alt={conf.name}
+                            key={conf.name}
+                            style={{gridRowStart:conf.gridRowStart,gridRowEnd:conf.gridRowEnd,gridColumn:conf.gridColumn}}
+                            />
+                        )
+                    }
+                    {
+                        this.state.teamID_list.map(
+                            teamID =>
+                            <QBSelector
+                            default_player={this.state.default_players[teamID]}
+                            teamID={teamID}
+                            team={this.state.teams[teamID]}
+                            key={teamID}
+                            players={this.state.players}
+                            ></QBSelector>
+                        )
+                    }
+                </div>
+            )
+        } else {
+            return null
+        }
     }
 }
 

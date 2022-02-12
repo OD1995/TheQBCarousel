@@ -1,0 +1,10 @@
+package mygroup.tqbcbackend.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class ConferenceController {
+	
+	@Autowired
+	private 
+
+}

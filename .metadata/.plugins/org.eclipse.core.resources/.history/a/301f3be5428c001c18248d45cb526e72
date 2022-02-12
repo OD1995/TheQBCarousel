@@ -1,0 +1,39 @@
+package mygroup.tqbcbackend.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name = "Conferences")
+public class Conference {
+	@Id
+	@Column(name = "ConferenceID")
+	private String conferenceID;
+	
+	@Column(name = "Season")
+	private int season;
+	
+	@Column(name = "Name")
+	private String name;
+	
+	@Column(name = "GridColumn")
+	private int gridColumn;
+	
+	@Column(name = "GridRowStart")
+	private int gridRowStart;
+	
+	@Column(name = "GridRowEnd")
+	private int gridRowEnd;
+	
+	@Column(name = "IsActive")
+	private boolean isActive;
+	
+	public Conference() {
+		
+	}
+	
+	
+}
