@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TeamService from '../services/TeamService';
-import SelectSearch, { fuzzySearch } from 'react-select-search';
+// import SelectSearch, { fuzzySearch } from 'react-select-search';
+import Select from 'react-select';
 import PlayerService from '../services/PlayerService';
 // import fuzzySearch from '../assets/fuzzySearch';
 
@@ -9,8 +10,19 @@ class QBSelectorComponent extends Component {
         super(props)
 
         this.state = {
+            selectedOption: props.default_player,
         }
     }
+
+    // componentDidMount() {
+    //     this.setState({selectedOption: this.props.default_player})
+    // }
+    
+    handleChange = (selectedOption) => {
+      this.setState({ selectedOption }, () =>
+        console.log(`Option selected:`, this.state.selectedOption)
+      );
+    };
 
     render() {
         // Data only arrives after `componentDidMount` called in QBPredictionsComponent
@@ -19,19 +31,24 @@ class QBSelectorComponent extends Component {
             (typeof this.props.team !== "undefined")
             &
             (this.props.players !== [])
+            &
+            (this.state.selectedOption != null)
         ) {
             let img_src = window.location.origin + '/team_logos/' + this.props.team['season'] + '/' + this.props.team.location.replace(" ","") + this.props.team.nickname + '.png' 
+            const { selectedOption } = this.state;
             return (
                 <div>
                     <img 
                     src={img_src}
                     alt={this.props.team.nickname}
                     />
-                    <SelectSearch
+                    <Select
                     options={this.props.players}
-                    search={true}
-                    filterOptions={fuzzySearch}
-                    value={this.props.default_player}
+                    // search={true}
+                    // filterOptions={fuzzySearch}
+                    // value={this.props.default_player}
+                    value={selectedOption}
+                    onChange={this.handleChange}
                     />
                 </div>
             )
@@ -67,7 +84,7 @@ class QBPredictionsComponent extends Component {
             let default_team_dict = {};
             for (const player_obj of res.data) {
                 const dropdown_data = {
-                    name : player_obj.name,
+                    label : player_obj.name,
                     value : player_obj.playerID
                 };
                 players_array.push(dropdown_data);
