@@ -121,42 +121,38 @@ const QBPredictionsComponent = (props) => {
             // this.setState({ conferences : res.data})
             setConferences(res.data);
         });
-    });
+    },[]);
 
-    // updateParentState(id,dict) {
-    //     // Get copy of current state.dropdown_values
-    //     let dv = {...this.state.dropdown_values};
-    //     // Set the new value
-    //     dv[id] = dict;
-    //     // Update state
-    //     this.setState({dropdown_values : dv});
-    // }
-
-    // updateParentState(event, teamID) {
     const updateParentState = (event, teamID) => {
-        console.log(this.state);
-        // let cdv = { ...this.state.current_dropdown_values };
         let cdv = { ...currentDropdownValues }
         console.log(teamID);
         console.log(event);
         cdv[teamID] = event;
-        // this.setState({current_dropdown_values : cdv})
         setCurrentDropdownValues(cdv);
-    
-        // setFieldsValues(newFields);
     };
 
-    // savePredictions() {
     const savePredictions = () => {
-        // Get current values of all dropdrowns
-        // const selectors = document.getElementsByClassName("qb_selector_select");
-        const selectors = this.chi
-        console.log(selectors);
-        let inputs = {};
-        for (const selector of selectors) {
-            inputs[selector.id] = selector.innerText
+        // Make sure no QB has been chosen for two teams
+        let selections = {};
+        console.log(currentDropdownValues);
+        let msg = "All OK";
+        const txt = " will be the QB of multiple teams. Unfortunately, this is not possible. Please adjust and save again.";
+        // for (const prediction of currentDropdownValues) {
+        for (const [teamID, prediction] of Object.entries(currentDropdownValues)) {
+            // console.log("selections");
+            // console.log(selections);
+            // console.log("entry");
+            // console.log(teamID);
+            // console.log(prediction);
+            if (prediction.value in selections) {
+                const t2 = selections[prediction.value];
+                msg = "You have predicted that " + prediction.label + txt + "("+teamID+","+t2+")";
+                break;
+            } else {
+                selections[prediction.value] = teamID;
+            }
         }
-        console.log(inputs);
+        document.getElementById("msg").innerText = msg;
     };
 
     // render() {
@@ -192,7 +188,7 @@ const QBPredictionsComponent = (props) => {
                         teamID =>
                         <QBSelector
                         // default_player={this.state.current_dropdown_values[teamID]}
-                        default_player={currentDropdownValues}
+                        default_player={currentDropdownValues[teamID]}
                         teamID={teamID}
                         // team={this.state.teams[teamID]}
                         team={teams[teamID]}
@@ -209,6 +205,10 @@ const QBPredictionsComponent = (props) => {
                 >
                     Save
                 </button>
+                <p
+                id="msg"
+                style={{gridRow:11,gridColumnStart:1,gridColumnEnd:6}}
+                >Ignore Me</p>
             </div>
         )
     } else {

@@ -41,7 +41,7 @@
     /* grid-template-columns: 5vw 20vw 20vw 20vw 20vw; */
     grid-template-columns: 5vw repeat(4,18vw);
     /* grid-template-rows: 3vh 10vh 10vh 10vh 10vh 10vh 10vh 10vh 10vh; */
-    grid-template-rows: 3vh repeat(8,9vh);
+    grid-template-rows: 3vh repeat(8,9vh) 4vh 4vh;
     grid-gap: 2px;
 }
 
