@@ -1,0 +1,5 @@
+package mygroup.tqbcbackend.security.service;
+
+public class AuthTokenFiler {
+
+}

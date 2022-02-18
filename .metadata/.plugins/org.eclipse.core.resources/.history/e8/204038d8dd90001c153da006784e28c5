@@ -1,0 +1,5 @@
+package mygroup.tqbcbackend.security.jwt;
+
+public class AuthEntryPointJwt {
+
+}

@@ -1,0 +1,13 @@
+package mygroup.tqbcbackend.security;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
+import mygroup.tqbcbackend.security.service.UserDetailsImpl;
+
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
+	@Autowired
+	UserDetailsImpl userDetailsService;
+	@Autowired
+	private AuthEntryPointJ
+}

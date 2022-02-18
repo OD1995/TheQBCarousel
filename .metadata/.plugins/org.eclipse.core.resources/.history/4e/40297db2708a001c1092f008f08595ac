@@ -1,7 +1,0 @@
-package mygroup.tqbcbackend.model;
-
-import java.io.Serializable;
-
-public class PeriodPredictionID implements Serializable{
-
-}

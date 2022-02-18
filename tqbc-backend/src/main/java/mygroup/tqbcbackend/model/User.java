@@ -37,16 +37,16 @@ public class User {
 	private String username;
 	
 	@Email
-	@Column(name = "EmailAddress")
-	private String emailAddress;
+	@Column(name = "Email")
+	private String email;
 	
 	@Column(name = "FavouriteTeamID")
 	private String favouriteTeamID;
 	
 	@NotBlank
 	@Size(max = 120)
-	@Column(name = "HashedPassword")
-	private String hashedPassword;
+	@Column(name = "Password")
+	private String password;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable( name = "UserRoles",
@@ -66,16 +66,23 @@ public class User {
 		
 	}
 
-	public User(String userID, @NotBlank @Size(max = 20) String username, @Email String emailAddress,
-			String favouriteTeamID, @NotBlank @Size(max = 120) String hashedPassword, Set<Role> roles,
-			boolean isAuthenticated, Date userCreated) {
+	public User(
+			String userID,
+			@NotBlank @Size(max = 20) String username,
+			@Email String email,
+//			String favouriteTeamID,
+			@NotBlank @Size(max = 120) String password,
+//			Set<Role> roles,
+			boolean isAuthenticated,
+			Date userCreated
+	) {
 		super();
 		this.userID = userID;
 		this.username = username;
-		this.emailAddress = emailAddress;
-		this.favouriteTeamID = favouriteTeamID;
-		this.hashedPassword = hashedPassword;
-		this.roles = roles;
+		this.email = email;
+//		this.favouriteTeamID = favouriteTeamID;
+		this.password = password;
+//		this.roles = roles;
 		this.isAuthenticated = isAuthenticated;
 		this.userCreated = userCreated;
 	}
@@ -96,12 +103,12 @@ public class User {
 		this.username = username;
 	}
 
-	public String getEmailAddress() {
-		return emailAddress;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getFavouriteTeamID() {
@@ -112,12 +119,12 @@ public class User {
 		this.favouriteTeamID = favouriteTeamID;
 	}
 
-	public String getHashedPassword() {
-		return hashedPassword;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setHashedPassword(String hashedPassword) {
-		this.hashedPassword = hashedPassword;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Set<Role> getRoles() {

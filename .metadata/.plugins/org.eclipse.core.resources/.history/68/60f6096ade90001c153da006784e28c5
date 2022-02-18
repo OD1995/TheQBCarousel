@@ -1,0 +1,10 @@
+package mygroup.tqbcbackend.security.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+public class AuthTokenFiler extends OncePerRequestFilter {
+
+	@Autowired
+	private JwtUtils
+}
