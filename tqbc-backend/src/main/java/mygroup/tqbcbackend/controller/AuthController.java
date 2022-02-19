@@ -95,7 +95,7 @@ public class AuthController {
 		}
 		
 		// Create new user's account
-		String userID = new StringBuilder("U").append(userRepository.count()).toString();
+		String userID = new StringBuilder("U").append(userRepository.count()+1).toString();
 		User user = new User(
 				userID,
 				signupRequest.getUsername(),
