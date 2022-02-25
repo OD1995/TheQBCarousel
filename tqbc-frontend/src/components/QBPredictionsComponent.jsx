@@ -54,7 +54,7 @@ const QBPredictionsComponent = () => {
     const [players, setPlayers] = useState([]);
     const [conferences, setConferences] = useState([]);
     const [currentDropdownValues, setCurrentDropdownValues] = useState({});
-    const [showPopup, setShowPopup] = useState(true);
+    const [showPopup, setShowPopup] = useState(false);
     const [popupMessage, setPopupMessage] = useState("You have predicted that Kyler Murray will be the QB of multiple teams. Unfortunately, this is not possible. Please adjust and save again.");
 
     useEffect(() => {

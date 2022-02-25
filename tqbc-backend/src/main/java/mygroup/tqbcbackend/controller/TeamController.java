@@ -13,20 +13,20 @@ import mygroup.tqbcbackend.repository.TeamRepository;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1/teams")
 public class TeamController {
 
 	@Autowired
 	private TeamRepository teamRepository;
 	
 	// Get all teams
-	@GetMapping("/teams")
+	@GetMapping("/all")
 	public List<Team> getAllTeams() {
 		return teamRepository.findAll();
 	}
 	
 	// Get all active teams
-	@GetMapping("/activeteams")
+	@GetMapping("/active")
 	public List<Team> getAllActiveTeams() {
 		return teamRepository.findByIsActiveTrue();
 	} 
