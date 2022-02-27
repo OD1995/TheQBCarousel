@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import mygroup.tqbcbackend.model.Player;
 import mygroup.tqbcbackend.repository.PlayerRepository;
 
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/players")
 public class PlayerController {

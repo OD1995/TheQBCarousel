@@ -158,7 +158,7 @@ const QBPredictionsComponent = () => {
                 }
                 <button
                 onClick={savePredictions}
-                class="tqbc-black-button"
+                className="tqbc-black-button"
                 id="save-button"
                 >
                     Save

@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import mygroup.tqbcbackend.model.Conference;
 import mygroup.tqbcbackend.repository.ConferenceRepository;
 
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/conferences")
 public class ConferenceController {
