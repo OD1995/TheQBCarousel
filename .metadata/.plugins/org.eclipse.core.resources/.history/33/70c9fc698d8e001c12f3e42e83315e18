@@ -1,5 +1,0 @@
-package mygroup.tqbcbackend.repository;
-
-public interface RoleRepository {
-
-}

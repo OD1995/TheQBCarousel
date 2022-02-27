@@ -1,5 +1,0 @@
-package mygroup.tqbcbackend.security;
-
-public class UserDetailsServiceImpl {
-
-}

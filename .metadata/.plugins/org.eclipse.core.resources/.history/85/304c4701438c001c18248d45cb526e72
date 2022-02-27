@@ -1,9 +1,0 @@
-package mygroup.tqbcbackend.repository;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import mygroup.tqbcbackend.model.Conference;
-
-public interface ConferenceRepository extends JpaRepository<Conference, String>{
-
-}

@@ -1,5 +1,0 @@
-package mygroup.tqbcbackend.payload.request;
-
-public class LoginRequest {
-
-}

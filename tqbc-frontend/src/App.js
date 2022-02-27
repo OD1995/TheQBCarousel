@@ -140,13 +140,13 @@ const App = () => {
 
 				<div className="container">
 					<Routes>
-						<Route exact path="/" component={Home} />
+						<Route exact path="/" element={<Home/>} />
 						<Route exact path="/login" element={<Login/>}></Route>
-						<Route exact path="/register" component={Register} />
-						<Route exact path="/profile" component={Profile} />
-						<Route path="/user" component={BoardUser} />
+						<Route exact path="/register" element={<Register/>} />
+						<Route exact path="/profile" element={<Profile/>} />
+						<Route path="/user" element={<BoardUser/>} />
 						<Route path="/mod" element={<BoardModerator/>} />
-						<Route path="/admin" component={BoardAdmin} />
+						<Route path="/admin" component={<BoardAdmin/>} />
 						<Route path="/" exact element={<ListTeamComponent/>}></Route>
 						<Route path="/list-teams" element={<ListTeamComponent/>}></Route>
 						<Route path="/qb-predictions" element={<QBPredictionsComponent/>}></Route>
