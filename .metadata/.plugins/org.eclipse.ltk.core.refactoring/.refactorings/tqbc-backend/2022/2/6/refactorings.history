@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename compilation unit &apos;mygroup.tqbcbackend.model.PeriodPredictionID.java&apos; to &apos;PeriodPredictionCompositeKey.java&apos;&#x0D;&#x0A;- Original project: &apos;tqbc-backend&apos;&#x0D;&#x0A;- Original element: &apos;mygroup.tqbcbackend.model.PeriodPredictionID.java&apos;&#x0D;&#x0A;- Renamed element: &apos;mygroup.tqbcbackend.model.PeriodPredictionCompositeKey.java&apos;" description="Rename compilation unit &apos;PeriodPredictionID.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;mygroup.tqbcbackend.model{PeriodPredictionID.java" name="PeriodPredictionCompositeKey.java" references="false" stamp="1644497718003" version="1.0"/>
-</session>
