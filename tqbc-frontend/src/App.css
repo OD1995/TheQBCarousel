@@ -91,3 +91,7 @@ label {
 .component-container {
   padding-top: 2vh;
 }
+
+.display-linebreak {
+  white-space: pre-line;
+}
