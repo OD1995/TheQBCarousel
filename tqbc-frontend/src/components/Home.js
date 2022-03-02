@@ -5,26 +5,27 @@ import UserService from "../services/user.service";
 const Home = () => {
     const [content, setContent] = useState("");
 
-    useEffect(() => {
-        UserService.getPublicContent().then(
-            (response) => {
-                setContent(response.data);
-            },
-            (error) => {
-                const _content =
-                    (error.response && error.response.data ||
-                        error.message ||
-                        error.toString());
+    // useEffect(() => {
+    //     UserService.getPublicContent().then(
+    //         (response) => {
+    //             setContent(response.data);
+    //         },
+    //         (error) => {
+    //             const _content =
+    //                 (error.response && error.response.data ||
+    //                     error.message ||
+    //                     error.toString());
                     
-                setContent(_content);
-            }
-        );
-    }, []);
+    //             setContent(_content);
+    //         }
+    //     );
+    // }, []);
 
     return (
         <div className="container">
             <header className="jumbotron">
-                <h3>{content}</h3>
+                {/* <h3>{content}</h3> */}
+                <h3>Some text</h3>
             </header>
         </div>
     );

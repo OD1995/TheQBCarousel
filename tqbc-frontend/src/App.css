@@ -69,3 +69,25 @@ label {
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
+
+#tqbc-navbar-logo {
+  max-height: 8vh;
+  /* border: 1px solid green; */
+  /* padding-top: 0px !important; */
+  /* padding-bottom: 0px; */
+}
+
+.navbar {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  margin-top: 1vh;
+}
+
+.navbar-brand {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.component-container {
+  padding-top: 2vh;
+}

@@ -127,10 +127,10 @@ const QBPredictionsComponent = () => {
     ) {
         return (
             <div className='qb_predictor_box'>
-                <h1 className='area_title' style={{gridRow:1,gridColumn:2}}>North</h1>
-                <h1 className='area_title' style={{gridRow:1,gridColumn:3}}>East</h1>
-                <h1 className='area_title' style={{gridRow:1,gridColumn:4}}>South</h1>
-                <h1 className='area_title' style={{gridRow:1,gridColumn:5}}>West</h1>
+                <h1 className='area_title' style={{gridRow:1,gridColumn:2}}>NORTH</h1>
+                <h1 className='area_title' style={{gridRow:1,gridColumn:3}}>EAST</h1>
+                <h1 className='area_title' style={{gridRow:1,gridColumn:4}}>SOUTH</h1>
+                <h1 className='area_title' style={{gridRow:1,gridColumn:5}}>WEST</h1>
                 {
                     conferences.map(
                         conf =>
@@ -163,10 +163,10 @@ const QBPredictionsComponent = () => {
                 >
                     Save
                 </button>
-                <p
+                {/* <p
                 id="msg"
                 style={{gridRow:11,gridColumnStart:1,gridColumnEnd:6}}
-                >Ignore Me</p>
+                >Ignore Me</p> */}
                 <Popup
                 trigger={showPopup}
                 setTrigger={setShowPopup}
