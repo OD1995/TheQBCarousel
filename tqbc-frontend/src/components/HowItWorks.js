@@ -1,6 +1,10 @@
 import "../styles/HowItWorks.css";
+import getHowItWorksTable from "../helpers/PredictionPeriodsTable";
+import { useState, useEffect } from "react";
 
 const HowItWorks = () => {
+    const [exampleSeason, setExampleSeason] = useState(2023);
+    const [ppTable2, setPptable2] = useState(null);
 
     // const ppTable = (
     //     <table>
@@ -25,13 +29,20 @@ const HowItWorks = () => {
     //     </table>
     // );
     const txt = "";
+    useEffect(() => {
+        const result = getHowItWorksTable();
+        console.log("hi");
+        console.log(result);
+        setExampleSeason(result.ssn);
+        setPptable2(result.tbl);
+    },[])
     const ppTable = (
         <table cellSpacing={0} cellPadding={0}>
             <tbody>
                 <tr>
                     <th className="display-linebreak ps-col">Prediction{"\n"}Season</th>
                     <th className="display-linebreak">Prediction{"\n"}Period</th>
-                    <th className="arrow-col"></th>
+                    <th className="display-linebreak arrow-col">From{"\n"}To</th>
                     <th>Event</th>
                     <th>Date</th>
                 </tr>
@@ -39,7 +50,7 @@ const HowItWorks = () => {
                     <td dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
                     <td dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
                     <td></td>
-                    <td className="border-tlb" rowSpan={2}>KO of 2022 Season Opener</td>
+                    <td className="border-tlb" rowSpan={2}>KO of 2022 Regular Season opener</td>
                     <td className="border-trb" rowSpan={2}>7th Sep 2022 20:15</td>
                 </tr>
                 <tr>
@@ -129,9 +140,11 @@ const HowItWorks = () => {
                     Each "prediction year" will start at the kick off of the season opener and end with the kick
                     off of the following season opener. And each prediction year will be split into 5
                     "prediction periods". For example, the prediction year in which the starting QBs will be
-                    predicted for the 2023 season will be split into the prediction periods below:
+                    predicted for the {exampleSeason} season will be split into the prediction periods below:
                 </p>
                 {ppTable}
+                <br></br>
+                {ppTable2}
                 <br></br>
             </header>
         </div>

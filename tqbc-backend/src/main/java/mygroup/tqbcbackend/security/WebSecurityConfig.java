@@ -53,6 +53,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests().antMatchers("/api/v1/auth/**").permitAll()
 			.antMatchers("/api/v1/test/**").permitAll()
 			.antMatchers("/api/v1/teams/**").permitAll()
+			.antMatchers("/api/v1/events/**").permitAll()
+			.antMatchers("/api/v1/predictionperiods/**").permitAll()
 			.antMatchers("/api/v1/players/**").permitAll()
 			.antMatchers("/api/v1/conferences/**").permitAll()
 			.anyRequest().authenticated();

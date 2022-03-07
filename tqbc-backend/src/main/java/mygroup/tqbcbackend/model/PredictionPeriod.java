@@ -1,7 +1,5 @@
 package mygroup.tqbcbackend.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -21,36 +19,32 @@ public class PredictionPeriod {
 	@Column(name = "SeasonPeriodID")
 	private String seasonPeriodID;
 	
-	@Column(name = "DeadlineEvent")
-	private String deadlineEvent;
+	@Column(name = "FromEventID")
+	private String fromEventID;
 	
-	@Column(name = "FromDateTime")
-	private Date fromDateTime;
+	@Column(name = "ToEventID")
+	private String toEventID;
 	
-	@Column(name = "ToDateTime")
-	private Date toDateTime;
+	@Column(name = "HowItWorks")
+	private boolean howItWorks;
 	
-	@Column(name = "Days")
-	private int days;
-	
-	@Column(name = "Weeks")
-	private int weeks;
+	@Column(name = "IsActive")
+	private boolean isActive;
 	
 	public PredictionPeriod() {
 		
 	}
 
-	public PredictionPeriod(String predictionPeriodID, int season, String seasonPeriodID, String deadlineEvent,
-			Date fromDateTime, Date toDateTime, int days, int weeks) {
+	public PredictionPeriod(String predictionPeriodID, int season, String seasonPeriodID, String fromEventID,
+			String toEventID, boolean howItWorks, boolean isActive) {
 		super();
 		this.predictionPeriodID = predictionPeriodID;
 		this.season = season;
 		this.seasonPeriodID = seasonPeriodID;
-		this.deadlineEvent = deadlineEvent;
-		this.fromDateTime = fromDateTime;
-		this.toDateTime = toDateTime;
-		this.days = days;
-		this.weeks = weeks;
+		this.fromEventID = fromEventID;
+		this.toEventID = toEventID;
+		this.howItWorks = howItWorks;
+		this.isActive = isActive;
 	}
 
 	public String getPredictionPeriodID() {
@@ -77,44 +71,36 @@ public class PredictionPeriod {
 		this.seasonPeriodID = seasonPeriodID;
 	}
 
-	public String getDeadlineEvent() {
-		return deadlineEvent;
+	public String getFromEventID() {
+		return fromEventID;
 	}
 
-	public void setDeadlineEvent(String deadlineEvent) {
-		this.deadlineEvent = deadlineEvent;
+	public void setFromEventID(String fromEventID) {
+		this.fromEventID = fromEventID;
 	}
 
-	public Date getFromDateTime() {
-		return fromDateTime;
+	public String getToEventID() {
+		return toEventID;
 	}
 
-	public void setFromDateTime(Date fromDateTime) {
-		this.fromDateTime = fromDateTime;
+	public void setToEventID(String toEventID) {
+		this.toEventID = toEventID;
 	}
 
-	public Date getToDateTime() {
-		return toDateTime;
+	public boolean isHowItWorks() {
+		return howItWorks;
 	}
 
-	public void setToDateTime(Date toDateTime) {
-		this.toDateTime = toDateTime;
+	public void setHowItWorks(boolean howItWorks) {
+		this.howItWorks = howItWorks;
 	}
 
-	public int getDays() {
-		return days;
+	public boolean isActive() {
+		return isActive;
 	}
 
-	public void setDays(int days) {
-		this.days = days;
-	}
-
-	public int getWeeks() {
-		return weeks;
-	}
-
-	public void setWeeks(int weeks) {
-		this.weeks = weeks;
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 	
 }
