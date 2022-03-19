@@ -1,10 +1,10 @@
 import PredictionPeriodService from "../services/PredictionPeriodService";
 import EventService from "../services/EventService";
+import moment from "moment-timezone";
 
 function getHowItWorksTable() {
     PredictionPeriodService.getHowItWorksPredictionPeriods().then(
         (ppRes) => {
-            // console.log(ppRes.data)
             // Get the example season to use (based on the DB)
             const exampleSeasonFromDB = ppRes.data[0].season;
             // Get unique array of eventIDs
@@ -14,10 +14,7 @@ function getHowItWorksTable() {
             // Get details of events in `uniqueEventIDs`
             EventService.getEventsByEventIDArray(uniqueEventIDs).then(
                 (eRes) => {
-                    // console.log(eRes.data)
                     let tbl = createPredictionPeriodsTable(ppRes.data,eRes.data);
-                    console.log('hello');
-                    console.log(tbl);
                     return {
                         tbl : tbl,
                         ssn: exampleSeasonFromDB
@@ -30,7 +27,25 @@ function getHowItWorksTable() {
 
 function createPredictionPeriodsTable(predictionPeriodsArray,eventArray) {
     // Create dict where key is eventID and value is row from `events`
-    let eventsDict = Object.assign({}, ...eventArray.map((x) => ({[x.eventID]: x})));
+    // let eventsDict = Object.assign({}, ...eventArray.map((x) => ({[x.eventID]: x})));
+    // console.log("typea");
+    // let od1 = eventArray[0].eventDateTimeUTC.slice(0,19);
+    // let M = moment.utc(od1);
+    // console.log(od1);
+    // console.log(M);
+    // console.log(M.format("DD MMM YYYY HH:mm"));
+    // console.log(M.tz("America/New_York").format("DD MMM YYYY HH:mm"));
+    // console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
+
+    let eventsDict = {};
+    let userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    for (const ev of eventArray) { // 7th Sep 2022 20:15
+        let momentDate = moment.utc(
+            ev.eventDateTimeUTC.slice(0,19)
+        ).tz(userTZ).format("DD MMM YYYY HH:mm");
+        ev.eventDateTimeUTC = momentDate;
+        eventsDict[ev.eventID] = ev;
+    }
     // Create dict where key is predictionPeriodID and value is row from `predictionperiods`
     let predictionPeriodDict = Object.assign({}, ...predictionPeriodsArray.map(
         (x) => ({[x.predictionPeriodID]: x}))
@@ -39,7 +54,6 @@ function createPredictionPeriodsTable(predictionPeriodsArray,eventArray) {
     let bothDict = Object.assign({}, eventsDict, predictionPeriodDict);
     // let bothDict = {...eventsDict, ...Pred}
 
-    console.log(bothDict);
     let rowsArray = [];
     for (const [ix,predictionPeriod] of predictionPeriodsArray.entries()) {
         // If it's the first prediction period of a season, add `fromEventID` to `rowsArray`
@@ -59,7 +73,6 @@ function createPredictionPeriodsTable(predictionPeriodsArray,eventArray) {
             image: predictionPeriod.seasonPeriodID !== "SP4"
         });
     }
-    console.log(rowsArray);
 
     const ppTable = (
         <table cellSpacing={0} cellPadding={0}>
@@ -69,10 +82,12 @@ function createPredictionPeriodsTable(predictionPeriodsArray,eventArray) {
                     <th className="display-linebreak">Prediction{"\n"}Period</th>
                     <th className="display-linebreak arrow-col">From{"\n"}To</th>
                     <th>Event</th>
-                    <th>Date</th>
+                    <th className="display-linebreak">Date{"\n"}(In Your Timezone:{"\n"}{Intl.DateTimeFormat().resolvedOptions().timeZone})</th>
                 </tr>
                 {
-                    rowsArray.map(rowIDDict => createPredictionPeriodTableRow(rowIDDict,bothDict))
+                    rowsArray.map(
+                        (rowIDDict,ix) => createPredictionPeriodTableRow(rowIDDict,bothDict,ix,rowsArray.length)
+                    )
                 }
             </tbody>
         </table>
@@ -81,39 +96,97 @@ function createPredictionPeriodsTable(predictionPeriodsArray,eventArray) {
     return ppTable;
 }
 
-function createPredictionPeriodTableRow(rowIDDict,bothDict) {
+function createPredictionPeriodTableRow(rowIDDict,bothDict,rowArrayIndex,totalRows) {
     const rowID = rowIDDict.id;
+    const firstEvent = rowArrayIndex == 0;
+    const lastEvent = rowArrayIndex + 1 == totalRows;
     if (rowID[0] === "E") {
-        const returnMe = [
-            <tr key={rowID + "-row"}>
-                <td dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
-                <td dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
-                <td></td>
-                <td className="border-tlb" rowSpan={2}>{bothDict[rowID].eventName}</td>
-                <td className="border-trb" rowSpan={2}>{bothDict[rowID].eventDateTimeUTC}</td>
-            </tr>
-        ]
-        if (rowIDDict.image) {
-            const imageRow = (
-                <tr key={rowID + "-image"}>
+        const returnMe = [];
+
+        if (firstEvent) {
+            const txtRow = (
+                <tr key={rowID + "-row"}>
                     <td dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
                     <td dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
-                    <td rowSpan={3}>
-                        <img
-                            src={window.location.origin + '/arrows.png'}
-                            className="arrows arrow-col"
-                        />
-                    </td>
+                    <td></td>
+                    <td className="border-tlb" rowSpan={2}>{bothDict[rowID].eventName}</td>
+                    <td className="border-trb" rowSpan={2}>{bothDict[rowID].eventDateTimeUTC}</td>
                 </tr>
             );
-            returnMe.push(imageRow)
+            returnMe.push(txtRow);
+        } else if (lastEvent) {
+            const txtRow1 = (
+                <tr key={rowID + "-row1"}>
+                    <td dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
+                    <td dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
+                    <td className="border-tlb" rowSpan={2}>{bothDict[rowID].eventName}</td>
+                    <td className="border-trb" rowSpan={2}>{bothDict[rowID].eventDateTimeUTC}</td>
+                </tr>
+            );
+            const txtRow2 = (
+                <tr key={rowID + "-row2"}>
+                    <td dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
+                    <td dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
+                    <td dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
+                </tr>
+            );
+            returnMe.push(txtRow1);
+            returnMe.push(txtRow2);
+        } else {
+            const txtRow = (
+                <tr key={rowID + "-row"}>
+                    <td dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
+                    <td className="border-tlb" rowSpan={2}>{bothDict[rowID].eventName}</td>
+                    <td className="border-trb" rowSpan={2}>{bothDict[rowID].eventDateTimeUTC}</td>
+                </tr>
+            )
+            returnMe.push(txtRow);           
+        }
+
+        if (rowIDDict.image) {
+            if (firstEvent) {
+                const imageRow = (
+                    <tr key={rowID + "-image"}>
+                        <td dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
+                        <td dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
+                        <td rowSpan={3}>
+                            <img
+                                src={window.location.origin + '/arrows.png'}
+                                className="arrows arrow-col"
+                            />
+                        </td>
+                    </tr>
+                );
+                returnMe.push(imageRow)
+            } else {
+                const imageRow = (
+                    <tr key={rowID + "-image"}>
+                        <td dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
+                        <td rowSpan={3}>
+                            <img
+                                src={window.location.origin + '/arrows.png'}
+                                className="arrows arrow-col"
+                            />
+                        </td>
+                    </tr>
+                );
+                returnMe.push(imageRow)
+            }
         }
         return returnMe;
 
+    } else if (rowID === "PP1") {
+        return (
+            <tr>
+                <td className="ps-col ps-val" rowSpan={10}>{bothDict[rowID].season}</td>
+                <td>{bothDict[rowID].predictionPeriodID}</td>
+                <td></td>
+                <td></td>
+            </tr>
+        )
     } else {
         return (
             <tr>
-                <td className="ps-col ps-val" rowSpan={4}>{bothDict[rowID].season}</td>
                 <td>{bothDict[rowID].predictionPeriodID}</td>
                 <td></td>
                 <td></td>
@@ -122,4 +195,4 @@ function createPredictionPeriodTableRow(rowIDDict,bothDict) {
     }
 }
 
-export default getHowItWorksTable;
+export default createPredictionPeriodsTable;

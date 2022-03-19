@@ -1,5 +1,6 @@
 package mygroup.tqbcbackend.model;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,7 +19,8 @@ public class Event {
 	private String eventName;
 	
 	@Column(name = "EventDateTimeUTC")
-	private Date eventDateTimeUTC;
+//	private Date eventDateTimeUTC;
+	private ZonedDateTime eventDateTimeUTC;
 	
 	@Column(name = "DateConfirmed")
 	private boolean dateConfirmed;
@@ -27,7 +29,7 @@ public class Event {
 		
 	}
 
-	public Event(String eventID, String eventName, Date eventDateTimeUTC, boolean dateConfirmed) {
+	public Event(String eventID, String eventName, ZonedDateTime eventDateTimeUTC, boolean dateConfirmed) {
 		super();
 		this.eventID = eventID;
 		this.eventName = eventName;
@@ -51,11 +53,11 @@ public class Event {
 		this.eventName = eventName;
 	}
 
-	public Date getEventDateTimeUTC() {
+	public ZonedDateTime getEventDateTimeUTC() {
 		return eventDateTimeUTC;
 	}
 
-	public void setEventDateTimeUTC(Date eventDateTimeUTC) {
+	public void setEventDateTimeUTC(ZonedDateTime eventDateTimeUTC) {
 		this.eventDateTimeUTC = eventDateTimeUTC;
 	}
 
