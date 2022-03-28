@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 
 const HowItWorks = () => {
     const [exampleSeason, setExampleSeason] = useState(2023);
-    const [ppTable2, setPptable2] = useState("CHANGE MEEEEE");
+    const [ppTable, setPptable] = useState("");
 
     const txt = "";
     useEffect(() => {
@@ -25,7 +25,7 @@ const HowItWorks = () => {
                         let tbl = createPredictionPeriodsTable(ppRes.data,eRes.data);
                         console.log('hello');
                         console.log(tbl);
-                        setPptable2(tbl);
+                        setPptable(tbl);
                         setExampleSeason(exampleSeasonFromDB);
                     }
                 )
@@ -60,14 +60,43 @@ const HowItWorks = () => {
                 <p>
                     Each "prediction season" will start at the kick off of the season opener and end with the start of the following draft.
                     Each prediction year will be split into 4 "prediction periods".
-                    For example, the prediction year in which the starting QBs will be predicted for the {exampleSeason} season will be split into the prediction periods below:
+                    For example, the prediction year in which the starting QBs will be predicted for the {exampleSeason} season
+                    will be split into the prediction periods below:
                 </p>
-                {ppTable2}
+                {ppTable}
                 <br></br>
                 <p>
                     Once the draft has started, the prediction window for the upcoming season closes.
                     The prediction window for the next season then opens with the kick off of the first game of the new season.
                 </p>
+                <br></br>
+                <h3>Scoring</h3>
+                <p>
+                    Once a new season has started, the predictions from the 4 prediction periods for the seasons will be graded.
+                    Each prediction period will get a percentage score assigned to it, dependent on how many of the teams' QBs were correctly guessed.
+                    These scores will then be used in the global leaderboard as well as private leagues.
+                    The global leaderboard will equally weight the 4 prediction periods, to come up with a single score for the whole prediction season.
+                    Private leagues allow you to set your own weightings.
+                    For example, you may wish to give more weight to the earlier prediction periods compared to the later prediciton periods.
+                </p>
+                <br></br>
+                <h3>Correct Answers</h3>
+                <p>
+                    With the kickoff of the season opener, a list of correct answers will be published.
+                    It is possible for a team to have more than one correct answer.
+                    Below are the 3 types of QB that would qualify as a correct answer:
+                </p>
+                <ul>
+                    <li>
+                        The team's starter from the previous season
+                    </li>
+                    <li>
+                        A QB drafted in the first 2 rounds of the NFL Draft
+                    </li>
+                    <li>
+                        A veteran QB brought in to compete for the starting position
+                    </li>
+                </ul>
             </header>
         </div>
     );
