@@ -43,14 +43,14 @@ const HowItWorks = () => {
                     significantly CHECK ME. This site is a platform that allows you to:
                 </p>
                 <ul>
-                    <li>
+                    <li key="concept-item1">
                         make predictions over the course of the season (and off-season) about who will be each
                         franchise's starting QB in the following season
                     </li>
-                    <li>
+                    <li key="concept-item2">
                         look back at your predictions from the past
                     </li>
-                    <li>
+                    <li key="concept-item3">
                         compare your predictions to your friends (through private leagues) and everyone else 
                         (via a global leaderboard)
                     </li>
@@ -87,13 +87,13 @@ const HowItWorks = () => {
                     Below are the 3 types of QB that would qualify as a correct answer:
                 </p>
                 <ul>
-                    <li>
+                    <li key="correctanswers-item1">
                         The team's starter from the previous season
                     </li>
-                    <li>
+                    <li key="correctanswers-item2">
                         A QB drafted in the first 2 rounds of the NFL Draft
                     </li>
-                    <li>
+                    <li key="correctanswers-item3">
                         A veteran QB brought in to compete for the starting position
                     </li>
                 </ul>

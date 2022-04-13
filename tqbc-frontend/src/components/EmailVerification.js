@@ -5,12 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 const EmailVerification = () => {
-    const [username, setUsername] = useState(null);
     const [searchParams, setSearchParams] = useSearchParams();
-    // const [{token}] = useSearchParams();
     const { message } = useSelector(state => state.message);
 
     const dispatch = useDispatch();
+
+    console.log("message: " + message);
 
     useEffect(
         () => {
@@ -21,13 +21,13 @@ const EmailVerification = () => {
         []
     )
 
-    if (message == "success") {
+    if (message === "failure") {
+        var title = "Email Verification Failure";
+        var paragraph = "The provided token is not valid";
+    } else {
         var title = "Email Verification Success";
         var paragraph = "Your email address has been successfully verified! ";
         paragraph += "You can now login and start your predictions.";
-    } else {
-        var title = "Email Verification Failure";
-        var paragraph = "The provided token is not valid";
     }
 
     return (

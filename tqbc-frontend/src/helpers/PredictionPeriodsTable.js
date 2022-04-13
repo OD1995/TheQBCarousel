@@ -77,7 +77,7 @@ function createPredictionPeriodsTable(predictionPeriodsArray,eventArray) {
     const ppTable = (
         <table cellSpacing={0} cellPadding={0}>
             <tbody>
-                <tr>
+                <tr key="column-headers">
                     <th className="display-linebreak ps-col">Prediction{"\n"}Season</th>
                     <th className="display-linebreak">Prediction{"\n"}Period</th>
                     <th className="display-linebreak arrow-col">From{"\n"}To</th>
@@ -177,7 +177,7 @@ function createPredictionPeriodTableRow(rowIDDict,bothDict,rowArrayIndex,totalRo
 
     } else if (rowID === "PP1") {
         return (
-            <tr>
+            <tr key={"PP1-" + rowID}>
                 <td className="ps-col ps-val" rowSpan={10}>{bothDict[rowID].season}</td>
                 <td>{bothDict[rowID].predictionPeriodID}</td>
                 <td></td>
@@ -186,7 +186,7 @@ function createPredictionPeriodTableRow(rowIDDict,bothDict,rowArrayIndex,totalRo
         )
     } else {
         return (
-            <tr>
+            <tr key={"other-" + rowID}>
                 <td>{bothDict[rowID].predictionPeriodID}</td>
                 <td></td>
                 <td></td>

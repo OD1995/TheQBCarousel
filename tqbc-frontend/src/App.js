@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
 	BrowserRouter as Router,
 	Link,
+	Navigate,
 	Route,
 	Routes,
 } from 'react-router-dom';
@@ -37,11 +38,14 @@ const App = () => {
 	const [showAdminBoard, setShowAdminBoard] = useState(false);
 
 	const { user: currentUser } = useSelector((state) => state.auth);
+	const { isLoggedIn } = useSelector(state => state.auth);
+	
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		history.listen(
 			(location) => {
+				console.log("Changing location, clearMessage called");
 				dispatch(clearMessage()); // Clear messsage when changing location
 			}
 		);
@@ -104,14 +108,6 @@ const App = () => {
 									</Link>
 								</li>
 							)}
-
-							{currentUser && (
-								<li className="nav-item">
-									<Link to={"/user"} className="nav-link">
-										User
-									</Link>
-								</li>
-							)}
 						</div>
 
 						{currentUser ? (
@@ -119,6 +115,16 @@ const App = () => {
 								<li className="nav-item">
 									<Link to={"/profile"} className="nav-link">
 										{currentUser.username}
+									</Link>
+								</li>
+								<li className="nav-item">
+									<Link to={"/qb-predictions"} className="nav-link">
+										Prediction Board
+									</Link>
+								</li>
+								<li className="nav-item">
+									<Link to={"/qb-predictions"} className="nav-link">
+										Prediction History
 									</Link>
 								</li>
 								<li className="nav-item">
@@ -137,7 +143,7 @@ const App = () => {
 
 								<li className="nav-item">
 									<Link to={"/register"} className="nav-link">
-										Sign Up
+										Register
 									</Link>
 								</li>
 							</div>
@@ -147,12 +153,20 @@ const App = () => {
 
 				<div className="component-container container">
 					<Routes>
-						{/* <Route exact path="/" element={<Home/>} /> */}
+						<Route
+							index
+							element={
+								isLoggedIn ? (
+									<Navigate replace to="/profile" />
+								) : (
+									<Navigate replace to="/how-it-works" />
+								)
+							}
+						/>
 						<Route exact path="/how-it-works" element={<HowItWorks/>}></Route>
 						<Route exact path="/login" element={<Login/>}></Route>
 						<Route exact path="/register" element={<Register/>} />
 						<Route exact path="/profile" element={<Profile/>} />
-						<Route path="/user" element={<BoardUser/>} />
 						<Route path="/mod" element={<BoardModerator/>} />
 						<Route path="/admin" component={<BoardAdmin/>} />
 						{/* <Route path="/" exact element={<ListTeamComponent/>}></Route> */}
