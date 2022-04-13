@@ -4,7 +4,7 @@ const API_URL = process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/auth/";
 
 const register = (username, email, password) => {
     return axios.post(
-        API_URL + "signup",
+        API_URL + "register",
         {
             username,
             email,
@@ -13,9 +13,18 @@ const register = (username, email, password) => {
     );
 };
 
+const verifyEmail = (token) => {
+    return axios.post(
+        API_URL + "verify-email",
+        {
+            token
+        }
+    );
+}
+
 const login = (username, password) => {
     return axios.post(
-        API_URL + "signin",
+        API_URL + "login",
         {
             username,
             password
@@ -39,6 +48,7 @@ const logout = () => {
 
 export default {
     register,
+    verifyEmail,
     login,
     logout
 };

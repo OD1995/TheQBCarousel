@@ -95,3 +95,8 @@ label {
 .display-linebreak {
   white-space: pre-line;
 }
+
+#emailVerificationDiv {
+  /* border: 1px solid green; */
+  padding-top: 30vh;
+}

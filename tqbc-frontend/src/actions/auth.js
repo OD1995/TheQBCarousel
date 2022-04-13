@@ -4,7 +4,9 @@ import {
     LOGOUT,
     REGISTER_FAIL,
     REGISTER_SUCCESS,
-    SET_MESSAGE
+    SET_MESSAGE,
+    VERIFICATION_FAIL,
+    VERIFICATION_SUCCESS
 } from "./types";
 import AuthService from "../services/auth.service"
 
@@ -56,6 +58,41 @@ export const register = (username, email, password) => (dispatch) => {
         }
     );
 };
+
+export const verifyEmail = (token) => (dispatch) => {
+    return AuthService.verifyEmail(
+        token
+    ).then(
+        (response) => {
+            dispatch(
+                {
+                    type: VERIFICATION_SUCCESS
+                }
+            );
+            dispatch(
+                {
+                    type: SET_MESSAGE,
+                    payload: response.data.message
+                }
+            );
+            return Promise.resolve();
+        },
+        (error) => {
+            dispatch(
+                {
+                    type: VERIFICATION_FAIL
+                }
+            );
+            dispatch(
+                {
+                    type: SET_MESSAGE,
+                    payload: error.message
+                }
+            );
+            return Promise.reject();
+        }
+    )
+}
 
 export const login = (username, password) => (dispatch) => {
     return AuthService.login(

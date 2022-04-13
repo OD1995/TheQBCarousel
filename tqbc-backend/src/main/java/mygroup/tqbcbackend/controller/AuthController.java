@@ -9,7 +9,9 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,17 +23,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import mygroup.tqbcbackend.model.ConfirmationToken;
 import mygroup.tqbcbackend.model.ERole;
 import mygroup.tqbcbackend.model.Role;
 import mygroup.tqbcbackend.model.User;
+import mygroup.tqbcbackend.payload.request.EmailVerificationRequest;
 import mygroup.tqbcbackend.payload.request.LoginRequest;
 import mygroup.tqbcbackend.payload.request.SignupRequest;
 import mygroup.tqbcbackend.payload.response.JwtResponse;
 import mygroup.tqbcbackend.payload.response.MessageResponse;
+import mygroup.tqbcbackend.repository.ConfirmationTokenRepository;
 import mygroup.tqbcbackend.repository.RoleRepository;
 import mygroup.tqbcbackend.repository.UserRepository;
 import mygroup.tqbcbackend.security.jwt.JwtUtils;
 import mygroup.tqbcbackend.security.service.UserDetailsImpl;
+import mygroup.tqbcbackend.service.EmailSenderService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -48,8 +54,17 @@ public class AuthController {
 	PasswordEncoder encoder;
 	@Autowired
 	JwtUtils jwtUtils;
+	@Autowired
+	ConfirmationTokenRepository confirmationTokenRepository;
+	@Autowired
+	private EmailSenderService emailSenderService;	
+	@Value("${spring.mail.username}")
+	private String fromEmailAddress;	
+	@Value("${tqdm.app.frontEndURL}")
+	private String frontEndURL;
 	
-	@PostMapping("/signin")
+	
+	@PostMapping("/login")
 	public ResponseEntity<?> authenticateUser(
 			@Valid @RequestBody LoginRequest loginRequest
 	) {
@@ -76,7 +91,7 @@ public class AuthController {
 		return ResponseEntity.ok(jwtResponse);
 	}
 	
-	@PostMapping("/signup")
+	@PostMapping("/register")
 	public ResponseEntity<?> registerUser(
 			@Valid @RequestBody SignupRequest signupRequest
 	) {
@@ -135,6 +150,70 @@ public class AuthController {
 		user.setRoles(roles);
 		userRepository.save(user);
 		
-		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+		// Create confirmation token then email user to verify address
+		ConfirmationToken confirmationToken = new ConfirmationToken(user);
+		confirmationTokenRepository.save(confirmationToken);
+		
+		SimpleMailMessage mailMessage = new SimpleMailMessage();
+		mailMessage.setTo(user.getEmail());
+		mailMessage.setSubject("The QB Carousel - Email Verification");
+		mailMessage.setFrom(fromEmailAddress);
+		mailMessage.setText(
+			"Hi "
+			+ user.getUsername()
+			+ "\n\n"
+			+ "Thank you for registering at TheQBCarousel.com! "
+			+ "Please verify your email address by clicking here: "
+			+ frontEndURL
+			+ "/email-verification?token="
+			+ confirmationToken.getConfirmationToken()
+			+ "\n\n"
+			+ "Thanks"
+		);
+		emailSenderService.sendMail(mailMessage);		
+		
+		return ResponseEntity.ok(
+			new MessageResponse(
+				"You have successfully registered as a user. "
+				+ "Before you are able to make any predictions, "
+				+ "you'll need to verify your email address "
+				+ "by clicking on the link that has been sent to "
+				+ user.getEmail()
+			)
+		);
+	}
+	
+	@PostMapping("/verify-email")
+	public ResponseEntity<?> verifyEmail(
+			@Valid @RequestBody EmailVerificationRequest emailVerificationRequest
+	) {
+		ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(emailVerificationRequest.getToken());
+		
+		if (token != null) {
+			User user = userRepository.findByEmailIgnoreCase(token.getUser().getEmail());
+			user.setAuthenticated(true);
+			userRepository.save(user);
+//			return ResponseEntity.ok(
+//				new MessageResponse(
+//					"Your email address has been successfully verified! "
+//					+ "You can now login and start your predictions."
+//				)
+//			);
+			return ResponseEntity.ok(
+					new MessageResponse(
+						"success"
+					)
+				);
+		} else {
+//			return ResponseEntity.badRequest().body(
+//				"Email verification failed. "
+//				+ "The provided token ("
+//				+ emailVerificationRequest.getToken()
+//				+ ") is not valid."
+//			);
+			return ResponseEntity.badRequest().body(
+					"failure"
+				);
+		}
 	}
 }

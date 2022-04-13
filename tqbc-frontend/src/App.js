@@ -23,6 +23,7 @@ import Profile from "./components/Profile";
 import BoardUser from "./components/BoardUser";
 import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
+import EmailVerification from "./components/EmailVerification";
 
 import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
@@ -157,6 +158,7 @@ const App = () => {
 						{/* <Route path="/" exact element={<ListTeamComponent/>}></Route> */}
 						<Route path="/list-teams" element={<ListTeamComponent/>}></Route>
 						<Route path="/qb-predictions" element={<QBPredictionsComponent/>}></Route>
+						<Route path="/email-verification" element={<EmailVerification/>}></Route>
 						{/* <Route path="/test" element={<FieldForm fields={fields}/>}></Route>
 						<Route path="/test2" element={<Test2/>}></Route> */}
 					</Routes>
