@@ -1,6 +1,6 @@
+- Change string IDs to numerical IDs
 - Prepare backend for receiving predictions
 - Visualise historical predictions
-- Maybe change string IDs to numerical IDs
 - Integrate Google Analytics
 - Calculate and visualise points and league tables
 - Give login/signup buttons some space
