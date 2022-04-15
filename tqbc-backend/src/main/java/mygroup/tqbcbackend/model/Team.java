@@ -3,6 +3,8 @@ package mygroup.tqbcbackend.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,8 +12,9 @@ import javax.persistence.Table;
 @Table(name = "Teams")
 public class Team {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "TeamID")
-	private String teamID;	
+	private long teamID;	
 	
 	@Column(name = "Season")
 	private int season;	
@@ -41,7 +44,7 @@ public class Team {
 		
 	}
 
-	public Team(String teamID, int season, String location, String nickname, String conference, String division,
+	public Team(long teamID, int season, String location, String nickname, String conference, String division,
 			boolean isActive, int gridColumn, int gridRow) {
 		super();
 		this.teamID = teamID;
@@ -55,11 +58,11 @@ public class Team {
 		this.gridRow = gridRow;
 	}
 
-	public String getTeamID() {
+	public long getTeamID() {
 		return teamID;
 	}
 
-	public void setTeamID(String teamID) {
+	public void setTeamID(long teamID) {
 		this.teamID = teamID;
 	}
 

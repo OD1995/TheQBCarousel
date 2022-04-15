@@ -14,35 +14,35 @@ public class PrivateLeagueMember {
 
 	@Id
 	@Column(name = "LeagueID")
-	private String leagueID;
+	private long leagueID;
 	
 	@Id
 	@Column(name = "UserID")
-	private String userID;
+	private long userID;
 	
 	public PrivateLeagueMember() {
 		
 	}
 
-	public PrivateLeagueMember(String leagueID, String userID) {
+	public PrivateLeagueMember(long leagueID, long userID) {
 		super();
 		this.leagueID = leagueID;
 		this.userID = userID;
 	}
 
-	public String getLeagueID() {
+	public long getLeagueID() {
 		return leagueID;
 	}
 
-	public void setLeagueID(String leagueID) {
+	public void setLeagueID(long leagueID) {
 		this.leagueID = leagueID;
 	}
 
-	public String getUserID() {
+	public long getUserID() {
 		return userID;
 	}
 
-	public void setUserID(String userID) {
+	public void setUserID(long userID) {
 		this.userID = userID;
 	}
 	

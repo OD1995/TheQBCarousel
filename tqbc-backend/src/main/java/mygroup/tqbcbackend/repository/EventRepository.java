@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import mygroup.tqbcbackend.model.Event;
 
 @Repository
-public interface EventRepository extends JpaRepository<Event, String>{
+public interface EventRepository extends JpaRepository<Event, Long>{
 
-	public List<Event> findByEventIDInOrderByEventIDAsc(List<String> eventIDs);
+	public List<Event> findByEventIDInOrderByEventIDAsc(List<Long> eventIDs);
 	
 }

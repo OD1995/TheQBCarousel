@@ -1,10 +1,11 @@
 package mygroup.tqbcbackend.model;
 
 import java.time.ZonedDateTime;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,8 +13,9 @@ import javax.persistence.Table;
 @Table(name = "Events")
 public class Event {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "EventID")
-	private String eventID;
+	private long eventID;
 	
 	@Column(name = "EventName")
 	private String eventName;
@@ -29,7 +31,7 @@ public class Event {
 		
 	}
 
-	public Event(String eventID, String eventName, ZonedDateTime eventDateTimeUTC, boolean dateConfirmed) {
+	public Event(long eventID, String eventName, ZonedDateTime eventDateTimeUTC, boolean dateConfirmed) {
 		super();
 		this.eventID = eventID;
 		this.eventName = eventName;
@@ -37,11 +39,11 @@ public class Event {
 		this.dateConfirmed = dateConfirmed;
 	}
 
-	public String getEventID() {
+	public long getEventID() {
 		return eventID;
 	}
 
-	public void setEventID(String eventID) {
+	public void setEventID(long eventID) {
 		this.eventID = eventID;
 	}
 

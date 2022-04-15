@@ -25,7 +25,7 @@ public class EventController {
 	// Get events by eventID
 	@PostMapping("/eventIDIn")
 	public List<Event> getEventsByEventIDArray(
-			@Valid @RequestBody List<String> eventIDs
+			@Valid @RequestBody List<Long> eventIDs
 	) {
 		return eventRepository.findByEventIDInOrderByEventIDAsc(eventIDs);
 	}

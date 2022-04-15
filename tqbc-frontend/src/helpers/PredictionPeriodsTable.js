@@ -1,29 +1,29 @@
-import PredictionPeriodService from "../services/PredictionPeriodService";
-import EventService from "../services/EventService";
+// import PredictionPeriodService from "../services/PredictionPeriodService";
+// import EventService from "../services/EventService";
 import moment from "moment-timezone";
 
-function getHowItWorksTable() {
-    PredictionPeriodService.getHowItWorksPredictionPeriods().then(
-        (ppRes) => {
-            // Get the example season to use (based on the DB)
-            const exampleSeasonFromDB = ppRes.data[0].season;
-            // Get unique array of eventIDs
-            const fromEventIDs = ppRes.data.map(o => o.fromEventID);
-            const toEventIDs = ppRes.data.map(o => o.toEventID);
-            const uniqueEventIDs = [...new Set([...fromEventIDs ,...toEventIDs])];
-            // Get details of events in `uniqueEventIDs`
-            EventService.getEventsByEventIDArray(uniqueEventIDs).then(
-                (eRes) => {
-                    let tbl = createPredictionPeriodsTable(ppRes.data,eRes.data);
-                    return {
-                        tbl : tbl,
-                        ssn: exampleSeasonFromDB
-                    };
-                }
-            )
-        }
-    )
-}
+// function getHowItWorksTable() {
+//     PredictionPeriodService.getHowItWorksPredictionPeriods().then(
+//         (ppRes) => {
+//             // Get the example season to use (based on the DB)
+//             const exampleSeasonFromDB = ppRes.data[0].season;
+//             // Get unique array of eventIDs
+//             const fromEventIDs = ppRes.data.map(o => o.fromEventID);
+//             const toEventIDs = ppRes.data.map(o => o.toEventID);
+//             const uniqueEventIDs = [...new Set([...fromEventIDs ,...toEventIDs])];
+//             // Get details of events in `uniqueEventIDs`
+//             EventService.getEventsByEventIDArray(uniqueEventIDs).then(
+//                 (eRes) => {
+//                     let tbl = createPredictionPeriodsTable(ppRes.data,eRes.data);
+//                     return {
+//                         tbl : tbl,
+//                         ssn: exampleSeasonFromDB
+//                     };
+//                 }
+//             )
+//         }
+//     )
+// }
 
 function createPredictionPeriodsTable(predictionPeriodsArray,eventArray) {
     // Create dict where key is eventID and value is row from `events`
@@ -44,11 +44,11 @@ function createPredictionPeriodsTable(predictionPeriodsArray,eventArray) {
             ev.eventDateTimeUTC.slice(0,19)
         ).tz(userTZ).format("DD MMM YYYY HH:mm");
         ev.eventDateTimeUTC = momentDate;
-        eventsDict[ev.eventID] = ev;
+        eventsDict["E" + ev.eventID] = ev;
     }
     // Create dict where key is predictionPeriodID and value is row from `predictionperiods`
     let predictionPeriodDict = Object.assign({}, ...predictionPeriodsArray.map(
-        (x) => ({[x.predictionPeriodID]: x}))
+        (x) => ({["PP" + x.predictionPeriodID]: x}))
     );
     // Combine the two dicts
     let bothDict = Object.assign({}, eventsDict, predictionPeriodDict);
@@ -58,22 +58,25 @@ function createPredictionPeriodsTable(predictionPeriodsArray,eventArray) {
     for (const [ix,predictionPeriod] of predictionPeriodsArray.entries()) {
         // If it's the first prediction period of a season, add `fromEventID` to `rowsArray`
         // if ((ix == 0) || (rowsArray[-1] !== fromEventID)) {
-        if (predictionPeriod.seasonPeriodID === "SP1") {
+        if (predictionPeriod.seasonPeriodID === 1) {
             rowsArray.push({
-                id: predictionPeriod.fromEventID,
+                id: "E" + predictionPeriod.fromEventID,
                 image: true
             });
         }
         rowsArray.push({
-            id: predictionPeriod.predictionPeriodID,
+            id: "PP" + predictionPeriod.predictionPeriodID,
             image: false
         });
         rowsArray.push({
-            id: predictionPeriod.toEventID,
-            image: predictionPeriod.seasonPeriodID !== "SP4"
+            id: "E" + predictionPeriod.toEventID,
+            image: predictionPeriod.seasonPeriodID !== 4
         });
     }
-
+    // console.log("rowsArray");
+    // console.log(rowsArray);
+    // console.log("bothDict");
+    // console.log(bothDict);
     const ppTable = (
         <table cellSpacing={0} cellPadding={0}>
             <tbody>
@@ -98,8 +101,8 @@ function createPredictionPeriodsTable(predictionPeriodsArray,eventArray) {
 
 function createPredictionPeriodTableRow(rowIDDict,bothDict,rowArrayIndex,totalRows) {
     const rowID = rowIDDict.id;
-    const firstEvent = rowArrayIndex == 0;
-    const lastEvent = rowArrayIndex + 1 == totalRows;
+    const firstEvent = rowArrayIndex === 0;
+    const lastEvent = rowArrayIndex + 1 === totalRows;
     if (rowID[0] === "E") {
         const returnMe = [];
 
@@ -152,6 +155,7 @@ function createPredictionPeriodTableRow(rowIDDict,bothDict,rowArrayIndex,totalRo
                         <td rowSpan={3}>
                             <img
                                 src={window.location.origin + '/arrows.png'}
+                                alt="from-to-arrow"
                                 className="arrows arrow-col"
                             />
                         </td>
@@ -165,6 +169,7 @@ function createPredictionPeriodTableRow(rowIDDict,bothDict,rowArrayIndex,totalRo
                         <td rowSpan={3}>
                             <img
                                 src={window.location.origin + '/arrows.png'}
+                                alt="from-to-arrow"
                                 className="arrows arrow-col"
                             />
                         </td>
@@ -177,9 +182,9 @@ function createPredictionPeriodTableRow(rowIDDict,bothDict,rowArrayIndex,totalRo
 
     } else if (rowID === "PP1") {
         return (
-            <tr key={"PP1-" + rowID}>
+            <tr key={rowID}>
                 <td className="ps-col ps-val" rowSpan={10}>{bothDict[rowID].season}</td>
-                <td>{bothDict[rowID].predictionPeriodID}</td>
+                <td>{"PP" + bothDict[rowID].predictionPeriodID}</td>
                 <td></td>
                 <td></td>
             </tr>
@@ -187,7 +192,7 @@ function createPredictionPeriodTableRow(rowIDDict,bothDict,rowArrayIndex,totalRo
     } else {
         return (
             <tr key={"other-" + rowID}>
-                <td>{bothDict[rowID].predictionPeriodID}</td>
+                <td>{"PP" + bothDict[rowID].predictionPeriodID}</td>
                 <td></td>
                 <td></td>
             </tr>

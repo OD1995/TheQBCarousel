@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -28,8 +30,9 @@ import javax.validation.constraints.Size;
 		})
 public class User {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "UserID")
-	private String userID;
+	private long userID;
 	
 	@NotBlank
 	@Size(max = 20)
@@ -41,7 +44,7 @@ public class User {
 	private String email;
 	
 	@Column(name = "FavouriteTeamID")
-	private String favouriteTeamID;
+	private long favouriteTeamID;
 	
 	@NotBlank
 	@Size(max = 120)
@@ -67,17 +70,17 @@ public class User {
 	}
 
 	public User(
-			String userID,
+//			long userID,
 			@NotBlank @Size(max = 20) String username,
 			@Email String email,
-//			String favouriteTeamID,
+//			long favouriteTeamID,
 			@NotBlank @Size(max = 120) String password,
 //			Set<Role> roles,
 			boolean isAuthenticated,
 			Date userCreated
 	) {
 		super();
-		this.userID = userID;
+//		this.userID = userID;
 		this.username = username;
 		this.email = email;
 //		this.favouriteTeamID = favouriteTeamID;
@@ -87,11 +90,11 @@ public class User {
 		this.userCreated = userCreated;
 	}
 
-	public String getUserID() {
+	public long getUserID() {
 		return userID;
 	}
 
-	public void setUserID(String userID) {
+	public void setUserID(long userID) {
 		this.userID = userID;
 	}
 
@@ -111,11 +114,11 @@ public class User {
 		this.email = email;
 	}
 
-	public String getFavouriteTeamID() {
+	public long getFavouriteTeamID() {
 		return favouriteTeamID;
 	}
 
-	public void setFavouriteTeamID(String favouriteTeamID) {
+	public void setFavouriteTeamID(long favouriteTeamID) {
 		this.favouriteTeamID = favouriteTeamID;
 	}
 

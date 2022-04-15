@@ -2,6 +2,8 @@ package mygroup.tqbcbackend.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,20 +12,21 @@ import javax.persistence.Table;
 @Table(name = "PredictionPeriods")
 public class PredictionPeriod {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PredictionPeriodID")
-	private String predictionPeriodID;
+	private long predictionPeriodID;
 	
 	@Column(name = "Season")
 	private int season;
 	
 	@Column(name = "SeasonPeriodID")
-	private String seasonPeriodID;
+	private long seasonPeriodID;
 	
 	@Column(name = "FromEventID")
-	private String fromEventID;
+	private long fromEventID;
 	
 	@Column(name = "ToEventID")
-	private String toEventID;
+	private long toEventID;
 	
 	@Column(name = "HowItWorks")
 	private boolean howItWorks;
@@ -35,8 +38,15 @@ public class PredictionPeriod {
 		
 	}
 
-	public PredictionPeriod(String predictionPeriodID, int season, String seasonPeriodID, String fromEventID,
-			String toEventID, boolean howItWorks, boolean isActive) {
+	public PredictionPeriod(
+			long predictionPeriodID,
+			int season,
+			long seasonPeriodID,
+			long fromEventID,
+			long toEventID,
+			boolean howItWorks, 
+			boolean isActive
+	) {
 		super();
 		this.predictionPeriodID = predictionPeriodID;
 		this.season = season;
@@ -47,11 +57,11 @@ public class PredictionPeriod {
 		this.isActive = isActive;
 	}
 
-	public String getPredictionPeriodID() {
+	public long getPredictionPeriodID() {
 		return predictionPeriodID;
 	}
 
-	public void setPredictionPeriodID(String predictionPeriodID) {
+	public void setPredictionPeriodID(long predictionPeriodID) {
 		this.predictionPeriodID = predictionPeriodID;
 	}
 
@@ -63,27 +73,27 @@ public class PredictionPeriod {
 		this.season = season;
 	}
 
-	public String getSeasonPeriodID() {
+	public long getSeasonPeriodID() {
 		return seasonPeriodID;
 	}
 
-	public void setSeasonPeriodID(String seasonPeriodID) {
+	public void setSeasonPeriodID(long seasonPeriodID) {
 		this.seasonPeriodID = seasonPeriodID;
 	}
 
-	public String getFromEventID() {
+	public long getFromEventID() {
 		return fromEventID;
 	}
 
-	public void setFromEventID(String fromEventID) {
+	public void setFromEventID(long fromEventID) {
 		this.fromEventID = fromEventID;
 	}
 
-	public String getToEventID() {
+	public long getToEventID() {
 		return toEventID;
 	}
 
-	public void setToEventID(String toEventID) {
+	public void setToEventID(long toEventID) {
 		this.toEventID = toEventID;
 	}
 
@@ -96,7 +106,7 @@ public class PredictionPeriod {
 	}
 
 	public boolean isActive() {
-		return isActive;
+		return isActive; 
 	}
 
 	public void setActive(boolean isActive) {

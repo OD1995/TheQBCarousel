@@ -7,15 +7,19 @@ public class PeriodPredictionCompositeKey implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    private String predictionPeriodID;
-    private String userID;
-    private String teamID;
+    private long predictionPeriodID;
+    private long userID;
+    private long teamID;
     
     public PeriodPredictionCompositeKey() {
     	
     }
 
-	public PeriodPredictionCompositeKey(String predictionPeriodID, String userID, String teamID) {
+	public PeriodPredictionCompositeKey(
+			long predictionPeriodID,
+			long userID,
+			long teamID
+	) {
 		this.predictionPeriodID = predictionPeriodID;
 		this.userID = userID;
 		this.teamID = teamID;

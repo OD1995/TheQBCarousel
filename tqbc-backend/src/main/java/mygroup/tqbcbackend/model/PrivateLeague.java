@@ -2,6 +2,8 @@ package mygroup.tqbcbackend.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,8 +12,9 @@ import javax.persistence.Table;
 public class PrivateLeague {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "LeagueID")
-	private String leagueID;
+	private long leagueID;
 	
 	@Column(name = "OwnerUserID")
 	private String ownerUserID;
@@ -23,18 +26,18 @@ public class PrivateLeague {
 		
 	}
 
-	public PrivateLeague(String leagueID, String ownerUserID, String scoringSettingsID) {
+	public PrivateLeague(long leagueID, String ownerUserID, String scoringSettingsID) {
 		super();
 		this.leagueID = leagueID;
 		this.ownerUserID = ownerUserID;
 		this.scoringSettingsID = scoringSettingsID;
 	}
 
-	public String getLeagueID() {
+	public long getLeagueID() {
 		return leagueID;
 	}
 
-	public void setLeagueID(String leagueID) {
+	public void setLeagueID(long leagueID) {
 		this.leagueID = leagueID;
 	}
 

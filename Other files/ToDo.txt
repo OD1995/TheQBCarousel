@@ -1,9 +1,11 @@
-- Change string IDs to numerical IDs
 - Prepare backend for receiving predictions
 - Visualise historical predictions
 - Integrate Google Analytics
+- Re-configure ScoreSetting.java to have better data practice
 - Calculate and visualise points and league tables
 - Give login/signup buttons some space
 - Replace message with modal or own page
 - Add user's fav team in sign up
 - Make API endpoints only usable from frontend
+- Stop Predictions Board dropdown from extending the page
+- Roles: Admin, Test, User

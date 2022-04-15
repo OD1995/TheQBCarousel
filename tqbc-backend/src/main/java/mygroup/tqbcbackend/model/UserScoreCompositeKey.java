@@ -7,8 +7,8 @@ public class UserScoreCompositeKey implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private String predictionPeriodID;
-	private String userID;
+	private long predictionPeriodID;
+	private long userID;
 	
 	public UserScoreCompositeKey() {
 		

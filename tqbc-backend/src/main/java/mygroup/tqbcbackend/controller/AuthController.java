@@ -108,9 +108,9 @@ public class AuthController {
 		}
 		
 		// Create new user's account
-		String userID = new StringBuilder("U").append(userRepository.count()+1).toString();
+//		String userID = new StringBuilder("U").append(userRepository.count()+1).toString();
 		User user = new User(
-				userID,
+//				userID,
 				signupRequest.getUsername(),
 				signupRequest.getEmail(),
 //				String favouriteTeamID,
@@ -193,24 +193,12 @@ public class AuthController {
 			User user = userRepository.findByEmailIgnoreCase(token.getUser().getEmail());
 			user.setAuthenticated(true);
 			userRepository.save(user);
-//			return ResponseEntity.ok(
-//				new MessageResponse(
-//					"Your email address has been successfully verified! "
-//					+ "You can now login and start your predictions."
-//				)
-//			);
 			return ResponseEntity.ok(
 					new MessageResponse(
 						"success"
 					)
 				);
 		} else {
-//			return ResponseEntity.badRequest().body(
-//				"Email verification failed. "
-//				+ "The provided token ("
-//				+ emailVerificationRequest.getToken()
-//				+ ") is not valid."
-//			);
 			return ResponseEntity.badRequest().body(
 					"failure"
 				);

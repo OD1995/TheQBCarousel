@@ -13,11 +13,11 @@ public class UserScore {
 
 	@Id
 	@Column(name = "PredictionPeriodID")
-	private String predictionPeriodID;
+	private long predictionPeriodID;
 	
 	@Id
 	@Column(name = "UserID")
-	private String userID;
+	private long userID;
 	
 	@Column(name = "Score")
 	private float score;
@@ -26,26 +26,26 @@ public class UserScore {
 		
 	}
 
-	public UserScore(String predictionPeriodID, String userID, float score) {
+	public UserScore(long predictionPeriodID, long userID, float score) {
 		super();
 		this.predictionPeriodID = predictionPeriodID;
 		this.userID = userID;
 		this.score = score;
 	}
 
-	public String getPredictionPeriodID() {
+	public long getPredictionPeriodID() {
 		return predictionPeriodID;
 	}
 
-	public void setPredictionPeriodID(String predictionPeriodID) {
+	public void setPredictionPeriodID(long predictionPeriodID) {
 		this.predictionPeriodID = predictionPeriodID;
 	}
 
-	public String getUserID() {
+	public long getUserID() {
 		return userID;
 	}
 
-	public void setUserID(String userID) {
+	public void setUserID(long userID) {
 		this.userID = userID;
 	}
 

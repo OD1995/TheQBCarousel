@@ -2,6 +2,8 @@ package mygroup.tqbcbackend.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -9,14 +11,15 @@ import javax.persistence.Table;
 @Table(name = "Players")
 public class Player {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PlayerID")
-	private String playerID;
+	private long playerID;
 	
 	@Column(name = "Name")
 	private String name;
 	
 	@Column(name = "DefaultTeamID")
-	private String defaultTeamID;
+	private Long defaultTeamID;
 	
 	@Column(name = "IsActive")
 	private boolean isActive;
@@ -25,7 +28,7 @@ public class Player {
 		
 	}
 
-	public Player(String playerID, String name, String defaultTeamID, boolean isActive) {
+	public Player(long playerID, String name, Long defaultTeamID, boolean isActive) {
 		super();
 		this.playerID = playerID;
 		this.name = name;
@@ -33,11 +36,11 @@ public class Player {
 		this.isActive = isActive;
 	}
 
-	public String getPlayerID() {
+	public long getPlayerID() {
 		return playerID;
 	}
 
-	public void setPlayerID(String playerID) {
+	public void setPlayerID(long playerID) {
 		this.playerID = playerID;
 	}
 
@@ -49,11 +52,11 @@ public class Player {
 		this.name = name;
 	}
 
-	public String getDefaultTeamID() {
+	public Long getDefaultTeamID() {
 		return defaultTeamID;
 	}
 
-	public void setDefaultTeamID(String defaultTeamID) {
+	public void setDefaultTeamID(Long defaultTeamID) {
 		this.defaultTeamID = defaultTeamID;
 	}
 

@@ -2,6 +2,8 @@ package mygroup.tqbcbackend.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
@@ -11,25 +13,31 @@ import javax.persistence.Table;
 @IdClass(PeriodPredictionCompositeKey.class)
 public class PeriodPrediction {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PredictionPeriodID")
-	private String predictionPeriodID;
+	private long predictionPeriodID;
 
 	@Id
 	@Column(name = "UserID")
-	private String userID;
+	private long userID;
 
 	@Id
 	@Column(name = "TeamID")
-	private String teamID;
+	private long teamID;
 
 	@Column(name = "PlayerID")
-	private String playerID;
+	private long playerID;
 
 	public PeriodPrediction() {
 
 	}
 
-	public PeriodPrediction(String predictionPeriodID, String userID, String teamID, String playerID) {
+	public PeriodPrediction(
+			long predictionPeriodID,
+			long userID,
+			long teamID,
+			long playerID
+	) {
 		super();
 		this.predictionPeriodID = predictionPeriodID;
 		this.userID = userID;
@@ -37,35 +45,35 @@ public class PeriodPrediction {
 		this.playerID = playerID;
 	}
 
-	public String getPredictionPeriodID() {
+	public long getPredictionPeriodID() {
 		return predictionPeriodID;
 	}
 
-	public void setPredictionPeriodID(String predictionPeriodID) {
+	public void setPredictionPeriodID(long predictionPeriodID) {
 		this.predictionPeriodID = predictionPeriodID;
 	}
 
-	public String getUserID() {
+	public long getUserID() {
 		return userID;
 	}
 
-	public void setUserID(String userID) {
+	public void setUserID(long userID) {
 		this.userID = userID;
 	}
 
-	public String getTeamID() {
+	public long getTeamID() {
 		return teamID;
 	}
 
-	public void setTeamID(String teamID) {
+	public void setTeamID(long teamID) {
 		this.teamID = teamID;
 	}
 
-	public String getPlayerID() {
+	public long getPlayerID() {
 		return playerID;
 	}
 
-	public void setPlayerID(String playerID) {
+	public void setPlayerID(long playerID) {
 		this.playerID = playerID;
 	}
 

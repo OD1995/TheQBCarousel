@@ -7,8 +7,8 @@ public class PrivateLeagueMemberCompositeKey implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private String leagueID;
-	private String userID;
+	private long leagueID;
+	private long userID;
 	
 	public PrivateLeagueMemberCompositeKey() {
 		

@@ -2,6 +2,8 @@ package mygroup.tqbcbackend.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,8 +12,9 @@ import javax.persistence.Table;
 @Table(name = "Conferences")
 public class Conference {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ConferenceID")
-	private String conferenceID;
+	private long conferenceID;
 	
 	@Column(name = "Season")
 	private int season;
@@ -35,7 +38,7 @@ public class Conference {
 		
 	}
 
-	public Conference(String conferenceID, int season, String name, int gridColumn, int gridRowStart, int gridRowEnd,
+	public Conference(long conferenceID, int season, String name, int gridColumn, int gridRowStart, int gridRowEnd,
 			boolean isActive) {
 		super();
 		this.conferenceID = conferenceID;
@@ -47,11 +50,11 @@ public class Conference {
 		this.isActive = isActive;
 	}
 
-	public String getConferenceID() {
+	public long getConferenceID() {
 		return conferenceID;
 	}
 
-	public void setConferenceID(String conferenceID) {
+	public void setConferenceID(long conferenceID) {
 		this.conferenceID = conferenceID;
 	}
 
