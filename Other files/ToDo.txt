@@ -5,3 +5,5 @@
 - Calculate and visualise points and league tables
 - Give login/signup buttons some space
 - Replace message with modal or own page
+- Add user's fav team in sign up
+- Make API endpoints only usable from frontend
