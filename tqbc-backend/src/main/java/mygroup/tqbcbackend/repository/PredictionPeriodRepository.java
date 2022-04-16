@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import mygroup.tqbcbackend.model.PredictionPeriod;
 
 @Repository
-public interface PredictionPeriodRepository extends JpaRepository<PredictionPeriod,String> {
+public interface PredictionPeriodRepository extends JpaRepository<PredictionPeriod,Long> {
 
 	public List<PredictionPeriod> findByHowItWorksTrueOrderByPredictionPeriodIDAsc(); 
 }

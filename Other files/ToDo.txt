@@ -1,4 +1,6 @@
-- Prepare backend for receiving predictions
+- Do update or insert, depending on whether rows exist for predictionPeriodID
+- Set predictionPeriodID in redux store when logging in
+- Allow test accounts and admin accounts to change periodPredictionID
 - Visualise historical predictions
 - Integrate Google Analytics
 - Re-configure ScoreSetting.java to have better data practice

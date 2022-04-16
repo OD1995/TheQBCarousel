@@ -44,7 +44,7 @@ public class User {
 	private String email;
 	
 	@Column(name = "FavouriteTeamID")
-	private long favouriteTeamID;
+	private Long favouriteTeamID;
 	
 	@NotBlank
 	@Size(max = 120)
@@ -73,7 +73,7 @@ public class User {
 //			long userID,
 			@NotBlank @Size(max = 20) String username,
 			@Email String email,
-//			long favouriteTeamID,
+//			Long favouriteTeamID,
 			@NotBlank @Size(max = 120) String password,
 //			Set<Role> roles,
 			boolean isAuthenticated,
@@ -114,11 +114,11 @@ public class User {
 		this.email = email;
 	}
 
-	public long getFavouriteTeamID() {
+	public Long getFavouriteTeamID() {
 		return favouriteTeamID;
 	}
 
-	public void setFavouriteTeamID(long favouriteTeamID) {
+	public void setFavouriteTeamID(Long favouriteTeamID) {
 		this.favouriteTeamID = favouriteTeamID;
 	}
 

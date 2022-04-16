@@ -16,13 +16,13 @@ import mygroup.tqbcbackend.model.User;
 public class UserDetailsImpl implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
-	private String userID;
+	private long userID;
 	private String username;
 	private String email;
 	@JsonIgnore
 	private String password;
 	private Collection<? extends GrantedAuthority> authories;
-	public UserDetailsImpl(String userID, String username, String email, String password,
+	public UserDetailsImpl(long userID, String username, String email, String password,
 			Collection<? extends GrantedAuthority> authories) {
 		this.userID = userID;
 		this.username = username;
@@ -46,7 +46,7 @@ public class UserDetailsImpl implements UserDetails {
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authories;
 	}
-	public String getUserID() {
+	public long getUserID() {
 		return userID;
 	}
 	public String getEmail() {

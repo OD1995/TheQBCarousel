@@ -5,7 +5,8 @@ import TeamService from '../services/TeamService';
 import PlayerService from '../services/PlayerService';
 import '../styles/QBPredictionsComponent.css';
 import Popup from './PopUpComponent';
-
+import { postPredictions } from '../actions/predictions';
+import { useSelector } from 'react-redux';
 
 const QBSelector = (props) => {
 
@@ -56,6 +57,7 @@ const QBPredictionsComponent = () => {
     const [currentDropdownValues, setCurrentDropdownValues] = useState({});
     const [showPopup, setShowPopup] = useState(false);
     const [popupMessage, setPopupMessage] = useState("You have predicted that Kyler Murray will be the QB of multiple teams. Unfortunately, this is not possible. Please adjust and save again.");
+    const { user: currentUser } = useSelector((state) => state.auth);
 
     useEffect(() => {
         TeamService.getActiveTeams().then((res) => {
@@ -96,21 +98,36 @@ const QBPredictionsComponent = () => {
 
     const savePredictions = () => {
         // Make sure no QB has been chosen for two teams
-        let selections = {};
+        let selectionsDict = {};
+        let selectionsArray = [];
         // console.log(currentDropdownValues);
         let msg = "All OK";
         const txt = "</b> will be the QB of multiple teams. Unfortunately, this is not possible. Please adjust and save again.";
         for (const [teamID, prediction] of Object.entries(currentDropdownValues)) {
-            if (prediction.value in selections) {
+            if (prediction.value in selectionsDict) {
                 msg = "You have predicted that <b>" + prediction.label + txt;
                 console.log(msg);
                 break;
             } else {
-                selections[prediction.value] = teamID;
+                selectionsDict[prediction.value] = teamID;
+                selectionsArray.push(
+                    {
+                        teamID: Number(teamID),
+                        playerID: prediction.value
+                    }
+                );
             }
         }
         if (msg === "All OK") {
             // Post dropdown values to backend
+            console.log(selectionsArray);
+            console.log(currentUser.userID);
+            postPredictions(
+                1,
+                currentUser.userID,
+                selectionsArray
+            );
+            console.log("postPredictions run");
         } else {
             // Open pop up to display `msg`
             setPopupMessage(msg);
