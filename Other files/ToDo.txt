@@ -1,4 +1,5 @@
 - Set predictionPeriodID in redux store when logging in
+- Create relationships between all necessary classes in java
 - Allow test accounts and admin accounts to change periodPredictionID
 - Visualise historical predictions
 - Integrate Google Analytics
