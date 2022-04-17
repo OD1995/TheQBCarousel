@@ -1,4 +1,3 @@
-- Do update or insert, depending on whether rows exist for predictionPeriodID
 - Set predictionPeriodID in redux store when logging in
 - Allow test accounts and admin accounts to change periodPredictionID
 - Visualise historical predictions
@@ -11,3 +10,21 @@
 - Make API endpoints only usable from frontend
 - Stop Predictions Board dropdown from extending the page
 - Roles: Admin, Test, User
+
+SELECT
+	pp.PredictionPeriodID
+--     pp.FromEventID,
+--     ef.EventName,
+--     ef.EventDateTimeUTC,
+--     pp.ToEventID,
+--     et.EventName,
+--     et.EventDateTimeUTC
+FROM the_qb_carousel.predictionperiods pp
+JOIN the_qb_carousel.events ef
+	ON pp.FromEventID = ef.EventID
+JOIN the_qb_carousel.events et
+	ON pp.ToEventID = et.EventID
+WHERE ef.EventDateTimeUTC <= curdate() 
+	AND et.EventDateTimeUTC >= curdate()
+
+22 March

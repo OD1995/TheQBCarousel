@@ -108,9 +108,7 @@ public class AuthController {
 		}
 		
 		// Create new user's account
-//		String userID = new StringBuilder("U").append(userRepository.count()+1).toString();
 		User user = new User(
-//				userID,
 				signupRequest.getUsername(),
 				signupRequest.getEmail(),
 //				String favouriteTeamID,
@@ -135,7 +133,7 @@ public class AuthController {
 					roles.add(adminRole);
 					break;
 				case "mod":
-					Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+					Role modRole = roleRepository.findByName(ERole.ROLE_TESTER)
 						.orElseThrow(() -> new RuntimeException("Error: Role is not found"));
 					roles.add(modRole);
 					break;

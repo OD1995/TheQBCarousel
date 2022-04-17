@@ -43,9 +43,6 @@ public class PeriodPredictionController {
 				)
 			);
 		}
-		// Get row count of predictions for the predictionPeriodID & userID
-		// if rowCount > 0 -> update
-		// else -> insert
 		periodPredictionRepository.saveAll(periodPredictions);
 	}
 }
