@@ -2,6 +2,7 @@ package mygroup.tqbcbackend.model;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -13,13 +14,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
+
+import org.springframework.lang.Nullable;
 
 
 @Entity
@@ -64,7 +70,22 @@ public class User {
 	@Column(name = "UserCreated")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date userCreated;
-
+	
+	@OneToMany(
+		targetEntity = PeriodPrediction.class,
+		fetch = FetchType.LAZY,
+		mappedBy = "user" 
+	)
+	private List<PeriodPrediction> periodPredictions;
+	
+	@OneToOne(
+			targetEntity = PrivateLeague.class,
+			fetch = FetchType.LAZY,
+			mappedBy = "ownerUser"
+	)
+	@Nullable
+	private PrivateLeague privateLeague;
+	
 	public User() {
 		
 	}

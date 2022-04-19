@@ -11,4 +11,5 @@ import mygroup.tqbcbackend.model.Player;
 public interface PlayerRepository extends JpaRepository<Player, String>{
 	
 	public List<Player> findByIsActiveTrueOrderByNameAsc();
+	public Player findByPlayerID(long playerID);
 }

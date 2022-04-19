@@ -1,10 +1,16 @@
 package mygroup.tqbcbackend.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -22,17 +28,26 @@ public class PredictionPeriod {
 	@Column(name = "SeasonPeriodID")
 	private long seasonPeriodID;
 	
-	@Column(name = "FromEventID")
-	private long fromEventID;
+	@OneToOne(targetEntity = Event.class, fetch = FetchType.EAGER)
+	@JoinColumn(nullable = false, name = "FromEventID")
+	private Event fromEvent;
 	
-	@Column(name = "ToEventID")
-	private long toEventID;
+	@OneToOne(targetEntity = Event.class, fetch = FetchType.EAGER)
+	@JoinColumn(nullable = false, name = "ToEventID")
+	private Event toEvent;
 	
 	@Column(name = "HowItWorks")
 	private boolean howItWorks;
 	
 	@Column(name = "IsActive")
 	private boolean isActive;
+	
+	@OneToMany(
+		targetEntity = PeriodPrediction.class, 
+		fetch = FetchType.LAZY,
+		mappedBy = "predictionPeriod"
+	)
+	private List<PeriodPrediction> periodPredictions;
 	
 	public PredictionPeriod() {
 		
@@ -42,8 +57,8 @@ public class PredictionPeriod {
 			long predictionPeriodID,
 			int season,
 			long seasonPeriodID,
-			long fromEventID,
-			long toEventID,
+			Event fromEvent,
+			Event toEvent,
 			boolean howItWorks, 
 			boolean isActive
 	) {
@@ -51,8 +66,8 @@ public class PredictionPeriod {
 		this.predictionPeriodID = predictionPeriodID;
 		this.season = season;
 		this.seasonPeriodID = seasonPeriodID;
-		this.fromEventID = fromEventID;
-		this.toEventID = toEventID;
+		this.fromEvent = fromEvent;
+		this.toEvent = toEvent;
 		this.howItWorks = howItWorks;
 		this.isActive = isActive;
 	}
@@ -81,20 +96,20 @@ public class PredictionPeriod {
 		this.seasonPeriodID = seasonPeriodID;
 	}
 
-	public long getFromEventID() {
-		return fromEventID;
+	public Event getFromEvent() {
+		return fromEvent;
 	}
 
-	public void setFromEventID(long fromEventID) {
-		this.fromEventID = fromEventID;
+	public void setFromEvent(Event fromEvent) {
+		this.fromEvent = fromEvent;
 	}
 
-	public long getToEventID() {
-		return toEventID;
+	public Event getToEvent() {
+		return toEvent;
 	}
 
-	public void setToEventID(long toEventID) {
-		this.toEventID = toEventID;
+	public void setToEvent(Event toEvent) {
+		this.toEvent = toEvent;
 	}
 
 	public boolean isHowItWorks() {

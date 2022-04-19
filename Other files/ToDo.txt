@@ -11,6 +11,8 @@
 - Make API endpoints only usable from frontend
 - Stop Predictions Board dropdown from extending the page
 - Roles: Admin, Test, User
+- Put composite key constructor inside entity constructor
+
 
 SELECT
 	pp.PredictionPeriodID

@@ -21,7 +21,6 @@ public class Event {
 	private String eventName;
 	
 	@Column(name = "EventDateTimeUTC")
-//	private Date eventDateTimeUTC;
 	private ZonedDateTime eventDateTimeUTC;
 	
 	@Column(name = "DateConfirmed")

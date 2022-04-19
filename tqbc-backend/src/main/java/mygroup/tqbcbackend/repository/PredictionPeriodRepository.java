@@ -10,5 +10,6 @@ import mygroup.tqbcbackend.model.PredictionPeriod;
 @Repository
 public interface PredictionPeriodRepository extends JpaRepository<PredictionPeriod,Long> {
 
-	public List<PredictionPeriod> findByHowItWorksTrueOrderByPredictionPeriodIDAsc(); 
+	public List<PredictionPeriod> findByHowItWorksTrueOrderByPredictionPeriodIDAsc();
+	public PredictionPeriod findByPredictionPeriodID(long predictionPeriodID);
 }

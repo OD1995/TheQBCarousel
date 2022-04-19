@@ -1,11 +1,17 @@
 package mygroup.tqbcbackend.model;
 
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -40,12 +46,26 @@ public class Team {
 	@Column(name = "GridRow")
 	private int gridRow;
 	
+	@OneToOne(
+			targetEntity = Player.class,
+			fetch = FetchType.LAZY
+	)
+	@JoinColumn(name = "DefaultPlayerID")
+	private Player defaultPlayer;
+	
+	@OneToMany(
+		targetEntity = PeriodPrediction.class,
+		fetch = FetchType.LAZY,
+		mappedBy = "team"
+	)
+	private List<PeriodPrediction> periodPredictions;
+	
 	public Team() {
 		
 	}
 
 	public Team(long teamID, int season, String location, String nickname, String conference, String division,
-			boolean isActive, int gridColumn, int gridRow) {
+			boolean isActive, int gridColumn, int gridRow, Player defaultPlayer) {
 		super();
 		this.teamID = teamID;
 		this.season = season;
@@ -56,6 +76,7 @@ public class Team {
 		this.isActive = isActive;
 		this.gridColumn = gridColumn;
 		this.gridRow = gridRow;
+		this.defaultPlayer = defaultPlayer;
 	}
 
 	public long getTeamID() {
@@ -129,5 +150,13 @@ public class Team {
 	public void setGridRow(int gridRow) {
 		this.gridRow = gridRow;
 	}
-	
+
+	public Player getDefaultPlayer() {
+		return defaultPlayer;
+	}
+
+	public void setDefaultPlayer(Player defaultPlayer) {
+		this.defaultPlayer = defaultPlayer;
+	}
+
 }

@@ -1,78 +1,63 @@
 package mygroup.tqbcbackend.model;
 
-import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "PeriodPredictions")
-@IdClass(PeriodPredictionCompositeKey.class)
 public class PeriodPrediction {
 	
-	@Id
-	@Column(name = "PredictionPeriodID")
-	private long predictionPeriodID;
+	@EmbeddedId
+	private PeriodPredictionCompositeKey periodPredictionCompositeKey;
+	
+	@ManyToOne(targetEntity = PredictionPeriod.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "PredictionPeriodID", nullable = false, insertable = false, updatable = false)
+	private PredictionPeriod predictionPeriod;
 
-	@Id
-	@Column(name = "UserID")
-	private long userID;
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "UserID", nullable = false, insertable = false, updatable = false)
+	private User user;
 
-	@Id
-	@Column(name = "TeamID")
-	private long teamID;
+	@ManyToOne(targetEntity = Team.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "TeamID", nullable = false, insertable = false, updatable = false)
+	private Team team;
 
-	@Column(name = "PlayerID")
-	private long playerID;
+	@ManyToOne(targetEntity = Player.class, fetch = FetchType.LAZY)
+	@MapsId("PlayerID")
+	@JoinColumn(name = "PlayerID", nullable = false)
+	private Player player;
 
 	public PeriodPrediction() {
 
 	}
 
-	public PeriodPrediction(
-			long predictionPeriodID,
-			long userID,
-			long teamID,
-			long playerID
-	) {
+	public PeriodPrediction(PeriodPredictionCompositeKey periodPredictionCompositeKey, Player player) {
 		super();
-		this.predictionPeriodID = predictionPeriodID;
-		this.userID = userID;
-		this.teamID = teamID;
-		this.playerID = playerID;
+		this.periodPredictionCompositeKey = periodPredictionCompositeKey;
+		this.player = player;
 	}
 
-	public long getPredictionPeriodID() {
-		return predictionPeriodID;
+	public PeriodPredictionCompositeKey getPeriodPredictionCompositeKey() {
+		return periodPredictionCompositeKey;
 	}
 
-	public void setPredictionPeriodID(long predictionPeriodID) {
-		this.predictionPeriodID = predictionPeriodID;
+	public void setPeriodPredictionCompositeKey(PeriodPredictionCompositeKey periodPredictionCompositeKey) {
+		this.periodPredictionCompositeKey = periodPredictionCompositeKey;
 	}
 
-	public long getUserID() {
-		return userID;
+	public Player getPlayer() {
+		return player;
 	}
 
-	public void setUserID(long userID) {
-		this.userID = userID;
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 
-	public long getTeamID() {
-		return teamID;
-	}
-
-	public void setTeamID(long teamID) {
-		this.teamID = teamID;
-	}
-
-	public long getPlayerID() {
-		return playerID;
-	}
-
-	public void setPlayerID(long playerID) {
-		this.playerID = playerID;
-	}
-
+	
+	
 }

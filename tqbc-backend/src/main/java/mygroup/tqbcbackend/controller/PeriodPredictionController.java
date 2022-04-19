@@ -14,8 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import mygroup.tqbcbackend.model.FrontEndPrediction;
 import mygroup.tqbcbackend.model.PeriodPrediction;
+import mygroup.tqbcbackend.model.PeriodPredictionCompositeKey;
 import mygroup.tqbcbackend.payload.request.PeriodPredictionRequest;
 import mygroup.tqbcbackend.repository.PeriodPredictionRepository;
+import mygroup.tqbcbackend.repository.PlayerRepository;
+//import mygroup.tqbcbackend.repository.PredictionPeriodRepository;
+//import mygroup.tqbcbackend.repository.TeamRepository;
+//import mygroup.tqbcbackend.repository.UserRepository;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -24,6 +29,19 @@ public class PeriodPredictionController {
 
 	@Autowired
 	private PeriodPredictionRepository periodPredictionRepository;
+	
+//	@Autowired
+//	private PredictionPeriodRepository predictionPeriodRepository;
+//	
+//	@Autowired
+//	private UserRepository userRepository;
+//	
+//	@Autowired
+//	private TeamRepository teamRepository;
+	
+	@Autowired
+	private PlayerRepository playerRepository;
+	
 	
 	// Insert user's predictions
 	@PostMapping("/postpredictions")
@@ -34,14 +52,16 @@ public class PeriodPredictionController {
 		long userID = periodPredictionRequest.getUserID();
 		List<PeriodPrediction> periodPredictions = new ArrayList<PeriodPrediction>();
 		for (FrontEndPrediction prediction : periodPredictionRequest.getPredictions()) {
-			periodPredictions.add(
-				new PeriodPrediction(
-						predictionPeriodID,
-						userID, 
-						prediction.getTeamID(),
-						prediction.getPlayerID()
-				)
+			PeriodPredictionCompositeKey periodPredictionCompositeKey = new PeriodPredictionCompositeKey(
+					predictionPeriodID,
+					userID,
+					prediction.getTeamID()
 			);
+			PeriodPrediction periodPrediction = new PeriodPrediction(
+					periodPredictionCompositeKey,
+					playerRepository.findByPlayerID(prediction.getPlayerID())
+			);
+			periodPredictions.add(periodPrediction);
 		}
 		periodPredictionRepository.saveAll(periodPredictions);
 	}

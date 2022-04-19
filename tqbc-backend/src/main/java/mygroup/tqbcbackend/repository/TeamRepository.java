@@ -12,5 +12,6 @@ import mygroup.tqbcbackend.model.Team;
 public interface TeamRepository extends JpaRepository<Team,String>{
 	
 	public List<Team> findByIsActiveTrue();
+	public Team findByTeamID(long teamID);
 
 }

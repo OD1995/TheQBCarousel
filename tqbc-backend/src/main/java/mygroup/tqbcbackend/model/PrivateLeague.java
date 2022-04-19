@@ -2,9 +2,12 @@ package mygroup.tqbcbackend.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,8 +19,15 @@ public class PrivateLeague {
 	@Column(name = "LeagueID")
 	private long leagueID;
 	
-	@Column(name = "OwnerUserID")
-	private String ownerUserID;
+//	@Column(name = "OwnerUserID")
+//	private String ownerUserID;
+	
+	@OneToOne(
+			targetEntity = User.class,
+			fetch = FetchType.LAZY
+	)
+	@JoinColumn(name = "OwnerUserID")
+	private User ownerUser;
 	
 	@Column(name = "ScoringSettingsID")
 	private String scoringSettingsID;
@@ -26,10 +36,10 @@ public class PrivateLeague {
 		
 	}
 
-	public PrivateLeague(long leagueID, String ownerUserID, String scoringSettingsID) {
+	public PrivateLeague(long leagueID, User ownerUser, String scoringSettingsID) {
 		super();
 		this.leagueID = leagueID;
-		this.ownerUserID = ownerUserID;
+		this.ownerUser = ownerUser;
 		this.scoringSettingsID = scoringSettingsID;
 	}
 
@@ -41,12 +51,12 @@ public class PrivateLeague {
 		this.leagueID = leagueID;
 	}
 
-	public String getOwnerUserID() {
-		return ownerUserID;
+	public User getOwnerUser() {
+		return ownerUser;
 	}
 
-	public void setOwnerUserID(String ownerUserID) {
-		this.ownerUserID = ownerUserID;
+	public void setOwnerUser(User ownerUser) {
+		this.ownerUser = ownerUser;
 	}
 
 	public String getScoringSettingsID() {
@@ -56,6 +66,6 @@ public class PrivateLeague {
 	public void setScoringSettingsID(String scoringSettingsID) {
 		this.scoringSettingsID = scoringSettingsID;
 	}
-	
+
 }
 

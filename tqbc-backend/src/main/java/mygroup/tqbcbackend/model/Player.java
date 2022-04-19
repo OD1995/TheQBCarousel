@@ -1,11 +1,18 @@
 package mygroup.tqbcbackend.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "Players")
@@ -18,21 +25,32 @@ public class Player {
 	@Column(name = "Name")
 	private String name;
 	
-	@Column(name = "DefaultTeamID")
-	private Long defaultTeamID;
-	
 	@Column(name = "IsActive")
 	private boolean isActive;
+	
+	@OneToMany(
+			targetEntity = PeriodPrediction.class,
+			fetch = FetchType.LAZY,
+			mappedBy = "player"
+	)
+	private List<PeriodPrediction> periodPredictions;
+	
+	@OneToOne(
+			targetEntity = Team.class,
+			fetch = FetchType.LAZY,
+			mappedBy = "defaultPlayer"
+	)
+	@Nullable
+	private Team defaultTeam;
 	
 	public Player() {
 		
 	}
 
-	public Player(long playerID, String name, Long defaultTeamID, boolean isActive) {
+	public Player(long playerID, String name, boolean isActive) {
 		super();
 		this.playerID = playerID;
 		this.name = name;
-		this.defaultTeamID = defaultTeamID;
 		this.isActive = isActive;
 	}
 
@@ -50,14 +68,6 @@ public class Player {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Long getDefaultTeamID() {
-		return defaultTeamID;
-	}
-
-	public void setDefaultTeamID(Long defaultTeamID) {
-		this.defaultTeamID = defaultTeamID;
 	}
 
 	public boolean isActive() {

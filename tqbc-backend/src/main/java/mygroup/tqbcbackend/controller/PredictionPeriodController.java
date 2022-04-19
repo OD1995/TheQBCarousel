@@ -24,4 +24,10 @@ public class PredictionPeriodController {
 	public List<PredictionPeriod> getHowItWorksPredictionPeriods() {
 		return predictionPeriodRepository.findByHowItWorksTrueOrderByPredictionPeriodIDAsc();
 	}
+	
+//	// Get the current predictionPeriodID
+//	@GetMapping("/getcurrent")
+//	public int getCurrentPredictionPeriodID() {
+//		
+//	}
 }

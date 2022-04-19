@@ -3,6 +3,7 @@ import Select from 'react-select';
 import ConferenceService from '../services/ConferenceService';
 import TeamService from '../services/TeamService';
 import PlayerService from '../services/PlayerService';
+import PredictionPeriodService from '../services/PredictionPeriodService';
 import '../styles/QBPredictionsComponent.css';
 import Popup from './PopUpComponent';
 import { postPredictions } from '../actions/predictions';
@@ -86,6 +87,7 @@ const QBPredictionsComponent = () => {
         ConferenceService.getActiveConferences().then((res) => {
             setConferences(res.data);
         });
+        // PredictionPeriodService
     },[]);
 
     const updateParentState = (event, teamID) => {

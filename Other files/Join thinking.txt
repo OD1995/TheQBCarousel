@@ -1,0 +1,26 @@
+Users {
+ - UserID - PK
+ - Username
+}
+
+PredictionPeriods {
+ - PredictionPeriodID - PK
+ - PredictionPeriodName
+}
+
+Teams {
+ - TeamID - PK
+ - TeamName
+}
+
+Players {
+ - PlayerID - PK
+ - PlayerName
+}
+
+PeriodPredictions {
+ - PredictionPeriodID - PK & PredictionPeriods.PredictionPeriod FK
+ - UserID - PK & Users.UserID FK
+ - TeamID - PK & Teams.TeamID FK
+ - PlayerID - Players.PlayerID FK
+}
