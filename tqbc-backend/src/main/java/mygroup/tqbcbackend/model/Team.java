@@ -54,11 +54,19 @@ public class Team {
 	private Player defaultPlayer;
 	
 	@OneToMany(
-		targetEntity = PeriodPrediction.class,
-		fetch = FetchType.LAZY,
-		mappedBy = "team"
+			targetEntity = PeriodPrediction.class,
+			fetch = FetchType.LAZY,
+			mappedBy = "team"
 	)
 	private List<PeriodPrediction> periodPredictions;
+	
+	@OneToMany(
+			targetEntity = User.class,
+			fetch = FetchType.LAZY,
+			mappedBy = "favouriteTeam"
+	)
+	private List<User> fans;
+	
 	
 	public Team() {
 		

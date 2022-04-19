@@ -111,9 +111,8 @@ public class AuthController {
 		User user = new User(
 				signupRequest.getUsername(),
 				signupRequest.getEmail(),
-//				String favouriteTeamID,
+				null,
 				encoder.encode(signupRequest.getPassword()),
-//				Set<Role> roles,
 				false,
 				new Date()
 		);

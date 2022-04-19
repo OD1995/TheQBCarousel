@@ -43,11 +43,18 @@ public class PredictionPeriod {
 	private boolean isActive;
 	
 	@OneToMany(
-		targetEntity = PeriodPrediction.class, 
-		fetch = FetchType.LAZY,
-		mappedBy = "predictionPeriod"
+			targetEntity = PeriodPrediction.class, 
+			fetch = FetchType.LAZY,
+			mappedBy = "predictionPeriod"
 	)
 	private List<PeriodPrediction> periodPredictions;
+	
+	@OneToMany(
+			targetEntity = UserScore.class,
+			fetch = FetchType.LAZY,
+			mappedBy = "predictionPeriod"
+	)
+	private List<UserScore> userScores;
 	
 	public PredictionPeriod() {
 		

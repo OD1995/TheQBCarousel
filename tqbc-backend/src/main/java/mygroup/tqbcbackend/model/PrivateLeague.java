@@ -1,5 +1,8 @@
 package mygroup.tqbcbackend.model;
 
+import java.util.List;
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -18,29 +23,41 @@ public class PrivateLeague {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "LeagueID")
 	private long leagueID;
-	
-//	@Column(name = "OwnerUserID")
-//	private String ownerUserID;
-	
+		
 	@OneToOne(
 			targetEntity = User.class,
 			fetch = FetchType.LAZY
 	)
 	@JoinColumn(name = "OwnerUserID")
 	private User ownerUser;
+		
+	@ManyToOne(
+			targetEntity = ScoringSetting.class,
+			fetch = FetchType.LAZY
+	)
+	@JoinColumn(name = "ScoringSettingID")
+	private ScoringSetting scoringSetting;
 	
-	@Column(name = "ScoringSettingsID")
-	private String scoringSettingsID;
+	@Column(name = "LeagueUUID")
+	private UUID leagueUUID;
+	
+	@OneToMany(
+			targetEntity = PrivateLeagueMember.class,
+			fetch = FetchType.LAZY,
+			mappedBy = "privateLeague"
+	)
+	private List<PrivateLeagueMember> privateLeagueMembers;
 	
 	public PrivateLeague() {
 		
 	}
 
-	public PrivateLeague(long leagueID, User ownerUser, String scoringSettingsID) {
+	public PrivateLeague(long leagueID, User ownerUser, ScoringSetting scoringSetting) {
 		super();
 		this.leagueID = leagueID;
 		this.ownerUser = ownerUser;
-		this.scoringSettingsID = scoringSettingsID;
+		this.scoringSetting = scoringSetting;
+		this.leagueUUID = UUID.randomUUID();
 	}
 
 	public long getLeagueID() {
@@ -59,12 +76,16 @@ public class PrivateLeague {
 		this.ownerUser = ownerUser;
 	}
 
-	public String getScoringSettingsID() {
-		return scoringSettingsID;
+	public ScoringSetting getScoringSetting() {
+		return scoringSetting;
 	}
 
-	public void setScoringSettingsID(String scoringSettingsID) {
-		this.scoringSettingsID = scoringSettingsID;
+	public void setScoringSetting(ScoringSetting scoringSetting) {
+		this.scoringSetting = scoringSetting;
+	}
+
+	public UUID getLeagueUUID() {
+		return leagueUUID;
 	}
 
 }

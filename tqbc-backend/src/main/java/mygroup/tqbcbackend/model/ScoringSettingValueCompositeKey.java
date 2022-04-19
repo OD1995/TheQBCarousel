@@ -6,20 +6,20 @@ import java.util.Objects;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class UserScoreCompositeKey implements Serializable{
+public class ScoringSettingValueCompositeKey implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private long predictionPeriodID;
-	private long userID;
+	private long scoringSettingID;
+	private long scoringPeriodID;
 	
-	public UserScoreCompositeKey() {
+	public ScoringSettingValueCompositeKey() {
 		
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(predictionPeriodID, userID);
+		return Objects.hash(scoringPeriodID, scoringSettingID);
 	}
 
 	@Override
@@ -30,8 +30,9 @@ public class UserScoreCompositeKey implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UserScoreCompositeKey other = (UserScoreCompositeKey) obj;
-		return Objects.equals(predictionPeriodID, other.predictionPeriodID) && Objects.equals(userID, other.userID);
+		ScoringSettingValueCompositeKey other = (ScoringSettingValueCompositeKey) obj;
+		return scoringPeriodID == other.scoringPeriodID && scoringSettingID == other.scoringSettingID;
 	}
+	
 	
 }

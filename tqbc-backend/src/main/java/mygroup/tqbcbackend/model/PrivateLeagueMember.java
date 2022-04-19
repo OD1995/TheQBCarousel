@@ -1,49 +1,47 @@
 package mygroup.tqbcbackend.model;
 
-import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
 @Entity
 @Table(name = "PrivateLeagueMembers")
-@IdClass(PrivateLeagueMemberCompositeKey.class)
 public class PrivateLeagueMember {
-
-	@Id
-	@Column(name = "LeagueID")
-	private long leagueID;
 	
-	@Id
-	@Column(name = "UserID")
-	private long userID;
+	@EmbeddedId
+	private PrivateLeagueMemberCompositeKey privateLeagueMemberCompositeKey;
+	
+	@ManyToOne(targetEntity = PrivateLeague.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "LeagueID", nullable = false, insertable = false, updatable = false)
+	private PrivateLeague privateLeague;
+	
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "UserID", nullable = false, insertable = false, updatable = false)
+	private User user;
+	
 	
 	public PrivateLeagueMember() {
 		
 	}
 
-	public PrivateLeagueMember(long leagueID, long userID) {
+
+	public PrivateLeagueMember(PrivateLeagueMemberCompositeKey privateLeagueMemberCompositeKey) {
 		super();
-		this.leagueID = leagueID;
-		this.userID = userID;
+		this.privateLeagueMemberCompositeKey = privateLeagueMemberCompositeKey;
 	}
 
-	public long getLeagueID() {
-		return leagueID;
+
+	public PrivateLeagueMemberCompositeKey getPrivateLeagueMemberCompositeKey() {
+		return privateLeagueMemberCompositeKey;
 	}
 
-	public void setLeagueID(long leagueID) {
-		this.leagueID = leagueID;
-	}
 
-	public long getUserID() {
-		return userID;
-	}
-
-	public void setUserID(long userID) {
-		this.userID = userID;
+	public void setPrivateLeagueMemberCompositeKey(PrivateLeagueMemberCompositeKey privateLeagueMemberCompositeKey) {
+		this.privateLeagueMemberCompositeKey = privateLeagueMemberCompositeKey;
 	}
 	
 }

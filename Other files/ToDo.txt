@@ -1,9 +1,7 @@
-- Set predictionPeriodID in redux store when logging in
-- Create relationships between all necessary classes in java
+- Set predictionPeriodID in redux store when logging in, check how often changes
 - Allow test accounts and admin accounts to change periodPredictionID
 - Visualise historical predictions
 - Integrate Google Analytics
-- Re-configure ScoreSetting.java to have better data practice
 - Calculate and visualise points and league tables
 - Give login/signup buttons some space
 - Replace message with modal or own page

@@ -1,52 +1,50 @@
 package mygroup.tqbcbackend.model;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "UserScores")
-@IdClass(UserScoreCompositeKey.class)
 public class UserScore {
-
-	@Id
-	@Column(name = "PredictionPeriodID")
-	private long predictionPeriodID;
 	
-	@Id
-	@Column(name = "UserID")
-	private long userID;
+	@EmbeddedId
+	private UserScoreCompositeKey userScoreCompositeKey;
 	
 	@Column(name = "Score")
 	private float score;
+	
+	@ManyToOne(
+			targetEntity = PredictionPeriod.class,
+			fetch = FetchType.LAZY
+	)
+	private PredictionPeriod predictionPeriod;
+	
+	@ManyToOne(
+			targetEntity = User.class,
+			fetch = FetchType.LAZY
+	)
+	private User user;
 	
 	public UserScore() {
 		
 	}
 
-	public UserScore(long predictionPeriodID, long userID, float score) {
+	public UserScore(UserScoreCompositeKey userScoreCompositeKey, float score) {
 		super();
-		this.predictionPeriodID = predictionPeriodID;
-		this.userID = userID;
+		this.userScoreCompositeKey = userScoreCompositeKey;
 		this.score = score;
 	}
 
-	public long getPredictionPeriodID() {
-		return predictionPeriodID;
+	public UserScoreCompositeKey getUserScoreCompositeKey() {
+		return userScoreCompositeKey;
 	}
 
-	public void setPredictionPeriodID(long predictionPeriodID) {
-		this.predictionPeriodID = predictionPeriodID;
-	}
-
-	public long getUserID() {
-		return userID;
-	}
-
-	public void setUserID(long userID) {
-		this.userID = userID;
+	public void setUserScoreCompositeKey(UserScoreCompositeKey userScoreCompositeKey) {
+		this.userScoreCompositeKey = userScoreCompositeKey;
 	}
 
 	public float getScore() {

@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -22,7 +23,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
 import org.springframework.lang.Nullable;
@@ -49,8 +49,16 @@ public class User {
 	@Column(name = "Email")
 	private String email;
 	
-	@Column(name = "FavouriteTeamID")
-	private Long favouriteTeamID;
+//	@Column(name = "FavouriteTeamID")
+//	private Long favouriteTeamID;
+	
+	@Nullable
+	@ManyToOne(
+			targetEntity = Team.class,
+			fetch = FetchType.LAZY
+	)
+	@JoinColumn(name = "FavouriteTeamID")
+	private Team favouriteTeam;
 	
 	@NotBlank
 	@Size(max = 120)
@@ -84,27 +92,38 @@ public class User {
 			mappedBy = "ownerUser"
 	)
 	@Nullable
-	private PrivateLeague privateLeague;
+	private PrivateLeague ownedPrivateLeague;
+	
+	@OneToMany(
+			targetEntity = PrivateLeagueMember.class,
+			fetch = FetchType.LAZY,
+			mappedBy = "user"
+	)
+	private List<PrivateLeagueMember> privateLeagueMemberships;
+	
+	@OneToMany(
+			targetEntity = UserScore.class,
+			fetch = FetchType.LAZY,
+			mappedBy = "user"
+	)
+	private List<UserScore> scores;
 	
 	public User() {
 		
 	}
 
 	public User(
-//			long userID,
 			@NotBlank @Size(max = 20) String username,
 			@Email String email,
-//			Long favouriteTeamID,
+			Team favouriteTeam,
 			@NotBlank @Size(max = 120) String password,
-//			Set<Role> roles,
 			boolean isAuthenticated,
 			Date userCreated
 	) {
 		super();
-//		this.userID = userID;
 		this.username = username;
 		this.email = email;
-//		this.favouriteTeamID = favouriteTeamID;
+		this.favouriteTeam = favouriteTeam;
 		this.password = password;
 //		this.roles = roles;
 		this.isAuthenticated = isAuthenticated;
@@ -135,12 +154,12 @@ public class User {
 		this.email = email;
 	}
 
-	public Long getFavouriteTeamID() {
-		return favouriteTeamID;
+	public Team getFavouriteTeam() {
+		return favouriteTeam;
 	}
 
-	public void setFavouriteTeamID(Long favouriteTeamID) {
-		this.favouriteTeamID = favouriteTeamID;
+	public void setFavouriteTeam(Team favouriteTeam) {
+		this.favouriteTeam = favouriteTeam;
 	}
 
 	public String getPassword() {
