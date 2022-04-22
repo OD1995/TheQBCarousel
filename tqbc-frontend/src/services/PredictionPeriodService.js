@@ -7,7 +7,11 @@ class PredictionPeriodService {
     }
 
     getCurrentPredictionPeriodID() {
-        return axios.get(process.env.REACT_APP_BACKEND_BASE_URL + "api/v1/predictionperiods/getcurrent");
+        return axios.get(process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/predictionperiods/getcurrent");
+    }
+
+    getActivePredictionPeriods() {
+        return axios.get(process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/predictionperiods/active")
     }
 }
 

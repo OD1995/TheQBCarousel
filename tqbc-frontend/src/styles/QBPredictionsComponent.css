@@ -47,6 +47,28 @@
     /* padding-top: 2vh; */
 }
 
+#prediction-period-changer {
+    display: grid;
+    grid-template-columns: 10% 20% 15% 20% 10% 25%;
+    /* grid-template-rows: 100%; */
+}
+
+#prediction-period-changer {
+    border: 1px solid green;
+}
+
+
+.prediction-period-changer-text {
+    border: 1px solid blue;
+    justify-self: center;
+    align-self: center;
+}
+
+.prediction-period-changer-selecter {
+    justify-self: center;
+    align-self: center;
+}
+
 .area_title {
     /* border: 1px solid orange; */
     justify-self: center;
@@ -69,6 +91,7 @@
     align-self: center;
      /* border: 1px solid purple; */
 }
+
 
 #save-button {
     font-size: 20px !important;

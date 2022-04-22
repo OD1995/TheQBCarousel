@@ -20,6 +20,12 @@ public class PredictionPeriodController {
 	@Autowired
 	private PredictionPeriodRepository predictionPeriodRepository;
 	
+	// Get all active Prediction Periods
+	@GetMapping("/active")
+	public List<PredictionPeriod> getAllActivePredictionPeriods() {
+		return predictionPeriodRepository.findByIsActiveTrue();
+	}
+	
 	// Get all Prediction Periods for the How It Works page
 	@GetMapping("/howitworks")
 	public List<PredictionPeriod> getHowItWorksPredictionPeriods() {

@@ -9,6 +9,69 @@ import Popup from './PopUpComponent';
 import { postPredictions } from '../actions/predictions';
 import { useSelector } from 'react-redux';
 
+const PredictionPeriodChanger = (props) => {
+
+    const sendSeasonToParent = (event) => {
+        console.log("season: " + event.value);
+    }
+
+    const sendSeasonPeriodToParent = (event) => {
+        console.log("season: " + event.value);
+    }
+
+    const savePredictionPeriod = () => {
+        console.log("a");
+    }
+
+    return (
+        <div
+            id="prediction-period-changer"
+            style={{gridRow:10,gridColumnStart:1,gridColumnEnd:4}}
+        >
+            <h6
+                style={{gridColumn:1}}
+                className="prediction-period-changer-text"
+            >Season</h6>
+            <Select
+                style={{gridColumn:2}}
+                defaultValue={props.currentSeason}
+                onChange={event => sendSeasonToParent(event)}
+                options={props.seasons}
+                // isSearchable={true}
+                className='prediction-period-changer-selecter'
+                id="prediction-period-changer-selecter-season"
+            />
+            <h6
+                style={{gridColumn:3}}
+                className="prediction-period-changer-text"
+            >Season Period</h6>
+            <Select
+                style={{gridColumn:4}}
+                defaultValue={props.currentSeasonPeriodID}
+                onChange={event => sendSeasonPeriodToParent(event)}
+                options={props.seasonPeriodIDs}
+                // isSearchable={true}
+                className='prediction-period-changer-selecter'
+                id="prediction-period-changer-selecter-seasonPeriodID"
+            />
+            <button
+                style={{gridColumn:5}}
+                onClick={savePredictions}
+                className="tqbc-black-button"
+                id="prediction-period-changer-button"
+            >
+            Update
+            </button>
+            <h3
+                style={{gridColumn:6}}
+                className="prediction-period-changer-text"
+            >
+            {"Current PredictionPeriod: " + currentPredictionPeriodID}
+            </h3>
+        </div>
+    )
+}
+
 const QBSelector = (props) => {
 
     const sendToParent = (event) => {
@@ -59,7 +122,15 @@ const QBPredictionsComponent = () => {
     const [currentPredictionPeriodID, setCurrentPredictionPeriodID] = useState("c");
     const [showPopup, setShowPopup] = useState(false);
     const [popupMessage, setPopupMessage] = useState("");
+    const [uniqueSeasons, setUniqueSeasons] = useState([]);
+    const [uniqueSeasonPeriodIDs, setUniqueSeasonPeriodIDs] = useState([]);
+    const [periodLookup, setPeriodLookup] = useState({});
+    const [showPredictionPeriodChanger, setShowPredictionPeriodChanger] = useState(false);
+    const [currentSeason, setCurrentSeason] = useState(null);
+    const [currentSeasonPeriodID, setCurrentSeasonPeriodID] = useState(null);
     const { user: currentUser } = useSelector((state) => state.auth);
+
+
     useEffect(() => {
         callTeamsService();
 
@@ -115,6 +186,7 @@ const QBPredictionsComponent = () => {
         ConferenceService.getActiveConferences().then(
             (res) => {
                 setConferences(res.data);
+                callPredictionPeriodService();
             }
         )
     }
@@ -123,8 +195,52 @@ const QBPredictionsComponent = () => {
         PredictionPeriodService.getCurrentPredictionPeriodID().then(
             (res) => {
                 // Deal with null and use setCurrentPredictionPeriodID
+                setCurrentPredictionPeriodID(res.data);
             }
-        )
+        );
+        if (currentUser.roles.includes("ROLE_TESTER")) {
+            setShowPredictionPeriodChanger(true);
+            PredictionPeriodService.getActivePredictionPeriods().then(
+                (res) => {
+                    let unique_seasons = [];
+                    let unique_season_dicts = [];
+                    let unique_season_period_IDs = [];
+                    let unique_season_period_IDs_dicts = [];
+                    let period_lookup = {};
+                    for (const predictionPeriod of res.data) {
+                        let ssn = predictionPeriod.season;
+                        let spID = predictionPeriod.seasonPeriodID;
+                        let ppID = predictionPeriod.predictionPeriodID;
+                        if (! unique_seasons.includes(ssn)) {
+                            unique_seasons.push(ssn);
+                            unique_season_dicts.push(
+                                {
+                                    label: ssn,
+                                    value: ssn
+                                }
+                            );
+                        }
+                        if (! unique_season_period_IDs.includes(spID)) {
+                            unique_season_period_IDs.push(spID);
+                            unique_season_period_IDs_dicts.push(
+                                {
+                                    label: spID,
+                                    value: spID
+                                }
+                            );
+                        }
+                        if (ppID === currentPredictionPeriodID) {
+                            setCurrentSeason(ssn);
+                            setCurrentSeasonPeriodID(spID);
+                        }
+                        period_lookup[ssn + "---" + spID] = predictionPeriod.predictionPeriodID;
+                    }
+                    setUniqueSeasons(unique_season_dicts);
+                    setUniqueSeasonPeriodIDs(unique_season_period_IDs_dicts);
+                    setPeriodLookup(period_lookup);
+                }
+            )
+        }
     }
 
     const updateParentState = (event, teamID) => {
@@ -159,7 +275,7 @@ const QBPredictionsComponent = () => {
             // console.log(selectionsArray);
             // console.log(currentUser.userID);
             postPredictions(
-                1,
+                currentPredictionPeriodID,
                 currentUser.userID,
                 selectionsArray
             );
@@ -197,50 +313,9 @@ const QBPredictionsComponent = () => {
                     )
                 }
                 {
-                    // teamIDList.map(
-                    //     teamID =>
-                    //     <QBSelector
-                    //     default_player={currentDropdownValues[teamID]}
-                    //     teamID={teamID}
-                    //     team={teams[teamID]}
-                    //     key={teamID}
-                    //     players={players}
-                    //     parentStateUpdater={updateParentState}
-                    //     ></QBSelector>
-                    // )
-                    // teamIDList.map(
-                    //     function(teamID) {
-                    //         let propos = {
-                    //             default_player:currentDropdownValues[teamID],
-                    //             teamID:teamID,
-                    //             team:teams[teamID],
-                    //             key:teamID,
-                    //             players:players
-                    //         };
-                    //         console.log(propos);
-                    //         return (
-                    //             <QBSelector
-                    //                 default_player={currentDropdownValues[teamID]}
-                    //                 teamID={teamID}
-                    //                 team={teams[teamID]}
-                    //                 key={teamID}
-                    //                 players={players}
-                    //                 parentStateUpdater={updateParentState}
-                    //             ></QBSelector>
-                    //         )
-                    //     }
-                    // )
                     Object.keys(currentDropdownValues).map(
                         function(teamID) {
                             let defaultPlayerID = currentDropdownValues[teamID];
-                            let propos = {
-                                default_player:defaultPlayerID,
-                                teamID:teamID,
-                                team:teams[teamID],
-                                key:teamID,
-                                players:players
-                            };
-                            // console.log(propos);
                             return (
                                 <QBSelector
                                     default_player={defaultPlayerID}
@@ -261,6 +336,16 @@ const QBPredictionsComponent = () => {
                 >
                     Save
                 </button>
+                {
+                    showPredictionPeriodChanger && (
+                        <PredictionPeriodChanger
+                            seasons={uniqueSeasons}
+                            seasonPeriodIDs={uniqueSeasonPeriodIDs}
+                            currentSeason={currentSeason}
+                            currentSeasonPeriodID={currentSeasonPeriodID}
+                        />
+                    )
+                }
                 {/* <p
                 id="msg"
                 style={{gridRow:11,gridColumnStart:1,gridColumnEnd:6}}
