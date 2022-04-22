@@ -1,5 +1,6 @@
 package mygroup.tqbcbackend.controller;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,19 @@ public class PredictionPeriodController {
 		return predictionPeriodRepository.findByHowItWorksTrueOrderByPredictionPeriodIDAsc();
 	}
 	
-//	// Get the current predictionPeriodID
-//	@GetMapping("/getcurrent")
-//	public int getCurrentPredictionPeriodID() {
-//		
-//	}
+	// Get the current predictionPeriodID
+	@GetMapping("/getcurrent")
+	public Long getCurrentPredictionPeriodID() {
+		ZonedDateTime now = ZonedDateTime.now();
+		PredictionPeriod predictionPeriod = predictionPeriodRepository.findByFromEvent_EventDateTimeUTCLessThanEqualAndToEvent_EventDateTimeUTCGreaterThanEqual(
+				now,
+				now
+		);
+		// Return null if we're not inside a PredictionPeriod (i.e. between draft and season)
+		if (predictionPeriod == null) {
+			return null;
+		} else {
+			return predictionPeriod.getPredictionPeriodID();			
+		}
+	}
 }

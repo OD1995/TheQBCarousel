@@ -1,7 +1,5 @@
 package mygroup.tqbcbackend.payload.request;
 
-import java.util.Set;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -16,7 +14,7 @@ public class SignupRequest {
 	@Email
 	private String email;
 	
-	private Set<String> role;
+	private Long favTeamID;
 	
 	@NotBlank
 	@Size(min = 6,max = 40)
@@ -38,12 +36,12 @@ public class SignupRequest {
 		this.email = email;
 	}
 
-	public Set<String> getRole() {
-		return role;
+	public Long getFavTeamID() {
+		return favTeamID;
 	}
 
-	public void setRole(Set<String> role) {
-		this.role = role;
+	public void setFavTeamID(Long favTeamID) {
+		this.favTeamID = favTeamID;
 	}
 
 	public String getPassword() {
@@ -53,5 +51,5 @@ public class SignupRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-		
+
 }

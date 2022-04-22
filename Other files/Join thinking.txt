@@ -24,3 +24,47 @@ PeriodPredictions {
  - TeamID - PK & Teams.TeamID FK
  - PlayerID - Players.PlayerID FK
 }
+
+
+
+
+
+
+
+
+
+
+
+User
+
+UserInfo
+
+Always a User for UserInfo row
+Not always UserInfo for User row
+
+
+Team
+
+Player
+
+Always a Player for Team row
+Not always a Team for Player row
+
+
+
+Therefore
+ - User = Player
+ - UserInfo = Team
+
+
+
+
+
+
+
+
+
+
+
+
+

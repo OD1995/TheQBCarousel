@@ -34,6 +34,7 @@ import mygroup.tqbcbackend.payload.response.JwtResponse;
 import mygroup.tqbcbackend.payload.response.MessageResponse;
 import mygroup.tqbcbackend.repository.ConfirmationTokenRepository;
 import mygroup.tqbcbackend.repository.RoleRepository;
+import mygroup.tqbcbackend.repository.TeamRepository;
 import mygroup.tqbcbackend.repository.UserRepository;
 import mygroup.tqbcbackend.security.jwt.JwtUtils;
 import mygroup.tqbcbackend.security.service.UserDetailsImpl;
@@ -46,24 +47,34 @@ public class AuthController {
 
 	@Autowired
 	AuthenticationManager authenticationManager;
+	
 	@Autowired
 	UserRepository userRepository;
+	
 	@Autowired
 	RoleRepository roleRepository;
+	
+	@Autowired
+	TeamRepository teamRepository;
+	
 	@Autowired
 	PasswordEncoder encoder;
+	
 	@Autowired
 	JwtUtils jwtUtils;
+	
 	@Autowired
 	ConfirmationTokenRepository confirmationTokenRepository;
+	
 	@Autowired
 	private EmailSenderService emailSenderService;	
+	
 	@Value("${spring.mail.username}")
 	private String fromEmailAddress;	
+	
 	@Value("${tqdm.app.frontEndURL}")
 	private String frontEndURL;
-	
-	
+		
 	@PostMapping("/login")
 	public ResponseEntity<?> authenticateUser(
 			@Valid @RequestBody LoginRequest loginRequest
@@ -111,38 +122,16 @@ public class AuthController {
 		User user = new User(
 				signupRequest.getUsername(),
 				signupRequest.getEmail(),
-				null,
+				teamRepository.findByTeamID(signupRequest.getFavTeamID()),
 				encoder.encode(signupRequest.getPassword()),
 				false,
 				new Date()
 		);
-		Set<String> strRoles = signupRequest.getRole();
 		Set<Role> roles = new HashSet<>();
 		
-		if (strRoles == null) {
-			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-					.orElseThrow(() -> new RuntimeException("Error: Role is not found"));
-			roles.add(userRole);
-		} else {
-			strRoles.forEach(role -> {
-				switch (role) {
-				case "admin":
-					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-						.orElseThrow(() -> new RuntimeException("Error: Role is not found"));
-					roles.add(adminRole);
-					break;
-				case "mod":
-					Role modRole = roleRepository.findByName(ERole.ROLE_TESTER)
-						.orElseThrow(() -> new RuntimeException("Error: Role is not found"));
-					roles.add(modRole);
-					break;
-				default:
-					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-						.orElseThrow(() -> new RuntimeException("Error: Role is not found"));
-					roles.add(userRole);
-				}
-			});
-		}
+		Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+				.orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+		roles.add(userRole);
 		
 		user.setRoles(roles);
 		userRepository.save(user);

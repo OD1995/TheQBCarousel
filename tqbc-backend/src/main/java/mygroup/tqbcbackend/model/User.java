@@ -52,7 +52,7 @@ public class User {
 //	@Column(name = "FavouriteTeamID")
 //	private Long favouriteTeamID;
 	
-	@Nullable
+//	@Nullable
 	@ManyToOne(
 			targetEntity = Team.class,
 			fetch = FetchType.LAZY
@@ -129,6 +129,24 @@ public class User {
 		this.isAuthenticated = isAuthenticated;
 		this.userCreated = userCreated;
 	}
+	
+//	public User(
+//			@NotBlank @Size(max = 20) String username,
+//			@Email String email,
+//			null,
+//			@NotBlank @Size(max = 120) String password,
+//			boolean isAuthenticated,
+//			Date userCreated
+//	) {
+//		super();
+//		this.username = username;
+//		this.email = email;
+//		this.favouriteTeam = favouriteTeam;
+//		this.password = password;
+////		this.roles = roles;
+//		this.isAuthenticated = isAuthenticated;
+//		this.userCreated = userCreated;
+//	}
 
 	public long getUserID() {
 		return userID;

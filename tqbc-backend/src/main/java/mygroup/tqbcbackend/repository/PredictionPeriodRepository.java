@@ -1,5 +1,6 @@
 package mygroup.tqbcbackend.repository;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +13,8 @@ public interface PredictionPeriodRepository extends JpaRepository<PredictionPeri
 
 	public List<PredictionPeriod> findByHowItWorksTrueOrderByPredictionPeriodIDAsc();
 	public PredictionPeriod findByPredictionPeriodID(long predictionPeriodID);
+	public PredictionPeriod findByFromEvent_EventDateTimeUTCLessThanEqualAndToEvent_EventDateTimeUTCGreaterThanEqual(
+			ZonedDateTime date1,
+			ZonedDateTime date2
+	);
 }

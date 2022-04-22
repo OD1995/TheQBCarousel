@@ -31,17 +31,17 @@ const QBSelector = (props) => {
         return (
             <div className={'qb_selector_box '+props.team.conference} style={grid_pos}>
                 <img 
-                src={img_src}
-                alt={props.team.nickname}
-                className='qb_selector_logo'
+                    src={img_src}
+                    alt={props.team.nickname}
+                    className='qb_selector_logo'
                 />
                 <Select
-                defaultValue={props.default_player}
-                onChange={event => sendToParent(event)}
-                options={props.players}
-                isSearchable={true}
-                className='qb_selector_select'
-                id={props.teamID}
+                    defaultValue={props.default_player}
+                    onChange={event => sendToParent(event)}
+                    options={props.players}
+                    isSearchable={true}
+                    className='qb_selector_select'
+                    id={props.teamID}
                 />
             </div>
         )
@@ -52,48 +52,83 @@ const QBSelector = (props) => {
 
 const QBPredictionsComponent = () => {
     const [teamIDList, setTeamIDList] = useState([]);
-    const [teams, setTeams] = useState({});
+    const [teams, setTeams] = useState("a");
     const [players, setPlayers] = useState([]);
     const [conferences, setConferences] = useState([]);
-    const [currentDropdownValues, setCurrentDropdownValues] = useState({});
+    const [currentDropdownValues, setCurrentDropdownValues] = useState("b");
+    const [currentPredictionPeriodID, setCurrentPredictionPeriodID] = useState("c");
     const [showPopup, setShowPopup] = useState(false);
-    const [popupMessage, setPopupMessage] = useState("You have predicted that Kyler Murray will be the QB of multiple teams. Unfortunately, this is not possible. Please adjust and save again.");
+    const [popupMessage, setPopupMessage] = useState("");
     const { user: currentUser } = useSelector((state) => state.auth);
-
     useEffect(() => {
-        TeamService.getActiveTeams().then((res) => {
-            let _list_ = res.data;
-            // Create dict where key is teamID and value is row from `teams`
-            let _dict_ = Object.assign({}, ..._list_.map((x) => ({[x.teamID]: x})));
-            setTeams(_dict_);
-            setTeamIDList(Object.keys(_dict_));
-        });
-        PlayerService.getActivePlayers().then((res) => {
-            let players_array = [];
-            let default_team_dict = {};
-            for (const player_obj of res.data) {
-                const dropdown_data = {
-                    label : player_obj.name,
-                    value : player_obj.playerID
-                };
-                players_array.push(dropdown_data);
-                if (player_obj.defaultTeamID != null) {
-                    default_team_dict[player_obj.defaultTeamID] = dropdown_data;
-                }
-            }
-            setPlayers(players_array);
-            setCurrentDropdownValues(default_team_dict);
-        });
-        ConferenceService.getActiveConferences().then((res) => {
-            setConferences(res.data);
-        });
+        callTeamsService();
+
         // PredictionPeriodService
     },[]);
 
+    const callTeamsService = () => {
+        TeamService.getActiveTeams().then(
+            (res) => {
+                // Create dict where key is teamID and value is row from `teams`
+                let teams_dict = {};
+                let default_dict = {};
+                let team_id_list = [];
+                for (const team_obj of res.data) {
+                    // console.log(team_obj);
+                    teams_dict[team_obj.teamID] = team_obj;
+                    default_dict[team_obj.defaultPlayer.playerID] = team_obj.teamID;
+                    team_id_list.push(team_obj.teamID);
+                }
+                setTeams(teams_dict);
+                setTeamIDList(team_id_list);
+                callPlayerService(default_dict);
+            }
+        )
+    }
+
+    const callPlayerService = (defaultDict) => {
+        PlayerService.getActivePlayers().then(
+            (res) => {
+                let players_array = [];
+                let default_team_dict = {};
+                for (const player_obj of res.data) {
+                    const dropdown_data = {
+                        label : player_obj.name,
+                        value : player_obj.playerID
+                    };
+                    players_array.push(dropdown_data);
+                    // if (player_obj.defaultTeamID != null) {
+                    //     default_team_dict[player_obj.defaultTeamID] = dropdown_data;
+                    // }
+                    if (player_obj.playerID in defaultDict) {
+                        default_team_dict[defaultDict[player_obj.playerID]] = dropdown_data
+                    }
+                }
+                setPlayers(players_array);
+                setCurrentDropdownValues(default_team_dict);
+                callConferenceService();
+            }
+        )
+    }
+
+    const callConferenceService = () => {
+        ConferenceService.getActiveConferences().then(
+            (res) => {
+                setConferences(res.data);
+            }
+        )
+    }
+
+    const callPredictionPeriodService = () => {
+        PredictionPeriodService.getCurrentPredictionPeriodID().then(
+            (res) => {
+                // Deal with null and use setCurrentPredictionPeriodID
+            }
+        )
+    }
+
     const updateParentState = (event, teamID) => {
         let cdv = { ...currentDropdownValues }
-        // console.log(teamID);
-        // console.log(event);
         cdv[teamID] = event;
         setCurrentDropdownValues(cdv);
     };
@@ -102,13 +137,12 @@ const QBPredictionsComponent = () => {
         // Make sure no QB has been chosen for two teams
         let selectionsDict = {};
         let selectionsArray = [];
-        // console.log(currentDropdownValues);
         let msg = "All OK";
         const txt = "</b> will be the QB of multiple teams. Unfortunately, this is not possible. Please adjust and save again.";
         for (const [teamID, prediction] of Object.entries(currentDropdownValues)) {
             if (prediction.value in selectionsDict) {
                 msg = "You have predicted that <b>" + prediction.label + txt;
-                console.log(msg);
+                // console.log(msg);
                 break;
             } else {
                 selectionsDict[prediction.value] = teamID;
@@ -122,14 +156,14 @@ const QBPredictionsComponent = () => {
         }
         if (msg === "All OK") {
             // Post dropdown values to backend
-            console.log(selectionsArray);
-            console.log(currentUser.userID);
+            // console.log(selectionsArray);
+            // console.log(currentUser.userID);
             postPredictions(
                 1,
                 currentUser.userID,
                 selectionsArray
             );
-            console.log("postPredictions run");
+            // console.log("postPredictions run");
         } else {
             // Open pop up to display `msg`
             setPopupMessage(msg);
@@ -138,7 +172,7 @@ const QBPredictionsComponent = () => {
     };
 
     if (
-        (teams !== {})
+        (teams !== "a")
         &
         (players !== [])
         &
@@ -163,16 +197,61 @@ const QBPredictionsComponent = () => {
                     )
                 }
                 {
-                    teamIDList.map(
-                        teamID =>
-                        <QBSelector
-                        default_player={currentDropdownValues[teamID]}
-                        teamID={teamID}
-                        team={teams[teamID]}
-                        key={teamID}
-                        players={players}
-                        parentStateUpdater={updateParentState}
-                        ></QBSelector>
+                    // teamIDList.map(
+                    //     teamID =>
+                    //     <QBSelector
+                    //     default_player={currentDropdownValues[teamID]}
+                    //     teamID={teamID}
+                    //     team={teams[teamID]}
+                    //     key={teamID}
+                    //     players={players}
+                    //     parentStateUpdater={updateParentState}
+                    //     ></QBSelector>
+                    // )
+                    // teamIDList.map(
+                    //     function(teamID) {
+                    //         let propos = {
+                    //             default_player:currentDropdownValues[teamID],
+                    //             teamID:teamID,
+                    //             team:teams[teamID],
+                    //             key:teamID,
+                    //             players:players
+                    //         };
+                    //         console.log(propos);
+                    //         return (
+                    //             <QBSelector
+                    //                 default_player={currentDropdownValues[teamID]}
+                    //                 teamID={teamID}
+                    //                 team={teams[teamID]}
+                    //                 key={teamID}
+                    //                 players={players}
+                    //                 parentStateUpdater={updateParentState}
+                    //             ></QBSelector>
+                    //         )
+                    //     }
+                    // )
+                    Object.keys(currentDropdownValues).map(
+                        function(teamID) {
+                            let defaultPlayerID = currentDropdownValues[teamID];
+                            let propos = {
+                                default_player:defaultPlayerID,
+                                teamID:teamID,
+                                team:teams[teamID],
+                                key:teamID,
+                                players:players
+                            };
+                            // console.log(propos);
+                            return (
+                                <QBSelector
+                                    default_player={defaultPlayerID}
+                                    teamID={teamID}
+                                    team={teams[teamID]}
+                                    key={teamID}
+                                    players={players}
+                                    parentStateUpdater={updateParentState}
+                                ></QBSelector>
+                            )
+                        }
                     )
                 }
                 <button

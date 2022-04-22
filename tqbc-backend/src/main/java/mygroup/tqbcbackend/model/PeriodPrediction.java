@@ -1,12 +1,16 @@
 package mygroup.tqbcbackend.model;
 
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "PeriodPredictions")
@@ -27,19 +31,25 @@ public class PeriodPrediction {
 	@JoinColumn(name = "TeamID", nullable = false, insertable = false, updatable = false)
 	private Team team;
 
-	@ManyToOne(targetEntity = Player.class, fetch = FetchType.LAZY)
-	@MapsId("PlayerID")
+	@ManyToOne(targetEntity = Player.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "PlayerID", nullable = false)
 	private Player player;
+	
+	@Column(name = "PredictionDateTimeUTC")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date predictionDateTimeUTC;
 
 	public PeriodPrediction() {
 
 	}
 
-	public PeriodPrediction(PeriodPredictionCompositeKey periodPredictionCompositeKey, Player player) {
+//	public PeriodPrediction(PeriodPredictionCompositeKey periodPredictionCompositeKey, Player player, Date predictionDateTimeUTC) {
+	public PeriodPrediction(long predictionPeriodID, long userID, long teamID, Player player, Date predictionDateTimeUTC) {
 		super();
-		this.periodPredictionCompositeKey = periodPredictionCompositeKey;
+//		this.periodPredictionCompositeKey = periodPredictionCompositeKey;
+		this.periodPredictionCompositeKey = new PeriodPredictionCompositeKey(predictionPeriodID, userID, teamID);
 		this.player = player;
+		this.predictionDateTimeUTC = predictionDateTimeUTC;
 	}
 
 	public PeriodPredictionCompositeKey getPeriodPredictionCompositeKey() {
@@ -58,6 +68,8 @@ public class PeriodPrediction {
 		this.player = player;
 	}
 
-	
-	
+	public Date getPredictionDateTimeUTC() {
+		return predictionDateTimeUTC;
+	}
+
 }

@@ -14,8 +14,8 @@ public class ScoringSettingValue {
 	@EmbeddedId
 	private ScoringSettingValueCompositeKey scoringSettingValueCompositeKey;
 	
-	@Column(name = "ScoringPeriodID")
-	private long scoringPeriodID;
+//	@Column(name = "ScoringPeriodID")
+//	private long scoringPeriodID;
 	
 	@Column(name = "Value")
 	private double value;
@@ -38,13 +38,13 @@ public class ScoringSettingValue {
 		this.scoringSettingDescription = scoringSettingDescription;
 	}
 
-	public long getScoringPeriodID() {
-		return scoringPeriodID;
-	}
-
-	public void setScoringPeriodID(long scoringPeriodID) {
-		this.scoringPeriodID = scoringPeriodID;
-	}
+//	public long getScoringPeriodID() {
+//		return scoringPeriodID;
+//	}
+//
+//	public void setScoringPeriodID(long scoringPeriodID) {
+//		this.scoringPeriodID = scoringPeriodID;
+//	}
 
 	public double getValue() {
 		return value;

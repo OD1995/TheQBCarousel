@@ -20,7 +20,7 @@ public class Team {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "TeamID")
-	private long teamID;	
+	private Long teamID;	
 	
 	@Column(name = "Season")
 	private int season;	
@@ -48,9 +48,10 @@ public class Team {
 	
 	@OneToOne(
 			targetEntity = Player.class,
-			fetch = FetchType.LAZY
+			fetch = FetchType.EAGER
 	)
 	@JoinColumn(name = "DefaultPlayerID")
+//	@JsonIgnore
 	private Player defaultPlayer;
 	
 	@OneToMany(
@@ -72,7 +73,7 @@ public class Team {
 		
 	}
 
-	public Team(long teamID, int season, String location, String nickname, String conference, String division,
+	public Team(Long teamID, int season, String location, String nickname, String conference, String division,
 			boolean isActive, int gridColumn, int gridRow, Player defaultPlayer) {
 		super();
 		this.teamID = teamID;
@@ -87,11 +88,11 @@ public class Team {
 		this.defaultPlayer = defaultPlayer;
 	}
 
-	public long getTeamID() {
+	public Long getTeamID() {
 		return teamID;
 	}
 
-	public void setTeamID(long teamID) {
+	public void setTeamID(Long teamID) {
 		this.teamID = teamID;
 	}
 

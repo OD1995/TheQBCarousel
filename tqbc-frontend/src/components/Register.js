@@ -1,12 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
+import Select from "react-select";
 import { isEmail } from "validator";
 
 import { register } from "../actions/auth";
+import TeamService from "../services/TeamService";
 
 const required = (value) => {
     if (!value) {
@@ -65,10 +67,40 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [successful, setSuccessful] = useState(false);
+    const [favTeam, setFavTeam] = useState(null);
+    const [favTeamList, setFavTeamList] = useState([]);
     
     const { message } = useSelector(state => state.message);
     
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        TeamService.getActiveTeams().then(
+            (res) => {
+                console.log("activeTeams");
+                console.log(res.data);
+                let teams_array = [
+                    {
+                        label: "n/a",
+                        value: null
+                    }
+                ];
+                for (const team_obj of res.data) {
+                    teams_array.push(
+                        {
+                            label: team_obj.location + " " + team_obj.nickname,
+                            value: team_obj.teamID
+                        }
+                    );
+                }
+                setFavTeamList(teams_array);
+                console.log("favTeamList");
+                console.log(favTeamList);
+                console.log("teams_array");
+                console.log(teams_array);
+            }
+        )
+    },[])
 
     const onChangeUsername = (e) => {
         const username = e.target.value;
@@ -93,7 +125,7 @@ const Register = () => {
         form.current.validateAll();
 
         if (checkBtn.current.context._errors.length === 0) {
-            dispatch(register(username,email,password))
+            dispatch(register(username,favTeam,email,password))
                 .then(
                     () => {
                         setSuccessful(true);
@@ -109,13 +141,7 @@ const Register = () => {
 
     return (
         <div className="col-md-12">
-            {/* <div className="card card-container"> */}
             <div>
-                {/* <img
-                    src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                    alt="profile-img"
-                    className="profile-img-card"
-                /> */}
 
                 <Form
                     onSubmit={handleRegister}
@@ -132,6 +158,18 @@ const Register = () => {
                                     value={username}
                                     onChange={onChangeUsername}
                                     validations={[required,vusername]}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="favTeam">Favourite Team</label>
+                                <Select
+                                    defaultValue={favTeam}
+                                    onChange={event => setFavTeam(event.value)}
+                                    options={favTeamList}
+                                    isSearchable={true}
+                                    className='favTeam_selector_select'
+                                    // id=''
                                 />
                             </div>
 

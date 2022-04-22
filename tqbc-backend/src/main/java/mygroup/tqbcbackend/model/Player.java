@@ -18,7 +18,7 @@ import org.springframework.lang.Nullable;
 @Table(name = "Players")
 public class Player {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "PlayerID")
 	private long playerID;
 	

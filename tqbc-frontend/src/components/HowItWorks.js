@@ -1,5 +1,5 @@
 import "../styles/HowItWorks.css";
-import createPredictionPeriodsTable from "../helpers/PredictionPeriodsTable";
+import createPredictionPeriodsTable2 from "../helpers/PredictionPeriodsTable";
 import PredictionPeriodService from "../services/PredictionPeriodService";
 import EventService from "../services/EventService";
 import { useState, useEffect } from "react";
@@ -12,23 +12,10 @@ const HowItWorks = () => {
     useEffect(() => {
         PredictionPeriodService.getHowItWorksPredictionPeriods().then(
             (ppRes) => {
-                // console.log(ppRes.data)
-                // Get the example season to use (based on the DB)
-                const exampleSeasonFromDB = ppRes.data[0].season;
-                // Get unique array of eventIDs
-                const fromEventIDs = ppRes.data.map(o => o.fromEventID);
-                const toEventIDs = ppRes.data.map(o => o.toEventID);
-                const uniqueEventIDs = [...new Set([...fromEventIDs ,...toEventIDs])];
-                // Get details of events in `uniqueEventIDs`
-                EventService.getEventsByEventIDArray(uniqueEventIDs).then(
-                    (eRes) => {
-                        let tbl = createPredictionPeriodsTable(ppRes.data,eRes.data);
-                        console.log('hello');
-                        console.log(tbl);
-                        setPptable(tbl);
-                        setExampleSeason(exampleSeasonFromDB);
-                    }
-                )
+                let tbl = createPredictionPeriodsTable2(ppRes.data);
+                let exampleSeasonFromDB = ppRes.data[0].season;
+                setPptable(tbl);
+                setExampleSeason(exampleSeasonFromDB);
             }
         )
     },[])

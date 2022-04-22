@@ -11,9 +11,10 @@ import {
 import AuthService from "../services/auth.service"
 
 
-export const register = (username, email, password) => (dispatch) => {
+export const register = (username, favTeam, email, password) => (dispatch) => {
     return AuthService.register(
         username,
+        favTeam,
         email,
         password
     ).then(

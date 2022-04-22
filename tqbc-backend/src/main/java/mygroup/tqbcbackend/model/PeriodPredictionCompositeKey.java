@@ -3,6 +3,7 @@ package mygroup.tqbcbackend.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
@@ -10,8 +11,13 @@ public class PeriodPredictionCompositeKey implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Column(name = "PredictionPeriodID")
     private long predictionPeriodID;
+    
+    @Column(name = "UserID")
     private long userID;
+    
+    @Column(name = "TeamID")
     private long teamID;
 
 	public PeriodPredictionCompositeKey() {

@@ -1,7 +1,9 @@
 package mygroup.tqbcbackend.controller;
 
 import java.util.List;
+//import java.io.Console;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.validation.Valid;
 
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import mygroup.tqbcbackend.model.FrontEndPrediction;
 import mygroup.tqbcbackend.model.PeriodPrediction;
-import mygroup.tqbcbackend.model.PeriodPredictionCompositeKey;
+//import mygroup.tqbcbackend.model.PeriodPredictionCompositeKey;
 import mygroup.tqbcbackend.payload.request.PeriodPredictionRequest;
 import mygroup.tqbcbackend.repository.PeriodPredictionRepository;
 import mygroup.tqbcbackend.repository.PlayerRepository;
@@ -52,15 +54,25 @@ public class PeriodPredictionController {
 		long userID = periodPredictionRequest.getUserID();
 		List<PeriodPrediction> periodPredictions = new ArrayList<PeriodPrediction>();
 		for (FrontEndPrediction prediction : periodPredictionRequest.getPredictions()) {
-			PeriodPredictionCompositeKey periodPredictionCompositeKey = new PeriodPredictionCompositeKey(
+//			PeriodPredictionCompositeKey periodPredictionCompositeKey = new PeriodPredictionCompositeKey(
+//					predictionPeriodID,
+//					userID,
+//					prediction.getTeamID()
+//			);
+//			PeriodPrediction periodPrediction = new PeriodPrediction(
+//					periodPredictionCompositeKey,
+//					playerRepository.findByPlayerID(prediction.getPlayerID()),
+//					new Date()
+//			);
+			
+			PeriodPrediction periodPrediction = new PeriodPrediction(
 					predictionPeriodID,
 					userID,
-					prediction.getTeamID()
+					prediction.getTeamID(),
+					playerRepository.findByPlayerID(prediction.getPlayerID()),
+					new Date()
 			);
-			PeriodPrediction periodPrediction = new PeriodPrediction(
-					periodPredictionCompositeKey,
-					playerRepository.findByPlayerID(prediction.getPlayerID())
-			);
+			
 			periodPredictions.add(periodPrediction);
 		}
 		periodPredictionRepository.saveAll(periodPredictions);
