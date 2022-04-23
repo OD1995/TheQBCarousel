@@ -1,6 +1,6 @@
 import '../styles/PopupComponent.css';
 
-function Popup(props) {
+function PopupComponent(props) {
 	return (props.trigger) ? (
 		<div className="popup">
 			<div className="popup-inner">
@@ -9,12 +9,26 @@ function Popup(props) {
 				onClick={() => props.setTrigger(false)}
 				>close</button>
 				{ props.children }
+				<h2>
+					{props.title}
+				</h2>
+				{
+					(props.subtitle !== "popupSubtitle") && (
+						// <h6>
+						// 	{props.subtitle}
+						// </h6>
+						<span
+							dangerouslySetInnerHTML={{__html: props.subtitle}}
+							id="popup-subtitle"
+						/>
+					)
+				}
                 <span 
-                dangerouslySetInnerHTML={{__html: props.message}}
+                	dangerouslySetInnerHTML={{__html: props.message}}
                 />
 			</div>
 		</div>
 	) : "";
 }
 
-export default Popup
+export default PopupComponent;

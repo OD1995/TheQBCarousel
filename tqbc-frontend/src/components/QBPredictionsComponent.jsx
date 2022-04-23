@@ -1,133 +1,38 @@
 import React, { useEffect,useState } from 'react';
-import Select from 'react-select';
+import QBSelector from './QBSelector';
 import ConferenceService from '../services/ConferenceService';
 import TeamService from '../services/TeamService';
 import PlayerService from '../services/PlayerService';
 import PredictionPeriodService from '../services/PredictionPeriodService';
 import '../styles/QBPredictionsComponent.css';
-import Popup from './PopUpComponent';
+import PopupComponent from './PopUpComponent';
 import { postPredictions } from '../actions/predictions';
 import { useSelector } from 'react-redux';
-
-const PredictionPeriodChanger = (props) => {
-
-    const sendSeasonToParent = (event) => {
-        console.log("season: " + event.value);
-    }
-
-    const sendSeasonPeriodToParent = (event) => {
-        console.log("season: " + event.value);
-    }
-
-    const savePredictionPeriod = () => {
-        console.log("a");
-    }
-
-    return (
-        <div
-            id="prediction-period-changer"
-            style={{gridRow:10,gridColumnStart:1,gridColumnEnd:4}}
-        >
-            <h6
-                style={{gridColumn:1}}
-                className="prediction-period-changer-text"
-            >Season</h6>
-            <Select
-                style={{gridColumn:2}}
-                defaultValue={props.currentSeason}
-                onChange={event => sendSeasonToParent(event)}
-                options={props.seasons}
-                // isSearchable={true}
-                className='prediction-period-changer-selecter'
-                id="prediction-period-changer-selecter-season"
-            />
-            <h6
-                style={{gridColumn:3}}
-                className="prediction-period-changer-text"
-            >Season Period</h6>
-            <Select
-                style={{gridColumn:4}}
-                defaultValue={props.currentSeasonPeriodID}
-                onChange={event => sendSeasonPeriodToParent(event)}
-                options={props.seasonPeriodIDs}
-                // isSearchable={true}
-                className='prediction-period-changer-selecter'
-                id="prediction-period-changer-selecter-seasonPeriodID"
-            />
-            <button
-                style={{gridColumn:5}}
-                onClick={savePredictions}
-                className="tqbc-black-button"
-                id="prediction-period-changer-button"
-            >
-            Update
-            </button>
-            <h3
-                style={{gridColumn:6}}
-                className="prediction-period-changer-text"
-            >
-            {"Current PredictionPeriod: " + currentPredictionPeriodID}
-            </h3>
-        </div>
-    )
-}
-
-const QBSelector = (props) => {
-
-    const sendToParent = (event) => {
-        //here calling Parents changeValue
-        props.parentStateUpdater(event,props.teamID);
-      };
-
-    if (
-        (typeof props.team !== "undefined")
-        &
-        (typeof props.default_player !== "undefined")
-        &
-        (props.players !== [])
-        ) {
-        let img_src = window.location.origin + '/team_logos/' + props.team['season'] + '/' + props.team.location.replace(" ","") + props.team.nickname + '.png' 
-        let grid_pos = {
-            gridRow: props.team.gridRow,
-            gridColumn: props.team.gridColumn
-        }
-        return (
-            <div className={'qb_selector_box '+props.team.conference} style={grid_pos}>
-                <img 
-                    src={img_src}
-                    alt={props.team.nickname}
-                    className='qb_selector_logo'
-                />
-                <Select
-                    defaultValue={props.default_player}
-                    onChange={event => sendToParent(event)}
-                    options={props.players}
-                    isSearchable={true}
-                    className='qb_selector_select'
-                    id={props.teamID}
-                />
-            </div>
-        )
-    } else {
-        return null
-    }
-}
+import PredictionPeriodChanger from './PredictionPeriodChanger';
 
 const QBPredictionsComponent = () => {
-    const [teamIDList, setTeamIDList] = useState([]);
+    // const [teamIDList, setTeamIDList] = useState([]);
     const [teams, setTeams] = useState("a");
     const [players, setPlayers] = useState([]);
     const [conferences, setConferences] = useState([]);
     const [currentDropdownValues, setCurrentDropdownValues] = useState("b");
-    const [currentPredictionPeriodID, setCurrentPredictionPeriodID] = useState("c");
+    const [truePredictionPeriodID, setTruePredictionPeriodID] = useState("truePredictionPeriodID");
+    const [currentPredictionPeriodID, setCurrentPredictionPeriodID] = useState("currentPredictionPeriodID");
     const [showPopup, setShowPopup] = useState(false);
-    const [popupMessage, setPopupMessage] = useState("");
+    const [popupMessage, setPopupMessage] = useState("popupMessage");
+    const [popupTitle, setPopupTitle] = useState("popupTitle");
+    const [popupSubtitle, setPopupSubtitle] = useState("popupSubtitle");
     const [uniqueSeasons, setUniqueSeasons] = useState([]);
     const [uniqueSeasonPeriodIDs, setUniqueSeasonPeriodIDs] = useState([]);
     const [periodLookup, setPeriodLookup] = useState({});
     const [showPredictionPeriodChanger, setShowPredictionPeriodChanger] = useState(false);
-    const [currentSeason, setCurrentSeason] = useState(null);
-    const [currentSeasonPeriodID, setCurrentSeasonPeriodID] = useState(null);
+    const [trueSeason, setTrueSeason] = useState("trueSeason");
+    const [currentSeason, setCurrentSeason] = useState("currentSeason");
+    const [trueSeasonPeriodID, setTrueSeasonPeriodID] = useState("trueSeasonPeriodID");
+    const [currentSeasonPeriodID, setCurrentSeasonPeriodID] = useState("currentSeasonPeriodID");
+    const [bottomLeftMessage, setBottomLeftMessage] = useState("bottomLeftMessage");
+    const [displayBottomLeftMessage, setDisplayBottomLeftMessage] = useState(false);
+    const [bottomLeftMessageClass, setBottomLeftMessageClass] = useState("bottomLeftMessageClass");
     const { user: currentUser } = useSelector((state) => state.auth);
 
 
@@ -151,7 +56,7 @@ const QBPredictionsComponent = () => {
                     team_id_list.push(team_obj.teamID);
                 }
                 setTeams(teams_dict);
-                setTeamIDList(team_id_list);
+                // setTeamIDList(team_id_list);
                 callPlayerService(default_dict);
             }
         )
@@ -186,18 +91,23 @@ const QBPredictionsComponent = () => {
         ConferenceService.getActiveConferences().then(
             (res) => {
                 setConferences(res.data);
-                callPredictionPeriodService();
+                callPredictionPeriodService1();
             }
         )
     }
 
-    const callPredictionPeriodService = () => {
+    const callPredictionPeriodService1 = () => {
         PredictionPeriodService.getCurrentPredictionPeriodID().then(
             (res) => {
                 // Deal with null and use setCurrentPredictionPeriodID
                 setCurrentPredictionPeriodID(res.data);
+                setTruePredictionPeriodID(res.data);
+                callPredictionPeriodService2(res.data);
             }
         );
+    }
+
+    const callPredictionPeriodService2 = (current_predictions_period_ID) => {
         if (currentUser.roles.includes("ROLE_TESTER")) {
             setShowPredictionPeriodChanger(true);
             PredictionPeriodService.getActivePredictionPeriods().then(
@@ -229,25 +139,60 @@ const QBPredictionsComponent = () => {
                                 }
                             );
                         }
-                        if (ppID === currentPredictionPeriodID) {
+                        // console.log("ppID: " + ppID);
+                        // console.log("current_predictions_period_ID: " + current_predictions_period_ID);
+                        if (ppID === current_predictions_period_ID) {
                             setCurrentSeason(ssn);
+                            setTrueSeason(ssn);
                             setCurrentSeasonPeriodID(spID);
+                            setTrueSeasonPeriodID(spID);
                         }
+                        // console.log("currentSeason: " + currentSeason);
+                        // console.log("currentSeasonPeriodID: " + currentSeasonPeriodID);
                         period_lookup[ssn + "---" + spID] = predictionPeriod.predictionPeriodID;
+                        // console.log("-------------------")
                     }
                     setUniqueSeasons(unique_season_dicts);
                     setUniqueSeasonPeriodIDs(unique_season_period_IDs_dicts);
                     setPeriodLookup(period_lookup);
+                    if (currentSeasonPeriodID === "n/a") {
+                        setCurrentSeasonPeriodID(null);
+                    }
                 }
             )
         }
     }
 
-    const updateParentState = (event, teamID) => {
+    const resetPredictionPeriodID = () => {
+        setCurrentPredictionPeriodID(truePredictionPeriodID);
+        setCurrentSeason(trueSeason);
+        setCurrentSeasonPeriodID(trueSeasonPeriodID);
+    }
+
+    const updateParentStateQBSelector = (event, teamID) => {
         let cdv = { ...currentDropdownValues }
         cdv[teamID] = event;
         setCurrentDropdownValues(cdv);
     };
+
+    const updateParentStatePredictionPeriodChanger = (comboID) => {
+        let newPredictionPeriodID = periodLookup[comboID];
+        console.log("newPredictionPeriodID: " + newPredictionPeriodID);
+        setCurrentPredictionPeriodID(newPredictionPeriodID);
+    }
+
+    const sleep = (ms) => {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+
+    const showAndHideBottomLeftMessage = async () => {
+        // Display message, wait 3 secs, hide message
+        setDisplayBottomLeftMessage(true);
+        console.log("about to sleep");
+        await sleep(3*1000);
+        setDisplayBottomLeftMessage(false);
+    }
+
 
     const savePredictions = () => {
         // Make sure no QB has been chosen for two teams
@@ -278,21 +223,61 @@ const QBPredictionsComponent = () => {
                 currentPredictionPeriodID,
                 currentUser.userID,
                 selectionsArray
+            ).then(
+                (res) => {
+                    setBottomLeftMessage("Success!");
+                    setBottomLeftMessageClass("bottom-left-message-green")
+                    showAndHideBottomLeftMessage();
+                }
+            ).catch(
+                (error) => {
+                    var popup_title, popup_message
+                    var popup_subtitle = "Please try again, if the error continues, tweet ";
+                    popup_subtitle += '<a href="https://www.twitter.com/TheQBCarousel"  target="_blank">@TheQBCarousel</a>';
+                    if (error.response) {
+                        // The request was made and the server responded with a status code
+                        // that falls out of the range of 2xx
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                        popup_title = "Response Error";
+                        popup_message = error.response.data.message;
+                    } else if (error.request) {
+                        // The request was made but no response was received
+                        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                        // http.ClientRequest in node.js
+                        console.log(error.request);
+                        popup_title = "Request Error";
+                        popup_message = "There request was made but no response was received";
+                    } else {
+                        // Something happened in setting up the request that triggered an Error
+                        console.log('Error', error.message);
+                        popup_title = "Error";
+                        popup_message = "Something happened in setting up the request that triggered an error";
+                    }
+                    console.log(error.config);
+                    setPopupTitle(popup_title);
+                    setPopupSubtitle(popup_subtitle);
+                    setPopupMessage(popup_message);
+                    setShowPopup(true);
+                }
             );
-            // console.log("postPredictions run");
+            console.log("predictions posted");
         } else {
             // Open pop up to display `msg`
+            setPopupTitle("Same QB chosen for more than one team");
             setPopupMessage(msg);
             setShowPopup(true);
         }
     };
 
     if (
-        (teams !== "a")
-        &
-        (players !== [])
-        &
-        (currentDropdownValues !== {})
+        // (teams !== "a")
+        // &
+        // (players !== [])
+        // &
+        // (currentDropdownValues !== {})
+        (currentSeasonPeriodID !== "currentSeasonPeriodID")
     ) {
         return (
             <div className='qb_predictor_box'>
@@ -323,7 +308,7 @@ const QBPredictionsComponent = () => {
                                     team={teams[teamID]}
                                     key={teamID}
                                     players={players}
-                                    parentStateUpdater={updateParentState}
+                                    parentStateUpdater={updateParentStateQBSelector}
                                 ></QBSelector>
                             )
                         }
@@ -343,18 +328,33 @@ const QBPredictionsComponent = () => {
                             seasonPeriodIDs={uniqueSeasonPeriodIDs}
                             currentSeason={currentSeason}
                             currentSeasonPeriodID={currentSeasonPeriodID}
+                            currentPredictionPeriodID={currentPredictionPeriodID}
+                            parentStateUpdater={updateParentStatePredictionPeriodChanger}
+                            predictionPeriodIDResetter={resetPredictionPeriodID}
                         />
+                    )
+                }
+                {
+                    displayBottomLeftMessage && (
+                        <h4
+                            className={bottomLeftMessageClass}
+                            id="bottom-left-message"
+                        >
+                            {bottomLeftMessage}
+                        </h4>
                     )
                 }
                 {/* <p
                 id="msg"
                 style={{gridRow:11,gridColumnStart:1,gridColumnEnd:6}}
                 >Ignore Me</p> */}
-                <Popup
-                trigger={showPopup}
-                setTrigger={setShowPopup}
-                message={popupMessage}
-                ></Popup>
+                <PopupComponent
+                    trigger={showPopup}
+                    setTrigger={setShowPopup}
+                    title={popupTitle}
+                    subtitle={popupSubtitle}
+                    message={popupMessage}
+                ></PopupComponent>
             </div>
         )
     } else {

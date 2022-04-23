@@ -12,4 +12,5 @@ public interface PlayerRepository extends JpaRepository<Player, String>{
 	
 	public List<Player> findByIsActiveTrueOrderByNameAsc();
 	public Player findByPlayerID(long playerID);
+	public List<Player> findByPlayerIDIn(List<Long> playerIDs);
 }

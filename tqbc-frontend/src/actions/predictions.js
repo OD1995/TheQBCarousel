@@ -6,19 +6,23 @@ export const postPredictions = (predictionPeriodID, userID, predictions) => {
         predictionPeriodID,
         userID,
         predictions
-    ).then(
-        (response) => {
-            return Promise.resolve()
-        },
-        (error) => {
-            const message = 
-                (
-                    error.response &&
-                    error.response.data &&
-                    error.response.data.message
-                ) || error.message || error.toString();
+    )
+    // .then(
+    //     (response) => {
+    //         console.log("response");
+    //         console.log(response);
+    //         return response;
+    //         // return Promise.resolve()
+    //     },
+    //     (error) => {
+    //         const message = 
+    //             (
+    //                 error.response &&
+    //                 error.response.data &&
+    //                 error.response.data.message
+    //             ) || error.message || error.toString();
 
-                return Promise.reject();
-        }
-    );
+    //             return Promise.reject();
+    //     }
+    // );
 };
