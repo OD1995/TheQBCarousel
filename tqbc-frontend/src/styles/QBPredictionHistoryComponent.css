@@ -1,0 +1,149 @@
+.qb_selector_box {
+    /* border:1px solid black; */
+    display: grid;
+    /* grid-template-columns: min(10vw,100%) 15vw; */
+    /* grid-template-columns: 1fr 15vw; */
+    grid-template-columns: 1fr 75%;
+    /* grid-template-rows: min(10vw,100%); */
+    /* grid-template-rows: 10vw; */
+    /* height: 10vh; */
+    /* width: 25vw; */
+    border-radius: 25px;
+}
+
+.qb_selector_logo {
+    /* float: left; */
+    /* width: 10%; */
+    /* height: 9vh; */
+    /* border:1px solid blue; */
+    grid-column: 1;
+    justify-self: center;
+    align-self: center;
+    max-width: 80%;
+    max-height: 100%;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.qb_selector_select {
+    /* float: right;
+    width: 14vw; */
+    /* border:1px solid green; */
+    grid-column: 2;
+    justify-self: stretch;
+    align-self: center;
+    max-width: 100%;
+    padding-right: 5px;
+}
+
+.qb_predictor_box {
+    display: grid;
+    /* grid-template-columns: 5vw 20vw 20vw 20vw 20vw; */
+    grid-template-columns: 7vw repeat(4,18vw);
+    /* grid-template-rows: 3vh 10vh 10vh 10vh 10vh 10vh 10vh 10vh 10vh; */
+    grid-template-rows: 3vh repeat(8,9vh) 8vh;
+    grid-gap: 2px;
+    /* border: 1px solid red; */
+    /* padding-top: 2vh; */
+}
+
+#prediction-period-changer {
+    display: grid;
+    /* grid-template-columns: 10% 20% 15% 20% 10% 25%; */
+    /* grid-template-rows: 100%; */
+    grid-template-columns: 30% 40% 40%;
+    grid-template-rows: 40% 60%;
+    /* border: 1px solid black; */
+}
+
+.prediction-period-changer-text {
+    /* border: 1px solid blue; */
+    justify-self: center;
+    align-self: center;
+}
+
+.prediction-period-changer-selecter {
+    justify-self: center;
+    align-self: center;
+}
+
+.area_title {
+    /* border: 1px solid orange; */
+    justify-self: center;
+    align-self: center;
+    font-size: large;
+    font-weight: bold;
+}
+
+#bottom-left-message {
+    grid-row: 10;
+    grid-column-start: 4;
+    grid-column-end: 6;
+    justify-self: center;
+    align-self: center;
+}
+
+.bottom-left-message-green {
+    color: green;
+}
+
+.AFC {
+    background-color: rgba(206,17,38,0.8);
+}
+
+.NFC {
+    background-color: rgba(0,59,102,0.8);
+}
+
+.conference_logo {
+    /* max-width: 100%; */
+    max-width: 5vw;
+    align-self: center;
+     /* border: 1px solid purple; */
+}
+
+#prediction-period-changer-button-div {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+
+#save-button {
+    font-size: 20px !important;
+    margin: 10px 0px;
+    width: 50%;
+    justify-self: right;
+    grid-row: 10;
+    grid-column: 5;
+}
+
+.tqbc-black-button {
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.tqbc-green-button {
+    background-color: darkgreen;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.tqbc-red-button {
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#qb-displayer-selection {
+    display: block;
+    font-size: 1em;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: 500;
+  }

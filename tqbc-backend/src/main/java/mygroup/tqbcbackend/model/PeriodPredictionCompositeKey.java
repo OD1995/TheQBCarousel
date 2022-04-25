@@ -34,7 +34,33 @@ public class PeriodPredictionCompositeKey implements Serializable {
     	this.teamID = teamID;
     }
     
-    @Override
+    
+    
+    public long getPredictionPeriodID() {
+		return predictionPeriodID;
+	}
+
+	public void setPredictionPeriodID(long predictionPeriodID) {
+		this.predictionPeriodID = predictionPeriodID;
+	}
+
+	public long getUserID() {
+		return userID;
+	}
+
+	public void setUserID(long userID) {
+		this.userID = userID;
+	}
+
+	public long getTeamID() {
+		return teamID;
+	}
+
+	public void setTeamID(long teamID) {
+		this.teamID = teamID;
+	}
+
+	@Override
 	public int hashCode() {
 		return Objects.hash(predictionPeriodID, teamID, userID);
 	}

@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,15 +19,15 @@ public class PeriodPrediction {
 	@EmbeddedId
 	private PeriodPredictionCompositeKey periodPredictionCompositeKey;
 	
-	@ManyToOne(targetEntity = PredictionPeriod.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = PredictionPeriod.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "PredictionPeriodID", nullable = false, insertable = false, updatable = false)
 	private PredictionPeriod predictionPeriod;
 
-	@ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "UserID", nullable = false, insertable = false, updatable = false)
 	private User user;
 
-	@ManyToOne(targetEntity = Team.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Team.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "TeamID", nullable = false, insertable = false, updatable = false)
 	private Team team;
 
@@ -71,6 +70,14 @@ public class PeriodPrediction {
 
 	public Date getPredictionDateTimeUTC() {
 		return predictionDateTimeUTC;
+	}
+
+	public Team getTeam() {
+		return team;
+	}
+
+	public void setTeam(Team team) {
+		this.team = team;
 	}
 
 }

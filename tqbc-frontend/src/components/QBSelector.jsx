@@ -8,12 +8,12 @@ const QBSelector = (props) => {
       };
 
     if (
-        (typeof props.team !== "undefined")
-        &
-        (typeof props.default_player !== "undefined")
-        &
-        (props.players !== [])
-        ) {
+            (typeof props.team !== "undefined")
+            &
+            (typeof props.default_player !== "undefined")
+            &
+            (props.players !== [])
+    ) {
         let img_src = window.location.origin + '/team_logos/' + props.team['season'] + '/' + props.team.location.replace(" ","") + props.team.nickname + '.png' 
         let grid_pos = {
             gridRow: props.team.gridRow,

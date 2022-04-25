@@ -2,9 +2,7 @@ package mygroup.tqbcbackend.controller;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-//import java.io.Console;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -12,7 +10,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,12 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
 import mygroup.tqbcbackend.model.FrontEndPrediction;
 import mygroup.tqbcbackend.model.PeriodPrediction;
 import mygroup.tqbcbackend.model.Player;
+import mygroup.tqbcbackend.model.PredictionPeriod;
+import mygroup.tqbcbackend.model.User;
 //import mygroup.tqbcbackend.model.PeriodPredictionCompositeKey;
 import mygroup.tqbcbackend.payload.request.PeriodPredictionRequest;
+import mygroup.tqbcbackend.payload.request.PredictionHistoryRequest;
 import mygroup.tqbcbackend.payload.response.MessageResponse;
 import mygroup.tqbcbackend.repository.PeriodPredictionRepository;
 import mygroup.tqbcbackend.repository.PlayerRepository;
-//import mygroup.tqbcbackend.repository.PredictionPeriodRepository;
+import mygroup.tqbcbackend.repository.UserRepository;
+import mygroup.tqbcbackend.repository.PredictionPeriodRepository;
 //import mygroup.tqbcbackend.repository.TeamRepository;
 //import mygroup.tqbcbackend.repository.UserRepository;
 
@@ -38,11 +42,11 @@ public class PeriodPredictionController {
 	@Autowired
 	private PeriodPredictionRepository periodPredictionRepository;
 	
-//	@Autowired
-//	private PredictionPeriodRepository predictionPeriodRepository;
+	@Autowired
+	private PredictionPeriodRepository predictionPeriodRepository;
 //	
-//	@Autowired
-//	private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 //	
 //	@Autowired
 //	private TeamRepository teamRepository;
@@ -65,23 +69,11 @@ public class PeriodPredictionController {
 		List<Player> players = playerRepository.findByPlayerIDIn(playerIDs);
 		Map<Long, Player> playerMap = players.stream().collect(Collectors.toMap(Player::getPlayerID, v -> v));
 		List<PeriodPrediction> periodPredictions = new ArrayList<PeriodPrediction>();
-		for (FrontEndPrediction prediction : periodPredictionRequest.getPredictions()) {
-//			PeriodPredictionCompositeKey periodPredictionCompositeKey = new PeriodPredictionCompositeKey(
-//					predictionPeriodID,
-//					userID,
-//					prediction.getTeamID()
-//			);
-//			PeriodPrediction periodPrediction = new PeriodPrediction(
-//					periodPredictionCompositeKey,
-//					playerRepository.findByPlayerID(prediction.getPlayerID()),
-//					new Date()
-//			);
-			
+		for (FrontEndPrediction prediction : periodPredictionRequest.getPredictions()) {			
 			PeriodPrediction periodPrediction = new PeriodPrediction(
 					predictionPeriodID,
 					userID,
 					prediction.getTeamID(),
-//					playerRepository.findByPlayerID(prediction.getPlayerID()),
 					playerMap.get(prediction.getPlayerID()),
 					new Date()
 			);
@@ -93,5 +85,28 @@ public class PeriodPredictionController {
 		return ResponseEntity.ok(
 				new MessageResponse("Success!")
 		);
+	}
+	
+	@GetMapping("/getmaxpredictionperiodid")
+	public long getMaxPredictionPeriodID(PredictionHistoryRequest predictionHistoryRequest) {
+		String username = predictionHistoryRequest.getUsername();	
+		User user = userRepository.findByUsername(username)
+				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+		return periodPredictionRepository.findMaxPredictionPeriodID(user.getUserID());
+	}
+	
+	@GetMapping("/getpredictions")
+	public Map<Long, PeriodPrediction> getTest(PredictionHistoryRequest predictionHistoryRequest) {
+		String username = predictionHistoryRequest.getUsername();
+		User user = userRepository.findByUsername(username)
+				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+		PredictionPeriod predictionPeriod = predictionPeriodRepository.findByPredictionPeriodID(predictionHistoryRequest.getPredictionPeriodID());
+		List<PeriodPrediction> periodPredictions = periodPredictionRepository.findByUserAndPredictionPeriod(user, predictionPeriod);
+		Map<Long, PeriodPrediction> teamIDMap = periodPredictions.stream().collect(Collectors.toMap(
+//				PeriodPrediction::getTeam::getTeamID,
+				k -> k.getTeam().getTeamID(),
+				v -> v
+		));
+		return teamIDMap;
 	}
 }

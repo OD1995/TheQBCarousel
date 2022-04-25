@@ -14,14 +14,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import ListTeamComponent from './components/ListTeamComponent';
 import QBPredictionsComponent from './components/QBPredictionsComponent';
-// import FieldForm from './components/TestComponent';
-// import Test2 from './components/TestComponent2';
+import QBPredictionHistoryComponent from './components/QBPredictionHistoryComponent';
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Home from "./components/Home";
 import HowItWorks from "./components/HowItWorks";
 import Profile from "./components/Profile";
-import BoardUser from "./components/BoardUser";
 import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
 import EmailVerification from "./components/EmailVerification";
@@ -123,8 +120,8 @@ const App = () => {
 									</Link>
 								</li>
 								<li className="nav-item">
-									<Link to={"/qb-predictions"} className="nav-link">
-										Prediction History
+									<Link to={"/prediction-history/" + currentUser.username} className="nav-link">
+										My Prediction History
 									</Link>
 								</li>
 								<li className="nav-item">
@@ -172,6 +169,14 @@ const App = () => {
 						{/* <Route path="/" exact element={<ListTeamComponent/>}></Route> */}
 						<Route path="/list-teams" element={<ListTeamComponent/>}></Route>
 						<Route path="/qb-predictions" element={<QBPredictionsComponent/>}></Route>
+						<Route
+							path="/prediction-history/:username/"
+							element={<QBPredictionHistoryComponent/>}
+						></Route>
+						<Route
+							path="/prediction-history/:username/historyID"
+							element={<QBPredictionHistoryComponent/>}
+						></Route>
 						<Route path="/email-verification" element={<EmailVerification/>}></Route>
 						{/* <Route path="/test" element={<FieldForm fields={fields}/>}></Route>
 						<Route path="/test2" element={<Test2/>}></Route> */}
