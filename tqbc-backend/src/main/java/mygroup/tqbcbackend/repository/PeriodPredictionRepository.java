@@ -18,4 +18,6 @@ public interface PeriodPredictionRepository extends JpaRepository<PeriodPredicti
 			nativeQuery = true
 	)
 	public long findMaxPredictionPeriodID(long userID);
+	
+	public List<PeriodPrediction> findByPredictionPeriod_SeasonAndUser(long season, User user);
 }

@@ -1,3 +1,4 @@
+- Have predictions board show predictions if already been made in the prediction period
 - Visualise historical predictions
 - Integrate Google Analytics
 - Calculate and visualise points and league tables

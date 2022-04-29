@@ -155,7 +155,7 @@ const QBPredictionsComponent = () => {
                     setUniqueSeasons(unique_season_dicts);
                     setUniqueSeasonPeriodIDs(unique_season_period_IDs_dicts);
                     setPeriodLookup(period_lookup);
-                    if (currentSeasonPeriodID === "n/a") {
+                    if (currentSeasonPeriodID === "currentSeasonPeriodID") {
                         setCurrentSeasonPeriodID(null);
                     }
                 }

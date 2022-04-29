@@ -43,6 +43,13 @@ public class Player {
 	@Nullable
 	private Team defaultTeam;
 	
+	@OneToMany(
+			targetEntity = Answer.class,
+			fetch = FetchType.LAZY,
+			mappedBy = "player"
+	)
+	private List<Answer> answers;
+	
 	public Player() {
 		
 	}

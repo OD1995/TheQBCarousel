@@ -23,7 +23,7 @@ public class PredictionPeriod {
 	private long predictionPeriodID;
 	
 	@Column(name = "Season")
-	private int season;
+	private long season;
 	
 	@Column(name = "SeasonPeriodID")
 	private long seasonPeriodID;
@@ -87,11 +87,11 @@ public class PredictionPeriod {
 		this.predictionPeriodID = predictionPeriodID;
 	}
 
-	public int getSeason() {
+	public long getSeason() {
 		return season;
 	}
 
-	public void setSeason(int season) {
+	public void setSeason(long season) {
 		this.season = season;
 	}
 

@@ -23,7 +23,7 @@ public class Team {
 	private Long teamID;	
 	
 	@Column(name = "Season")
-	private int season;	
+	private long season;	
 	
 	@Column(name = "Location")
 	private String location;
@@ -68,6 +68,14 @@ public class Team {
 	)
 	private List<User> fans;
 	
+	@OneToMany(
+			targetEntity = Answer.class,
+			fetch = FetchType.LAZY,
+			mappedBy = "team"
+	)
+	private List<Answer> answers;
+	
+	
 	
 	public Team() {
 		
@@ -96,11 +104,11 @@ public class Team {
 		this.teamID = teamID;
 	}
 
-	public int getSeason() {
+	public long getSeason() {
 		return season;
 	}
 
-	public void setSeason(int season) {
+	public void setSeason(long season) {
 		this.season = season;
 	}
 
