@@ -7,6 +7,8 @@ public class PredictionHistoryRequest {
 	private String username;
 	
 	private long predictionPeriodID;
+	
+	private long season;
 
 	public long getUserID() {
 		return userID;
@@ -31,4 +33,13 @@ public class PredictionHistoryRequest {
 	public void setPredictionPeriodID(long predictionPeriodID) {
 		this.predictionPeriodID = predictionPeriodID;
 	}
+
+	public long getSeason() {
+		return season;
+	}
+
+	public void setSeason(long season) {
+		this.season = season;
+	}
+
 }

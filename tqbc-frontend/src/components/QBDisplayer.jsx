@@ -10,27 +10,67 @@ const QBDisplayer = (props) => {
             // (typeof props.prediction.team !== "undefined")
             (props.allLoaded)
     ) {
+        let team = props.predictions[0].team;
+        let player = props.predictions[0].player;
         let img_src = (
             window.location.origin
             + '/team_logos/' 
-            + props.prediction.team.season
-            + '/' + props.prediction.team.location.replace(" ","")
-            + props.prediction.team.nickname + '.png'
+            + team.season
+            + '/' + team.location.replace(" ","")
+            + team.nickname + '.png'
         );
         let grid_pos = {
-            gridRow: props.prediction.team.gridRow,
-            gridColumn: props.prediction.team.gridColumn
+            gridRow: team.gridRow,
+            gridColumn: team.gridColumn
         }
         return (
-            <div className={'qb_selector_box '+props.prediction.team.conference} style={grid_pos}>
+            <div className={'qb_displayer_box '+ team.conference} style={grid_pos}>
                 <img 
                     src={img_src}
-                    alt={props.prediction.team.nickname}
-                    className='qb_selector_logo'
+                    alt={team.nickname}
+                    className='qb_displayer_logo'
                 />
-                <p className='qb-displayer-selection'>
-                    {props.prediction.player.name}
-                </p>
+
+                {
+                    props.predictions.map(
+                        (prediction, idx) => {
+                            var boxColour;
+                            if (prediction.correct == 1) {
+                                boxColour = "green"
+                            } else if (prediction.correct == 0) {
+                                boxColour = "red"
+                            } else {
+                                boxColour = "white"
+                            }
+                            return (
+                                [
+                                    <p 
+                                        className={'qb-displayer-selection pp pp-' + (idx+1)}
+                                        style={{
+                                            gridColumn:2,
+                                            gridRow:idx+2
+                                        }}
+                                        key={idx}
+                                    >
+                                        {"PP" + (idx + 1)}
+                                    </p>,
+                                    <p 
+                                        className={
+                                            'qb-displayer-selection player player-' + (idx+1) + " colour-" + boxColour
+                                        }
+                                        style={{
+                                            gridColumn:3,
+                                            gridRow:idx+2
+                                        }}
+                                        key={idx}
+                                    >
+                                        {prediction.player.name}
+                                    </p>
+                                ]
+                            )
+                        }
+                    )
+                }
             </div>
         )
     } else {

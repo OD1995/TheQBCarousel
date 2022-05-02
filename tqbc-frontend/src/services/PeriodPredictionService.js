@@ -26,7 +26,7 @@ class PeriodPredictionService {
             {
                 params: {
                     username: username,
-                    predictionPeriodID: predictionPeriodID
+                    season: predictionPeriodID
                 }
             }
         );
@@ -37,6 +37,19 @@ class PeriodPredictionService {
     ) {
         return axios.get(
             process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/periodpredictions/getmaxpredictionperiodid",
+            {
+                params: {
+                    username: username
+                }
+            }
+        );
+    }
+
+    getMaxSeason(
+        username
+    ) {
+        return axios.get(
+            process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/periodpredictions/getmaxseason",
             {
                 params: {
                     username: username

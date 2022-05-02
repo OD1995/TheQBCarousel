@@ -1,6 +1,9 @@
 package mygroup.tqbcbackend.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import mygroup.tqbcbackend.model.Answer;
 import mygroup.tqbcbackend.model.PeriodPrediction;
+import mygroup.tqbcbackend.model.Player;
 import mygroup.tqbcbackend.repository.AnswerRepository;
 import mygroup.tqbcbackend.repository.PeriodPredictionRepository;
 import mygroup.tqbcbackend.repository.UserRepository;
@@ -29,7 +33,7 @@ public class UserScoreController {
 	private AnswerRepository answerRepository;
 
 	@GetMapping("/test")
-	public List<Answer> getUserScore() {
+	public Map<Long, List<Player>> getUserScore() {
 		// Get predictions for given season and user
 		List<PeriodPrediction> periodPredictions = periodPredictionRepository.findByPredictionPeriod_SeasonAndUser(
 				2022,
@@ -37,7 +41,33 @@ public class UserScoreController {
 		);
 		// Get answers for given season
 		List<Answer> answers = answerRepository.findByTeam_Season(2022);
+		// Convert to map with key: teamID, value: array of players
+		Map<Long, List<Player>> teamIDPlayerArrayMap = new HashMap<Long, List<Player>>();
+		for (Answer answer : answers) {
+			long teamID = answer.getTeam().getTeamID();
+			Player player = answer.getPlayer();
+			if (teamIDPlayerArrayMap.containsKey(teamID)) {
+				teamIDPlayerArrayMap.get(teamID).add(player);
+			} else {
+				List<Player> playerList = new ArrayList<>();
+				playerList.add(player);
+				teamIDPlayerArrayMap.put(
+						teamID,
+						playerList
+				);
+			}
+		}
 		
-		return answers;
+		for (PeriodPrediction periodPrediction : periodPredictions) {
+			long teamID = periodPrediction.getTeam().getTeamID();
+			Player player = periodPrediction.getPlayer();
+			periodPrediction.setCorrect(
+					teamIDPlayerArrayMap.get(teamID).contains(player)
+			);
+		}
+		
+		periodPredictionRepository.saveAll(periodPredictions);
+		
+		return teamIDPlayerArrayMap;
 	}
 }

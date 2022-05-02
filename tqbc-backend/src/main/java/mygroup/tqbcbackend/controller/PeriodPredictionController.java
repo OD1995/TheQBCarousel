@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.validation.Valid;
 
@@ -75,7 +76,8 @@ public class PeriodPredictionController {
 					userID,
 					prediction.getTeamID(),
 					playerMap.get(prediction.getPlayerID()),
-					new Date()
+					new Date(),
+					null
 			);
 			
 			periodPredictions.add(periodPrediction);
@@ -95,18 +97,44 @@ public class PeriodPredictionController {
 		return periodPredictionRepository.findMaxPredictionPeriodID(user.getUserID());
 	}
 	
+	@GetMapping("/getmaxseason")
+	public long getMaxSeason(PredictionHistoryRequest predictionHistoryRequest) {
+		String username = predictionHistoryRequest.getUsername();	
+		User user = userRepository.findByUsername(username)
+				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+		return periodPredictionRepository.findMaxSeason(user.getUserID());
+	}
+	
 	@GetMapping("/getpredictions")
-	public Map<Long, PeriodPrediction> getTest(PredictionHistoryRequest predictionHistoryRequest) {
+	public Map<Long, List<PeriodPrediction>> getTest(PredictionHistoryRequest predictionHistoryRequest) {
 		String username = predictionHistoryRequest.getUsername();
 		User user = userRepository.findByUsername(username)
 				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-		PredictionPeriod predictionPeriod = predictionPeriodRepository.findByPredictionPeriodID(predictionHistoryRequest.getPredictionPeriodID());
-		List<PeriodPrediction> periodPredictions = periodPredictionRepository.findByUserAndPredictionPeriod(user, predictionPeriod);
-		Map<Long, PeriodPrediction> teamIDMap = periodPredictions.stream().collect(Collectors.toMap(
-//				PeriodPrediction::getTeam::getTeamID,
-				k -> k.getTeam().getTeamID(),
-				v -> v
-		));
+//		PredictionPeriod predictionPeriod = predictionPeriodRepository.findByPredictionPeriodID(predictionHistoryRequest.getPredictionPeriodID());
+//		List<PeriodPrediction> periodPredictions = periodPredictionRepository.findByUserAndPredictionPeriod(user, predictionPeriod);
+		List<PeriodPrediction> periodPredictions = periodPredictionRepository.findByPredictionPeriod_SeasonAndUser(
+				predictionHistoryRequest.getSeason(),
+				user
+		);
+//		Map<Long, PeriodPrediction> teamIDMap = periodPredictions.stream().collect(Collectors.toMap(
+////				PeriodPrediction::getTeam::getTeamID,
+//				k -> k.getTeam().getTeamID(),
+//				v -> v
+//		));
+		Map<Long, List<PeriodPrediction>> teamIDMap = new HashMap<>();
+		for (PeriodPrediction periodPrediction : periodPredictions) {
+			long teamID = periodPrediction.getTeam().getTeamID();
+			if (teamIDMap.containsKey(teamID)) {
+				teamIDMap.get(teamID).add(periodPrediction);
+			} else {
+				List<PeriodPrediction> periodPredictionList = new ArrayList<>();
+				periodPredictionList.add(periodPrediction);
+				teamIDMap.put(
+						teamID,
+						periodPredictionList
+				);
+			}
+		}
 		return teamIDMap;
 	}
 }

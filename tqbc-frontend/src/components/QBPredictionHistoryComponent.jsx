@@ -70,7 +70,7 @@ const QBPredictionHistoryComponent = () => {
     }
 
     const callPeriodPredictionService = () => {
-        PeriodPredictionService.getMaxPredictionPeriodID(params.username).then(
+        PeriodPredictionService.getMaxSeason(params.username).then(
             (res) => {
                 PeriodPredictionService.getPredictions(
                     params.username,
@@ -327,7 +327,7 @@ const QBPredictionHistoryComponent = () => {
                             return (
                                 <QBDisplayer
                                     teamID={teamID}
-                                    prediction={teamIDPeriodPredictionDict[teamID]}
+                                    predictions={teamIDPeriodPredictionDict[teamID]}
                                     key={teamID}
                                     allLoaded={allLoaded}
                                 ></QBDisplayer>

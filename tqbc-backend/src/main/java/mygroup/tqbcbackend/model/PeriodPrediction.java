@@ -38,18 +38,20 @@ public class PeriodPrediction {
 	@Column(name = "PredictionDateTimeUTC")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date predictionDateTimeUTC;
+	
+	@Column(name = "IsCorrect")
+	private Boolean isCorrect;
 
 	public PeriodPrediction() {
 
 	}
 
-//	public PeriodPrediction(PeriodPredictionCompositeKey periodPredictionCompositeKey, Player player, Date predictionDateTimeUTC) {
-	public PeriodPrediction(long predictionPeriodID, long userID, long teamID, Player player, Date predictionDateTimeUTC) {
+	public PeriodPrediction(long predictionPeriodID, long userID, long teamID, Player player, Date predictionDateTimeUTC, Boolean isCorrect) {
 		super();
-//		this.periodPredictionCompositeKey = periodPredictionCompositeKey;
 		this.periodPredictionCompositeKey = new PeriodPredictionCompositeKey(predictionPeriodID, userID, teamID);
 		this.player = player;
 		this.predictionDateTimeUTC = predictionDateTimeUTC;
+		this.isCorrect = isCorrect;
 	}
 
 	public PeriodPredictionCompositeKey getPeriodPredictionCompositeKey() {
@@ -78,6 +80,14 @@ public class PeriodPrediction {
 
 	public void setTeam(Team team) {
 		this.team = team;
+	}
+
+	public Boolean isCorrect() {
+		return isCorrect;
+	}
+
+	public void setCorrect(Boolean isCorrect) {
+		this.isCorrect = isCorrect;
 	}
 
 }
