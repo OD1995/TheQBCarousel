@@ -19,7 +19,7 @@ import mygroup.tqbcbackend.repository.EventRepository;
 @RequestMapping("/api/v1/events")
 public class EventController {
 
-	@Autowired
+	// @Autowired
 	private EventRepository eventRepository;
 	
 	// Get events by eventID

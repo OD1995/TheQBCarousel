@@ -13,7 +13,7 @@ import mygroup.tqbcbackend.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-	@Autowired
+	// @Autowired
 	UserRepository userRepository;
 	@Override
 	@Transactional

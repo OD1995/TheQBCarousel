@@ -17,7 +17,7 @@ import mygroup.tqbcbackend.repository.ConferenceRepository;
 @RequestMapping("/api/v1/conferences")
 public class ConferenceController {
 	
-	@Autowired
+	// @Autowired
 	private ConferenceRepository conferenceRepository;
 	
 	// Get all conferences

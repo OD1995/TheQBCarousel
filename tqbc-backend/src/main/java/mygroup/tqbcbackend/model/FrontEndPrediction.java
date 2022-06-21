@@ -1,5 +1,8 @@
 package mygroup.tqbcbackend.model;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class FrontEndPrediction {
 
 	private long teamID;

@@ -22,7 +22,7 @@ import mygroup.tqbcbackend.repository.PeriodPredictionRepository;
 @RequestMapping("/api/v1/periodpredictions")
 public class PeriodPredictionController {
 
-	@Autowired
+	// @Autowired
 	private PeriodPredictionRepository periodPredictionRepository;
 	
 	// Insert user's predictions

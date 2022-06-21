@@ -1,0 +1,20 @@
+2022-06-20 22:10:40.340  INFO 19956 --- [  restartedMain] m.tqbcbackend.TqbcBackendApplication     : Starting TqbcBackendApplication using Java 11.0.15 on OD with PID 19956 (C:\Dev\TheQBCarousel\tqbc-backend\target\classes started by odern in C:\Dev\TheQBCarousel\tqbc-backend)
+2022-06-20 22:10:40.341  INFO 19956 --- [  restartedMain] m.tqbcbackend.TqbcBackendApplication     : No active profile set, falling back to default profiles: default
+2022-06-20 22:10:40.424  INFO 19956 --- [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-06-20 22:10:40.425  INFO 19956 --- [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-06-20 22:10:42.072  INFO 19956 --- [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-06-20 22:10:42.086  INFO 19956 --- [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-06-20 22:10:42.087  INFO 19956 --- [  restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.56]
+2022-06-20 22:10:42.396  INFO 19956 --- [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-06-20 22:10:42.397  INFO 19956 --- [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1971 ms
+2022-06-20 22:10:42.532 ERROR 19956 --- [  restartedMain] o.s.b.web.embedded.tomcat.TomcatStarter  : Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'webSecurityConfig': Unsatisfied dependency expressed through field 'userDetailsService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userDetailsServiceImpl': Unsatisfied dependency expressed through field 'userRepository'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'mygroup.tqbcbackend.repository.UserRepository' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2022-06-20 22:10:42.565  INFO 19956 --- [  restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2022-06-20 22:10:42.585  WARN 19956 --- [  restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during consitory.UserRepositorsitory.UserRepository' that could not be found.
+
+The injection point has the following annotations:
+        - @org.springframework.beans.factory.annotation.Autowired(required=true)
+
+
+Action:
+
+Consider defining a bean of type 'mygroup.tqbcbackend.repository.UserRepository' in your configuration.

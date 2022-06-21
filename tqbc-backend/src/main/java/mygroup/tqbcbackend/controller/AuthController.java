@@ -46,15 +46,15 @@ public class AuthController {
 
 	@Autowired
 	AuthenticationManager authenticationManager;
-	@Autowired
+	// @Autowired
 	UserRepository userRepository;
-	@Autowired
+	// @Autowired
 	RoleRepository roleRepository;
 	@Autowired
 	PasswordEncoder encoder;
 	@Autowired
 	JwtUtils jwtUtils;
-	@Autowired
+	// @Autowired
 	ConfirmationTokenRepository confirmationTokenRepository;
 	@Autowired
 	private EmailSenderService emailSenderService;	

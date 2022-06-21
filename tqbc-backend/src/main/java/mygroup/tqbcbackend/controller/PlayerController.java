@@ -17,7 +17,7 @@ import mygroup.tqbcbackend.repository.PlayerRepository;
 @RequestMapping("/api/v1/players")
 public class PlayerController {
 	
-	@Autowired
+	// @Autowired
 	private PlayerRepository playerRepository;
 	
 	// Get all players

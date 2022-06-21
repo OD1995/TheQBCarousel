@@ -16,7 +16,7 @@ import mygroup.tqbcbackend.repository.PredictionPeriodRepository;
 @RequestMapping("/api/v1/predictionperiods")
 public class PredictionPeriodController {
 	
-	@Autowired
+	// @Autowired
 	private PredictionPeriodRepository predictionPeriodRepository;
 	
 	// Get all Prediction Periods for the How It Works page
