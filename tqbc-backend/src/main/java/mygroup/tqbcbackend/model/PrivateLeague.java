@@ -28,7 +28,10 @@ public class PrivateLeague {
 			targetEntity = User.class,
 			fetch = FetchType.LAZY
 	)
-	@JoinColumn(name = "OwnerUserID")
+	@JoinColumn(
+		name = "OwnerUserID",
+		referencedColumnName = "UserID"
+	)
 	private User ownerUser;
 		
 	@ManyToOne(

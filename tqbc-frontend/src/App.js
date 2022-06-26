@@ -15,6 +15,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import ListTeamComponent from './components/ListTeamComponent';
 import QBPredictionsComponent from './components/QBPredictionsComponent';
 import QBPredictionHistoryComponent from './components/QBPredictionHistoryComponent';
+import Navigator from './components/Navigator';
 import Login from "./components/Login";
 import Register from "./components/Register";
 import HowItWorks from "./components/HowItWorks";
@@ -24,7 +25,6 @@ import BoardAdmin from "./components/BoardAdmin";
 import EmailVerification from "./components/EmailVerification";
 
 import { logout } from "./actions/auth";
-import { clearMessage } from "./actions/message";
 
 import { history } from "./helpers/history";
 
@@ -36,17 +36,43 @@ const App = () => {
 
 	const { user: currentUser } = useSelector((state) => state.auth);
 	const { isLoggedIn } = useSelector(state => state.auth);
+	// const location = useLocation();
 	
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		history.listen(
-			(location) => {
-				console.log("Changing location, clearMessage called");
-				dispatch(clearMessage()); // Clear messsage when changing location
-			}
-		);
-	}, [dispatch]);
+	// const listenFunction = (location) => {
+	// 	console.log("Changing location, clearMessage called");
+	// 	dispatch(clearMessage()); // Clear messsage when changing location
+	// }
+
+	// useEffect(() => {
+	// 	console.log("hi")
+	// 	// console.log(history)
+	// 	// history.listen(
+	// 	// 	// console.log("hello")
+	// 	// 	// console.log(location)
+	// 	// 	// (location) => {
+	// 	// 	// 	console.log("Changing location, clearMessage called");
+	// 	// 	// 	dispatch(clearMessage()); // Clear messsage when changing location
+	// 	// 	// }
+	// 	// 	listenFunction
+	// 	// );
+	// 	history.listen(({ action, location }) => {
+	// 		console.log(
+	// 		  `The current URL is ${location.pathname}${location.search}${location.hash}`
+	// 		);
+	// 		console.log(`The last navigation action was ${action}`);
+	// 	  });
+	// 	console.log(history)
+	// }, [dispatch]);
+
+	// useEffect(
+	// 	() => {
+	// 		console.log("loc has changed");
+
+	// 	},
+	// 	[location]
+	// )
 
 	const logOut = useCallback(() => {
 		dispatch(logout());
@@ -74,6 +100,7 @@ const App = () => {
 		<div>
 			<Router history={history}>
 				<div>
+					<Navigator/>
 					<nav className="navbar navbar-expand navbar-dark bg-black">
 						<Link to={"/how-it-works"} className="navbar-brand">
 							<img

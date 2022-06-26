@@ -110,3 +110,8 @@ label {
   margin-right: 0;
   font-weight: 500;
 }
+
+.nav-item {
+  text-align: center;
+  align-self: center;
+}
