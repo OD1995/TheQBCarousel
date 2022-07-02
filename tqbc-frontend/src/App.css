@@ -110,3 +110,11 @@ label {
   text-align: center;
   align-self: center;
 }
+
+.navigation-bar {
+  height: 8vh;
+}
+
+.page-content {
+  height: 92vh;
+}

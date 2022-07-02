@@ -1,4 +1,5 @@
 import Select from 'react-select';
+import './QBSelector.css';
 
 const QBSelector = (props) => {
 
@@ -20,11 +21,11 @@ const QBSelector = (props) => {
             gridColumn: props.team.gridColumn
         }
         return (
-            <div className={'qb_selector_box '+props.team.conference} style={grid_pos}>
+            <div className={'qb-selector-box '+props.team.conference} style={grid_pos}>
                 <img 
                     src={img_src}
                     alt={props.team.nickname}
-                    className='qb_selector_logo'
+                    className='qb-selector-logo'
                 />
                 <Select
                     defaultValue={props.default_player}

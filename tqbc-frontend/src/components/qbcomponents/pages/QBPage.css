@@ -1,11 +1,13 @@
-.qb-box {
+.qb-grid {
     display: grid;
-    /* grid-template-columns: 5vw 20vw 20vw 20vw 20vw; */
     grid-template-columns: 7vw repeat(4,18vw);
-    /* grid-template-rows: 3vh 10vh 10vh 10vh 10vh 10vh 10vh 10vh 10vh; */
-    /* grid-template-rows: 3vh repeat(8,9vh) 8vh; */
-    grid-template-rows: 3vh repeat(8,10vh);
-    grid-gap: 2px;
-    /* border: 1px solid red; */
-    /* padding-top: 2vh; */
+    grid-template-rows: 3vh repeat(8,9.5vh);
+    grid-gap: 1px;
+}
+
+.area-title {
+    justify-self: center;
+    align-self: center;
+    font-size: large;
+    font-weight: bold;
 }

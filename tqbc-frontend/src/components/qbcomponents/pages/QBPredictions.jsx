@@ -21,7 +21,9 @@ const QBPredictionsComponent = () => {
     const [players, setPlayers] = useState([]);
     const [conferences, setConferences] = useState([]);
     const [currentDropdownValues, setCurrentDropdownValues] = useState("b");
+    // Actual prediction period, can be null, isn't changed after set
     const [truePredictionPeriodID, setTruePredictionPeriodID] = useState("truePredictionPeriodID");
+    // Potentially fake prediction period
     const [currentPredictionPeriodID, setCurrentPredictionPeriodID] = useState("currentPredictionPeriodID");
     const [showPopup, setShowPopup] = useState(false);
     const [popupMessage, setPopupMessage] = useState("popupMessage");
@@ -280,11 +282,11 @@ const QBPredictionsComponent = () => {
         (currentSeasonPeriodID !== "currentSeasonPeriodID")
     ) {
         return (
-            <div className='qb-predictor-box qb-box'>
-                <h1 className='area_title' style={{gridRow:1,gridColumn:2}}>NORTH</h1>
-                <h1 className='area_title' style={{gridRow:1,gridColumn:3}}>EAST</h1>
-                <h1 className='area_title' style={{gridRow:1,gridColumn:4}}>SOUTH</h1>
-                <h1 className='area_title' style={{gridRow:1,gridColumn:5}}>WEST</h1>
+            <div className='qb-predictor-box qb-grid'>
+                <h1 className='area-title' style={{gridRow:1,gridColumn:2}}>NORTH</h1>
+                <h1 className='area-title' style={{gridRow:1,gridColumn:3}}>EAST</h1>
+                <h1 className='area-title' style={{gridRow:1,gridColumn:4}}>SOUTH</h1>
+                <h1 className='area-title' style={{gridRow:1,gridColumn:5}}>WEST</h1>
                 {
                     conferences.map(
                         conf =>

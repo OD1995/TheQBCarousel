@@ -99,7 +99,7 @@ const App = () => {
   	return (
 		<div>
 			<Router history={history}>
-				<div>
+				<div className='navigation-bar'>
 					<Navigator/>
 					<nav className="navbar navbar-expand navbar-dark bg-black">
 						<Link to={"/how-it-works"} className="navbar-brand">
@@ -175,7 +175,7 @@ const App = () => {
 					</nav>
 				</div>
 
-				<div className="component-container container">
+				<div className="component-container container page-content">
 					<Routes>
 						<Route
 							index

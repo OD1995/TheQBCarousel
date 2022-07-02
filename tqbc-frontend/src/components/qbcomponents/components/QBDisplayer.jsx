@@ -42,6 +42,7 @@ const QBDisplayer = (props) => {
                             } else {
                                 boxColour = "white"
                             }
+                            const keyValue = props.teamID + "-" + idx;
                             return (
                                 [
                                     <p 
@@ -50,7 +51,7 @@ const QBDisplayer = (props) => {
                                             gridColumn:2,
                                             gridRow:idx+2
                                         }}
-                                        key={idx}
+                                        key={keyValue}
                                     >
                                         {"PP" + (idx + 1)}
                                     </p>,

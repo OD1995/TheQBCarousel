@@ -6,4 +6,4 @@
 - Replace message with modal or own page - register/sign in
 - Make API endpoints only usable from frontend
 - Prediction board only visible if in prediction period or admin account
-     - both link at top and if url navigated to
+     - both link at top and if url navigated to (redirect to error "outside of prediction period" page)
