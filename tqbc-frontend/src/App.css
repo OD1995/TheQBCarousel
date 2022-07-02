@@ -72,15 +72,11 @@ label {
 
 #tqbc-navbar-logo {
   max-height: 8vh;
-  /* border: 1px solid green; */
-  /* padding-top: 0px !important; */
-  /* padding-bottom: 0px; */
 }
 
 .navbar {
   padding-top: 0px !important;
   padding-bottom: 0px !important;
-  /* margin-top: 1vh; */
 }
 
 .navbar-brand {
@@ -97,7 +93,6 @@ label {
 }
 
 #plainPage {
-  /* border: 1px solid green; */
   padding-top: 30vh;
 }
 

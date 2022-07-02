@@ -1,14 +1,19 @@
 import React, { useEffect,useState } from 'react';
-import QBSelector from './QBSelector';
-import ConferenceService from '../services/ConferenceService';
-import TeamService from '../services/TeamService';
-import PlayerService from '../services/PlayerService';
-import PredictionPeriodService from '../services/PredictionPeriodService';
-import '../styles/QBPredictionsComponent.css';
-import PopupComponent from './PopUpComponent';
-import { postPredictions } from '../actions/predictions';
 import { useSelector } from 'react-redux';
-import PredictionPeriodChanger from './PredictionPeriodChanger';
+
+import QBSelector from '../components/QBSelector';
+import PopupComponent from '../../PopUpComponent';
+import PredictionPeriodChanger from '../../PredictionPeriodChanger';
+
+import ConferenceService from '../../../services/ConferenceService';
+import TeamService from '../../../services/TeamService';
+import PlayerService from '../../../services/PlayerService';
+import PredictionPeriodService from '../../../services/PredictionPeriodService';
+
+import { postPredictions } from '../../../actions/predictions';
+
+import '../pages/QBPredictions.css';
+import './QBPage.css';
 
 const QBPredictionsComponent = () => {
     // const [teamIDList, setTeamIDList] = useState([]);
@@ -272,15 +277,10 @@ const QBPredictionsComponent = () => {
     };
 
     if (
-        // (teams !== "a")
-        // &
-        // (players !== [])
-        // &
-        // (currentDropdownValues !== {})
         (currentSeasonPeriodID !== "currentSeasonPeriodID")
     ) {
         return (
-            <div className='qb_predictor_box'>
+            <div className='qb-predictor-box qb-box'>
                 <h1 className='area_title' style={{gridRow:1,gridColumn:2}}>NORTH</h1>
                 <h1 className='area_title' style={{gridRow:1,gridColumn:3}}>EAST</h1>
                 <h1 className='area_title' style={{gridRow:1,gridColumn:4}}>SOUTH</h1>
@@ -315,9 +315,9 @@ const QBPredictionsComponent = () => {
                     )
                 }
                 <button
-                onClick={savePredictions}
-                className="tqbc-black-button"
-                id="save-button"
+                    onClick={savePredictions}
+                    className="tqbc-black-button"
+                    id="save-button"
                 >
                     Save
                 </button>

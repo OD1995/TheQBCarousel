@@ -1,16 +1,9 @@
 .arrows {
-    /* max-width: 2vw; */
-    /* max-height: 4vw; */
     width: 3vw;
     height: 3vw;
-    /* border: 1px solid black; */
 }
 
 table,th,td {
-    /* align-content: center; */
-    /* justify-content: center; */
-    /* justify-items: center; */
-    /* border: 1px solid red; */
     text-align: center;
 }
 
@@ -22,8 +15,6 @@ tr {
     border-top: 1px solid black;
     border-left: 1px solid black;
     border-bottom: 1px solid black;
-    /* border-right: 1px solid black; */
-    /* text-align: left; */
     padding-left: 5vw;
     padding-right: 5vw;
 }
@@ -32,7 +23,6 @@ tr {
     border-top: 1px solid black;
     border-right: 1px solid black;
     border-bottom: 1px solid black;
-    /* border-left: 1px solid black; */
     padding-left: 2vw;
     padding-right: 2vw;
 }

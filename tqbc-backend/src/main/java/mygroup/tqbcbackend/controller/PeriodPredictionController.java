@@ -102,7 +102,8 @@ public class PeriodPredictionController {
 		String username = predictionHistoryRequest.getUsername();	
 		User user = userRepository.findByUsername(username)
 				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-		return periodPredictionRepository.findMaxSeason(user.getUserID());
+		long userID = user.getUserID();
+		return periodPredictionRepository.findMaxSeason(userID);
 	}
 	
 	@GetMapping("/getpredictions")

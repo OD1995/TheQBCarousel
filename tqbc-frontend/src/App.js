@@ -13,8 +13,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 
 import ListTeamComponent from './components/ListTeamComponent';
-import QBPredictionsComponent from './components/QBPredictionsComponent';
-import QBPredictionHistoryComponent from './components/QBPredictionHistoryComponent';
+import QBPredictionsComponent from './components/qbcomponents/pages/QBPredictions';
+import QBPredictionHistoryComponent from './components/qbcomponents/pages/QBPredictionHistory';
 import Navigator from './components/Navigator';
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -193,7 +193,6 @@ const App = () => {
 						<Route exact path="/profile" element={<Profile/>} />
 						<Route path="/mod" element={<BoardModerator/>} />
 						<Route path="/admin" component={<BoardAdmin/>} />
-						{/* <Route path="/" exact element={<ListTeamComponent/>}></Route> */}
 						<Route path="/list-teams" element={<ListTeamComponent/>}></Route>
 						<Route path="/qb-predictions" element={<QBPredictionsComponent/>}></Route>
 						<Route
@@ -205,8 +204,6 @@ const App = () => {
 							element={<QBPredictionHistoryComponent/>}
 						></Route>
 						<Route path="/email-verification" element={<EmailVerification/>}></Route>
-						{/* <Route path="/test" element={<FieldForm fields={fields}/>}></Route>
-						<Route path="/test2" element={<Test2/>}></Route> */}
 					</Routes>
 				</div>
 			</Router>
