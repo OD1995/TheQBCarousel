@@ -1,6 +1,7 @@
 package mygroup.tqbcbackend.security.jwt;
 
 import java.io.IOException;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 
 	private static final Logger logger = LoggerFactory.getLogger(AuthEntryPointJwt.class);
+
 	@Override
 	public void commence(
 			HttpServletRequest request,
@@ -37,6 +39,7 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 		body.put("error", "Unauthorized");
 		body.put("message", authException.getMessage());
 		body.put("path", request.getServletPath());
+		body.put("datetime", ZonedDateTime.now().toString());
 		
 		final ObjectMapper mapper = new ObjectMapper();
 		mapper.writeValue(response.getOutputStream(), body);

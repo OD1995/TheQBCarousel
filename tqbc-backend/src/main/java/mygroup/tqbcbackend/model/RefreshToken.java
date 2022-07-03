@@ -1,0 +1,71 @@
+package mygroup.tqbcbackend.model;
+
+import java.time.Instant;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "RefreshTokens")
+public class RefreshToken {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "RefreshTokenID")
+    private long refreshTokenID;
+
+    @OneToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "UserID")
+    private User user;
+
+    @Column(nullable = false, unique = true, name = "RefreshToken")
+    private String refreshToken;
+
+    @Column(nullable = false, name = "ExpiryDate")
+    private Instant expiryDate;
+
+    public RefreshToken() {
+        
+    }
+
+
+    public long getRefreshTokenID() {
+        return this.refreshTokenID;
+    }
+
+    public void setRefreshTokenID(long refreshTokenID) {
+        this.refreshTokenID = refreshTokenID;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getRefreshToken() {
+        return this.refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    public Instant getExpiryDate() {
+        return this.expiryDate;
+    }
+
+    public void setExpiryDate(Instant expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
+}
