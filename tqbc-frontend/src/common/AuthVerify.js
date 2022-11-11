@@ -1,5 +1,10 @@
 import React from "react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { updateAccessToken } from "../actions/auth";
 import { history } from "../helpers/history";
+import AuthService from "../services/auth.service";
 
 const parseJwt = (token) => {
     try {
@@ -10,19 +15,27 @@ const parseJwt = (token) => {
 };
 
 const AuthVerify = (props) => {
-    history.listen(() => {
-        const user = JSON.parse(localStorage.getItem("user"));
+    let location = useLocation();
+    const dispatch = useDispatch();
 
-        if (user) {
-            const decodedJwt = parseJwt(user.token);
-
-            if (decodedJwt.exp * 1000 < Date.now()) {
+    useEffect(() => {
+      const user = JSON.parse(localStorage.getItem("user"));
+  
+      if (user) {
+        const decodedJwt = parseJwt(user.token);
+  
+        if (decodedJwt.exp * 1000 < Date.now()) {
+            // Get new access token using refresh token
+            dispatch(updateAccessToken(user.refreshToken));
+            if (false) {
+                // If refresh token has expired, logout
                 props.logOut();
             }
         }
-    });
+      }
+    }, [location, props]);
 
-    return <div></div>
+    return <div></div>;
 };
 
 export default AuthVerify;

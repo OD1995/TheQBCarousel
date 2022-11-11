@@ -23,6 +23,15 @@ const verifyEmail = (token) => {
     );
 }
 
+const updateAccessToken = (refreshToken) => {
+    return axios.post(
+        API_URL + "refreshtoken",
+        {
+            refreshToken
+        }
+    )
+}
+
 const login = (username, password) => {
     return axios.post(
         API_URL + "login",
@@ -51,5 +60,6 @@ export default {
     register,
     verifyEmail,
     login,
-    logout
+    logout,
+    updateAccessToken
 };

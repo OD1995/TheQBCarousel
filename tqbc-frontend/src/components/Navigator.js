@@ -9,9 +9,10 @@ const Navigator = () => {
     const dispatch = useDispatch();
 
     useEffect(
-        () => {
+        (location) => {
             console.log("Changing location, clearMessage called");
-		    dispatch(clearMessage()); // Clear messsage when changing location
+		    // Clear messsage when changing location
+            dispatch(clearMessage()); 
         },
         [location]
     )

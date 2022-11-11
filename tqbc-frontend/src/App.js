@@ -29,6 +29,7 @@ import { logout } from "./actions/auth";
 import { history } from "./helpers/history";
 
 import EventBus from "./common/EventBus";
+import AuthVerify from './common/AuthVerify';
 
 const App = () => {
 	const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -36,47 +37,22 @@ const App = () => {
 
 	const { user: currentUser } = useSelector((state) => state.auth);
 	const { isLoggedIn } = useSelector(state => state.auth);
-	// const location = useLocation();
+	const { justLoggedOut } = useSelector(state => state.auth);
 	
 	const dispatch = useDispatch();
-
-	// const listenFunction = (location) => {
-	// 	console.log("Changing location, clearMessage called");
-	// 	dispatch(clearMessage()); // Clear messsage when changing location
-	// }
-
-	// useEffect(() => {
-	// 	console.log("hi")
-	// 	// console.log(history)
-	// 	// history.listen(
-	// 	// 	// console.log("hello")
-	// 	// 	// console.log(location)
-	// 	// 	// (location) => {
-	// 	// 	// 	console.log("Changing location, clearMessage called");
-	// 	// 	// 	dispatch(clearMessage()); // Clear messsage when changing location
-	// 	// 	// }
-	// 	// 	listenFunction
-	// 	// );
-	// 	history.listen(({ action, location }) => {
-	// 		console.log(
-	// 		  `The current URL is ${location.pathname}${location.search}${location.hash}`
-	// 		);
-	// 		console.log(`The last navigation action was ${action}`);
-	// 	  });
-	// 	console.log(history)
-	// }, [dispatch]);
-
-	// useEffect(
-	// 	() => {
-	// 		console.log("loc has changed");
-
-	// 	},
-	// 	[location]
-	// )
 
 	const logOut = useCallback(() => {
 		dispatch(logout());
 	}, [dispatch]);
+
+	let defaultPage = null;
+	if (isLoggedIn) {
+		defaultPage = <Navigate replace to="/profile" />
+	} else if (justLoggedOut) {
+		defaultPage = <Navigate replace to="/login" />
+	} else {
+		defaultPage = <Navigate replace to="/how-it-works" />
+	}
 
 	useEffect(() => {
 		if (currentUser) {
@@ -177,35 +153,27 @@ const App = () => {
 
 				<div className="component-container container page-content">
 					<Routes>
-						<Route
-							index
-							element={
-								isLoggedIn ? (
-									<Navigate replace to="/profile" />
-								) : (
-									<Navigate replace to="/how-it-works" />
-								)
-							}
-						/>
-						<Route exact path="/how-it-works" element={<HowItWorks/>}></Route>
+						<Route index element={defaultPage}/>
+						<Route exact path="/how-it-works" element={<HowItWorks/>}/>
 						<Route exact path="/login" element={<Login/>}></Route>
 						<Route exact path="/register" element={<Register/>} />
 						<Route exact path="/profile" element={<Profile/>} />
 						<Route path="/mod" element={<BoardModerator/>} />
 						<Route path="/admin" component={<BoardAdmin/>} />
 						<Route path="/list-teams" element={<ListTeamComponent/>}></Route>
-						<Route path="/qb-predictions" element={<QBPredictionsComponent/>}></Route>
+						<Route path="/qb-predictions" element={<QBPredictionsComponent/>}/>
 						<Route
 							path="/prediction-history/:username/"
 							element={<QBPredictionHistoryComponent/>}
-						></Route>
+						/>
 						<Route
 							path="/prediction-history/:username/historyID"
 							element={<QBPredictionHistoryComponent/>}
-						></Route>
-						<Route path="/email-verification" element={<EmailVerification/>}></Route>
+						/>
+						<Route path="/email-verification" element={<EmailVerification/>}/>
 					</Routes>
 				</div>
+				<AuthVerify logOut={logOut}/>
 			</Router>
 		</div>
   	);

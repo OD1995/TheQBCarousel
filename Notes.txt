@@ -1,0 +1,6 @@
+To run backend in vscode - go to Spring Boot Dashboard plugin (?) and press play on tqbc-backend option
+
+To do:
+ - Regenerate access token after it's expired using refresh token
+ - Work out what to do with the refresh token
+ - Improve sign in page

@@ -9,6 +9,7 @@ import {
     VERIFICATION_SUCCESS
 } from "./types";
 import AuthService from "../services/auth.service"
+import EventBus from "../common/EventBus";
 
 
 export const register = (username, favTeam, email, password) => (dispatch) => {
@@ -147,3 +148,31 @@ export const logout = () => (dispatch) => {
         }
     );
 };
+
+export const updateAccessToken = (refreshToken) => (dispatch) => {
+    AuthService.updateAccessToken(refreshToken)
+    .then(
+        (response) => {
+            const user = JSON.parse(localStorage.getItem("user"));
+            user.token = response.data.accessToken;
+            localStorage.setItem(
+                "user",
+                JSON.stringify(user)
+            );
+            return Promise.resolve();
+        },
+        (error) => {
+            const notInDatabaseErrorString = `Failed for [${refreshToken}]: Refresh token is not in database!`;
+            if (error.response.data.message === notInDatabaseErrorString) {
+                dispatch(
+                    {
+                        type: SET_MESSAGE,
+                        payload: 'A VERY IMPORTANT MESSAGE'
+                    }
+                )
+                EventBus.dispatch("logout");
+            }
+            return Promise.reject();
+        }
+    )
+}
