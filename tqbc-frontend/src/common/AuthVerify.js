@@ -22,7 +22,7 @@ const AuthVerify = (props) => {
       const user = JSON.parse(localStorage.getItem("user"));
   
       if (user) {
-        const decodedJwt = parseJwt(user.token);
+        const decodedJwt = parseJwt(user.accessToken);
   
         if (decodedJwt.exp * 1000 < Date.now()) {
             // Get new access token using refresh token

@@ -9,7 +9,10 @@ const Navigator = () => {
     const dispatch = useDispatch();
 
     useEffect(
-        (location) => {
+        () => {
+            if (location.pathname === '/how-it-works') {
+                
+            }
             console.log("Changing location, clearMessage called");
 		    // Clear messsage when changing location
             dispatch(clearMessage()); 

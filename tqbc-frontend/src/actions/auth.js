@@ -154,7 +154,7 @@ export const updateAccessToken = (refreshToken) => (dispatch) => {
     .then(
         (response) => {
             const user = JSON.parse(localStorage.getItem("user"));
-            user.token = response.data.accessToken;
+            user.accessToken = response.data.accessToken;
             localStorage.setItem(
                 "user",
                 JSON.stringify(user)
@@ -170,6 +170,10 @@ export const updateAccessToken = (refreshToken) => (dispatch) => {
                         payload: 'A VERY IMPORTANT MESSAGE'
                     }
                 )
+                localStorage.setItem(
+                    "justLoggedOut",
+                    true
+                );
                 EventBus.dispatch("logout");
             }
             return Promise.reject();

@@ -21,7 +21,7 @@ const Profile = () => {
                 </h3>
             </header>
             <p style={{fontSize:'12px'}}>
-                <strong>Token:</strong> {currentUser.token}
+                <strong>Token:</strong> {currentUser.accessToken}
             </p>
             <p>
                 <strong>User ID:</strong> {currentUser.userID}

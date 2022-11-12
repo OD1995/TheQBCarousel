@@ -37,7 +37,7 @@ const App = () => {
 
 	const { user: currentUser } = useSelector((state) => state.auth);
 	const { isLoggedIn } = useSelector(state => state.auth);
-	const { justLoggedOut } = useSelector(state => state.auth);
+	const justLoggedOut = localStorage.getItem("justLoggedOut");
 	
 	const dispatch = useDispatch();
 
@@ -173,7 +173,7 @@ const App = () => {
 						<Route path="/email-verification" element={<EmailVerification/>}/>
 					</Routes>
 				</div>
-				<AuthVerify logOut={logOut}/>
+				{/* <AuthVerify logOut={logOut}/> */}
 			</Router>
 		</div>
   	);
