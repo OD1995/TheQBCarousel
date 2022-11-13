@@ -1,15 +1,10 @@
-import axios from 'axios';
-import authHeader from './auth-header';
-// import RequestHandlerService from './RequestHandlerService';
+import api from './api.js';
 
 class PlayerService {
 
     getActivePlayers() {
-        return axios.get(
-            process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/players/active",
-            {
-                headers : authHeader()
-            }
+        return api.get(
+            process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/players/active"
         )
     }
 }

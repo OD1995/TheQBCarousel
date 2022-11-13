@@ -1,17 +1,17 @@
-import axios from 'axios';
+import api from './api.js';
 
 class PredictionPeriodService {
 
     getHowItWorksPredictionPeriods() {
-        return axios.get(process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/predictionperiods/howitworks");
+        return api.get(process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/predictionperiods/howitworks");
     }
 
     getCurrentPredictionPeriodID() {
-        return axios.get(process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/predictionperiods/getcurrent");
+        return api.get(process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/predictionperiods/getcurrent");
     }
 
     getActivePredictionPeriods() {
-        return axios.get(process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/predictionperiods/active")
+        return api.get(process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/predictionperiods/active")
     }
 }
 
