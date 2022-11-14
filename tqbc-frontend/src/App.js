@@ -28,6 +28,7 @@ import AuthVerify from './common/AuthVerify';
 import { SET_MESSAGE } from './actions/types';
 import { TestComponent } from './components/TestComponent';
 import { NavigateSetter } from './helpers/NavigateSetter';
+import { AnswerEntry } from './components/answerentry/AnswerEntry';
 
 const App = () => {
 	const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -176,8 +177,10 @@ const App = () => {
 						<Route exact path="/login" element={<Login/>}></Route>
 						<Route exact path="/profile" element={<Profile/>} />
 						<Route exact path="/test" element={<TestComponent/>} />
+						{/* <Route exact path="/admin" component={<TestComponent/>} /> */}
 						<Route path="/mod" element={<BoardModerator/>} />
-						<Route path="/admin" component={<BoardAdmin/>} />
+						<Route path="/admin" element={<BoardAdmin/>}/>
+						<Route path='/answer-entry' element={<AnswerEntry/>}/>
 						<Route path="/list-teams" element={<ListTeamComponent/>}></Route>
 						<Route path="/qb-predictions" element={<QBPredictionsComponent/>}/>
 						<Route

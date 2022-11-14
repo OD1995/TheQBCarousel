@@ -1,40 +1,45 @@
 import React, { useState, useEffect } from "react";
-
 import UserService from "../services/user.service";
 import EventBus from "../common/EventBus";
+import History from "../helpers/History";
 
 const BoardAdmin = () => {
-    const [content, setContent] = useState("");
+    const [showContent, setShowContent] = useState(false);
 
     useEffect(() => {
-        UserService.getAdminBoard().then(
-            (response) => {
-                setContent(response.data);
-            },
-            (error) => {
-                const _content = 
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-
-                setContent(_content);
-
-                if (error.response && error.response.status === 401) {
-                    EventBus.dispatch("logout");
-                }
-            }
-        );
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user.roles.includes("ROLE_ADMIN")) {
+            setShowContent(true)
+        } else {
+            History.navigate('/how-it-works')
+        }
     }, []);
 
-    return (
-        <div className="container">
-            <header className="jumbotron">
-                <h3>{content}</h3>
-            </header>
-        </div>
-    );
+    if (showContent) {
+        return (
+            <div className="container">
+                {/* <header className="jumbotron">
+                    <h3>CAT</h3>
+                </header> */}
+                <a href="/answer-entry">
+                    Answer Entry
+                </a>
+            </div>
+        );
+    } else {
+        return null;
+    }
 };
 
 export default BoardAdmin;
+
+// const BoardAdmin = () => {
+    
+//     return (
+//         <div>
+//             <h1>DOG</h1>
+//         </div>
+//     )
+// }
+
+// export default BoardAdmin;

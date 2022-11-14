@@ -1,38 +1,28 @@
-import axios from "axios";
-import authHeader from "./auth-header";
+import api from './api.js';
 
 const API_URL = process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/test/";
 
 const getPublicContent = () => {
-    return axios.get(
+    return api.get(
         API_URL + "all"
     );
 };
 
 const getUserBoard = () => {
-    return axios.get(
-        API_URL + "user",
-        {
-            headers : authHeader()
-        }
+    return api.get(
+        API_URL + "user"
     )
 };
 
 const getModeratorBoard = () => {
-    return axios.get(
-        API_URL + "mod",
-        {
-            headers : authHeader()
-        }
+    return api.get(
+        API_URL + "mod"
     )
 };
 
 const getAdminBoard = () => {
-    return axios.get(
-        API_URL + "admin",
-        {
-            headers : authHeader()
-        }
+    return api.get(
+        API_URL + "admin"
     )
 };
 
