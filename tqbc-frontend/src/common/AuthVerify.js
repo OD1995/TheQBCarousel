@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { updateAccessToken } from "../actions/auth";
-import { history } from "../helpers/history";
+import { history } from "../helpers/History";
 import AuthService from "../services/auth.service";
 
 const parseJwt = (token) => {

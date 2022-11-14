@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import History from "../helpers/History";
 
 const API_URL = process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/auth/";
 
@@ -42,18 +44,20 @@ const login = (username, password) => {
     )
     .then((response) => {
         if (response.data.accessToken) {
-            localStorage.setItem(
-                "user",
-                JSON.stringify(response.data)
-            );
+            localStorage.setItem("user",JSON.stringify(response.data));
         }
 
         return response.data;
     });
 };
 
-const logout = () => {
+const logout = (history) => {
+    localStorage.setItem("justLoggedOut",true);
     localStorage.removeItem("user");
+    // history.push('/login');
+    // const nav = useNavigate();
+    // nav("/login");
+    History.push("/login");
 };
 
 export default {

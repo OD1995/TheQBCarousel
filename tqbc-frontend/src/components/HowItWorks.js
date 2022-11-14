@@ -45,8 +45,8 @@ const HowItWorks = () => {
                 <br></br>
                 <h3>The Prediction Periods</h3>
                 <p>
-                    Each "prediction season" will start at the kick off of the season opener and end with the start of the following draft.
-                    Each prediction year will be split into 4 "prediction periods".
+                    Each "prediction season" starts at the kick off of the season opener and ends with the start of the following draft.
+                    Each prediction year is split into 4 "prediction periods".
                     For example, the prediction year in which the starting QBs will be predicted for the {exampleSeason} season
                     will be split into the prediction periods below:
                 </p>
@@ -59,23 +59,23 @@ const HowItWorks = () => {
                 <br></br>
                 <h3>Scoring</h3>
                 <p>
-                    Once a new season has started, the predictions from the 4 prediction periods for the seasons will be graded.
-                    Each prediction period will get a percentage score assigned to it, dependent on how many of the teams' QBs were correctly guessed.
-                    These scores will then be used in the global leaderboard as well as private leagues.
-                    The global leaderboard will equally weight the 4 prediction periods, to come up with a single score for the whole prediction season.
+                    Once a new season has started, the predictions from the 4 prediction periods for the seasons are graded.
+                    Each prediction period gets a percentage score assigned to it, dependent on how many of the teams' QBs were correctly guessed.
+                    These scores are displayed in the global leaderboard as well as private leagues.
+                    The global leaderboard equally weighs the 4 prediction periods, to come up with a single score for the whole prediction season.
                     Private leagues allow you to set your own weightings.
-                    For example, you may wish to give more weight to the earlier prediction periods compared to the later prediciton periods.
+                    For example, you may wish to give more weight to the earlier prediction periods compared to the later prediction periods.
                 </p>
                 <br></br>
                 <h3>Correct Answers</h3>
                 <p>
-                    With the kickoff of the season opener, a list of correct answers will be published.
+                    With the kick off of the season opener, a list of correct answers will be published.
                     It is possible for a team to have more than one correct answer.
                     Below are the 3 types of QB that would qualify as a correct answer:
                 </p>
                 <ul>
                     <li key="correctanswers-item1">
-                        The team's starter from the previous season
+                        The team's starter from the previous season (assuming they're still on the roster)
                     </li>
                     <li key="correctanswers-item2">
                         A QB drafted in the first 2 rounds of the NFL Draft

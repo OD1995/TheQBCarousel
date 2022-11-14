@@ -1,5 +1,6 @@
 package mygroup.tqbcbackend.controller;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -37,6 +38,7 @@ import mygroup.tqbcbackend.payload.response.JwtResponse;
 import mygroup.tqbcbackend.payload.response.MessageResponse;
 import mygroup.tqbcbackend.payload.response.TokenRefreshResponse;
 import mygroup.tqbcbackend.repository.ConfirmationTokenRepository;
+import mygroup.tqbcbackend.repository.RefreshTokenRepository;
 import mygroup.tqbcbackend.repository.RoleRepository;
 import mygroup.tqbcbackend.repository.TeamRepository;
 import mygroup.tqbcbackend.repository.UserRepository;
@@ -70,6 +72,9 @@ public class AuthController {
 	
 	@Autowired
 	RefreshTokenService refreshTokenService;
+
+	@Autowired
+	RefreshTokenRepository refreshTokenRepository;
 
 	@Autowired
 	ConfirmationTokenRepository confirmationTokenRepository;
@@ -200,13 +205,18 @@ public class AuthController {
 		}
 	}
 
-	@PostMapping("/refreshtoken")
-	public ResponseEntity<?> refreshToken(
+	@PostMapping("/refresh-access-token")
+	public ResponseEntity<?> refreshAccessToken(
 		@Valid @RequestBody TokenRefreshRequest request
 	) {
 		String requestRefreshToken = request.getRefreshToken();
 		return refreshTokenService.findByRefreshToken(requestRefreshToken)
 			.map(refreshTokenService::verifyExpiration)
+			.map(refreshToken -> {
+				refreshToken.setLastUsageDateTime(Instant.now());
+				refreshTokenRepository.save(refreshToken);
+				return refreshToken;
+			})
 			.map(RefreshToken::getUser)
 			.map(user -> {
 				String token = jwtUtils.generateTokenFromUsername(user.getUsername());

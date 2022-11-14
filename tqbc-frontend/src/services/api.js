@@ -36,7 +36,7 @@ instance.interceptors.response.use(
                 originalConfig._retry = true;
                 try {
                     const rs = await instance.post(
-                        "/v1/auth/refreshtoken",
+                        "/v1/auth/refresh-access-token",
                         {
                             refreshToken: TokenService.getLocalRefreshToken()
                         }
@@ -45,13 +45,13 @@ instance.interceptors.response.use(
                     TokenService.updateLocalAccessToken(accessToken);
                     return instance(originalConfig);
                 } catch (_error) {
-                    if (_error.response.status === 401) {
+                    if (_error.response.status === 403) {
                         // Refresh token has expired
                         // Logout and maybe set message
                         EventBus.dispatch(
                             "logout",
                             {
-                                message: "Logged out after 1 month since previous log in"
+                                message: "Logged out after more than 1 month since last activity"
                             }
                         );
                     }

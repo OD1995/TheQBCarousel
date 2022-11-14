@@ -10,6 +10,7 @@ import {
 } from "./types";
 import AuthService from "../services/auth.service"
 import EventBus from "../common/EventBus";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export const register = (username, favTeam, email, password) => (dispatch) => {
@@ -139,14 +140,16 @@ export const login = (username, password) => (dispatch) => {
     );
 };
 
-export const logout = () => (dispatch) => {
-    AuthService.logout();
-
+export const logout = (history) => (dispatch) => {
+    AuthService.logout(history);
     dispatch(
         {
             type: LOGOUT
         }
     );
+    const nav = useNavigate();
+    // nav("/login");
+    nav(<Link to={'/login'}/>)
 };
 
 export const updateAccessToken = (refreshToken) => (dispatch) => {
@@ -155,10 +158,7 @@ export const updateAccessToken = (refreshToken) => (dispatch) => {
         (response) => {
             const user = JSON.parse(localStorage.getItem("user"));
             user.accessToken = response.data.accessToken;
-            localStorage.setItem(
-                "user",
-                JSON.stringify(user)
-            );
+            localStorage.setItem("user",JSON.stringify(user));
             return Promise.resolve();
         },
         (error) => {
@@ -170,10 +170,6 @@ export const updateAccessToken = (refreshToken) => (dispatch) => {
                         payload: 'A VERY IMPORTANT MESSAGE'
                     }
                 )
-                localStorage.setItem(
-                    "justLoggedOut",
-                    true
-                );
                 EventBus.dispatch("logout");
             }
             return Promise.reject();

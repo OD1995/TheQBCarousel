@@ -15,6 +15,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "RefreshTokens")
 public class RefreshToken {
+
+    // RefreshToken is generated at login and then LastUsageDateTime is updated
+    //    every time it is used to create a new access token. When it hasn't been
+    //    used to create a new access token for `jwtRefreshExpirationMs` then it
+    //    has expired
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,8 +33,8 @@ public class RefreshToken {
     @Column(nullable = false, unique = true, name = "RefreshToken")
     private String refreshToken;
 
-    @Column(nullable = false, name = "ExpiryDate")
-    private Instant expiryDate;
+    @Column(nullable = false, name = "LastUsageDateTime")
+    private Instant lastUsageDateTime;
 
     public RefreshToken() {
         
@@ -60,12 +65,12 @@ public class RefreshToken {
         this.refreshToken = refreshToken;
     }
 
-    public Instant getExpiryDate() {
-        return this.expiryDate;
+    public Instant getLastUsageDateTime() {
+        return this.lastUsageDateTime;
     }
 
-    public void setExpiryDate(Instant expiryDate) {
-        this.expiryDate = expiryDate;
+    public void setLastUsageDateTime(Instant lastUsageDateTime) {
+        this.lastUsageDateTime = lastUsageDateTime;
     }
 
 }

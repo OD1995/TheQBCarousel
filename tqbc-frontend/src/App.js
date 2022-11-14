@@ -6,12 +6,10 @@ import {
 	Navigate,
 	Route,
 	Routes,
+	useNavigate,
 } from 'react-router-dom';
-
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
-
-
 import ListTeamComponent from './components/ListTeamComponent';
 import QBPredictionsComponent from './components/qbcomponents/pages/QBPredictions';
 import QBPredictionHistoryComponent from './components/qbcomponents/pages/QBPredictionHistory';
@@ -23,26 +21,31 @@ import Profile from "./components/Profile";
 import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
 import EmailVerification from "./components/EmailVerification";
-
 import { logout } from "./actions/auth";
-
-import { history } from "./helpers/history";
-
+// import { history } from "./helpers/History";
 import EventBus from "./common/EventBus";
 import AuthVerify from './common/AuthVerify';
+import { SET_MESSAGE } from './actions/types';
+import { TestComponent } from './components/TestComponent';
+import { NavigateSetter } from './helpers/NavigateSetter';
 
 const App = () => {
 	const [showModeratorBoard, setShowModeratorBoard] = useState(false);
 	const [showAdminBoard, setShowAdminBoard] = useState(false);
-
 	const { user: currentUser } = useSelector((state) => state.auth);
 	const { isLoggedIn } = useSelector(state => state.auth);
-	const justLoggedOut = localStorage.getItem("justLoggedOut");
+	const justLoggedOut = JSON.parse(localStorage.getItem("justLoggedOut"));
 	
 	const dispatch = useDispatch();
 
 	const logOut = useCallback(() => {
-		dispatch(logout());
+		// dispatch(
+		// 	{
+		// 		type: SET_MESSAGE,
+		// 		payload: 'ANOTHER VERY IMPORTANT MESSAGE'
+		// 	}
+		// )
+		dispatch(logout(null));
 	}, [dispatch]);
 
 	let defaultPage = null;
@@ -63,7 +66,15 @@ const App = () => {
 			setShowAdminBoard(false);
 		}
 
-		EventBus.on("logout", () => {
+		EventBus.on("logout", (data) => {
+			if (data.message) {
+				dispatch(
+					{
+						type: SET_MESSAGE,
+						payload: data.message
+					}
+				)
+			}
 			logOut();
 		});
 
@@ -74,7 +85,7 @@ const App = () => {
 
   	return (
 		<div>
-			<Router history={history}>
+			<Router>
 				<div className='navigation-bar'>
 					<Navigator/>
 					<nav className="navbar navbar-expand navbar-dark bg-black">
@@ -90,6 +101,12 @@ const App = () => {
 							<li className="nav-item">
 								<Link to={"/how-it-works"} className="nav-link">
 									How It Works
+								</Link>
+							</li>
+
+							<li className="nav-item">
+								<Link to={"/test"} className="nav-link">
+									Test
 								</Link>
 							</li>
 
@@ -128,7 +145,7 @@ const App = () => {
 									</Link>
 								</li>
 								<li className="nav-item">
-									<a href="/how-it-works" className="nav-link" onClick={logOut}>
+									<a href="/login" className="nav-link" onClick={logOut}>
 										Log Out
 									</a>
 								</li>
@@ -150,14 +167,15 @@ const App = () => {
 						)}
 					</nav>
 				</div>
-
+				<NavigateSetter/>
 				<div className="component-container container page-content">
 					<Routes>
 						<Route index element={defaultPage}/>
 						<Route exact path="/how-it-works" element={<HowItWorks/>}/>
-						<Route exact path="/login" element={<Login/>}></Route>
 						<Route exact path="/register" element={<Register/>} />
+						<Route exact path="/login" element={<Login/>}></Route>
 						<Route exact path="/profile" element={<Profile/>} />
+						<Route exact path="/test" element={<TestComponent/>} />
 						<Route path="/mod" element={<BoardModerator/>} />
 						<Route path="/admin" component={<BoardAdmin/>} />
 						<Route path="/list-teams" element={<ListTeamComponent/>}></Route>

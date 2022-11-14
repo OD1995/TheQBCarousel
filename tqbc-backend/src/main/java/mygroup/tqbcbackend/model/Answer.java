@@ -31,6 +31,13 @@ public class Answer {
 	)
 	@JoinColumn(name = "PlayerID")
 	private Player player;
+
+	@ManyToOne(
+			targetEntity = AnswerType.class,
+			fetch = FetchType.EAGER
+	)
+	@JoinColumn(name = "AnswerTypeID")
+	private AnswerType answerType;
 	
 	public Answer() {
 		
@@ -65,6 +72,14 @@ public class Answer {
 
 	public void setPlayer(Player player) {
 		this.player = player;
+	}
+
+	public AnswerType getAnswerType() {
+		return answerType;
+	}
+
+	public void setAnswerType(AnswerType answerType) {
+		this.answerType = answerType;
 	}
 	
 }

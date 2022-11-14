@@ -12,10 +12,7 @@ class TokenService {
     updateLocalAccessToken(newAccesstoken) {
         const user = JSON.parse(localStorage.getItem('user'));
         user.accessToken = newAccesstoken;
-        localStorage.setItem(
-            "user",
-            JSON.stringify(user)
-        )
+        localStorage.setItem("user",JSON.stringify(user));
     }
 
     getUser() {
@@ -24,10 +21,7 @@ class TokenService {
 
     setUser(user) {
         console.log(JSON.stringify(user));
-        localStorage.setItem(
-            "user",
-            JSON.stringify(user)
-        )
+        localStorage.setItem("user",JSON.stringify(user));
     }
 
     removeUser() {

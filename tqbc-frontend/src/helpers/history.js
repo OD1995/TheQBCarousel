@@ -1,3 +1,10 @@
-import { createBrowserHistory } from "history";
+// import { createBrowserHistory } from "history";
 
-export const history = createBrowserHistory();
+// export const history = createBrowserHistory();
+
+const History = {
+    navigate: null,
+    push: (page, ...rest) => History.navigate(page, ...rest),
+  };
+  
+  export default History;

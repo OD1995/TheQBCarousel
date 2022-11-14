@@ -34,14 +34,14 @@ public class RefreshTokenService {
     public RefreshToken createRefreshToken(Long userID) {
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setUser(userRepository.findByUserID(userID));
-        refreshToken.setExpiryDate(Instant.now().plusMillis(refreshTokenExpirationMs));
+        refreshToken.setLastUsageDateTime(Instant.now());
         refreshToken.setRefreshToken(UUID.randomUUID().toString());
         refreshToken = refreshTokenRepository.save(refreshToken);
         return refreshToken;
     }
 
     public RefreshToken verifyExpiration(RefreshToken token) {
-        if (token.getExpiryDate().compareTo(Instant.now()) < 0) {
+        if (token.getLastUsageDateTime().compareTo(Instant.now().minusMillis(refreshTokenExpirationMs)) < 0) {
             refreshTokenRepository.delete(token);
             throw new TokenRefreshException(
                 token.getRefreshToken(),
