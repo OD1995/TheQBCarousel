@@ -24,3 +24,7 @@
   .display-none {
     display: none;
   }
+
+  #answerEntryTablesDiv {
+    display: flex;
+  }

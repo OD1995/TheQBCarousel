@@ -13,5 +13,6 @@ public interface TeamRepository extends JpaRepository<Team,String>{
 	
 	public List<Team> findByIsActiveTrue();
 	public Team findByTeamID(Long teamID);
+	public List<Team> findByIsActiveTrueAndConference(String conference);
 
 }

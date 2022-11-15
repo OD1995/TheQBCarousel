@@ -22,14 +22,18 @@ public class AnswerType {
     @Column(name = "AnswerType")
     private EAnswerType answerType;
 
+    @Column(name = "AnswerTypeTidy")
+    private String answerTypeTidy;
+
     public AnswerType() {
         
     }
 
-    public AnswerType(long answerTypeID, EAnswerType answerType) {
+    public AnswerType(long answerTypeID, EAnswerType answerType, String answerTypeTidy) {
         super();
         this.answerTypeID = answerTypeID;
         this.answerType = answerType;
+        this.answerTypeTidy = answerTypeTidy;
     }
 
     public long getAnswerTypeID() {
@@ -46,5 +50,13 @@ public class AnswerType {
 
     public void setAnswerType(EAnswerType answerType) {
         this.answerType = answerType;
+    }
+
+    public String getAnswerTypeTidy() {
+        return answerTypeTidy;
+    }
+
+    public void setAnswerTypeTidy(String answerTypeTidy) {
+        this.answerTypeTidy = answerTypeTidy;
     }
 }
