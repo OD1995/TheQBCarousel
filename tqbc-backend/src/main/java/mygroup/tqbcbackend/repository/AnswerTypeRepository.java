@@ -8,5 +8,4 @@ import mygroup.tqbcbackend.model.AnswerType;
 
 public interface AnswerTypeRepository extends JpaRepository<AnswerType, String> {
     
-    // public List<AnswerType> 
 }

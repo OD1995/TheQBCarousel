@@ -180,7 +180,7 @@ const App = () => {
 						{/* <Route exact path="/admin" component={<TestComponent/>} /> */}
 						<Route path="/mod" element={<BoardModerator/>} />
 						<Route path="/admin" element={<BoardAdmin/>}/>
-						<Route path='/answer-entry' element={<AnswerEntry/>}/>
+						<Route path='/answer-entry/:season' element={<AnswerEntry/>}/>
 						<Route path="/list-teams" element={<ListTeamComponent/>}></Route>
 						<Route path="/qb-predictions" element={<QBPredictionsComponent/>}/>
 						<Route

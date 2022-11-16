@@ -1,12 +1,9 @@
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import api from './api.js';
 import History from "../helpers/History";
 
-const API_URL = process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/auth/";
-
 const register = (username, favTeam, email, password) => {
-    return axios.post(
-        API_URL + "register",
+    return api.post(
+        "/v1/auth/register",
         {
             username,
             favTeam,
@@ -17,8 +14,8 @@ const register = (username, favTeam, email, password) => {
 };
 
 const verifyEmail = (token) => {
-    return axios.post(
-        API_URL + "verify-email",
+    return api.post(
+        "/v1/auth/verify-email",
         {
             token
         }
@@ -26,8 +23,8 @@ const verifyEmail = (token) => {
 }
 
 const updateAccessToken = (refreshToken) => {
-    return axios.post(
-        API_URL + "refreshtoken",
+    return api.post(
+        "/v1/auth/refreshtoken",
         {
             refreshToken
         }
@@ -35,8 +32,8 @@ const updateAccessToken = (refreshToken) => {
 }
 
 const login = (username, password) => {
-    return axios.post(
-        API_URL + "login",
+    return api.post(
+        "/v1/auth/login",
         {
             username,
             password
@@ -54,9 +51,6 @@ const login = (username, password) => {
 const logout = (history) => {
     localStorage.setItem("justLoggedOut",true);
     localStorage.removeItem("user");
-    // history.push('/login');
-    // const nav = useNavigate();
-    // nav("/login");
     History.push("/login");
 };
 

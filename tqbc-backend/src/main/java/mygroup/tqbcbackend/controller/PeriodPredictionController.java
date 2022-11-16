@@ -37,7 +37,7 @@ import mygroup.tqbcbackend.repository.PredictionPeriodRepository;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/v1/periodpredictions")
+@RequestMapping("/api/v1/period-predictions")
 public class PeriodPredictionController {
 
 	@Autowired

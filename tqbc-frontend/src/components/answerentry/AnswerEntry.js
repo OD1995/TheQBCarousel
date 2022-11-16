@@ -5,6 +5,8 @@ import { useState } from "react";
 import { AnswerEntryModal } from "./AnswerEntryModal";
 import { useEffect } from "react";
 import AnswerTypeService from "../../services/AnswerTypeService";
+import { useParams } from "react-router-dom";
+import History from "../../helpers/History";
 
 export const AnswerEntry = () => {
 
@@ -16,6 +18,7 @@ export const AnswerEntry = () => {
     const [cellType, setCellType] = useState(null);
     const [answerTypes, setAnswerTypes] = useState({});
 
+    let params = useParams();
     
     const revealModal = (team,type) => {
         setCellTeam(team);
@@ -46,17 +49,20 @@ export const AnswerEntry = () => {
                         revealModal={revealModal}
                         conference={'AFC'}
                         answerTypes={answerTypes}
+                        season={params.season}
                     />
                     <AnswerEntryTable
                         revealModal={revealModal}
                         conference={'NFC'}
                         answerTypes={answerTypes}
+                        season={params.season}
                     />                
                 </div>
                 {showModal && (
                     <AnswerEntryModal
                         team={cellTeam}
                         type={cellType}
+                        season={params.season}
                     />
                 )}
             </div>

@@ -1,14 +1,16 @@
-import axios from 'axios';
+import api from './api.js';
 
 class PeriodPredictionService {
+
+    base_url = "/v1/period-predictions/"
 
     postPredictions(
         predictionPeriodID,
         userID,
         predictions
     ) {
-        return axios.post(
-            process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/periodpredictions/postpredictions",
+        return api.post(
+            this.base_url + "postpredictions",
             {
                 predictionPeriodID: predictionPeriodID,
                 userID: userID,
@@ -21,8 +23,8 @@ class PeriodPredictionService {
         username,
         predictionPeriodID
     ) {
-        return axios.get(
-            process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/periodpredictions/getpredictions",
+        return api.get(
+            this.base_url + "getpredictions",
             {
                 params: {
                     username: username,
@@ -35,8 +37,8 @@ class PeriodPredictionService {
     getMaxPredictionPeriodID(
         username
     ) {
-        return axios.get(
-            process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/periodpredictions/getmaxpredictionperiodid",
+        return api.get(
+            this.base_url + "getmaxpredictionperiodid",
             {
                 params: {
                     username: username
@@ -48,8 +50,8 @@ class PeriodPredictionService {
     getMaxSeason(
         username
     ) {
-        return axios.get(
-            process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/periodpredictions/getmaxseason",
+        return api.get(
+            this.base_url + "getmaxseason",
             {
                 params: {
                     username: username

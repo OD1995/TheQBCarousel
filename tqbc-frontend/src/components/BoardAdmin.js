@@ -21,7 +21,7 @@ const BoardAdmin = () => {
                 {/* <header className="jumbotron">
                     <h3>CAT</h3>
                 </header> */}
-                <a href="/answer-entry">
+                <a href="/answer-entry/2022">
                     Answer Entry
                 </a>
             </div>

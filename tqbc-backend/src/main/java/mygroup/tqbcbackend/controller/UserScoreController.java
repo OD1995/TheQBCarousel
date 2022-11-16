@@ -20,7 +20,7 @@ import mygroup.tqbcbackend.repository.UserRepository;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/v1/userscores")
+@RequestMapping("/api/v1/user-scores")
 public class UserScoreController {
 	
 	@Autowired

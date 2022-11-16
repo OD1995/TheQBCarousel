@@ -1,10 +1,10 @@
-import axios from 'axios';
+import api from './api.js';
 
 class EventService {
 
     getEventsByEventIDArray(uniqueEventIDs) {
-        return axios.post(
-            process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/events/eventIDIn",
+        return api.post(
+            "/v1/events/eventIDIn",
             uniqueEventIDs
         );
     }

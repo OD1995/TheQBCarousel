@@ -2,16 +2,18 @@ import api from './api.js';
 
 class PredictionPeriodService {
 
+    base_url = "/v1/prediction-periods/";
+
     getHowItWorksPredictionPeriods() {
-        return api.get(process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/predictionperiods/howitworks");
+        return api.get(this.base_url + "howitworks");
     }
 
     getCurrentPredictionPeriodID() {
-        return api.get(process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/predictionperiods/getcurrent");
+        return api.get(this.base_url + "getcurrent");
     }
 
     getActivePredictionPeriods() {
-        return api.get(process.env.REACT_APP_BACKEND_BASE_URL + "/api/v1/predictionperiods/active")
+        return api.get(this.base_url + "active")
     }
 }
 

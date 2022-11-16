@@ -20,8 +20,6 @@ import mygroup.tqbcbackend.repository.TeamRepository;
 @RequestMapping("/api/v1/teams")
 public class TeamController {
 
-
-	// private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 	private static final Logger logger = LoggerFactory.getLogger(TeamController.class);
 
 	@Autowired
@@ -42,7 +40,6 @@ public class TeamController {
 	// Get all active teams in a conference
 	@GetMapping("/conference-active")
 	public List<Team> getAllActiveConferenceTeams(ActiveConferenceTeamsRequest activeConferenceTeamsRequest) {
-		String conference = activeConferenceTeamsRequest.getConference();
-		return teamRepository.findByIsActiveTrueAndConference(conference);
+		return teamRepository.findByIsActiveTrueAndConference(activeConferenceTeamsRequest.getConference());
 	}
 }
