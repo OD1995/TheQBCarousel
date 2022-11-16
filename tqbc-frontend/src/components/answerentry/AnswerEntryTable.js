@@ -40,7 +40,7 @@ export const AnswerEntryTable = (props) => {
                             }
                             setAnswersObject(answers_obj);
                             generateTableHeaders();
-                            generateTableRows(teams_obj);
+                            generateTableRows(teams_obj,answers_obj);
                         }
                     )
                 }
@@ -61,11 +61,14 @@ export const AnswerEntryTable = (props) => {
         setTableHeaders(table_headers);
     }
 
-    const generateTableRows = (teams_obj) => {
+    const generateTableRows = (teams_obj,answers_obj) => {
+        if (Object.keys(teams_obj).length === 0) {
+            return null;
+        }
         let divisionsSeen = [];
         let trs = [];
         for (const teamID of Object.keys(teams_obj)) {
-            let team_obj = teamsObject[teamID]
+            let team_obj = teams_obj[teamID]
             let team_name = team_obj.location + " " + team_obj.nickname;
             let tds = [];
             let team_div = team_obj.division;
@@ -73,13 +76,12 @@ export const AnswerEntryTable = (props) => {
                 tds.push(<td rowSpan={4}>{team_div[0]}</td>);
                 divisionsSeen.push(team_div);
             }
-            // tds.push(<td>{team_div[0]}</td>);
             tds.push(<td>{team_name}</td>);
             for (const answerTypeID of Object.keys(props.answerTypes)) {
                 let td_value = "";
                 let key = teamID + "," + answerTypeID;
-                if (key in answersObject) {
-                    td_value = answersObject[key].join(", ");
+                if (key in answers_obj) {
+                    td_value = answers_obj[key].join(", ");
                 }
                 tds.push(
                     <td onClick={() => props.revealModal(team_name,answerTypeID)}>

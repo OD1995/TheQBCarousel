@@ -63,6 +63,8 @@ export const AnswerEntry = () => {
                         team={cellTeam}
                         type={cellType}
                         season={params.season}
+                        setIsOpen={setShowModal}
+                        answerTypes={answerTypes}
                     />
                 )}
             </div>
