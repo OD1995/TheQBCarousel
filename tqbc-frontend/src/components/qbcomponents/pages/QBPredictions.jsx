@@ -255,7 +255,7 @@ const QBPredictionsComponent = () => {
                         // http.ClientRequest in node.js
                         console.log(error.request);
                         popup_title = "Request Error";
-                        popup_message = "There request was made but no response was received";
+                        popup_message = "The request was made but no response was received";
                     } else {
                         // Something happened in setting up the request that triggered an Error
                         console.log('Error', error.message);

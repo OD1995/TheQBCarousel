@@ -2,7 +2,7 @@ import React from "react"
 import { AnswerEntryTable } from "./AnswerEntryTable"
 import './AnswerEntry.css';
 import { useState } from "react";
-import { AnswerEntryModal } from "./AnswerEntryModal2";
+import { AnswerEntryModal } from "./AnswerEntryModal";
 import { useEffect } from "react";
 import AnswerTypeService from "../../services/AnswerTypeService";
 import { useParams } from "react-router-dom";
@@ -16,6 +16,7 @@ export const AnswerEntry = () => {
     
     const [showModal, setShowModal] = useState(false);
     const [cellTeam, setCellTeam] = useState(null);
+    const [cellTeamID, setCellTeamID] = useState(null);
     const [cellType, setCellType] = useState(null);
     const [answerTypes, setAnswerTypes] = useState({});
     const [players, setPlayers] = useState([]);
@@ -23,8 +24,9 @@ export const AnswerEntry = () => {
 
     let params = useParams();
     
-    const revealModal = (team,type,pIDs) => {
+    const revealModal = (team,teamID,type,pIDs) => {
         setCellTeam(team);
+        setCellTeamID(teamID);
         setCellType(type);
         setCurrentAnswerIDs(pIDs);
         setShowModal(true);
@@ -83,7 +85,8 @@ export const AnswerEntry = () => {
                 {showModal && (
                     <AnswerEntryModal
                         team={cellTeam}
-                        type={cellType}
+                        teamID={cellTeamID}
+                        answerTypeID={cellType}
                         season={params.season}
                         setIsOpen={setShowModal}
                         answerTypes={answerTypes}

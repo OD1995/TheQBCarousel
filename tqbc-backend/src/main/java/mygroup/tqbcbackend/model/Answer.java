@@ -43,11 +43,11 @@ public class Answer {
 		
 	}
 
-	public Answer(long answerID, Team team, Player player) {
+	public Answer(Team team, Player player, AnswerType answerType) {
 		super();
-		this.answerID = answerID;
 		this.team = team;
 		this.player = player;
+		this.answerType = answerType;
 	}
 
 	public long getAnswerID() {

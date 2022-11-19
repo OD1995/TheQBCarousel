@@ -91,7 +91,7 @@ export const AnswerEntryTable = (props) => {
                     pIDs = answers_obj[key]['ids'];
                 }
                 tds.push(
-                    <td onClick={() => props.revealModal(team_name,answerTypeID,pIDs)}>
+                    <td onClick={() => props.revealModal(team_name,teamID,answerTypeID,pIDs)}>
                         {td_value}
                     </td>
                 );

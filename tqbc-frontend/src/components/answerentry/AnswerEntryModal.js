@@ -1,63 +1,58 @@
 import React from "react";
-import useState from "react-usestateref";
 import { useEffect } from "react";
-// import { useState } from "react";
-import { AnswerEntrySelect } from "./AnswerEntrySelect";
+import { useState } from "react";
 import Select from 'react-select';
+import { useRef } from "react";
+import AnswerService from "../../services/AnswerService";
 
 
 export const AnswerEntryModal = (props) => {
 
-    const [playerIDs, setPlayerIDs] = useState(Object.assign({},props.currentAnswerIDs));
-    const [selects, setSelects] = useState({});
+    const [playerIDs,setPlayerIDs] = useState(Object.assign({},props.currentAnswerIDs));
+    const [selects,setSelects] = useState({});
+    const [showSelects,setShowSelects] = useState({});
+    const stateRef = useRef();
+
+    stateRef.current = {
+        playerIDs: playerIDs,
+        selects: selects,
+        showSelects: showSelects
+    }
+
 
     const setAnswer = (event,idx) => {
-        // setPlayerIDs(event.value);
         setPlayerIDs(
-            previousPlayerIDs => (
-                {
-                    ...previousPlayerIDs,
-                    [idx]: event.value
-                }
-            )
-        );
+            {
+                ...stateRef.current.playerIDs,
+                [idx]: event.value
+            }
+        )
     }
 
     const removeSelectDiv = (idx) => {
-        var updatedPlayerIDs;
-        setPlayerIDs(currentPlayerIDs => {
-            updatedPlayerIDs = currentPlayerIDs;
-            return currentPlayerIDs;
-        });
-        var updatedSelects;
-        setSelects(currentSelects => {
-            updatedSelects = currentSelects;
-            return currentSelects;
-        });
-        delete updatedPlayerIDs[idx];
-        delete updatedSelects[idx];
-        setPlayerIDs(updatedPlayerIDs);
-        setSelects(updatedSelects);
-        // setPlayerIDs(
-        //     {
-        //         ...updatedPlayerIDs,
-        //         [idx]: undefined
-        //     }
-        // );
-        // setSelects(
-        //     {
-        //         ...updatedSelects,
-        //         [idx]: undefined
-        //     }
-        // )
-        if (Object.keys(updatedSelects).length === 0) {
-            // console.log("generateSelects1");
-            let selects_obj = {};
-            const idx = 0;
-            selects_obj[idx] = createSelectDiv(idx,true);
-            setSelects(selects_obj);
-            setPlayerIDs({0:0})
+        let tempShowSelects = {...stateRef.current.showSelects};
+        tempShowSelects[idx] = false;
+        let checker = arr => arr.every(v => v === false);
+        let startAgain = checker(Object.values(tempShowSelects));
+        
+        if (startAgain) {
+            console.log("generateSelects1");
+            const nextIdx = Math.max(...Object.keys(tempShowSelects)) + 1;
+            setSelects(
+                {
+                    ...stateRef.current.selects,
+                    [nextIdx]: createSelectDiv(nextIdx)
+                }
+            );
+            setPlayerIDs(
+                {
+                    ...stateRef.current.playerIDs,
+                    [nextIdx]: 0
+                }
+            );
+            tempShowSelects[nextIdx] = true;
         }
+        setShowSelects(tempShowSelects);
     }
 
     const createSelectDiv = (idx) => {
@@ -68,9 +63,10 @@ export const AnswerEntryModal = (props) => {
                     className="answerSelector"
                     defaultValue={props.players[0]}
                     // defaultValue={0}
-                    onChange={event => setAnswer(event,idx,playerIDs)}
+                    onChange={event => setAnswer(event,idx)}
                     options={props.players}
                     menuPlacement="auto"
+                    id={idx}
                     // isSearchable={true}                   
                 />
                 <button
@@ -83,57 +79,85 @@ export const AnswerEntryModal = (props) => {
         )
     }
 
-    // const createSelectDiv = (idx) => {
-    //     return (
-    //         <AnswerEntrySelect
-    //             idx={idx}
-    //             removeSelectDiv={removeSelectDiv}
-    //             players={props.players}
-    //             setParentPlayerID={setParentPlayerID}
-    //         />
-    //     )
-    // }
-
-    // const setParentPlayerID = (pID,idx) => {
-    //     setPlayerIDs(
-    //         {
-    //             ...playerIDs,
-    //             [idx]: pID
-    //         }
-    //     )
-    // }
-
     const addNewSelect = () => {
-        const nextIdx = Math.max(...Object.keys(selects)) + 1;
+        const nextIdx = Math.max(...Object.keys(stateRef.current.selects)) + 1;
         setSelects(
             {
-                ...selects,
+                ...stateRef.current.selects,
                 [nextIdx]: createSelectDiv(nextIdx,false)
             }
         )
         setPlayerIDs(
             {
-                ...playerIDs,
+                ...stateRef.current.playerIDs,
                 [nextIdx] : 0
             }
         )
+        setShowSelects(
+            {
+                ...stateRef.current.showSelects,
+                [nextIdx]: true
+            }
+        )
+    }
+
+    const saveData = () => {
+        let answers = [];
+        for (const key in Object.keys(stateRef.current.playerIDs)) {
+            let pID = stateRef.current.playerIDs[key];
+            if (
+                (stateRef.current.showSelects[key]) &
+                (!answers.includes(pID)) &
+                (pID !== 0)
+                ) {
+                answers.push(pID);
+            }
+        }
+        props.setIsOpen(false);
+        if (answers.length === 0) {
+            return ;
+        }
+        try {
+            AnswerService.postAnswersForTeamAndAnswerType(
+                props.teamID,
+                answers,
+                props.answerTypeID
+            ).then(
+                (res) => {
+                    console.log('answer posting: SUCCESSFUL');
+                },
+                (error) => {
+                    console.log('answer posting: UNSUCCESSFUL')
+                }
+            )
+        } catch (err) {
+            let a = 1;
+        }
+        // console.log(new Date());
+        // console.log(stateRef.current.playerIDs);
     }
 
     useEffect(
         () => {
             console.log("useEffect1");
             let selects_obj = {};
-            if (Object.keys(playerIDs).length === 0) {
-                const idx = 0;
-                selects_obj[idx] = createSelectDiv(idx,true);
+            let playerIDS_obj = {};
+            let ss_obj = {}
+            if (Object.keys(stateRef.current.playerIDs).length === 0) {
+                selects_obj[0] = createSelectDiv(0);
+                playerIDS_obj[0] = 0;
+                ss_obj[0] = true;
             } else {
-                for (const idx of Object.keys(playerIDs)) {
-                    let val = playerIDs[idx];
-                    selects_obj[idx] = createSelectDiv(idx,false);
+                for (const idx of Object.keys(stateRef.current.playerIDs)) {
+                    // let val = playerIDs.current[idx];
+                    selects_obj[idx] = createSelectDiv(idx);
+                    playerIDS_obj[idx] = 0;
+                    ss_obj[idx] = true;
                 }
             }
             setSelects(selects_obj);
-            setPlayerIDs({0:0});
+            setPlayerIDs(playerIDS_obj);
+            setShowSelects(ss_obj);
         },
         []
     )
@@ -159,9 +183,15 @@ export const AnswerEntryModal = (props) => {
                                 <b>Season: </b>{props.season}
                             </p>
                             <p>
-                                <b>Type: </b>{props.answerTypes[props.type]}
+                                <b>Type: </b>{props.answerTypes[props.answerTypeID]}
                             </p>
-                            {Object.values(selects)}
+                            {Object.keys(selects).map(
+                                (key) => {
+                                    if (showSelects[key]) {
+                                        return selects[key];
+                                    }
+                                }
+                            )}
                             <button
                                 className="tqbc-green-button"
                                 onClick={() => addNewSelect()}
@@ -172,9 +202,9 @@ export const AnswerEntryModal = (props) => {
                         <div className="modalActions">
                             <button
                                 className="tqbc-black-button modalButton"
-                                onClick={() => props.setIsOpen(false)}
+                                onClick={() => saveData()}
                             >
-                                SAVE
+                                Save & Close
                             </button>
                         </div>
                     </div>
