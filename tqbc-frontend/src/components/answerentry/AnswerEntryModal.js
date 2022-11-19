@@ -41,7 +41,7 @@ export const AnswerEntryModal = (props) => {
             setSelects(
                 {
                     ...stateRef.current.selects,
-                    [nextIdx]: createSelectDiv(nextIdx)
+                    [nextIdx]: createSelectDiv(nextIdx,false)
                 }
             );
             setPlayerIDs(
@@ -55,13 +55,21 @@ export const AnswerEntryModal = (props) => {
         setShowSelects(tempShowSelects);
     }
 
-    const createSelectDiv = (idx) => {
-        console.log("createSelectDiv");
+    const createSelectDiv = (idx,dvID) => {
+        let default_value;
+        if (dvID) {
+            default_value = {
+                label: props.playerLookup[dvID],
+                value: dvID
+            };
+        } else {
+            default_value = props.players[0];
+        } 
         return (
             <div className="answerSelectorDiv">
                 <Select
                     className="answerSelector"
-                    defaultValue={props.players[0]}
+                    defaultValue={default_value}
                     // defaultValue={0}
                     onChange={event => setAnswer(event,idx)}
                     options={props.players}
@@ -146,7 +154,7 @@ export const AnswerEntryModal = (props) => {
             } else {
                 for (const idx of Object.keys(stateRef.current.playerIDs)) {
                     // let val = playerIDs.current[idx];
-                    selects_obj[idx] = createSelectDiv(idx);
+                    selects_obj[idx] = createSelectDiv(idx,stateRef.current.playerIDs[idx]);
                     playerIDS_obj[idx] = 0;
                     ss_obj[idx] = true;
                 }

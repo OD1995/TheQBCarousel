@@ -84,11 +84,11 @@ export const AnswerEntry = () => {
                             let key = aob.team.teamID + "," + aob.answerType.answerTypeID;
                             if (key in answers_obj) {
                                 answers_obj[key]['names'].push(aob.player.name);
-                                answers_obj[key]['ids'].push(aob.player.id);
+                                answers_obj[key]['ids'].push(aob.player.playerID);
                             } else {
                                 let item = {
                                     names: [aob.player.name],
-                                    ids: [aob.player.id]
+                                    ids: [aob.player.playerID]
                                 }
                                 answers_obj[key] = item;
                             }
