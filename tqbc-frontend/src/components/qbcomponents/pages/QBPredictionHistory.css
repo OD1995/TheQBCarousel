@@ -146,3 +146,16 @@
     margin-right: 0;
     font-weight: 500;
   }
+
+#qb-history-container {
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    border: 1px solid blue;
+    padding-left: 0;
+    margin-left: 0; 
+}
+
+#qb-prediction-history-score-table {
+    height: 50%;
+}

@@ -8,6 +8,7 @@ import PopupComponent from '../../PopUpComponent';
 import { useSelector } from 'react-redux';
 import PeriodPredictionService from '../../../services/PeriodPredictionService';
 import { useParams } from 'react-router-dom';
+import { UserScoreDisplayer } from '../components/UserScoreDisplayer';
 
 const QBPredictionHistoryComponent = () => {
     const params = useParams();
@@ -36,6 +37,14 @@ const QBPredictionHistoryComponent = () => {
     // const [displayBottomLeftMessage, setDisplayBottomLeftMessage] = useState(false);
     // const [bottomLeftMessageClass, setBottomLeftMessageClass] = useState("bottomLeftMessageClass");
     const { user: currentUser } = useSelector((state) => state.auth);
+    const [userScore,setUserScore] = useState(
+        {
+            PP1: '10%',
+            PP2: '20%',
+            PP3: '30%',
+            PP4: '40%',
+        }
+    )
 
 
     useEffect(() => {
@@ -94,74 +103,77 @@ const QBPredictionHistoryComponent = () => {
         (teamIDList !== [])
     ) {
         return (
-            <div className='qb-history-box qb-grid'>
-                <h1 className='area-title' style={{gridRow:1,gridColumn:2}}>NORTH</h1>
-                <h1 className='area-title' style={{gridRow:1,gridColumn:3}}>EAST</h1>
-                <h1 className='area-title' style={{gridRow:1,gridColumn:4}}>SOUTH</h1>
-                <h1 className='area-title' style={{gridRow:1,gridColumn:5}}>WEST</h1>
-                {
-                    conferences.map(
-                        conf =>
-                        <img
-                        className='conference_logo'
-                        src={window.location.origin + '/conference_logos/' + conf.season + '/' + conf.name + '.png' }
-                        alt={conf.name}
-                        key={conf.name}
-                        style={{gridRowStart:conf.gridRowStart,gridRowEnd:conf.gridRowEnd,gridColumn:conf.gridColumn}}
-                        />
-                    )
-                }
-                {
-                    teamIDList.map(
-                        teamID => {
-                            return (
-                                <QBDisplayer
-                                    teamID={teamID}
-                                    predictions={teamIDPeriodPredictionDict[teamID]}
-                                    key={teamID}
-                                    allLoaded={allLoaded}
-                                ></QBDisplayer>
-                            )
-                        }
-                    )
-                }
-                {/* <button
-                onClick={savePredictions}
-                className="tqbc-black-button"
-                id="save-button"
-                >
-                    Save
-                </button> */}
-                {/* {
-                    showPredictionPeriodChanger && (
-                        <PredictionPeriodChanger
-                            seasons={uniqueSeasons}
-                            seasonPeriodIDs={uniqueSeasonPeriodIDs}
-                            currentSeason={currentSeason}
-                            currentSeasonPeriodID={currentSeasonPeriodID}
-                            currentPredictionPeriodID={currentPredictionPeriodID}
-                            parentStateUpdater={updateParentStatePredictionPeriodChanger}
-                            predictionPeriodIDResetter={resetPredictionPeriodID}
-                        />
-                    )
-                } */}
-                {/* {
-                    displayBottomLeftMessage && (
-                        <h4
-                            className={bottomLeftMessageClass}
-                            id="bottom-left-message"
-                        >
-                            {bottomLeftMessage}
-                        </h4>
-                    )
-                } */}
-                <PopupComponent
-                    trigger={showPopup}
-                    setTrigger={setShowPopup}
-                    title={popupTitle}
-                    subtitle={popupSubtitle}
-                    message={popupMessage}
-                ></PopupComponent>
+            <div id="qb-history-container">
+                <div className='qb-history-box qb-grid'>
+                    <h1 className='area-title' style={{gridRow:1,gridColumn:2}}>NORTH</h1>
+                    <h1 className='area-title' style={{gridRow:1,gridColumn:3}}>EAST</h1>
+                    <h1 className='area-title' style={{gridRow:1,gridColumn:4}}>SOUTH</h1>
+                    <h1 className='area-title' style={{gridRow:1,gridColumn:5}}>WEST</h1>
+                    {
+                        conferences.map(
+                            conf =>
+                            <img
+                            className='conference_logo'
+                            src={window.location.origin + '/conference_logos/' + conf.season + '/' + conf.name + '.png' }
+                            alt={conf.name}
+                            key={conf.name}
+                            style={{gridRowStart:conf.gridRowStart,gridRowEnd:conf.gridRowEnd,gridColumn:conf.gridColumn}}
+                            />
+                        )
+                    }
+                    {
+                        teamIDList.map(
+                            teamID => {
+                                return (
+                                    <QBDisplayer
+                                        teamID={teamID}
+                                        predictions={teamIDPeriodPredictionDict[teamID]}
+                                        key={teamID}
+                                        allLoaded={allLoaded}
+                                    ></QBDisplayer>
+                                )
+                            }
+                        )
+                    }
+                    {/* <button
+                    onClick={savePredictions}
+                    className="tqbc-black-button"
+                    id="save-button"
+                    >
+                        Save
+                    </button> */}
+                    {/* {
+                        showPredictionPeriodChanger && (
+                            <PredictionPeriodChanger
+                                seasons={uniqueSeasons}
+                                seasonPeriodIDs={uniqueSeasonPeriodIDs}
+                                currentSeason={currentSeason}
+                                currentSeasonPeriodID={currentSeasonPeriodID}
+                                currentPredictionPeriodID={currentPredictionPeriodID}
+                                parentStateUpdater={updateParentStatePredictionPeriodChanger}
+                                predictionPeriodIDResetter={resetPredictionPeriodID}
+                            />
+                        )
+                    } */}
+                    {/* {
+                        displayBottomLeftMessage && (
+                            <h4
+                                className={bottomLeftMessageClass}
+                                id="bottom-left-message"
+                            >
+                                {bottomLeftMessage}
+                            </h4>
+                        )
+                    } */}
+                    {/* <PopupComponent
+                        trigger={showPopup}
+                        setTrigger={setShowPopup}
+                        title={popupTitle}
+                        subtitle={popupSubtitle}
+                        message={popupMessage}
+                    ></PopupComponent> */}
+                </div>
+                <UserScoreDisplayer userScore={userScore}/>
             </div>
         )
     } else {
