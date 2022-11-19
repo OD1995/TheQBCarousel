@@ -8,44 +8,16 @@ import { AnswerEntryModal } from "./AnswerEntryModal";
 export const AnswerEntryTable = (props) => {
 
     // const [teamsArray, setTeamsArray] = useState([]);
-    const [teamsObject, setTeamsObject] = useState({});
-    const [answersObject, setAnswersObject] = useState({});
+    // const [teamsObject, setTeamsObject] = useState({});
+    // const [answersObject, setAnswersObject] = useState({});
     const [tableHeaders, setTableHeaders] = useState([]);
     const [tableRows, setTableRows] = useState([]);
-    const [divisionsSeen, setDivisionsSeen] = useState([]);
+    // const [divisionsSeen, setDivisionsSeen] = useState([]);
 
     useEffect(
         () => {
-            TeamService.getConferenceActiveTeams(props.conference).then(
-                (res) => {
-                    let teams_obj = {};
-                    for (const team_obj of res.data) {
-                        teams_obj[team_obj.teamID] = team_obj;
-                    }
-                    setTeamsObject(teams_obj);
-                    AnswerService.getAnswersForConferenceSeason(props.conference,props.season).then(
-                        (res2) => {
-                            let answers_obj = {};
-                            for (const aob of res2.data) {
-                                let key = aob.team.teamID + "," + aob.answerType.answerTypeID;
-                                if (key in answers_obj) {
-                                    answers_obj[key]['names'].push(aob.player.name);
-                                    answers_obj[key]['ids'].push(aob.player.id);
-                                } else {
-                                    let item = {
-                                        names: [aob.player.name],
-                                        ids: [aob.player.id]
-                                    }
-                                    answers_obj[key] = item;
-                                }
-                            }
-                            setAnswersObject(answers_obj);
-                            generateTableHeaders();
-                            generateTableRows(teams_obj,answers_obj);
-                        }
-                    )
-                }
-            )
+            generateTableHeaders();
+            generateTableRows(props.data.teams,props.data.answers);
         },
         []
     )
@@ -87,7 +59,7 @@ export const AnswerEntryTable = (props) => {
                     pIDs = answers_obj[key]['ids'];
                 }
                 tds.push(
-                    <td onClick={() => props.revealModal(team_name,teamID,answerTypeID,pIDs)}>
+                    <td onClick={() => props.revealModal(team_name,teamID,answerTypeID,pIDs,props.conference)}>
                         {td_value}
                     </td>
                 );

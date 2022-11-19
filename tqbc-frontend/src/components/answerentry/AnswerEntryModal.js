@@ -102,39 +102,35 @@ export const AnswerEntryModal = (props) => {
     }
 
     const saveData = () => {
-        let answers = [];
+        let answerIDs = [];
+        let answerNames = [];
         for (const key in Object.keys(stateRef.current.playerIDs)) {
             let pID = stateRef.current.playerIDs[key];
             if (
                 (stateRef.current.showSelects[key]) &
-                (!answers.includes(pID)) &
+                (!answerIDs.includes(pID)) &
                 (pID !== 0)
                 ) {
-                answers.push(pID);
+                    answerIDs.push(pID);
+                    answerNames.push(props.playerLookup[pID]);
             }
         }
         props.setIsOpen(false);
-        if (answers.length === 0) {
+        if (answerIDs.length === 0) {
             return ;
         }
-        try {
-            AnswerService.postAnswersForTeamAndAnswerType(
-                props.teamID,
-                answers,
-                props.answerTypeID
-            ).then(
-                (res) => {
-                    console.log('answer posting: SUCCESSFUL');
-                },
-                (error) => {
-                    console.log('answer posting: UNSUCCESSFUL')
-                }
-            )
-        } catch (err) {
-            let a = 1;
-        }
-        // console.log(new Date());
-        // console.log(stateRef.current.playerIDs);
+        AnswerService.postAnswersForTeamAndAnswerType(
+            props.teamID,
+            answerIDs,
+            props.answerTypeID
+        )
+        props.pushDataToParent(
+            props.conference,
+            props.teamID,
+            answerIDs,
+            answerNames,
+            props.answerTypeID
+        );
     }
 
     useEffect(
