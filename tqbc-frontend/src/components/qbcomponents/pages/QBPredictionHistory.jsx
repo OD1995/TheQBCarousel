@@ -37,19 +37,22 @@ const QBPredictionHistoryComponent = () => {
     // const [displayBottomLeftMessage, setDisplayBottomLeftMessage] = useState(false);
     // const [bottomLeftMessageClass, setBottomLeftMessageClass] = useState("bottomLeftMessageClass");
     const { user: currentUser } = useSelector((state) => state.auth);
-    const [userScore,setUserScore] = useState(
-        {
-            PP1: '10%',
-            PP2: '20%',
-            PP3: '30%',
-            PP4: '40%',
-        }
-    )
+    const [season, setSeason] = useState(0);
+    const [userID, setUserID] = useState(0);
+    // const [userScore,setUserScore] = useState(
+    //     {
+    //         PP1: '10%',
+    //         PP2: '20%',
+    //         PP3: '30%',
+    //         PP4: '40%',
+    //     }
+    // )
 
 
     useEffect(() => {
         // console.log("params");
         // console.log(params);
+        setUserID(JSON.parse(localStorage.getItem("user")).userID);
         callTeamsService();
 
         // PredictionPeriodService
@@ -78,6 +81,7 @@ const QBPredictionHistoryComponent = () => {
     const callPeriodPredictionService = () => {
         PeriodPredictionService.getMaxSeason(params.username).then(
             (res) => {
+                setSeason(res.data);
                 PeriodPredictionService.getPredictions(
                     params.username,
                     res.data
@@ -100,7 +104,8 @@ const QBPredictionHistoryComponent = () => {
         )
     }
     if (
-        (teamIDList !== [])
+        // (teamIDList !== [])
+        allLoaded
     ) {
         return (
             <div id="qb-history-container">
@@ -173,7 +178,10 @@ const QBPredictionHistoryComponent = () => {
                         message={popupMessage}
                     ></PopupComponent> */}
                 </div>
-                <UserScoreDisplayer userScore={userScore}/>
+                <UserScoreDisplayer
+                    userID={userID}
+                    season={season}
+                />
             </div>
         )
     } else {

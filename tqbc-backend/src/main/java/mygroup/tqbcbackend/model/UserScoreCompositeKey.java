@@ -42,5 +42,21 @@ public class UserScoreCompositeKey implements Serializable{
 		UserScoreCompositeKey other = (UserScoreCompositeKey) obj;
 		return Objects.equals(predictionPeriodID, other.predictionPeriodID) && Objects.equals(userID, other.userID);
 	}
+
+	public long getPredictionPeriodID() {
+		return this.predictionPeriodID;
+	}
+
+	public void setPredictionPeriodID(long predictionPeriodID) {
+		this.predictionPeriodID = predictionPeriodID;
+	}
+
+	public long getUserID() {
+		return this.userID;
+	}
+
+	public void setUserID(long userID) {
+		this.userID = userID;
+	}
 	
 }

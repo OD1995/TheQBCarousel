@@ -150,7 +150,7 @@
 #qb-history-container {
     display: flex;
     align-items: center;
-    width: 100vw;
+    /* width: 100vw; */
     border: 1px solid blue;
     padding-left: 0;
     margin-left: 0; 

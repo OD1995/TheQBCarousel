@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import mygroup.tqbcbackend.model.UserScore;
 import mygroup.tqbcbackend.payload.request.UserScoreRequest;
 import mygroup.tqbcbackend.payload.response.MessageResponse;
+import mygroup.tqbcbackend.repository.UserScoreRepository;
 import mygroup.tqbcbackend.service.UserScoreService;
 
 @CrossOrigin(origins = "*")
@@ -28,8 +30,11 @@ public class UserScoreController {
 	@Autowired
 	private UserScoreService userScoreService;
 
-	@PostMapping("/calculate-score")
-	public Map<Long, Float> calculateScore(
+	@Autowired
+	private UserScoreRepository userScoreRepository;
+
+	@PostMapping("/calculate-user-season-scores")
+	public Map<Long, Float> calculateUserSeasonScores(
 		@Valid @RequestBody UserScoreRequest userScoreRequest
 	) {
 		return userScoreService.calculateUserScoreForPredictionPeriodsInSeason(
@@ -40,5 +45,23 @@ public class UserScoreController {
 		// return ResponseEntity.ok(
 		// 	new MessageResponse("Success!")
 		// );
+	}
+
+	@GetMapping("/get-season-scores-for-user")
+	public Map<Long, Float> getSeasonScoresForUser(
+		UserScoreRequest userScoreRequest
+	) {
+		List<UserScore> userScores = userScoreRepository.findByUser_UserIDAndPredictionPeriod_Season(
+			userScoreRequest.getUserID(),
+			userScoreRequest.getSeason()
+		);
+		Map<Long, Float> scoresByPredictionPeriod = new HashMap<Long,Float>();
+		for (UserScore userScore : userScores) {
+			scoresByPredictionPeriod.put(
+				userScore.getUserScoreCompositeKey().getPredictionPeriodID(),
+				userScore.getScore()
+			);
+		}
+		return scoresByPredictionPeriod;
 	}
 }

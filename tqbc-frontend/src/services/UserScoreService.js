@@ -6,10 +6,22 @@ class UserScoreService {
 
     calculateUserScoreForSeason(userID,season) {
         return api.post(
-            this.base_url + "calculate-score",
+            this.base_url + "calculate-user-season-scores",
             {
                 userID: userID,
                 season: season   
+            }
+        );
+    }
+
+    getUserScoresForSeason(userID,season) {
+        return api.get(
+            this.base_url + "get-season-scores-for-user",
+            {
+                params: {
+                    userID: userID,
+                    season: season
+                }
             }
         );
     }
