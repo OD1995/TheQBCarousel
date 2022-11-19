@@ -29,16 +29,16 @@ public class UserScoreController {
 	private UserScoreService userScoreService;
 
 	@PostMapping("/calculate-score")
-	public ResponseEntity<?> calculateScore(
+	public Map<Long, Float> calculateScore(
 		@Valid @RequestBody UserScoreRequest userScoreRequest
 	) {
-		userScoreService.calculateUserScoreForPredictionPeriodsInSeason(
+		return userScoreService.calculateUserScoreForPredictionPeriodsInSeason(
 			userScoreRequest.getUserID(),
 			userScoreRequest.getSeason()
 		);
 
-		return ResponseEntity.ok(
-			new MessageResponse("Success!")
-		);
+		// return ResponseEntity.ok(
+		// 	new MessageResponse("Success!")
+		// );
 	}
 }

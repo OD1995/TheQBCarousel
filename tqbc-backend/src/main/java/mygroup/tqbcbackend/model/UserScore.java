@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -21,12 +22,14 @@ public class UserScore {
 			targetEntity = PredictionPeriod.class,
 			fetch = FetchType.LAZY
 	)
+	@JoinColumn(name = "PredictionPeriodID", nullable = false, insertable = false, updatable = false)
 	private PredictionPeriod predictionPeriod;
 	
 	@ManyToOne(
 			targetEntity = User.class,
 			fetch = FetchType.LAZY
 	)
+	@JoinColumn(name = "UserID", nullable = false, insertable = false, updatable = false)
 	private User user;
 	
 	public UserScore() {

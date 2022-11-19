@@ -11,9 +11,12 @@ import org.springframework.stereotype.Service;
 import mygroup.tqbcbackend.model.Answer;
 import mygroup.tqbcbackend.model.PeriodPrediction;
 import mygroup.tqbcbackend.model.Player;
+import mygroup.tqbcbackend.model.UserScore;
+import mygroup.tqbcbackend.model.UserScoreCompositeKey;
 import mygroup.tqbcbackend.repository.AnswerRepository;
 import mygroup.tqbcbackend.repository.PeriodPredictionRepository;
 import mygroup.tqbcbackend.repository.UserRepository;
+import mygroup.tqbcbackend.repository.UserScoreRepository;
 
 @Service
 public class UserScoreService {
@@ -27,7 +30,10 @@ public class UserScoreService {
     @Autowired
     AnswerRepository answerRepository;
 
-    public void calculateUserScoreForPredictionPeriodsInSeason(
+    @Autowired
+    UserScoreRepository userScoreRepository;
+
+    public Map<Long, Float> calculateUserScoreForPredictionPeriodsInSeason(
         long userID,
         long season
     ) {
@@ -55,17 +61,59 @@ public class UserScoreService {
             }
         }
 
+        Map<Long, List<Boolean>> predictionPeriodIDIsCorrectArrayMap = new HashMap<Long, List<Boolean>>();
+
         for (PeriodPrediction periodPrediction : periodPredictions) {
             long teamID = periodPrediction.getTeam().getTeamID();
             Player player = periodPrediction.getPlayer();
-            periodPrediction.setCorrect(
-                    teamIDPlayerArrayMap.get(teamID).contains(player)
-            );
+            Boolean isCorrect = teamIDPlayerArrayMap.get(teamID).contains(player);
+            periodPrediction.setCorrect(isCorrect);
+            Long predictionPeriodID = periodPrediction.getPeriodPredictionCompositeKey().getPredictionPeriodID();
+            if (predictionPeriodIDIsCorrectArrayMap.containsKey(predictionPeriodID)) {
+                predictionPeriodIDIsCorrectArrayMap.get(predictionPeriodID).add(isCorrect);
+            } else {
+                List<Boolean> isCorrectList = new ArrayList<>();
+                isCorrectList.add(isCorrect);
+                predictionPeriodIDIsCorrectArrayMap.put(
+                    predictionPeriodID,
+                    isCorrectList
+                );
+            }
         }
 
         periodPredictionRepository.saveAll(periodPredictions);
 
-        // return teamIDPlayerArrayMap;
+        // Map<Long, Float> scoresByPredictionPeriod = new HashMap<Long,Float>();
+        Map<Long, Float> scoresByPredictionPeriod = new HashMap<Long,Float>();
+
+        for (Long ppID : predictionPeriodIDIsCorrectArrayMap.keySet()) {
+            Integer ppCorrects = 0;
+            Integer ppTotalAttempts = 0;
+            List<Boolean> isCorrects = predictionPeriodIDIsCorrectArrayMap.get(ppID);
+            for (Boolean isCorrect : isCorrects) {
+                ppTotalAttempts += 1;
+                if (isCorrect) {
+                    ppCorrects += 1;
+                }
+            }
+            Float ppCorrectsFloat = (float) ppCorrects;
+            Float ppTotalAttemptsFloat = (float) ppTotalAttempts;
+            Float score = ppCorrectsFloat / ppTotalAttemptsFloat;
+            scoresByPredictionPeriod.put(
+                ppID,
+                score
+            );
+            UserScoreCompositeKey userScoreCompositeKey = new UserScoreCompositeKey(
+                ppID,
+                userID
+            );
+            UserScore userScore = new UserScore(
+                userScoreCompositeKey,
+                score
+            );
+            userScoreRepository.save(userScore);
+        }
+        return scoresByPredictionPeriod;
     }
     
 }

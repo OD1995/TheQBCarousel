@@ -19,7 +19,8 @@ export const UserScoreDisplayer = (props) => {
                 )
             }
             setScores(scores_array);
-        }
+        },
+        []
     )
 
     return (
