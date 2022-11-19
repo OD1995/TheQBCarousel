@@ -123,10 +123,6 @@ export const AnswerEntryModal = (props) => {
                     answerNames.push(props.playerLookup[pID]);
             }
         }
-        props.setIsOpen(false);
-        if (answerIDs.length === 0) {
-            return ;
-        }
         AnswerService.postAnswersForTeamAndAnswerType(
             props.teamID,
             answerIDs,
@@ -139,6 +135,7 @@ export const AnswerEntryModal = (props) => {
             answerNames,
             props.answerTypeID
         );
+        props.setIsOpen(false);
     }
 
     useEffect(

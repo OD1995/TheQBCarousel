@@ -62,6 +62,11 @@ public class AnswerController {
     ) {
         long teamID = answerPostRequest.getTeamID();
         long answerTypeID = answerPostRequest.getAnswerTypeID();
+        // Remove the current answers for the team/answer type combo
+        // int abc = answerRepository.deleteByTeam_TeamIDAndAnswerType_AnswerTypeID(teamID, answerTypeID);
+        List<Answer> oldAnswers = answerRepository.findByTeam_TeamIDAndAnswerType_AnswerTypeID(teamID, answerTypeID);
+        answerRepository.deleteAll(oldAnswers);
+        // Add the new answers
         List<Answer> answerList = new ArrayList<Answer>();
         for (Long playerID : answerPostRequest.getAnswers()) {
             answerList.add(
