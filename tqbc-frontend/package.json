@@ -18,6 +18,7 @@
     "react-scripts": "5.0.0",
     "react-select": "^5.2.2",
     "react-select-search": "^3.0.9",
+    "react-usestateref": "^1.0.8",
     "react-validation": "^3.0.7",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",

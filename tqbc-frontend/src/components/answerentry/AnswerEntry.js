@@ -2,11 +2,12 @@ import React from "react"
 import { AnswerEntryTable } from "./AnswerEntryTable"
 import './AnswerEntry.css';
 import { useState } from "react";
-import { AnswerEntryModal } from "./AnswerEntryModal";
+import { AnswerEntryModal } from "./AnswerEntryModal2";
 import { useEffect } from "react";
 import AnswerTypeService from "../../services/AnswerTypeService";
 import { useParams } from "react-router-dom";
 import History from "../../helpers/History";
+import PlayerService from "../../services/PlayerService";
 
 export const AnswerEntry = () => {
 
@@ -17,12 +18,15 @@ export const AnswerEntry = () => {
     const [cellTeam, setCellTeam] = useState(null);
     const [cellType, setCellType] = useState(null);
     const [answerTypes, setAnswerTypes] = useState({});
+    const [players, setPlayers] = useState([]);
+    const [currentAnswerIDs, setCurrentAnswerIDs] = useState([]);
 
     let params = useParams();
     
-    const revealModal = (team,type) => {
+    const revealModal = (team,type,pIDs) => {
         setCellTeam(team);
         setCellType(type);
+        setCurrentAnswerIDs(pIDs);
         setShowModal(true);
     }
 
@@ -35,6 +39,24 @@ export const AnswerEntry = () => {
                         answer_types[at_obj.answerTypeID] = at_obj.answerTypeTidy;
                     }
                     setAnswerTypes(answer_types);
+                    PlayerService.getActivePlayers().then(
+                        (res2) => {
+                            let players_array = [
+                                {
+                                    label : 'N/A',
+                                    value : 0
+                                }
+                            ];
+                            for (const player_obj of res2.data) {
+                                const dropdown_data = {
+                                    label : player_obj.name,
+                                    value : player_obj.playerID
+                                };
+                                players_array.push(dropdown_data);
+                            }
+                            setPlayers(players_array);
+                        }
+                    )
                 }
             )
         },
@@ -65,6 +87,8 @@ export const AnswerEntry = () => {
                         season={params.season}
                         setIsOpen={setShowModal}
                         answerTypes={answerTypes}
+                        players={players}
+                        currentAnswerIDs={currentAnswerIDs}
                     />
                 )}
             </div>

@@ -33,9 +33,14 @@ export const AnswerEntryTable = (props) => {
                             for (const aob of res2.data) {
                                 let key = aob.team.teamID + "," + aob.answerType.answerTypeID;
                                 if (key in answers_obj) {
-                                    answers_obj[key].push(aob.player.name);
+                                    answers_obj[key]['names'].push(aob.player.name);
+                                    answers_obj[key]['ids'].push(aob.player.id);
                                 } else {
-                                    answers_obj[key] = [aob.player.name];
+                                    let item = {
+                                        names: [aob.player.name],
+                                        ids: [aob.player.id]
+                                    }
+                                    answers_obj[key] = item;
                                 }
                             }
                             setAnswersObject(answers_obj);
@@ -79,12 +84,14 @@ export const AnswerEntryTable = (props) => {
             tds.push(<td>{team_name}</td>);
             for (const answerTypeID of Object.keys(props.answerTypes)) {
                 let td_value = "";
+                let pIDs = [];
                 let key = teamID + "," + answerTypeID;
                 if (key in answers_obj) {
-                    td_value = answers_obj[key].join(", ");
+                    td_value = answers_obj[key]['names'].join(", ");
+                    pIDs = answers_obj[key]['ids'];
                 }
                 tds.push(
-                    <td onClick={() => props.revealModal(team_name,answerTypeID)}>
+                    <td onClick={() => props.revealModal(team_name,answerTypeID,pIDs)}>
                         {td_value}
                     </td>
                 );
@@ -100,7 +107,7 @@ export const AnswerEntryTable = (props) => {
 
     if (tableRows.length > 0) {
         return (
-            <table style={{border:"1px solid black"}}>
+            <table id={`answerEntryTable-${props.conference}`}>
                 <tr>
                     {tableHeaders}
                 </tr>

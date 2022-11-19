@@ -36,11 +36,10 @@
     display: none;
   } */
 
-  #answerEntryTablesDiv {
-    display: flex;
+#answerEntryTablesDiv {
+	display: flex;
     justify-content: space-evenly;
-
-  }
+}
 table, th, td {
   border: 1px solid black;
 }
@@ -66,30 +65,22 @@ table, th, td {
 .tqbcModal {
   /* width: 250px; */
   /* height: 170px; */
-  height: 50vh;
+  min-height: 50vh;
+  height: max-content;
   width: 50vw;
+  position: relative;
+  /* padding-top: 10vh; */
   background: white;
   color: white;
   z-index: 10;
   border-radius: 16px;
   box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
-}
+  overflow: overlay;
+  /* border: 1px solid blue; */
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-around; */
 
-.modalHeader {
-  height: 50px;
-  background: white;
-  overflow: hidden;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-}
-
-.heading {
-  margin: 0;
-  padding: 10px;
-  color: #2c3e50;
-  font-weight: 500;
-  font-size: 18px;
-  text-align: center;
 }
 
 .modalContent {
@@ -99,19 +90,24 @@ table, th, td {
   text-align: center;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  padding-top: 5%;
+  /* overflow: overlay; */
+  /* border: 1px solid green; */
 }
 
 .modalActions {
   position: absolute;
   bottom: 2px;
-  margin-bottom: 10px;
+  margin-bottom: 2%;
   width: 100%;
+  display: flex;
+  justify-content: right;
+  /* border: 1px solid brown; */
 }
 
-.actionsContainer {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+.modalButton {
+	margin-right: 5%;
 }
 
 .closeBtn {
@@ -174,4 +170,20 @@ table, th, td {
   box-shadow: none;
   transform: none;
   background: whitesmoke;
+}
+
+.answerSelector {
+	width: 80%;
+}
+
+.removeAnswerSelector {
+	width: 10%;
+}
+
+.answerSelectorDiv {
+	display: flex;
+	flex-direction: row;
+	width: 50%;
+	justify-content: space-between;
+	padding-bottom: 2%;
 }
