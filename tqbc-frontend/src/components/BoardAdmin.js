@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import UserService from "../services/user.service";
-import EventBus from "../common/EventBus";
 import History from "../helpers/History";
+import UserScoreService from "../services/UserScoreService";
+import '../styles/BoardAdmin.css';
 
 const BoardAdmin = () => {
     const [showContent, setShowContent] = useState(false);
+    const [msg, setMsg] = useState("hopefully this will change");
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
@@ -15,15 +16,28 @@ const BoardAdmin = () => {
         }
     }, []);
 
+    const doStuff = () => {
+        UserScoreService.calculateUserScoreForSeason(1,2022).then(
+            (result) => {
+                setMsg(result.data.message);
+            }
+        )
+    }
+
     if (showContent) {
         return (
-            <div className="container">
-                {/* <header className="jumbotron">
-                    <h3>CAT</h3>
-                </header> */}
+            <div id="board-admin-container">
                 <a href="/answer-entry/2022">
                     Answer Entry
                 </a>
+                <button className="tqbc-green-button" id="calculate-user-score-button"
+                    onClick={() => doStuff()}
+                >
+                    Calculate User Score
+                </button>
+                <h1>
+                    {msg}
+                </h1>
             </div>
         );
     } else {

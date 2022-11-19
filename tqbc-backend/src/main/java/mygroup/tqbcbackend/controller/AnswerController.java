@@ -56,8 +56,8 @@ public class AnswerController {
     }
 
     // Save answers to db
-    @PostMapping("/post-team-season-answers")
-    public ResponseEntity<?> postTeamSeasonAnswers(
+    @PostMapping("/post-team-answertype-answers")
+    public ResponseEntity<?> postTeamAnswerTypeAnswers(
         @Valid @RequestBody AnswerPostRequest answerPostRequest
     ) {
         long teamID = answerPostRequest.getTeamID();

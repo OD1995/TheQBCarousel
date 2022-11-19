@@ -18,7 +18,7 @@ class AnswerService {
 
     postAnswersForTeamAndAnswerType(teamID,answers,answerTypeID) {
         return api.post(
-            this.base_url + "post-team-season-answers",
+            this.base_url + "post-team-answertype-answers",
             {
                 teamID: teamID,
                 answers: answers,
