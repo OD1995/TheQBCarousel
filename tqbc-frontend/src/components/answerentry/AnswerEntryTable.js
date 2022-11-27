@@ -1,99 +1,93 @@
 import React from "react"
 import { useState,useEffect } from "react";
-import History from "../../helpers/History";
-import AnswerService from "../../services/AnswerService";
-import TeamService from "../../services/TeamService"
-import { AnswerEntryModal } from "./AnswerEntryModal";
 
 export const AnswerEntryTable = (props) => {
 
-    // const [teamsArray, setTeamsArray] = useState([]);
-    const [teamsObject, setTeamsObject] = useState({});
-    const [answersObject, setAnswersObject] = useState({});
     const [tableHeaders, setTableHeaders] = useState([]);
     const [tableRows, setTableRows] = useState([]);
-    const [divisionsSeen, setDivisionsSeen] = useState([]);
 
     useEffect(
         () => {
-            TeamService.getConferenceActiveTeams(props.conference).then(
-                (res) => {
-                    let teams_obj = {};
-                    for (const team_obj of res.data) {
-                        teams_obj[team_obj.teamID] = team_obj;
-                    }
-                    setTeamsObject(teams_obj);
-                    AnswerService.getAnswersForConferenceSeason(props.conference,props.season).then(
-                        (res2) => {
-                            let answers_obj = {};
-                            for (const aob of res2.data) {
-                                let key = aob.team.teamID + "," + aob.answerType.answerTypeID;
-                                if (key in answers_obj) {
-                                    answers_obj[key]['names'].push(aob.player.name);
-                                    answers_obj[key]['ids'].push(aob.player.id);
-                                } else {
-                                    let item = {
-                                        names: [aob.player.name],
-                                        ids: [aob.player.id]
-                                    }
-                                    answers_obj[key] = item;
-                                }
-                            }
-                            setAnswersObject(answers_obj);
-                            generateTableHeaders();
-                            generateTableRows(teams_obj,answers_obj);
-                        }
-                    )
-                }
-            )
+            generateTableHeaders();
+            generateTableRows(props.data.teams,props.data.answers);
         },
-        []
+        [props.data.answers]
     )
 
     const generateTableHeaders = () => {
         let table_headers = [
-            <th colSpan={2}>{props.conference}</th>
+            <th
+                id={"header-" + props.conference}
+                key={"header-" + props.conference}
+                colSpan={2}
+            >
+                {props.conference}
+            </th>
         ];
         for (const answerTypeTidy of Object.values(props.answerTypes)) {
             table_headers.push(
-                <th>{answerTypeTidy}</th>
+                <th
+                    id={"header-" + answerTypeTidy}
+                    key={"header-" + answerTypeTidy}
+                >
+                    {answerTypeTidy}
+                </th>
             )
         }
         setTableHeaders(table_headers);
     }
 
-    const generateTableRows = (teams_obj,answers_obj) => {
-        if (Object.keys(teams_obj).length === 0) {
+    const generateTableRows = (teamsObj,answersObj) => {
+        if (Object.keys(teamsObj).length === 0) {
             return null;
         }
         let divisionsSeen = [];
         let trs = [];
-        for (const teamID of Object.keys(teams_obj)) {
-            let team_obj = teams_obj[teamID]
+        for (const teamID of Object.keys(teamsObj)) {
+            let team_obj = teamsObj[teamID]
             let team_name = team_obj.location + " " + team_obj.nickname;
             let tds = [];
             let team_div = team_obj.division;
             if (!divisionsSeen.includes(team_div)) {
-                tds.push(<td rowSpan={4}>{team_div[0]}</td>);
+                tds.push(
+                    <td               
+                        key={teamID + "-" + team_div[0]}
+                        id={teamID + "-" + team_div[0]}
+                        rowSpan={4}
+                    >
+                        {team_div[0]}
+                    </td>
+                );
                 divisionsSeen.push(team_div);
             }
-            tds.push(<td>{team_name}</td>);
+            tds.push(
+                <td                
+                    key={teamID + "-" + team_name}
+                    id={teamID + "-" + team_name}
+                >
+                    {team_name}
+                </td>
+            );
             for (const answerTypeID of Object.keys(props.answerTypes)) {
                 let td_value = "";
                 let pIDs = [];
                 let key = teamID + "," + answerTypeID;
-                if (key in answers_obj) {
-                    td_value = answers_obj[key]['names'].join(", ");
-                    pIDs = answers_obj[key]['ids'];
+                if (key in answersObj) {
+                    td_value = answersObj[key]['names'].join(", ");
+                    pIDs = answersObj[key]['ids'];
                 }
                 tds.push(
-                    <td onClick={() => props.revealModal(team_name,teamID,answerTypeID,pIDs)}>
+                    <td
+                        key={teamID + "-" + answerTypeID}
+                        id={teamID + "-" + answerTypeID}
+                        onClick={() => props.revealModal(team_name,teamID,answerTypeID,pIDs,props.conference)}
+                    >
                         {td_value}
                     </td>
                 );
             }
             trs.push(
-                <tr>
+                <tr key={teamID}>
                     {tds}
                 </tr>
             )
@@ -104,10 +98,14 @@ export const AnswerEntryTable = (props) => {
     if (tableRows.length > 0) {
         return (
             <table id={`answerEntryTable-${props.conference}`}>
-                <tr>
-                    {tableHeaders}
-                </tr>
-                {tableRows}
+                <thead>
+                    <tr>
+                        {tableHeaders}
+                    </tr>
+                </thead>
+                <tbody>
+                    {tableRows}
+                </tbody>
             </table>
         )
     } else {

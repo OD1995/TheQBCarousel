@@ -1,5 +1,5 @@
 import React from "react"
-import { AnswerEntryTable } from "./AnswerEntryTable2"
+import { AnswerEntryTable } from "./AnswerEntryTable"
 import './AnswerEntry.css';
 import { useState } from "react";
 import { AnswerEntryModal } from "./AnswerEntryModal";
@@ -11,6 +11,7 @@ import PlayerService from "../../services/PlayerService";
 import TeamService from "../../services/TeamService";
 import AnswerService from "../../services/AnswerService";
 import { useRef } from "react";
+import { useImmer } from "use-immer";
 
 export const AnswerEntry = () => {
 
@@ -33,7 +34,8 @@ export const AnswerEntry = () => {
     // const [dataNFC, setDataNFC] = useState({});
     // const [doneAFC, setDoneAFC] = useState(false);
     // const [doneNFC, setDoneNFC] = useState(false);
-    const [conferenceData, setConferenceData] = useState({});
+    // const [conferenceData, setConferenceData] = useState({});
+    const [conferenceData, setConferenceData] = useImmer({});
     const [conferenceDones, setConferenceDones] = useState({})
 
     const stateRef = useRef();
@@ -55,18 +57,15 @@ export const AnswerEntry = () => {
     }
 
     const pushDataToParent = (conference,teamID,answerIDs,answerNames,answerTypeID) => {
-        try {
-            let tempConferenceData = {...stateRef.current.conferenceData};
-            tempConferenceData[conference]['answers'][`${teamID},${answerTypeID}`] = {
-                ids: answerIDs,
-                names: answerNames
+        let newKey = `${teamID},${answerTypeID}`;
+        setConferenceData(
+            oldConferenceData => {
+                oldConferenceData[conference].answers[newKey] = {
+                    names: answerNames,
+                    ids: answerIDs
+                }
             }
-            // ['ids'] = answerIDs;
-            // tempConferenceData[conference]['answers'][`${teamID},${answerTypeID}`]['names'] = answerNames;
-            setConferenceData(tempConferenceData);
-        } catch (eee) {
-            let a = 1;
-        }
+        );
     }
 
     const generateConferenceData = (conference,setDataCallback,setDoneCallback) => {
@@ -170,9 +169,7 @@ export const AnswerEntry = () => {
         []
     )
 
-    // if (Object.keys(answerTypes).length > 0) {
     if (conferenceDones['AFC'] && conferenceDones['NFC']) {
-    // if (doneAFC && doneNFC) {
         return (
             <div>
                 <div id="answerEntryTablesDiv">
