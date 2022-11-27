@@ -188,7 +188,7 @@ const App = () => {
 							element={<QBPredictionHistoryComponent/>}
 						/>
 						<Route
-							path="/prediction-history/:username/historyID"
+							path="/prediction-history/:username/:season"
 							element={<QBPredictionHistoryComponent/>}
 						/>
 						<Route path="/email-verification" element={<EmailVerification/>}/>

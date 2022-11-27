@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import PeriodPredictionService from '../../../services/PeriodPredictionService';
 import { useParams } from 'react-router-dom';
 import { UserScoreDisplayer } from '../components/UserScoreDisplayer';
+import History from '../../../helpers/History';
 
 const QBPredictionHistoryComponent = () => {
     const params = useParams();
@@ -39,24 +40,29 @@ const QBPredictionHistoryComponent = () => {
     const { user: currentUser } = useSelector((state) => state.auth);
     const [season, setSeason] = useState(0);
     const [userID, setUserID] = useState(0);
-    // const [userScore,setUserScore] = useState(
-    //     {
-    //         PP1: '10%',
-    //         PP2: '20%',
-    //         PP3: '30%',
-    //         PP4: '40%',
-    //     }
-    // )
 
 
-    useEffect(() => {
-        // console.log("params");
-        // console.log(params);
-        setUserID(JSON.parse(localStorage.getItem("user")).userID);
-        callTeamsService();
-
-        // PredictionPeriodService
-    },[]);
+    useEffect(
+        () => {
+            // If season not in params or season not one of available options, get max season and redirect to there
+            var options = [2022];
+            if (
+                (params.season === null) || (!options.includes(params.season))
+            ) {
+                PeriodPredictionService.getMaxSeason(params.username).then(
+                    result => {
+                        History.push(`/predictions-history/${params.username}/${result.data}`);
+                    }
+                )
+            } else {
+                // console.log("params");
+                // console.log(params);
+                setUserID(JSON.parse(localStorage.getItem("user")).userID);
+                callTeamsService();
+            }
+        },
+        []
+    );
 
     const callTeamsService = () => {
         TeamService.getActiveTeams().then(
