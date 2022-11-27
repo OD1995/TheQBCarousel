@@ -7,6 +7,10 @@ export const UserScoreDisplayer = (props) => {
 
     const [scores, setScores] = useState([]);
 
+    const formatScore = (num) => {
+        return Number(num).toLocaleString(undefined,{style: 'percent', minimumFractionDigits:1});
+    }
+
     useEffect(
         () => {
             UserScoreService.getUserScoresForSeason(
@@ -16,10 +20,10 @@ export const UserScoreDisplayer = (props) => {
                 (result) => {
                     let scores_array = [];
                     for (const ppID of Object.keys(result.data)) {
-                        let ppScore = result.data[ppID];
+                        let ppScore = formatScore(result.data[ppID]);
                         scores_array.push(
                             <tr key={ppID}>
-                                <td>PP{ppID}</td>
+                                <td><b>PP{ppID}</b></td>
                                 <td>{ppScore}</td>
                             </tr>
                         )
