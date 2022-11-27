@@ -282,7 +282,7 @@ const QBPredictionsComponent = () => {
         (currentSeasonPeriodID !== "currentSeasonPeriodID")
     ) {
         return (
-            <div className='qb-predictor-box qb-grid'>
+            <div className='container qb-predictor-box qb-grid'>
                 <h1 className='area-title' style={{gridRow:1,gridColumn:2}}>NORTH</h1>
                 <h1 className='area-title' style={{gridRow:1,gridColumn:3}}>EAST</h1>
                 <h1 className='area-title' style={{gridRow:1,gridColumn:4}}>SOUTH</h1>

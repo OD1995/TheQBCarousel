@@ -169,7 +169,7 @@ const App = () => {
 					</nav>
 				</div>
 				<NavigateSetter/>
-				<div className="component-container container page-content">
+				<div className="component-container page-content">
 					<Routes>
 						<Route index element={defaultPage}/>
 						<Route exact path="/how-it-works" element={<HowItWorks/>}/>
