@@ -81,9 +81,6 @@ const QBPredictionsComponent = () => {
                         value : player_obj.playerID
                     };
                     players_array.push(dropdown_data);
-                    // if (player_obj.defaultTeamID != null) {
-                    //     default_team_dict[player_obj.defaultTeamID] = dropdown_data;
-                    // }
                     if (player_obj.playerID in defaultDict) {
                         default_team_dict[defaultDict[player_obj.playerID]] = dropdown_data
                     }
@@ -295,7 +292,7 @@ const QBPredictionsComponent = () => {
                         className='conference_logo'
                         src={window.location.origin + '/conference_logos/' + conf.season + '/' + conf.name + '.png' }
                         alt={conf.name}
-                        key={conf.name}
+                        key={conf.name + "-logo"}
                         style={{gridRowStart:conf.gridRowStart,gridRowEnd:conf.gridRowEnd,gridColumn:conf.gridColumn}}
                         />
                     )

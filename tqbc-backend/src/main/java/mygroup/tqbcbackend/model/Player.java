@@ -35,13 +35,13 @@ public class Player {
 	)
 	private List<PeriodPrediction> periodPredictions;
 	
-	@OneToOne(
-			targetEntity = Team.class,
-			fetch = FetchType.LAZY,
-			mappedBy = "defaultPlayer"
-	)
-	@Nullable
-	private Team defaultTeam;
+	// @OneToOne(
+	// 		targetEntity = Team.class,
+	// 		fetch = FetchType.LAZY,
+	// 		mappedBy = "defaultPlayer"
+	// )
+	// @Nullable
+	// private Team defaultTeam;
 	
 	@OneToMany(
 			targetEntity = Answer.class,

@@ -10,7 +10,7 @@ class PeriodPredictionService {
         predictions
     ) {
         return api.post(
-            this.base_url + "postpredictions",
+            this.base_url + "post-predictions",
             {
                 predictionPeriodID: predictionPeriodID,
                 userID: userID,

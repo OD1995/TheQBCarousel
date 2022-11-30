@@ -105,12 +105,6 @@ const App = () => {
 								</Link>
 							</li>
 
-							<li className="nav-item">
-								<Link to={"/test"} className="nav-link">
-									Test
-								</Link>
-							</li>
-
 							{showModeratorBoard && (
 								<li className="nav-item">
 									<Link to={"/mod"} className="nav-link">

@@ -10,18 +10,22 @@ const QBDisplayer = (props) => {
             // (typeof props.prediction.team !== "undefined")
             (props.allLoaded)
     ) {
-        let team = props.predictions[0].team;
-        let player = props.predictions[0].player;
-        let img_src = (
-            window.location.origin
-            + '/team_logos/' 
-            + team.season
-            + '/' + team.location.replace(" ","")
-            + team.nickname + '.png'
-        );
-        let grid_pos = {
-            gridRow: team.gridRow,
-            gridColumn: team.gridColumn
+        try {
+            var team = props.predictions[0].team;
+            // let player = props.predictions[0].player;
+            var img_src = (
+                window.location.origin
+                + '/team_logos/' 
+                + team.season
+                + '/' + team.location.replace(" ","")
+                + team.nickname + '.png'
+            );
+            var grid_pos = {
+                gridRow: team.gridRow,
+                gridColumn: team.gridColumn
+            }
+        } catch (e) {
+            let a = 1;
         }
         return (
             <div className={'qb_displayer_box '+ team.conference} style={grid_pos}>

@@ -57,7 +57,7 @@ public class PeriodPredictionController {
 	
 	
 	// Insert user's predictions
-	@PostMapping("/postpredictions")
+	@PostMapping("/post-predictions")
 	public ResponseEntity<?> postPredictions(
 			@Valid @RequestBody PeriodPredictionRequest periodPredictionRequest
 	) {

@@ -35,11 +35,15 @@ export const UserScoreDisplayer = (props) => {
         []
     )
 
-    return (
-        <table id="qb-prediction-history-score-table">
-            <tbody>
-                {scores}
-            </tbody>
-        </table>
-    )
+    if (scores.length > 0) {
+        return (
+            <table id="qb-prediction-history-score-table">
+                <tbody>
+                    {scores}
+                </tbody>
+            </table>
+        );
+    } else {
+        return null;
+    }
 }

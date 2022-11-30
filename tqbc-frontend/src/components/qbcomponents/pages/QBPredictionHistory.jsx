@@ -8,7 +8,6 @@ import PopupComponent from '../../PopUpComponent';
 import { useSelector } from 'react-redux';
 import PeriodPredictionService from '../../../services/PeriodPredictionService';
 import { useParams } from 'react-router-dom';
-import { UserScoreDisplayer } from '../components/UserScoreDisplayer';
 import History from '../../../helpers/History';
 import { QBPredictionHistoryRightPanel } from '../components/QBPredictionHistoryRightPanel';
 import PredictionPeriodService from '../../../services/PredictionPeriodService';
@@ -27,6 +26,7 @@ const QBPredictionHistoryComponent = () => {
     useEffect(
         () => {
             document.title = "Prediction History";
+            setAllLoaded(false);
             // If season not in params or season not one of available options, get max season and redirect to there
             setUserID(JSON.parse(localStorage.getItem("user")).userID);
             PeriodPredictionService.getUniqueSeasons(params.username).then(
@@ -59,7 +59,7 @@ const QBPredictionHistoryComponent = () => {
     );
 
     const callTeamsService = (history_season) => {
-        TeamService.getActiveTeams().then(
+        TeamService.getSeasonTeams(history_season).then(
             (res) => {
                 // Create dict where key is teamID and value is row from `teams`
                 let teams_dict = {};

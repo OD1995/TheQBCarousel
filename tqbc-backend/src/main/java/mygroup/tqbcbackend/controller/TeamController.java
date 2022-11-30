@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import mygroup.tqbcbackend.model.Team;
 import mygroup.tqbcbackend.payload.request.ActiveConferenceTeamsRequest;
+import mygroup.tqbcbackend.payload.request.TeamRequest;
 import mygroup.tqbcbackend.repository.TeamRepository;
 
 //@CrossOrigin(origins = "http://localhost:3000")
@@ -37,9 +38,19 @@ public class TeamController {
 		return teamRepository.findByIsActiveTrue();
 	} 
 
+	// Get all teams for a season
+	@GetMapping("/get-season-teams")
+	public List<Team> getSeasonTeams(
+		TeamRequest teamRequest
+	) {
+		return teamRepository.findBySeason(teamRequest.getSeason());
+	}
+
 	// Get all active teams in a conference
 	@GetMapping("/conference-active")
-	public List<Team> getAllActiveConferenceTeams(ActiveConferenceTeamsRequest activeConferenceTeamsRequest) {
+	public List<Team> getAllActiveConferenceTeams(
+		ActiveConferenceTeamsRequest activeConferenceTeamsRequest
+	) {
 		return teamRepository.findByIsActiveTrueAndConference(activeConferenceTeamsRequest.getConference());
 	}
 }
