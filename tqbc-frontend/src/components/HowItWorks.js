@@ -10,6 +10,7 @@ const HowItWorks = () => {
 
     const txt = "";
     useEffect(() => {
+        document.title = 'How It Works';
         PredictionPeriodService.getHowItWorksPredictionPeriods().then(
             (ppRes) => {
                 let tbl = createPredictionPeriodsTable2(ppRes.data);

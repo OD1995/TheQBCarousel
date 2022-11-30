@@ -44,6 +44,7 @@ const QBPredictionHistoryComponent = () => {
 
     useEffect(
         () => {
+            document.title = "Prediction History";
             // If season not in params or season not one of available options, get max season and redirect to there
             var options = [2022];
             if (

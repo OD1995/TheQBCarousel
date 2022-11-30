@@ -44,6 +44,7 @@ const QBPredictionsComponent = () => {
 
 
     useEffect(() => {
+        document.title = 'Prediction Board'
         callTeamsService();
 
         // PredictionPeriodService

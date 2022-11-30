@@ -19,6 +19,13 @@ const Navigator = () => {
                 // Clear messsage when changing location
                 dispatch(clearMessage()); 
             }
+            window.gtag(
+                "event",
+                "page_view",
+                {
+                    page_path: location.pathname + location.search
+                }
+            );
         },
         [location]
     )
