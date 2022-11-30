@@ -15,30 +15,9 @@ const QBPredictionHistoryComponent = () => {
     const params = useParams();
     const [allLoaded, setAllLoaded] = useState(false);
     const [teamIDList, setTeamIDList] = useState([]);
-    // const [teams, setTeams] = useState("a");
-    // const [players, setPlayers] = useState([]);
     const [conferences, setConferences] = useState([]);
     const [teamIDPeriodPredictionDict, setTeamIDPeriodPredictionDict] = useState("setTeamIDPeriodPredictionDict");
-    // const [currentDropdownValues, setCurrentDropdownValues] = useState("b");
-    // const [truePredictionPeriodID, setTruePredictionPeriodID] = useState("truePredictionPeriodID");
-    // const [currentPredictionPeriodID, setCurrentPredictionPeriodID] = useState("currentPredictionPeriodID");
-    const [showPopup, setShowPopup] = useState(false);
-    const [popupMessage, setPopupMessage] = useState("popupMessage");
-    const [popupTitle, setPopupTitle] = useState("popupTitle");
-    const [popupSubtitle, setPopupSubtitle] = useState("popupSubtitle");
-    // const [uniqueSeasons, setUniqueSeasons] = useState([]);
-    // const [uniqueSeasonPeriodIDs, setUniqueSeasonPeriodIDs] = useState([]);
-    // const [periodLookup, setPeriodLookup] = useState({});
-    // const [showPredictionPeriodChanger, setShowPredictionPeriodChanger] = useState(false);
-    // const [trueSeason, setTrueSeason] = useState("trueSeason");
-    // const [currentSeason, setCurrentSeason] = useState("currentSeason");
-    // const [trueSeasonPeriodID, setTrueSeasonPeriodID] = useState("trueSeasonPeriodID");
-    // const [currentSeasonPeriodID, setCurrentSeasonPeriodID] = useState("currentSeasonPeriodID");
-    // const [bottomLeftMessage, setBottomLeftMessage] = useState("bottomLeftMessage");
-    // const [displayBottomLeftMessage, setDisplayBottomLeftMessage] = useState(false);
-    // const [bottomLeftMessageClass, setBottomLeftMessageClass] = useState("bottomLeftMessageClass");
-    const { user: currentUser } = useSelector((state) => state.auth);
-    const [season, setSeason] = useState(0);
+    const [historySeason, setHistorySeason] = useState(0);
     const [userID, setUserID] = useState(0);
 
 
@@ -46,26 +25,30 @@ const QBPredictionHistoryComponent = () => {
         () => {
             document.title = "Prediction History";
             // If season not in params or season not one of available options, get max season and redirect to there
+            setUserID(JSON.parse(localStorage.getItem("user")).userID);
+            var history_season;
             var options = [2022];
             if (
-                (params.season === null) || (!options.includes(params.season))
+                (params.season === null) || (!options.includes(parseInt(params.season)))
             ) {
                 PeriodPredictionService.getMaxSeason(params.username).then(
                     result => {
-                        History.push(`/predictions-history/${params.username}/${result.data}`);
+                        history_season = result.data;
+                        setHistorySeason(history_season);
+                        History.push(`/prediction-history/${params.username}/${history_season}`);
+                        callTeamsService(history_season)
                     }
-                )
+                );
             } else {
-                // console.log("params");
-                // console.log(params);
-                setUserID(JSON.parse(localStorage.getItem("user")).userID);
-                callTeamsService();
+                history_season = parseInt(params.season)
+                setHistorySeason(history_season);
+                callTeamsService(history_season);
             }
         },
         []
     );
 
-    const callTeamsService = () => {
+    const callTeamsService = (history_season) => {
         TeamService.getActiveTeams().then(
             (res) => {
                 // Create dict where key is teamID and value is row from `teams`
@@ -80,33 +63,42 @@ const QBPredictionHistoryComponent = () => {
                 }
                 // setTeams(teams_dict);
                 setTeamIDList(team_id_list);
-                callConferenceService();
+                callConferenceService(history_season);
             }
         )
     }
 
-    const callPeriodPredictionService = () => {
-        PeriodPredictionService.getMaxSeason(params.username).then(
+    const callPeriodPredictionService = (history_season) => {
+        // PeriodPredictionService.getMaxSeason(params.username).then(
+        //     (res) => {
+        //         setSeason(res.data);
+        //         PeriodPredictionService.getPredictions(
+        //             params.username,
+        //             res.data
+        //         ).then(
+        //             (res) => {
+        //                 setTeamIDPeriodPredictionDict(res.data);
+        //                 setAllLoaded(true);
+        //             }
+        //         )
+        //     }
+        // )
+        PeriodPredictionService.getPredictions(
+            params.username,
+            history_season
+        ).then(
             (res) => {
-                setSeason(res.data);
-                PeriodPredictionService.getPredictions(
-                    params.username,
-                    res.data
-                ).then(
-                    (res) => {
-                        setTeamIDPeriodPredictionDict(res.data);
-                        setAllLoaded(true);
-                    }
-                )
+                setTeamIDPeriodPredictionDict(res.data);
+                setAllLoaded(true);
             }
         )
     }
 
-    const callConferenceService = () => {
+    const callConferenceService = (history_season) => {
         ConferenceService.getActiveConferences().then(
             (res) => {
                 setConferences(res.data);
-                callPeriodPredictionService();
+                callPeriodPredictionService(history_season);
             }
         )
     }
@@ -147,47 +139,10 @@ const QBPredictionHistoryComponent = () => {
                             }
                         )
                     }
-                    {/* <button
-                    onClick={savePredictions}
-                    className="tqbc-black-button"
-                    id="save-button"
-                    >
-                        Save
-                    </button> */}
-                    {/* {
-                        showPredictionPeriodChanger && (
-                            <PredictionPeriodChanger
-                                seasons={uniqueSeasons}
-                                seasonPeriodIDs={uniqueSeasonPeriodIDs}
-                                currentSeason={currentSeason}
-                                currentSeasonPeriodID={currentSeasonPeriodID}
-                                currentPredictionPeriodID={currentPredictionPeriodID}
-                                parentStateUpdater={updateParentStatePredictionPeriodChanger}
-                                predictionPeriodIDResetter={resetPredictionPeriodID}
-                            />
-                        )
-                    } */}
-                    {/* {
-                        displayBottomLeftMessage && (
-                            <h4
-                                className={bottomLeftMessageClass}
-                                id="bottom-left-message"
-                            >
-                                {bottomLeftMessage}
-                            </h4>
-                        )
-                    } */}
-                    {/* <PopupComponent
-                        trigger={showPopup}
-                        setTrigger={setShowPopup}
-                        title={popupTitle}
-                        subtitle={popupSubtitle}
-                        message={popupMessage}
-                    ></PopupComponent> */}
                 </div>
                 <UserScoreDisplayer
                     userID={userID}
-                    season={season}
+                    season={historySeason}
                 />
             </div>
         )

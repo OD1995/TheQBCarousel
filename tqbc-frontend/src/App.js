@@ -24,7 +24,7 @@ import EmailVerification from "./components/EmailVerification";
 import { logout } from "./actions/auth";
 // import { history } from "./helpers/History";
 import EventBus from "./common/EventBus";
-import AuthVerify from './common/AuthVerify';
+// import AuthVerify from './common/AuthVerify';
 import { SET_MESSAGE } from './actions/types';
 import { TestComponent } from './components/TestComponent';
 import { NavigateSetter } from './helpers/NavigateSetter';
