@@ -10,6 +10,8 @@ import PeriodPredictionService from '../../../services/PeriodPredictionService';
 import { useParams } from 'react-router-dom';
 import { UserScoreDisplayer } from '../components/UserScoreDisplayer';
 import History from '../../../helpers/History';
+import { QBPredictionHistoryRightPanel } from '../components/QBPredictionHistoryRightPanel';
+import PredictionPeriodService from '../../../services/PredictionPeriodService';
 
 const QBPredictionHistoryComponent = () => {
     const params = useParams();
@@ -19,6 +21,7 @@ const QBPredictionHistoryComponent = () => {
     const [teamIDPeriodPredictionDict, setTeamIDPeriodPredictionDict] = useState("setTeamIDPeriodPredictionDict");
     const [historySeason, setHistorySeason] = useState(0);
     const [userID, setUserID] = useState(0);
+    const [uniqueSeasons, setUniqueSeasons] = useState([]);
 
 
     useEffect(
@@ -26,26 +29,33 @@ const QBPredictionHistoryComponent = () => {
             document.title = "Prediction History";
             // If season not in params or season not one of available options, get max season and redirect to there
             setUserID(JSON.parse(localStorage.getItem("user")).userID);
-            var history_season;
-            var options = [2022];
-            if (
-                (params.season === null) || (!options.includes(parseInt(params.season)))
-            ) {
-                PeriodPredictionService.getMaxSeason(params.username).then(
-                    result => {
-                        history_season = result.data;
+            PeriodPredictionService.getUniqueSeasons(params.username).then(
+                result => {
+                    var history_season;
+                    // var options = [2022];
+                    var unique_seasons = result.data;
+                    setUniqueSeasons(unique_seasons);
+                    if (
+                        (params.season === null) || (!unique_seasons.includes(parseInt(params.season)))
+                    ) {
+                        PeriodPredictionService.getMaxSeason(params.username).then(
+                            result => {
+                                history_season = result.data;
+                                setHistorySeason(history_season);
+                                History.push(`/prediction-history/${params.username}/${history_season}`);
+                                callTeamsService(history_season);
+                            }
+                        );
+                    } else {
+                        history_season = parseInt(params.season)
                         setHistorySeason(history_season);
-                        History.push(`/prediction-history/${params.username}/${history_season}`);
-                        callTeamsService(history_season)
+                        callTeamsService(history_season);
                     }
-                );
-            } else {
-                history_season = parseInt(params.season)
-                setHistorySeason(history_season);
-                callTeamsService(history_season);
-            }
+
+                }
+            )
         },
-        []
+        [params]
     );
 
     const callTeamsService = (history_season) => {
@@ -69,20 +79,6 @@ const QBPredictionHistoryComponent = () => {
     }
 
     const callPeriodPredictionService = (history_season) => {
-        // PeriodPredictionService.getMaxSeason(params.username).then(
-        //     (res) => {
-        //         setSeason(res.data);
-        //         PeriodPredictionService.getPredictions(
-        //             params.username,
-        //             res.data
-        //         ).then(
-        //             (res) => {
-        //                 setTeamIDPeriodPredictionDict(res.data);
-        //                 setAllLoaded(true);
-        //             }
-        //         )
-        //     }
-        // )
         PeriodPredictionService.getPredictions(
             params.username,
             history_season
@@ -103,7 +99,6 @@ const QBPredictionHistoryComponent = () => {
         )
     }
     if (
-        // (teamIDList !== [])
         allLoaded
     ) {
         return (
@@ -140,9 +135,12 @@ const QBPredictionHistoryComponent = () => {
                         )
                     }
                 </div>
-                <UserScoreDisplayer
+                <QBPredictionHistoryRightPanel
                     userID={userID}
                     season={historySeason}
+                    uniqueSeasons={uniqueSeasons}
+                    // uniqueSeasons={[2022,2023]}
+                    username={params.username}
                 />
             </div>
         )

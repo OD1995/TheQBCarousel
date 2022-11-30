@@ -159,5 +159,25 @@
 }
 
 #qb-prediction-history-score-table {
-    height: 50%;
+    /* height: 50%; */
+}
+
+#qb-prediction-history-right-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* border: 1px solid blueviolet; */
+    justify-content: space-around;
+    height: 80vh;
+}
+
+#qb-prediction-history-season-selector-div {
+    display: flex;
+    /* align-items: center; */
+    width: 12vw;
+    justify-content: space-around;
+}
+
+#qb-prediction-history-season-updater-button {
+    margin-left: 5%;
 }

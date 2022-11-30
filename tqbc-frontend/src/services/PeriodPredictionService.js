@@ -24,7 +24,7 @@ class PeriodPredictionService {
         predictionPeriodID
     ) {
         return api.get(
-            this.base_url + "getpredictions",
+            this.base_url + "get-predictions",
             {
                 params: {
                     username: username,
@@ -51,7 +51,20 @@ class PeriodPredictionService {
         username
     ) {
         return api.get(
-            this.base_url + "getmaxseason",
+            this.base_url + "get-max-season",
+            {
+                params: {
+                    username: username
+                }
+            }
+        );
+    }
+
+    getUniqueSeasons(
+        username
+    ) {
+        return api.get(
+            this.base_url + "get-unique-seasons-for-user",
             {
                 params: {
                     username: username

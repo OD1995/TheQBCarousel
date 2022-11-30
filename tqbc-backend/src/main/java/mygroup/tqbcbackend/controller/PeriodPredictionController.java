@@ -97,7 +97,8 @@ public class PeriodPredictionController {
 		return periodPredictionRepository.findMaxPredictionPeriodID(user.getUserID());
 	}
 	
-	@GetMapping("/getmaxseason")
+	@GetMapping("/get-max-season")
+	// Get max/latest season a user has predictions for
 	public long getMaxSeason(PredictionHistoryRequest predictionHistoryRequest) {
 		String username = predictionHistoryRequest.getUsername();	
 		User user = userRepository.findByUsername(username)
@@ -105,23 +106,26 @@ public class PeriodPredictionController {
 		long userID = user.getUserID();
 		return periodPredictionRepository.findMaxSeason(userID);
 	}
+
+	@GetMapping("/get-unique-seasons-for-user")
+	public List<Long> getUniqueSeasonsForUser(
+		PredictionHistoryRequest predictionHistoryRequest
+	) {
+		String username = predictionHistoryRequest.getUsername();
+		User user = userRepository.findByUsername(username)
+				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+		return periodPredictionRepository.findDistinctSeasons(user.getUserID());
+	}
 	
-	@GetMapping("/getpredictions")
+	@GetMapping("/get-predictions")
 	public Map<Long, List<PeriodPrediction>> getTest(PredictionHistoryRequest predictionHistoryRequest) {
 		String username = predictionHistoryRequest.getUsername();
 		User user = userRepository.findByUsername(username)
 				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-//		PredictionPeriod predictionPeriod = predictionPeriodRepository.findByPredictionPeriodID(predictionHistoryRequest.getPredictionPeriodID());
-//		List<PeriodPrediction> periodPredictions = periodPredictionRepository.findByUserAndPredictionPeriod(user, predictionPeriod);
 		List<PeriodPrediction> periodPredictions = periodPredictionRepository.findByPredictionPeriod_SeasonAndUser(
 				predictionHistoryRequest.getSeason(),
 				user
 		);
-//		Map<Long, PeriodPrediction> teamIDMap = periodPredictions.stream().collect(Collectors.toMap(
-////				PeriodPrediction::getTeam::getTeamID,
-//				k -> k.getTeam().getTeamID(),
-//				v -> v
-//		));
 		Map<Long, List<PeriodPrediction>> teamIDMap = new HashMap<>();
 		for (PeriodPrediction periodPrediction : periodPredictions) {
 			long teamID = periodPrediction.getTeam().getTeamID();
