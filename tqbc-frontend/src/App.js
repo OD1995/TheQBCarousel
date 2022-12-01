@@ -29,6 +29,7 @@ import { SET_MESSAGE } from './actions/types';
 import { TestComponent } from './components/TestComponent';
 import { NavigateSetter } from './helpers/NavigateSetter';
 import { AnswerEntry } from './components/answerentry/AnswerEntry';
+import { PageDoesntExistComponent } from './components/PageDoesntExistComponent';
 
 const App = () => {
 	const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -186,6 +187,7 @@ const App = () => {
 							element={<QBPredictionHistoryComponent/>}
 						/>
 						<Route path="/email-verification" element={<EmailVerification/>}/>
+						<Route path='/*' element={<PageDoesntExistComponent/>}/>
 					</Routes>
 				</div>
 				{/* <AuthVerify logOut={logOut}/> */}
