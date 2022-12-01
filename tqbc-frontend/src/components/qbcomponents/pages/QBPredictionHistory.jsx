@@ -79,7 +79,7 @@ const QBPredictionHistoryComponent = () => {
     }
 
     const callPeriodPredictionService = (history_season) => {
-        PeriodPredictionService.getPredictions(
+        PeriodPredictionService.getSeasonPredictions(
             params.username,
             history_season
         ).then(

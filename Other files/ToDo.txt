@@ -1,3 +1,8 @@
+Short term
+What is an active prediction period?
+
+
+Long term
 --- Have predictions board show predictions if already been made in the prediction period
 -X- Visualise historical predictions
 -X- Integrate Google Analytics
@@ -9,3 +14,4 @@
      - both link at top and if url navigated to (redirect to error "outside of prediction period" page)
 --- Remove all logging before launch
 --- Allow users to request new player options
+--- Deal with scenario where we're not inside a prediction period

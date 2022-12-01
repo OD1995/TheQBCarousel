@@ -14,6 +14,7 @@ import { postPredictions } from '../../../actions/predictions';
 
 import '../pages/QBPredictions.css';
 import './QBPage.css';
+import PeriodPredictionService from '../../../services/PeriodPredictionService';
 
 const QBPredictionsComponent = () => {
     // const [teamIDList, setTeamIDList] = useState([]);
@@ -53,66 +54,86 @@ const QBPredictionsComponent = () => {
     const callTeamsService = () => {
         TeamService.getActiveTeams().then(
             (res) => {
-                // Create dict where key is teamID and value is row from `teams`
+                // team_dict -> teamID : Team
                 let teams_dict = {};
-                let default_dict = {};
-                let team_id_list = [];
+                // defaultPlayerID_teamID_dict -> playerID : teamID (team which player is default player of)
+                let defaultPlayerID_teamID_dict = {};
                 for (const team_obj of res.data) {
-                    // console.log(team_obj);
                     teams_dict[team_obj.teamID] = team_obj;
-                    default_dict[team_obj.defaultPlayer.playerID] = team_obj.teamID;
-                    team_id_list.push(team_obj.teamID);
+                    defaultPlayerID_teamID_dict[team_obj.defaultPlayer.playerID] = team_obj.teamID;
                 }
                 setTeams(teams_dict);
-                // setTeamIDList(team_id_list);
-                callPlayerService(default_dict);
+                callPlayerService(defaultPlayerID_teamID_dict);
             }
         )
     }
 
-    const callPlayerService = (defaultDict) => {
+    const callPlayerService = (defaultPlayerID_teamID_dict) => {
         PlayerService.getActivePlayers().then(
             (res) => {
                 let players_array = [];
-                let default_team_dict = {};
+                // teamID_dropdownPlayer_dict -> teamID : dropdown player object
+                let teamID_dropdownPlayer_dict = {};
                 for (const player_obj of res.data) {
                     const dropdown_data = {
                         label : player_obj.name,
                         value : player_obj.playerID
                     };
                     players_array.push(dropdown_data);
-                    if (player_obj.playerID in defaultDict) {
-                        default_team_dict[defaultDict[player_obj.playerID]] = dropdown_data
+                    if (player_obj.playerID in defaultPlayerID_teamID_dict) {
+                        teamID_dropdownPlayer_dict[defaultPlayerID_teamID_dict[player_obj.playerID]] = dropdown_data
                     }
                 }
                 setPlayers(players_array);
-                setCurrentDropdownValues(default_team_dict);
-                callConferenceService();
+                // callPeriodPredictionService(teamID_dropdownPlayer_dict);
+                callConferenceService(teamID_dropdownPlayer_dict);
             }
         )
     }
 
-    const callConferenceService = () => {
+    const callPeriodPredictionService = (
+        teamID_dropdownPlayer_dict,
+        current_prediction_period_ID
+    ) => {
+        PeriodPredictionService.getPredictionPeriodPredictions(
+            currentUser.userID,
+            current_prediction_period_ID
+        ).then(
+            (res) => {
+                for (const periodPrediction of res.data) {
+                    teamID_dropdownPlayer_dict[periodPrediction.team.teamID] = {
+                        label: periodPrediction.player.name,
+                        value: periodPrediction.player.playerID
+                    }
+                }
+                setCurrentDropdownValues(teamID_dropdownPlayer_dict);
+                callPredictionPeriodService2(current_prediction_period_ID);
+            }
+        )
+    }
+
+    const callConferenceService = (teamID_dropdownPlayer_dict) => {
         ConferenceService.getActiveConferences().then(
             (res) => {
                 setConferences(res.data);
-                callPredictionPeriodService1();
+                callPredictionPeriodService1(teamID_dropdownPlayer_dict);
             }
         )
     }
 
-    const callPredictionPeriodService1 = () => {
+    const callPredictionPeriodService1 = (teamID_dropdownPlayer_dict) => {
         PredictionPeriodService.getCurrentPredictionPeriodID().then(
             (res) => {
                 // Deal with null and use setCurrentPredictionPeriodID
-                setCurrentPredictionPeriodID(res.data);
-                setTruePredictionPeriodID(res.data);
-                callPredictionPeriodService2(res.data);
+                let current_prediction_period_ID = res.data;
+                setCurrentPredictionPeriodID(current_prediction_period_ID);
+                setTruePredictionPeriodID(current_prediction_period_ID);
+                callPeriodPredictionService(teamID_dropdownPlayer_dict,current_prediction_period_ID);
             }
         );
     }
 
-    const callPredictionPeriodService2 = (current_predictions_period_ID) => {
+    const callPredictionPeriodService2 = (current_prediction_period_ID) => {
         if (currentUser.roles.includes("ROLE_TESTER")) {
             setShowPredictionPeriodChanger(true);
             PredictionPeriodService.getActivePredictionPeriods().then(
@@ -144,9 +165,7 @@ const QBPredictionsComponent = () => {
                                 }
                             );
                         }
-                        // console.log("ppID: " + ppID);
-                        // console.log("current_predictions_period_ID: " + current_predictions_period_ID);
-                        if (ppID === current_predictions_period_ID) {
+                        if (ppID === current_prediction_period_ID) {
                             setCurrentSeason(ssn);
                             setTrueSeason(ssn);
                             setCurrentSeasonPeriodID(spID);
@@ -222,8 +241,6 @@ const QBPredictionsComponent = () => {
         }
         if (msg === "All OK") {
             // Post dropdown values to backend
-            // console.log(selectionsArray);
-            // console.log(currentUser.userID);
             postPredictions(
                 currentPredictionPeriodID,
                 currentUser.userID,

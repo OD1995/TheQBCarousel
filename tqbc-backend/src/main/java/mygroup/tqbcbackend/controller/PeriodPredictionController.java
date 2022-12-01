@@ -89,7 +89,7 @@ public class PeriodPredictionController {
 		);
 	}
 	
-	@GetMapping("/getmaxpredictionperiodid")
+	@GetMapping("/get-max-prediction-period-id")
 	public long getMaxPredictionPeriodID(PredictionHistoryRequest predictionHistoryRequest) {
 		String username = predictionHistoryRequest.getUsername();	
 		User user = userRepository.findByUsername(username)
@@ -117,8 +117,8 @@ public class PeriodPredictionController {
 		return periodPredictionRepository.findDistinctSeasons(user.getUserID());
 	}
 	
-	@GetMapping("/get-predictions")
-	public Map<Long, List<PeriodPrediction>> getTest(PredictionHistoryRequest predictionHistoryRequest) {
+	@GetMapping("/get-season-predictions")
+	public Map<Long, List<PeriodPrediction>> getSeasonPredictions(PredictionHistoryRequest predictionHistoryRequest) {
 		String username = predictionHistoryRequest.getUsername();
 		User user = userRepository.findByUsername(username)
 				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
@@ -141,5 +141,21 @@ public class PeriodPredictionController {
 			}
 		}
 		return teamIDMap;
+	}
+
+	@GetMapping("/get-prediction-period-predictions")
+	public List<PeriodPrediction> getPredictionPeriodPredictions(
+	// public void getPredictionPeriodPredictions(
+		PeriodPredictionRequest periodPredictionRequest
+	) {
+		long userID = periodPredictionRequest.getUserID();
+		User user = userRepository.findByUserID(userID);
+		long predictionPeriodID = periodPredictionRequest.getPredictionPeriodID();
+		PredictionPeriod predictionPeriod = predictionPeriodRepository.findByPredictionPeriodID(predictionPeriodID);
+		List<PeriodPrediction> periodPredictions = periodPredictionRepository.findByUserAndPredictionPeriod(
+			user,
+			predictionPeriod
+		);
+		return periodPredictions;
 	}
 }

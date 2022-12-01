@@ -19,16 +19,31 @@ class PeriodPredictionService {
         );
     }
 
-    getPredictions(
+    getSeasonPredictions(
         username,
-        predictionPeriodID
+        season
     ) {
         return api.get(
-            this.base_url + "get-predictions",
+            this.base_url + "get-season-predictions",
             {
                 params: {
                     username: username,
-                    season: predictionPeriodID
+                    season: season
+                }
+            }
+        );
+    }
+
+    getPredictionPeriodPredictions(
+        userID,
+        predictionPeriodID
+    ) {
+        return api.get(
+            this.base_url + "get-prediction-period-predictions",
+            {
+                params: {
+                    userID: userID,
+                    predictionPeriodID: predictionPeriodID
                 }
             }
         );
@@ -38,7 +53,7 @@ class PeriodPredictionService {
         username
     ) {
         return api.get(
-            this.base_url + "getmaxpredictionperiodid",
+            this.base_url + "get-max-prediction-period-id",
             {
                 params: {
                     username: username
