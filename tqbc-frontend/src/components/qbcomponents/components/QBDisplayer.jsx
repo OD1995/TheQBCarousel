@@ -10,22 +10,18 @@ const QBDisplayer = (props) => {
             // (typeof props.prediction.team !== "undefined")
             (props.allLoaded)
     ) {
-        try {
-            var team = props.predictions[0].team;
-            // let player = props.predictions[0].player;
-            var img_src = (
-                window.location.origin
-                + '/team_logos/' 
-                + team.season
-                + '/' + team.location.replace(" ","")
-                + team.nickname + '.png'
-            );
-            var grid_pos = {
-                gridRow: team.gridRow,
-                gridColumn: team.gridColumn
-            }
-        } catch (e) {
-            let a = 1;
+        var team = props.predictions[0].team;
+        // let player = props.predictions[0].player;
+        var img_src = (
+            window.location.origin
+            + '/team_logos/' 
+            + team.season
+            + '/' + team.location.replace(" ","")
+            + team.nickname + '.png'
+        );
+        var grid_pos = {
+            gridRow: team.gridRow,
+            gridColumn: team.gridColumn
         }
         return (
             <div className={'qb_displayer_box '+ team.conference} style={grid_pos}>
@@ -39,9 +35,9 @@ const QBDisplayer = (props) => {
                     props.predictions.map(
                         (prediction, idx) => {
                             var boxColour;
-                            if (prediction.correct == 1) {
+                            if (prediction.correct === true) {
                                 boxColour = "green"
-                            } else if (prediction.correct == 0) {
+                            } else if (prediction.correct === false) {
                                 boxColour = "red"
                             } else {
                                 boxColour = "white"
@@ -57,7 +53,7 @@ const QBDisplayer = (props) => {
                                         }}
                                         key={keyValue}
                                     >
-                                        {"PP" + (idx + 1)}
+                                        {"SP" + (idx + 1)}
                                     </p>,
                                     <p 
                                         className={

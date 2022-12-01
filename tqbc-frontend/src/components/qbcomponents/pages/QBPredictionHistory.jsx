@@ -112,11 +112,11 @@ const QBPredictionHistoryComponent = () => {
                         conferences.map(
                             conf =>
                             <img
-                            className='conference_logo'
-                            src={window.location.origin + '/conference_logos/' + conf.season + '/' + conf.name + '.png' }
-                            alt={conf.name}
-                            key={conf.name}
-                            style={{gridRowStart:conf.gridRowStart,gridRowEnd:conf.gridRowEnd,gridColumn:conf.gridColumn}}
+                                className='conference_logo'
+                                src={window.location.origin + '/conference_logos/' + conf.season + '/' + conf.name + '.png' }
+                                alt={conf.name}
+                                key={conf.name}
+                                style={{gridRowStart:conf.gridRowStart,gridRowEnd:conf.gridRowEnd,gridColumn:conf.gridColumn}}
                             />
                         )
                     }

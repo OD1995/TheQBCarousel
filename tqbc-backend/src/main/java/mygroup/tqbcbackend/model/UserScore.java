@@ -57,5 +57,21 @@ public class UserScore {
 	public void setScore(float score) {
 		this.score = score;
 	}
+
+	public PredictionPeriod getPredictionPeriod() {
+		return this.predictionPeriod;
+	}
+
+	public void setPredictionPeriod(PredictionPeriod predictionPeriod) {
+		this.predictionPeriod = predictionPeriod;
+	}
+
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 	
 }

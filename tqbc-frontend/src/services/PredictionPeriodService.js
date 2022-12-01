@@ -5,7 +5,7 @@ class PredictionPeriodService {
     base_url = "/v1/prediction-periods/";
 
     getHowItWorksPredictionPeriods() {
-        return api.get(this.base_url + "howitworks");
+        return api.get(this.base_url + "get-how-it-works-prediction-periods");
     }
 
     getCurrentPredictionPeriodID() {

@@ -27,7 +27,7 @@ public class PredictionPeriodController {
 	}
 	
 	// Get all Prediction Periods for the How It Works page
-	@GetMapping("/howitworks")
+	@GetMapping("/get-how-it-works-prediction-periods")
 	public List<PredictionPeriod> getHowItWorksPredictionPeriods() {
 		return predictionPeriodRepository.findByHowItWorksTrueOrderByPredictionPeriodIDAsc();
 	}

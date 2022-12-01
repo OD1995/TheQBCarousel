@@ -23,7 +23,7 @@ export const UserScoreDisplayer = (props) => {
                         let ppScore = formatScore(result.data[ppID]);
                         scores_array.push(
                             <tr key={ppID}>
-                                <td><b>PP{ppID}</b></td>
+                                <td><b>SP{ppID}</b></td>
                                 <td>{ppScore}</td>
                             </tr>
                         )

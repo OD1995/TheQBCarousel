@@ -58,7 +58,7 @@ public class UserScoreController {
 		Map<Long, Float> scoresByPredictionPeriod = new HashMap<Long,Float>();
 		for (UserScore userScore : userScores) {
 			scoresByPredictionPeriod.put(
-				userScore.getUserScoreCompositeKey().getPredictionPeriodID(),
+				userScore.getPredictionPeriod().getSeasonPeriodID(),
 				userScore.getScore()
 			);
 		}

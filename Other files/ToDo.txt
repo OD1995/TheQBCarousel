@@ -1,16 +1,17 @@
 Short term
-
+Allow how it works requests for non-logged in users
 
 Long term
---- Have predictions board show predictions if already been made in the prediction period
+-x- Have predictions board show predictions if already been made in the prediction period
 -X- Visualise historical predictions
 -X- Integrate Google Analytics
 --- Calculate and visualise points and league tables
 --- Give login/signup buttons some space
 --- Replace message with modal or own page - register/sign in
---- Make API endpoints only usable from frontend
+-x- Make API endpoints only usable from frontend
 --- Prediction board only visible if in prediction period or admin account
      - both link at top and if url navigated to (redirect to error "outside of prediction period" page)
 --- Remove all logging before launch
 --- Allow users to request new player options
 --- Deal with scenario where we're not inside a prediction period
+--- Over the last few seasons, the number of QBs changing teams in the NFL has been increasing significantly CHECK ME

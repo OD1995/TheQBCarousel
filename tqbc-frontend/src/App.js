@@ -16,7 +16,6 @@ import QBPredictionHistoryComponent from './components/qbcomponents/pages/QBPred
 import Navigator from './components/Navigator';
 import Login from "./components/Login";
 import Register from "./components/Register";
-import HowItWorks from "./components/HowItWorks";
 import Profile from "./components/Profile";
 import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
@@ -30,6 +29,7 @@ import { TestComponent } from './components/TestComponent';
 import { NavigateSetter } from './helpers/NavigateSetter';
 import { AnswerEntry } from './components/answerentry/AnswerEntry';
 import { PageDoesntExistComponent } from './components/PageDoesntExistComponent';
+import { HowItWorksComponent } from './components/howitworks/HowItWorksComponent';
 
 const App = () => {
 	const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -167,7 +167,7 @@ const App = () => {
 				<div className="component-container page-content">
 					<Routes>
 						<Route index element={defaultPage}/>
-						<Route exact path="/how-it-works" element={<HowItWorks/>}/>
+						<Route exact path="/how-it-works" element={<HowItWorksComponent/>}/>
 						<Route exact path="/register" element={<Register/>} />
 						<Route exact path="/login" element={<Login/>}></Route>
 						<Route exact path="/profile" element={<Profile/>} />
