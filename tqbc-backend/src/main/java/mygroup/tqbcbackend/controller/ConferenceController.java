@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import mygroup.tqbcbackend.model.Conference;
+import mygroup.tqbcbackend.payload.request.ConferenceRequest;
+import mygroup.tqbcbackend.payload.request.TeamRequest;
 import mygroup.tqbcbackend.repository.ConferenceRepository;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 //@CrossOrigin(origins = "http://localhost:3000")
 @CrossOrigin(origins = "*")
@@ -27,9 +31,18 @@ public class ConferenceController {
 	}
 
 	// Get all active conferences
-	@GetMapping("/active")
-	public List<Conference> getAllActiveConferences() {
+	@GetMapping("/get-active-conferences")
+	public List<Conference> getActiveConferences() {
 		return conferenceRepository.findByIsActiveTrueOrderByNameAsc();
 	}
 
+	// Get conferences for season
+	@GetMapping("/get-season-conferences")
+	public List<Conference> getSeasonConferences(
+		ConferenceRequest conferenceRequest
+	) {
+		long season = conferenceRequest.getSeason();
+		return conferenceRepository.findBySeasonOrderByNameAsc(season);
+	}
+	
 }

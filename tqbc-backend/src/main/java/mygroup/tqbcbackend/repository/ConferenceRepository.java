@@ -9,4 +9,5 @@ import mygroup.tqbcbackend.model.Conference;
 public interface ConferenceRepository extends JpaRepository<Conference, String>{
 
 	public List<Conference> findByIsActiveTrueOrderByNameAsc();
+	public List<Conference> findBySeasonOrderByNameAsc(long season);
 }

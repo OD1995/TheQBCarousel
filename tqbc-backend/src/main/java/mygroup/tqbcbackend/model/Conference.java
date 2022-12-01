@@ -17,7 +17,7 @@ public class Conference {
 	private long conferenceID;
 	
 	@Column(name = "Season")
-	private int season;
+	private long season;
 	
 	@Column(name = "Name")
 	private String name;
@@ -38,7 +38,7 @@ public class Conference {
 		
 	}
 
-	public Conference(long conferenceID, int season, String name, int gridColumn, int gridRowStart, int gridRowEnd,
+	public Conference(long conferenceID, long season, String name, int gridColumn, int gridRowStart, int gridRowEnd,
 			boolean isActive) {
 		super();
 		this.conferenceID = conferenceID;
@@ -58,11 +58,11 @@ public class Conference {
 		this.conferenceID = conferenceID;
 	}
 
-	public int getSeason() {
+	public long getSeason() {
 		return season;
 	}
 
-	public void setSeason(int season) {
+	public void setSeason(long season) {
 		this.season = season;
 	}
 

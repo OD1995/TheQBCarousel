@@ -91,7 +91,7 @@ const QBPredictionHistoryComponent = () => {
     }
 
     const callConferenceService = (history_season) => {
-        ConferenceService.getActiveConferences().then(
+        ConferenceService.getSeasonConferences(history_season).then(
             (res) => {
                 setConferences(res.data);
                 callPeriodPredictionService(history_season);
