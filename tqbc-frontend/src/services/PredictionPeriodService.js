@@ -9,7 +9,7 @@ class PredictionPeriodService {
     }
 
     getCurrentPredictionPeriodID() {
-        return api.get(this.base_url + "getcurrent");
+        return api.get(this.base_url + "get-current");
     }
 
     getActivePredictionPeriods() {

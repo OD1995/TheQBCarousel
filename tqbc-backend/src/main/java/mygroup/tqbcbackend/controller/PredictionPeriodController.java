@@ -33,7 +33,7 @@ public class PredictionPeriodController {
 	}
 	
 	// Get the current predictionPeriodID
-	@GetMapping("/getcurrent")
+	@GetMapping("/get-current")
 	public Long getCurrentPredictionPeriodID() {
 		ZonedDateTime now = ZonedDateTime.now();
 		PredictionPeriod predictionPeriod = predictionPeriodRepository.findByFromEvent_EventDateTimeUTCLessThanEqualAndToEvent_EventDateTimeUTCGreaterThanEqual(

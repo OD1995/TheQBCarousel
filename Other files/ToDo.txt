@@ -1,5 +1,6 @@
 Short term
 Allow how it works requests for non-logged in users
+Create nice outside prediction period page
 
 Long term
 -x- Have predictions board show predictions if already been made in the prediction period

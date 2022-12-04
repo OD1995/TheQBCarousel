@@ -15,6 +15,7 @@ import { postPredictions } from '../../../actions/predictions';
 import '../pages/QBPredictions.css';
 import './QBPage.css';
 import PeriodPredictionService from '../../../services/PeriodPredictionService';
+import { OutsidePredictionPeriod } from '../../errors/OutsidePredictionPeriod';
 
 const QBPredictionsComponent = () => {
     // const [teamIDList, setTeamIDList] = useState([]);
@@ -42,6 +43,7 @@ const QBPredictionsComponent = () => {
     const [displayBottomLeftMessage, setDisplayBottomLeftMessage] = useState(false);
     const [bottomLeftMessageClass, setBottomLeftMessageClass] = useState("bottomLeftMessageClass");
     const { user: currentUser } = useSelector((state) => state.auth);
+    const [outsidePredictionPeriod, setOutsidePredictionPeriod] = useState(false);
 
 
     useEffect(() => {
@@ -126,9 +128,13 @@ const QBPredictionsComponent = () => {
             (res) => {
                 // Deal with null and use setCurrentPredictionPeriodID
                 let current_prediction_period_ID = res.data;
-                setCurrentPredictionPeriodID(current_prediction_period_ID);
-                setTruePredictionPeriodID(current_prediction_period_ID);
-                callPeriodPredictionService(teamID_dropdownPlayer_dict,current_prediction_period_ID);
+                if (current_prediction_period_ID === null) {
+                    setOutsidePredictionPeriod(true);
+                } else {
+                    setCurrentPredictionPeriodID(current_prediction_period_ID);
+                    setTruePredictionPeriodID(current_prediction_period_ID);
+                    callPeriodPredictionService(teamID_dropdownPlayer_dict,current_prediction_period_ID);
+                }
             }
         );
     }
@@ -293,7 +299,11 @@ const QBPredictionsComponent = () => {
         }
     };
 
-    if (
+    if (outsidePredictionPeriod) {
+        return (
+            <OutsidePredictionPeriod/>
+        );
+    } elseif (
         (currentSeasonPeriodID !== "currentSeasonPeriodID")
     ) {
         return (
