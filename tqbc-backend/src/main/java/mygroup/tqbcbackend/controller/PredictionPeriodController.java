@@ -1,5 +1,6 @@
 package mygroup.tqbcbackend.controller;
 
+import java.time.Clock;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class PredictionPeriodController {
 	// Get the current predictionPeriodID
 	@GetMapping("/get-current")
 	public Long getCurrentPredictionPeriodID() {
-		ZonedDateTime now = ZonedDateTime.now();
+		ZonedDateTime now = ZonedDateTime.now(Clock.systemUTC());
 		PredictionPeriod predictionPeriod = predictionPeriodRepository.findByFromEvent_EventDateTimeUTCLessThanEqualAndToEvent_EventDateTimeUTCGreaterThanEqual(
 				now,
 				now

@@ -303,7 +303,7 @@ const QBPredictionsComponent = () => {
         return (
             <OutsidePredictionPeriod/>
         );
-    } elseif (
+    } else if (
         (currentSeasonPeriodID !== "currentSeasonPeriodID")
     ) {
         return (
@@ -371,10 +371,6 @@ const QBPredictionsComponent = () => {
                         </h4>
                     )
                 }
-                {/* <p
-                id="msg"
-                style={{gridRow:11,gridColumnStart:1,gridColumnEnd:6}}
-                >Ignore Me</p> */}
                 <PopupComponent
                     trigger={showPopup}
                     setTrigger={setShowPopup}
@@ -383,7 +379,7 @@ const QBPredictionsComponent = () => {
                     message={popupMessage}
                 ></PopupComponent>
             </div>
-        )
+        );
     } else {
         return null
     }

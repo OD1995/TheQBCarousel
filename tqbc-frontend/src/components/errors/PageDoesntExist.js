@@ -1,4 +1,4 @@
-export const PageDoesntExistComponent = () => {
+export const PageDoesntExist = () => {
     return (
         <div
             id="page-doesnt-exist-div"

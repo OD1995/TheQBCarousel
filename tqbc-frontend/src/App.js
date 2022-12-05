@@ -21,15 +21,13 @@ import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
 import EmailVerification from "./components/EmailVerification";
 import { logout } from "./actions/auth";
-// import { history } from "./helpers/History";
 import EventBus from "./common/EventBus";
-// import AuthVerify from './common/AuthVerify';
 import { SET_MESSAGE } from './actions/types';
 import { TestComponent } from './components/TestComponent';
 import { NavigateSetter } from './helpers/NavigateSetter';
 import { AnswerEntry } from './components/answerentry/AnswerEntry';
-import { PageDoesntExistComponent } from './components/PageDoesntExistComponent';
 import { HowItWorksComponent } from './components/howitworks/HowItWorksComponent';
+import { PageDoesntExist } from './components/errors/PageDoesntExist';
 
 const App = () => {
 	const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -187,7 +185,7 @@ const App = () => {
 							element={<QBPredictionHistoryComponent/>}
 						/>
 						<Route path="/email-verification" element={<EmailVerification/>}/>
-						<Route path='/*' element={<PageDoesntExistComponent/>}/>
+						<Route path='/*' element={<PageDoesntExist/>}/>
 					</Routes>
 				</div>
 				{/* <AuthVerify logOut={logOut}/> */}
