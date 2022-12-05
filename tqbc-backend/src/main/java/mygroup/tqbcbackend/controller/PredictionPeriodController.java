@@ -5,6 +5,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,11 +19,16 @@ import mygroup.tqbcbackend.repository.PredictionPeriodRepository;
 @RequestMapping("/api/v1/prediction-periods")
 public class PredictionPeriodController {
 	
+	// All requests are permitted to this controller (in WebSecurityConfig.java)
+	//    to allow the How It Works page to load for non-users, so all other
+	//    endpoints should be pre-authorised
+
 	@Autowired
 	private PredictionPeriodRepository predictionPeriodRepository;
 	
 	// Get all active Prediction Periods
 	@GetMapping("/active")
+	@PreAuthorize("hasRole('USER')")
 	public List<PredictionPeriod> getAllActivePredictionPeriods() {
 		return predictionPeriodRepository.findByIsActiveTrue();
 	}
@@ -35,6 +41,7 @@ public class PredictionPeriodController {
 	
 	// Get the current predictionPeriodID
 	@GetMapping("/get-current")
+	@PreAuthorize("hasRole('USER')")
 	public Long getCurrentPredictionPeriodID() {
 		ZonedDateTime now = ZonedDateTime.now(Clock.systemUTC());
 		PredictionPeriod predictionPeriod = predictionPeriodRepository.findByFromEvent_EventDateTimeUTCLessThanEqualAndToEvent_EventDateTimeUTCGreaterThanEqual(
