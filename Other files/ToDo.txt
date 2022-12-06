@@ -1,8 +1,8 @@
 Short term
-Add box on qb predictions to send users to twitter for player requests etc
+
 
 Long term
--x- Have predictions board show predictions if already been made in the prediction period
+-X- Have predictions board show predictions if already been made in the prediction period
 -X- Visualise historical predictions
 -X- Integrate Google Analytics
 --- Calculate and visualise points and league tables
@@ -11,6 +11,6 @@ Long term
 -X- Make API endpoints only usable from frontend
 -X- Prediction board only visible if in prediction period (redirect to error "outside of prediction period" page)
 --- Remove all logging before launch
---- Allow users to request new player options
---- Deal with scenario where we're not inside a prediction period
+-X- Allow users to request new player options
+-X- Deal with scenario where we're not inside a prediction period
 --- Over the last few seasons, the number of QBs changing teams in the NFL has been increasing significantly CHECK ME

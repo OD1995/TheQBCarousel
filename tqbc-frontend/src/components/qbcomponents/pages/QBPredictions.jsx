@@ -362,16 +362,11 @@ const QBPredictionsComponent = () => {
                         />
                     )
                 }
-                {/* {
+                {
                     (!showPredictionPeriodChanger) && (
-                        <SocialMediaRequest
-                            displayMe={true}
-                        />
+                        <SocialMediaRequest/>
                     )
-                } */}
-                <SocialMediaRequest
-                    displayMe={true}
-                />
+                }
                 {
                     displayBottomLeftMessage && (
                         <h4
