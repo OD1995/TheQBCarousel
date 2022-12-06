@@ -25,15 +25,15 @@ public class PredictionPeriod {
 	@Column(name = "Season")
 	private long season;
 	
-	@Column(name = "SeasonPeriodID")
+	@Column(name = "SeasonPeriodID", nullable = true)
 	private long seasonPeriodID;
 	
 	@OneToOne(targetEntity = Event.class, fetch = FetchType.EAGER)
-	@JoinColumn(nullable = false, name = "FromEventID")
+	@JoinColumn(nullable = true, name = "FromEventID")
 	private Event fromEvent;
 	
 	@OneToOne(targetEntity = Event.class, fetch = FetchType.EAGER)
-	@JoinColumn(nullable = false, name = "ToEventID")
+	@JoinColumn(nullable = true, name = "ToEventID")
 	private Event toEvent;
 	
 	@Column(name = "HowItWorks")
@@ -55,6 +55,11 @@ public class PredictionPeriod {
 			mappedBy = "predictionPeriod"
 	)
 	private List<UserScore> userScores;
+
+	@Column(name = "IsSeasonTotal")
+	private boolean isSeasonTotal;
+
+
 	
 	public PredictionPeriod() {
 		
@@ -67,7 +72,8 @@ public class PredictionPeriod {
 			Event fromEvent,
 			Event toEvent,
 			boolean howItWorks, 
-			boolean isActive
+			boolean isActive,
+			boolean isSeasonTotal
 	) {
 		super();
 		this.predictionPeriodID = predictionPeriodID;
@@ -77,62 +83,51 @@ public class PredictionPeriod {
 		this.toEvent = toEvent;
 		this.howItWorks = howItWorks;
 		this.isActive = isActive;
+		this.isSeasonTotal = isSeasonTotal;
 	}
 
-	public long getPredictionPeriodID() {
-		return predictionPeriodID;
+	public boolean getHowItWorks() {
+		return this.howItWorks;
 	}
 
-	public void setPredictionPeriodID(long predictionPeriodID) {
-		this.predictionPeriodID = predictionPeriodID;
+	public boolean isIsActive() {
+		return this.isActive;
 	}
 
-	public long getSeason() {
-		return season;
+	public boolean getIsActive() {
+		return this.isActive;
 	}
 
-	public void setSeason(long season) {
-		this.season = season;
-	}
-
-	public long getSeasonPeriodID() {
-		return seasonPeriodID;
-	}
-
-	public void setSeasonPeriodID(long seasonPeriodID) {
-		this.seasonPeriodID = seasonPeriodID;
-	}
-
-	public Event getFromEvent() {
-		return fromEvent;
-	}
-
-	public void setFromEvent(Event fromEvent) {
-		this.fromEvent = fromEvent;
-	}
-
-	public Event getToEvent() {
-		return toEvent;
-	}
-
-	public void setToEvent(Event toEvent) {
-		this.toEvent = toEvent;
-	}
-
-	public boolean isHowItWorks() {
-		return howItWorks;
-	}
-
-	public void setHowItWorks(boolean howItWorks) {
-		this.howItWorks = howItWorks;
-	}
-
-	public boolean isActive() {
-		return isActive; 
-	}
-
-	public void setActive(boolean isActive) {
+	public void setIsActive(boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	public List<PeriodPrediction> getPeriodPredictions() {
+		return this.periodPredictions;
+	}
+
+	public void setPeriodPredictions(List<PeriodPrediction> periodPredictions) {
+		this.periodPredictions = periodPredictions;
+	}
+
+	public List<UserScore> getUserScores() {
+		return this.userScores;
+	}
+
+	public void setUserScores(List<UserScore> userScores) {
+		this.userScores = userScores;
+	}
+
+	public boolean isIsSeasonTotal() {
+		return this.isSeasonTotal;
+	}
+
+	public boolean getIsSeasonTotal() {
+		return this.isSeasonTotal;
+	}
+
+	public void setIsSeasonTotal(boolean isSeasonTotal) {
+		this.isSeasonTotal = isSeasonTotal;
 	}
 	
 }

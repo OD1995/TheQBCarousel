@@ -33,16 +33,12 @@ public class UserScoreService {
     @Autowired
     UserScoreRepository userScoreRepository;
 
-    public Map<Long, Float> calculateUserScoreForPredictionPeriodsInSeason(
-        long userID,
+    public null calculateUserScoreForPredictionPeriodsInSeasonForAllUsers(
         long season
     ) {
-        // Get predictions for given season and user
-        List<PeriodPrediction> periodPredictions = periodPredictionRepository.findByPredictionPeriod_SeasonAndUser(
-            season,
-            userRepository.findByUserID(userID)
-        );
-        // Get answers for given season
+        // Get list of all the users who have made predictions during the season
+
+        // Get answers for season
         List<Answer> answers = answerRepository.findByTeam_Season(season);
         // Convert to map with key: teamID, value: array of players
         Map<Long, List<Player>> teamIDPlayerArrayMap = new HashMap<Long, List<Player>>();
@@ -60,9 +56,22 @@ public class UserScoreService {
                 );
             }
         }
+    }
 
+    public Map<Long, Float> calculateUserScoreForPredictionPeriodsInSeasonForUser(
+        long userID,
+        long season,
+        Map<Long, List<Player>> teamIDPlayerArrayMap
+    ) {
+        // Get predictions for given season and user
+        List<PeriodPrediction> periodPredictions = periodPredictionRepository.findByPredictionPeriod_SeasonAndUser(
+            season,
+            userRepository.findByUserID(userID)
+        );        
+        // Create map
+        //      key - predictionPeriodID
+        //      value - list of (32) bools, indicating prediction results
         Map<Long, List<Boolean>> predictionPeriodIDIsCorrectArrayMap = new HashMap<Long, List<Boolean>>();
-
         for (PeriodPrediction periodPrediction : periodPredictions) {
             long teamID = periodPrediction.getTeam().getTeamID();
             Player player = periodPrediction.getPlayer();
@@ -80,12 +89,11 @@ public class UserScoreService {
                 );
             }
         }
-
         periodPredictionRepository.saveAll(periodPredictions);
-
-        // Map<Long, Float> scoresByPredictionPeriod = new HashMap<Long,Float>();
+        
         Map<Long, Float> scoresByPredictionPeriod = new HashMap<Long,Float>();
 
+        List<UserScore> userScores = new ArrayList<>();
         for (Long ppID : predictionPeriodIDIsCorrectArrayMap.keySet()) {
             Integer ppCorrects = 0;
             Integer ppTotalAttempts = 0;
@@ -111,8 +119,9 @@ public class UserScoreService {
                 userScoreCompositeKey,
                 score
             );
-            userScoreRepository.save(userScore);
+            userScores.add(userScore);
         }
+        userScoreRepository.saveAll(userScores);
         return scoresByPredictionPeriod;
     }
     

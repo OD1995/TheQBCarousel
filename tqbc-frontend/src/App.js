@@ -29,6 +29,7 @@ import { HowItWorksComponent } from './components/howitworks/HowItWorksComponent
 import { PageDoesntExist } from './components/errors/PageDoesntExist';
 import { SocialMediaRequest } from './components/qbcomponents/components/SocialMediaRequest';
 import { TestComponent2 } from './components/qbcomponents/pages/TestComponent2';
+import { GlobalLeaderboard } from './components/leaderboards/GlobalLeaderboard';
 
 const App = () => {
 	const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -134,6 +135,11 @@ const App = () => {
 									</Link>
 								</li>
 								<li className="nav-item">
+									<Link to={"/global-leaderboard"} className="nav-link">
+										Global Leaderboard
+									</Link>
+								</li>
+								<li className="nav-item">
 									<a href="/login" className="nav-link" onClick={logOut}>
 										Log Out
 									</a>
@@ -181,6 +187,7 @@ const App = () => {
 							element={<QBPredictionHistoryComponent/>}
 						/>
 						<Route path="/email-verification" element={<EmailVerification/>}/>
+						<Route path="/global-leaderboard" element={<GlobalLeaderboard/>}/>
 						<Route path='/*' element={<PageDoesntExist/>}/>
 					</Routes>
 				</div>
