@@ -33,7 +33,6 @@ export const OutsidePredictionPeriod = () => {
                     height: "60vh",
                     display:"flex",
                     alignItems: "center",
-                    justifyContent: "center",
                     flexDirection: "column",
                     justifyContent: "space-evenly"
                 }

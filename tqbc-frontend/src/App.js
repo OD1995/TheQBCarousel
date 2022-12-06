@@ -5,8 +5,7 @@ import {
 	Link,
 	Navigate,
 	Route,
-	Routes,
-	useNavigate,
+	Routes
 } from 'react-router-dom';
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -39,12 +38,6 @@ const App = () => {
 	const dispatch = useDispatch();
 
 	const logOut = useCallback(() => {
-		// dispatch(
-		// 	{
-		// 		type: SET_MESSAGE,
-		// 		payload: 'ANOTHER VERY IMPORTANT MESSAGE'
-		// 	}
-		// )
 		dispatch(logout(null));
 	}, [dispatch]);
 
