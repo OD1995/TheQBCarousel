@@ -18,8 +18,7 @@ import PeriodPredictionService from '../../../services/PeriodPredictionService';
 import { OutsidePredictionPeriod } from '../../errors/OutsidePredictionPeriod';
 import { SocialMediaRequest } from '../components/SocialMediaRequest';
 
-const QBPredictionsComponent = () => {
-    // const [teamIDList, setTeamIDList] = useState([]);
+export const TestComponent2 = () => {
     const [teams, setTeams] = useState("a");
     const [players, setPlayers] = useState([]);
     const [conferences, setConferences] = useState([]);
@@ -300,6 +299,10 @@ const QBPredictionsComponent = () => {
         }
     };
 
+    // return (
+    //     <SocialMediaRequest/>
+    // );
+
     if (outsidePredictionPeriod) {
         return (
             <OutsidePredictionPeriod/>
@@ -363,10 +366,9 @@ const QBPredictionsComponent = () => {
                     )
                 }
                 {/* {
-                    (!showPredictionPeriodChanger) && (
-                        <SocialMediaRequest
-                            displayMe={true}
-                        />
+                    // (!showPredictionPeriodChanger) && (
+                    (true) && (
+                        <SocialMediaRequest/>
                     )
                 } */}
                 <SocialMediaRequest
@@ -395,7 +397,3 @@ const QBPredictionsComponent = () => {
         return null
     }
 }
-
-
-
-export default QBPredictionsComponent;

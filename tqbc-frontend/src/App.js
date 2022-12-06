@@ -27,6 +27,8 @@ import { NavigateSetter } from './helpers/NavigateSetter';
 import { AnswerEntry } from './components/answerentry/AnswerEntry';
 import { HowItWorksComponent } from './components/howitworks/HowItWorksComponent';
 import { PageDoesntExist } from './components/errors/PageDoesntExist';
+import { SocialMediaRequest } from './components/qbcomponents/components/SocialMediaRequest';
+import { TestComponent2 } from './components/qbcomponents/pages/TestComponent2';
 
 const App = () => {
 	const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -163,6 +165,7 @@ const App = () => {
 						<Route exact path="/login" element={<Login/>}></Route>
 						<Route exact path="/profile" element={<Profile/>} />
 						<Route exact path="/test" element={<TestComponent/>} />
+						<Route exact path="/test2" element={<TestComponent2/>} />
 						{/* <Route exact path="/admin" component={<TestComponent/>} /> */}
 						<Route path="/mod" element={<BoardModerator/>} />
 						<Route path="/admin" element={<BoardAdmin/>}/>
