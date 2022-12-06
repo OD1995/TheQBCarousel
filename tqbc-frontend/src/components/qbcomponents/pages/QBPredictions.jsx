@@ -16,6 +16,7 @@ import '../pages/QBPredictions.css';
 import './QBPage.css';
 import PeriodPredictionService from '../../../services/PeriodPredictionService';
 import { OutsidePredictionPeriod } from '../../errors/OutsidePredictionPeriod';
+import { TwitterRequest } from '../components/TwitterRequest';
 
 const QBPredictionsComponent = () => {
     // const [teamIDList, setTeamIDList] = useState([]);
@@ -141,7 +142,7 @@ const QBPredictionsComponent = () => {
 
     const callPredictionPeriodService2 = (current_prediction_period_ID) => {
         if (currentUser.roles.includes("ROLE_TESTER")) {
-            setShowPredictionPeriodChanger(true);
+            // setShowPredictionPeriodChanger(true);
             PredictionPeriodService.getActivePredictionPeriods().then(
                 (res) => {
                     let unique_seasons = [];
@@ -359,6 +360,11 @@ const QBPredictionsComponent = () => {
                             parentStateUpdater={updateParentStatePredictionPeriodChanger}
                             predictionPeriodIDResetter={resetPredictionPeriodID}
                         />
+                    )
+                }
+                {
+                    (!showPredictionPeriodChanger) && (
+                        <TwitterRequest/>
                     )
                 }
                 {
