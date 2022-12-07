@@ -12,6 +12,7 @@ import mygroup.tqbcbackend.model.User;
 public interface PeriodPredictionRepository extends JpaRepository<PeriodPrediction, Long> {
 
 	public List<PeriodPrediction> findByUserAndPredictionPeriod(User user, PredictionPeriod predictionPeriod);
+	public List<PeriodPrediction> findByPredictionPeriod_Season(long season);
 		
 	@Query(
 		value = "SELECT MAX(PredictionPeriodID) FROM PeriodPredictions WHERE UserID = ?1",

@@ -34,14 +34,14 @@ public class UserScoreController {
 	private UserScoreRepository userScoreRepository;
 
 	@PostMapping("/calculate-user-season-scores")
-	public Map<Long, Float> calculateUserSeasonScores(
+	public ResponseEntity calculateUserSeasonScores(
 		@Valid @RequestBody UserScoreRequest userScoreRequest
 	) {
 		// Maybe return a count of users scored, maybe just return a successful response
-		return userScoreService.calculateUserScoreForPredictionPeriodsInSeasonForAllUsers(
-			userScoreRequest.getUserID(),
+		userScoreService.calculateUserScoreForPredictionPeriodsInSeasonForAllUsers(
 			userScoreRequest.getSeason()
 		);
+		return ResponseEntity.ok().build();
 	}
 
 	@GetMapping("/get-season-scores-for-user")

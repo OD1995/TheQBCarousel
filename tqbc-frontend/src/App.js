@@ -27,9 +27,9 @@ import { NavigateSetter } from './helpers/NavigateSetter';
 import { AnswerEntry } from './components/answerentry/AnswerEntry';
 import { HowItWorksComponent } from './components/howitworks/HowItWorksComponent';
 import { PageDoesntExist } from './components/errors/PageDoesntExist';
-import { SocialMediaRequest } from './components/qbcomponents/components/SocialMediaRequest';
 import { TestComponent2 } from './components/qbcomponents/pages/TestComponent2';
 import { GlobalLeaderboard } from './components/leaderboards/GlobalLeaderboard';
+import { CreateNewPrivateLeaderboard } from './components/leaderboards/CreateNewPrivateLeaderboard';
 
 const App = () => {
 	const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -120,11 +120,6 @@ const App = () => {
 						{currentUser ? (
 							<div className="navbar-nav ml-auto">
 								<li className="nav-item">
-									<Link to={"/profile"} className="nav-link">
-										{currentUser.username}
-									</Link>
-								</li>
-								<li className="nav-item">
 									<Link to={"/qb-predictions"} className="nav-link">
 										Prediction Board
 									</Link>
@@ -137,6 +132,11 @@ const App = () => {
 								<li className="nav-item">
 									<Link to={"/global-leaderboard"} className="nav-link">
 										Global Leaderboard
+									</Link>
+								</li>
+								<li className="nav-item">
+									<Link to={"/create-new-private-leaderboard"} className="nav-link">
+										New Private Leaderboard
 									</Link>
 								</li>
 								<li className="nav-item">
@@ -188,6 +188,7 @@ const App = () => {
 						/>
 						<Route path="/email-verification" element={<EmailVerification/>}/>
 						<Route path="/global-leaderboard" element={<GlobalLeaderboard/>}/>
+						<Route path="/create-new-private-leaderboard" element={<CreateNewPrivateLeaderboard/>}/>
 						<Route path='/*' element={<PageDoesntExist/>}/>
 					</Routes>
 				</div>

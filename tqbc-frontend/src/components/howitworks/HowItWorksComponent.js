@@ -42,7 +42,7 @@ export const HowItWorksComponent = () => {
                             look back at your predictions from the past
                         </li>
                         <li key="concept-item3">
-                            compare your predictions to your friends (through private leagues) and everyone else 
+                            compare your predictions to your friends (through private leaderboards) and everyone else 
                             (via a global leaderboard)
                         </li>
                     </ul> 
@@ -68,9 +68,9 @@ export const HowItWorksComponent = () => {
                     <p>
                         Once a new season has started, the predictions from the 4 season periods for the season are graded.
                         Each season period gets a percentage score assigned to it, dependent on how many of the teams' QBs were correctly guessed.
-                        These scores are displayed in the global leaderboard as well as private leagues.
+                        These scores are displayed in the global leaderboard as well as private leaderboards.
                         The global leaderboard equally weighs the 4 season periods to come up with a single score for the whole prediction season.
-                        Private leagues allow you to set your own weightings.
+                        Private leaderboards allow you to set your own weightings.
                         For example, you may wish to give more weight to the earlier season periods compared to the later season periods.
                     </p>
                     <br></br>

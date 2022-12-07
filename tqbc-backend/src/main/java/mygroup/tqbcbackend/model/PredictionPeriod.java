@@ -86,15 +86,55 @@ public class PredictionPeriod {
 		this.isSeasonTotal = isSeasonTotal;
 	}
 
-	public boolean getHowItWorks() {
+	public long getPredictionPeriodID() {
+		return this.predictionPeriodID;
+	}
+
+	public void setPredictionPeriodID(long predictionPeriodID) {
+		this.predictionPeriodID = predictionPeriodID;
+	}
+
+	public long getSeason() {
+		return this.season;
+	}
+
+	public void setSeason(long season) {
+		this.season = season;
+	}
+
+	public long getSeasonPeriodID() {
+		return this.seasonPeriodID;
+	}
+
+	public void setSeasonPeriodID(long seasonPeriodID) {
+		this.seasonPeriodID = seasonPeriodID;
+	}
+
+	public Event getFromEvent() {
+		return this.fromEvent;
+	}
+
+	public void setFromEvent(Event fromEvent) {
+		this.fromEvent = fromEvent;
+	}
+
+	public Event getToEvent() {
+		return this.toEvent;
+	}
+
+	public void setToEvent(Event toEvent) {
+		this.toEvent = toEvent;
+	}
+
+	public boolean isHowItWorks() {
 		return this.howItWorks;
 	}
 
-	public boolean isIsActive() {
-		return this.isActive;
+	public void setHowItWorks(boolean howItWorks) {
+		this.howItWorks = howItWorks;
 	}
 
-	public boolean getIsActive() {
+	public boolean isIsActive() {
 		return this.isActive;
 	}
 
@@ -102,27 +142,7 @@ public class PredictionPeriod {
 		this.isActive = isActive;
 	}
 
-	public List<PeriodPrediction> getPeriodPredictions() {
-		return this.periodPredictions;
-	}
-
-	public void setPeriodPredictions(List<PeriodPrediction> periodPredictions) {
-		this.periodPredictions = periodPredictions;
-	}
-
-	public List<UserScore> getUserScores() {
-		return this.userScores;
-	}
-
-	public void setUserScores(List<UserScore> userScores) {
-		this.userScores = userScores;
-	}
-
 	public boolean isIsSeasonTotal() {
-		return this.isSeasonTotal;
-	}
-
-	public boolean getIsSeasonTotal() {
 		return this.isSeasonTotal;
 	}
 

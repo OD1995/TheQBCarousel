@@ -1,14 +1,12 @@
 Short term
-get user score calculation to do an average score and set for ppID 1234 etc
 Global leaderboard
  - top X based on average across 4 season periods (plus user if logged in)
- - allow user to order using column header, make request by clicking on header
- - add to nav bar
 Private leaderboard
- - add create new private leaderboard to nav bar
  - have hover and dropdown on nav bar to list private leagues
 Generic
  - hyperlink to user's prediction history
+ - allow user to order using column header, make request by clicking on header
+ - pop up to explain scoring (score of 0 for missed period etc)
 
 Long term
 -X- Have predictions board show predictions if already been made in the prediction period
@@ -23,3 +21,4 @@ Long term
 -X- Allow users to request new player options
 -X- Deal with scenario where we're not inside a prediction period
 --- Over the last few seasons, the number of QBs changing teams in the NFL has been increasing significantly CHECK ME
+--- Remove twitter script import and check twitter stuff works still
