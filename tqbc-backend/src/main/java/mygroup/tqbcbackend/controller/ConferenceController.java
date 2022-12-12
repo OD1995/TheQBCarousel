@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import mygroup.tqbcbackend.model.Conference;
 import mygroup.tqbcbackend.payload.request.ConferenceRequest;
-import mygroup.tqbcbackend.payload.request.TeamRequest;
 import mygroup.tqbcbackend.repository.ConferenceRepository;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 //@CrossOrigin(origins = "http://localhost:3000")

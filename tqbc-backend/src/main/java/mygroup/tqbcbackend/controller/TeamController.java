@@ -47,10 +47,20 @@ public class TeamController {
 	}
 
 	// Get all active teams in a conference
-	@GetMapping("/conference-active")
-	public List<Team> getAllActiveConferenceTeams(
+	@GetMapping("/get-conference-active-teams")
+	public List<Team> getConferenceActiveTeams(
 		ActiveConferenceTeamsRequest activeConferenceTeamsRequest
 	) {
 		return teamRepository.findByIsActiveTrueAndConference(activeConferenceTeamsRequest.getConference());
+	}
+
+	@GetMapping("/get-season-conference-teams")
+	public List<Team> getSeasonConferenceTeams(
+		ActiveConferenceTeamsRequest activeConferenceTeamsRequest
+	) {
+		return teamRepository.findBySeasonAndConference(
+			activeConferenceTeamsRequest.getSeason(),
+			activeConferenceTeamsRequest.getConference()
+		);
 	}
 }

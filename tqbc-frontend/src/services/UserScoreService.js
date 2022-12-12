@@ -25,6 +25,20 @@ class UserScoreService {
             }
         );
     }
+
+    getGlobalLeaderboardData(season,userID,seasonPeriodID,pageNumber) {
+        return api.get(
+            this.base_url + "get-global-leaderboard-data",
+            {
+                params: {
+                    season: season,
+                    userID: userID,
+                    seasonPeriodID: seasonPeriodID,
+                    pageNumber: pageNumber
+                }
+            }
+        )
+    }
 }
 
 export default new UserScoreService();

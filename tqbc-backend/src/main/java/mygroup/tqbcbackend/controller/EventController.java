@@ -1,10 +1,7 @@
 package mygroup.tqbcbackend.controller;
 
 import java.time.Clock;
-import java.time.Instant;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

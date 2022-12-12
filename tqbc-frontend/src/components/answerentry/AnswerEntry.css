@@ -40,7 +40,9 @@
 	display: flex;
     justify-content: space-evenly;
 }
-table, th, td {
+.answer-entry-table table,
+.answer-entry-table th,
+.answer-entry-table td {
   border: 1px solid black;
 }
 

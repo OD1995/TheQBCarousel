@@ -7,6 +7,7 @@ Generic
  - hyperlink to user's prediction history
  - allow user to order using column header, make request by clicking on header
  - pop up to explain scoring (score of 0 for missed period etc)
+ - ordered alphabetically before first set of answers are in
 
 Long term
 -X- Have predictions board show predictions if already been made in the prediction period

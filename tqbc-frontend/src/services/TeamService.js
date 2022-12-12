@@ -12,13 +12,25 @@ class TeamService {
 
     getConferenceActiveTeams(conference) {
         return api.get(
-            this.base_url + "conference-active",
+            this.base_url + "get-conference-active-teams",
             {
                 params: {
                     conference: conference
                 }
             }
         )
+    }
+
+    getSeasonConferenceTeams(season,conference) {
+        return api.get(
+            this.base_url + "get-season-conference-teams",
+            {
+                params: {
+                    season: season,
+                    conference: conference
+                }
+            }
+        );
     }
 
     getSeasonTeams(season) {

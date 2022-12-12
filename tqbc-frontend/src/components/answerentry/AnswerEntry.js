@@ -69,7 +69,7 @@ export const AnswerEntry = () => {
     }
 
     const generateConferenceData = (conference,setDataCallback,setDoneCallback) => {
-        TeamService.getConferenceActiveTeams(conference).then(
+        TeamService.getSeasonConferenceTeams(params.season,conference).then(
             (res) => {
                 let teams_obj = {};
                 for (const team_obj of res.data) {

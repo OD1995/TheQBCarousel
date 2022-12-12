@@ -26,7 +26,7 @@ public class PredictionPeriod {
 	private long season;
 	
 	@Column(name = "SeasonPeriodID", nullable = true)
-	private long seasonPeriodID;
+	private Long seasonPeriodID;
 	
 	@OneToOne(targetEntity = Event.class, fetch = FetchType.EAGER)
 	@JoinColumn(nullable = true, name = "FromEventID")
@@ -68,7 +68,7 @@ public class PredictionPeriod {
 	public PredictionPeriod(
 			long predictionPeriodID,
 			int season,
-			long seasonPeriodID,
+			Long seasonPeriodID,
 			Event fromEvent,
 			Event toEvent,
 			boolean howItWorks, 
@@ -102,11 +102,11 @@ public class PredictionPeriod {
 		this.season = season;
 	}
 
-	public long getSeasonPeriodID() {
+	public Long getSeasonPeriodID() {
 		return this.seasonPeriodID;
 	}
 
-	public void setSeasonPeriodID(long seasonPeriodID) {
+	public void setSeasonPeriodID(Long seasonPeriodID) {
 		this.seasonPeriodID = seasonPeriodID;
 	}
 

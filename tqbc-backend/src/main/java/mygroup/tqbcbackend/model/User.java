@@ -3,6 +3,7 @@ package mygroup.tqbcbackend.model;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -210,6 +211,22 @@ public class User {
 
 	public void setUserCreated(Date userCreated) {
 		this.userCreated = userCreated;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == this)
+			return true;
+		if (!(o instanceof User)) {
+			return false;
+		}
+		User user = (User) o;
+		return userID == user.userID && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(favouriteTeam, user.favouriteTeam) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles) && isAuthenticated == user.isAuthenticated && Objects.equals(userCreated, user.userCreated) && Objects.equals(periodPredictions, user.periodPredictions) && Objects.equals(ownedPrivateLeague, user.ownedPrivateLeague) && Objects.equals(privateLeagueMemberships, user.privateLeagueMemberships) && Objects.equals(scores, user.scores);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(userID, username, email, favouriteTeam, password, roles, isAuthenticated, userCreated, periodPredictions, ownedPrivateLeague, privateLeagueMemberships, scores);
 	}
 	
 }

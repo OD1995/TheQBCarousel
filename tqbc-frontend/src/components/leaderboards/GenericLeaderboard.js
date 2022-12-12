@@ -10,11 +10,11 @@ export const GenericLeaderboard = (props) => {
                     <td>SP4</td>
                     <td>Season</td>
                 </th>
-                {props.data.map(
+                {/* {props.data.map(
                     (user) => {
 
                     }
-                )}
+                )} */}
             </table>
         </div>
     );

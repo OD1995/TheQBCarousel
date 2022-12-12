@@ -97,7 +97,7 @@ export const AnswerEntryTable = (props) => {
 
     if (tableRows.length > 0) {
         return (
-            <table id={`answerEntryTable-${props.conference}`}>
+            <table id={`answerEntryTable-${props.conference}`} className='answer-entry-table'>
                 <thead>
                     <tr>
                         {tableHeaders}

@@ -19,15 +19,28 @@ export const UserScoreDisplayer = (props) => {
             ).then(
                 (result) => {
                     let scores_array = [];
-                    for (const ppID of Object.keys(result.data)) {
-                        let ppScore = formatScore(result.data[ppID]);
-                        scores_array.push(
-                            <tr key={ppID}>
-                                <td><b>SP{ppID}</b></td>
-                                <td>{ppScore}</td>
-                            </tr>
-                        )
+                    let spIDs = ['SP1','SP2','SP3','SP4'];
+                    for (const spID of spIDs) {
+                        if (spID in result.data) {
+                            let spScore = formatScore(result.data[spID]);
+                            scores_array.push(
+                                <tr key={spID}>
+                                    <td><b>{spID}</b></td>
+                                    <td>{spScore}</td>
+                                </tr>
+                            );
+                        }
                     }
+                    if ("Season" in result.data) {
+                        let spScore = formatScore(result.data["Season"]);
+                        scores_array.push(
+                            <tr key={"Season"}>
+                                <td><b>Season</b></td>
+                                <td><b>{spScore}</b></td>
+                            </tr>
+                        );
+                    }
+
                     setScores(scores_array);
                 }
             )
