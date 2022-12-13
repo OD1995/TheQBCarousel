@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -115,7 +116,10 @@ public class UserScoreController {
 		// long requestingUserIndex = -1;
 		for (User user : user_seasonPeriodScores.keySet()) {
 			LeaderboardRow leaderboardRow = new LeaderboardRow(
-				user,
+				// user,
+				// Hibernate.unproxy(user),
+				user.getUserID(),
+				user.getUsername(),
 				user_seasonPeriodScores.get(user),
 				user_seasonScore.get(user)
 			);
@@ -142,17 +146,12 @@ public class UserScoreController {
 		List<List<LeaderboardRow>> blocks = Lists.partition(leaderboardRows, pageSize);
 		int pageCount = blocks.size();
 		List<LeaderboardRow> blockToReturn = blocks.get(Math.toIntExact(userScoreRequest.getPageNumber()-1));
-		// boolean includeSeparateRequestingUserRow = (
-		// 	(requestingUserIndex != -1) & 
-		// 	(((pageSize * (userScoreRequest.getPageNumber() - 1)) - 1) <= requestingUserIndex) &
-		// 	(requestingUserIndex <= ((pageSize * userScoreRequest.getPageNumber()) - 1))
-		// );
 		// Don't include separate requesting user row if they're already in the returned rows
 		boolean includeSeparateRequestingUserRow = false;
 		if (requestingUserLeaderboardRowList.size() > 0) {
 			includeSeparateRequestingUserRow = true;
-			for (LeaderboardRow leaderboardRow : leaderboardRows) {
-				if (leaderboardRow.getUser().getUserID() == userScoreRequest.getUserID()) {
+			for (LeaderboardRow leaderboardRow : blockToReturn) {
+				if (leaderboardRow.getUserID() == userScoreRequest.getUserID()) {
 					includeSeparateRequestingUserRow = false;
 					break;
 				}
@@ -160,10 +159,26 @@ public class UserScoreController {
 		}
 		LeaderboardResponse leaderboardResponse = new LeaderboardResponse(
 			blockToReturn,
-			pageCount
+			pageCount,
+			((userScoreRequest.getPageNumber() - 1) * pageSize) + 1
 		);
 		if (includeSeparateRequestingUserRow) {
-			leaderboardResponse.setRequestingUserRow(requestingUserLeaderboardRowList.get(0));
+			LeaderboardRow requestingUserRow = requestingUserLeaderboardRowList.get(0);
+			// Calculate the requesting user's rank
+			Integer rank = 1;
+			Long spID = userScoreRequest.getSeasonPeriodID();
+			boolean useSeasonScore = spID == 1234;
+			Float userScore = userScoreService.getRelevantScore(requestingUserRow, useSeasonScore, spID);
+			for (LeaderboardRow leaderboardRow : leaderboardRows) {
+				Float score = userScoreService.getRelevantScore(leaderboardRow, useSeasonScore, spID);
+				if (score > userScore) {
+					rank += 1;
+				} else {
+					break;
+				}
+			}
+			leaderboardResponse.setRequestingRowRank(rank);
+			leaderboardResponse.setRequestingUserRow(requestingUserRow);
 		}
 		
 		return leaderboardResponse;

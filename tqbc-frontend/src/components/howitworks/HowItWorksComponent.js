@@ -54,7 +54,6 @@ export const HowItWorksComponent = () => {
                         For example, the prediction season in which the starting QBs will be predicted for the {exampleSeason} season
                         will be split into the season periods below:
                     </p>
-                    {/* {ppTable} */}
                     <PredictionPeriodsTable
                         predictionPeriodsData={predictionPeriodsData}
                     />

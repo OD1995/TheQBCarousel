@@ -41,7 +41,8 @@ tr {
     padding-right: 3vw;
 }
 
-table {
+/* table { */
+#how-it-works-table {
     border-collapse: separate !important;
 }
 

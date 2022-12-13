@@ -1,0 +1,40 @@
+.generic-leaderboard-table {
+    /* border: 1px solid black; */
+    border-collapse: collapse;
+}
+
+#rank-header {
+    min-width: 10vw;
+}
+
+#user-header {
+    min-width: 20vw;
+}
+
+.sp-col {
+    width: 10vw;
+}
+
+.br {
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.bl {
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+}
+
+.blr {
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+}
+
+/* .leaderboard-header :hover {
+    background-color: yellow;
+} */
+
+.leaderboard-header {
+    cursor: pointer;
+}

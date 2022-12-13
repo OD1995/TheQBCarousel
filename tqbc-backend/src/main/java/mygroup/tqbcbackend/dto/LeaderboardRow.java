@@ -9,7 +9,12 @@ import mygroup.tqbcbackend.model.User;
 
 public class LeaderboardRow {
     
-    private User user;
+    // private User user;
+    // private Object user;
+
+    private long userID;
+
+    private String username;
 
     // private float seasonPeriod1;
 
@@ -23,21 +28,26 @@ public class LeaderboardRow {
 
     private Float seasonScore;
 
-
-    public LeaderboardRow(User user, HashMap<Long,Float> seasonPeriodScores, Float seasonScore) {
-        this.user = user;
+    public LeaderboardRow(
+        long userID,
+        String username,
+        HashMap<Long,Float> seasonPeriodScores,
+        Float seasonScore
+    ) {
+        this.userID = userID;
+        this.username = username;
         this.seasonPeriodScores = seasonPeriodScores;
         this.seasonScore = seasonScore;
     }
     
 
-    public User getUser() {
-        return this.user;
-    }
+    // public Object getUser() {
+    //     return this.user;
+    // }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+    // public void setUser(Object user) {
+    //     this.user = user;
+    // }
 
     // // public float getSeasonPeriod1() {
     // //     return this.seasonPeriod1;
@@ -85,6 +95,22 @@ public class LeaderboardRow {
 
     public void setSeasonScore(Float seasonScore) {
         this.seasonScore = seasonScore;
+    }
+
+    public long getUserID() {
+        return this.userID;
+    }
+
+    public void setUserID(long userID) {
+        this.userID = userID;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 }

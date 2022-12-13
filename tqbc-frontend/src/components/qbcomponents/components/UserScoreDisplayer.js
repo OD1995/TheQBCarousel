@@ -1,15 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import { formatScore } from "../../../helpers/UsefulFunctions";
 import UserScoreService from "../../../services/UserScoreService";
 
 export const UserScoreDisplayer = (props) => {
 
     const [scores, setScores] = useState([]);
-
-    const formatScore = (num) => {
-        return Number(num).toLocaleString(undefined,{style: 'percent', minimumFractionDigits:1});
-    }
 
     useEffect(
         () => {

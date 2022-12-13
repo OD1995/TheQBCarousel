@@ -12,9 +12,14 @@ public class LeaderboardResponse {
 
     private int pageCount;
 
-    public LeaderboardResponse(List<LeaderboardRow> rows, int pageCount) {
+    private long firstRowRank;
+
+    private Integer requestingRowRank;
+
+    public LeaderboardResponse(List<LeaderboardRow> rows, int pageCount, long firstRowRank) {
         this.rows = rows;
         this.pageCount = pageCount;
+        this.firstRowRank = firstRowRank;
     }
 
 
@@ -40,6 +45,22 @@ public class LeaderboardResponse {
 
     public void setPageCount(int pageCount) {
         this.pageCount = pageCount;
+    }
+
+    public long getFirstRowRank() {
+        return this.firstRowRank;
+    }
+
+    public void setFirstRowRank(long firstRowRank) {
+        this.firstRowRank = firstRowRank;
+    }
+
+    public Integer getRequestingRowRank() {
+        return this.requestingRowRank;
+    }
+
+    public void setRequestingRowRank(Integer requestingRowRank) {
+        this.requestingRowRank = requestingRowRank;
     }
 
 }

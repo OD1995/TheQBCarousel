@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import mygroup.tqbcbackend.dto.LeaderboardRow;
 import mygroup.tqbcbackend.model.Answer;
 import mygroup.tqbcbackend.model.PeriodPrediction;
 import mygroup.tqbcbackend.model.Player;
@@ -197,6 +198,18 @@ public class UserScoreService {
         }
         userScoreRepository.saveAll(userScores);
         return scoresByPredictionPeriod;
+    }
+
+    public Float getRelevantScore(
+        LeaderboardRow leaderboardRow,
+        boolean useSeasonScore,
+        Long spID
+    ) {
+        if (useSeasonScore) {
+            return leaderboardRow.getSeasonScore();
+        } else {
+            return leaderboardRow.getSeasonPeriodScores().get(spID);
+        }
     }
     
 }

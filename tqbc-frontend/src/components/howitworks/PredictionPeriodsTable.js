@@ -133,7 +133,7 @@ export const PredictionPeriodsTable = (props) => {
 
     return (
         <div>
-            <table cellSpacing={0} cellPadding={0}>
+            <table id="how-it-works-table" cellSpacing={0} cellPadding={0}>
                 <tbody>
                     <tr key="column-headers">
                         <th className="display-linebreak ps-col">Prediction{"\n"}Season</th>
