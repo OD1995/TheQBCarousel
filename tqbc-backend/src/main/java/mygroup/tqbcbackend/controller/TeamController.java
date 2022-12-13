@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ public class TeamController {
 	
 	// Get all teams
 	@GetMapping("/all")
+	@PreAuthorize("hasRole('USER')")
 	public List<Team> getAllTeams() {
 		return teamRepository.findAll();
 	}
@@ -40,6 +42,7 @@ public class TeamController {
 
 	// Get all teams for a season
 	@GetMapping("/get-season-teams")
+	@PreAuthorize("hasRole('USER')")
 	public List<Team> getSeasonTeams(
 		TeamRequest teamRequest
 	) {
@@ -48,6 +51,7 @@ public class TeamController {
 
 	// Get all active teams in a conference
 	@GetMapping("/get-conference-active-teams")
+	@PreAuthorize("hasRole('USER')")
 	public List<Team> getConferenceActiveTeams(
 		ActiveConferenceTeamsRequest activeConferenceTeamsRequest
 	) {
@@ -55,6 +59,7 @@ public class TeamController {
 	}
 
 	@GetMapping("/get-season-conference-teams")
+	@PreAuthorize("hasRole('USER')")
 	public List<Team> getSeasonConferenceTeams(
 		ActiveConferenceTeamsRequest activeConferenceTeamsRequest
 	) {

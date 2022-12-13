@@ -12,6 +12,10 @@ export const GlobalLeaderboard = () => {
     const [pageCount, setPageCount] = useState(1);
     const [orderedBy, setOrderedBy] = useState(1234);
 
+    const updateData = (newOrderBy) => {
+
+    }
+
 
     useEffect(
         () => {
@@ -28,8 +32,8 @@ export const GlobalLeaderboard = () => {
                     }
                     setPageCount(res.data.pageCount);
                     setFirstRowRank(res.data.firstRowRank);
-                    // setLeaderboardRows(res.data.rows);
-                    setLeaderboardRows(Array(20).fill(res.data.rows[0]))
+                    setLeaderboardRows(res.data.rows);
+                    // setLeaderboardRows(Array(20).fill(res.data.rows[0]))
                 }
             )
         },
@@ -43,6 +47,8 @@ export const GlobalLeaderboard = () => {
                 global={true}
                 firstRowRank={firstRowRank}
                 orderedBy={orderedBy}
+                updateData={updateData}
+                currentSeason={2022}
             />
         );
     } else {

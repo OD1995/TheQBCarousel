@@ -53,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 			.antMatchers("/api/v1/auth/**").permitAll()
 			.antMatchers("/api/v1/test/**").hasRole("USER")
-			.antMatchers("/api/v1/teams/**").hasRole("USER")
+			.antMatchers("/api/v1/teams/**").permitAll()
 			.antMatchers("/api/v1/events/**").hasRole("USER")
 			.antMatchers("/api/v1/prediction-periods/**").permitAll()
 			.antMatchers("/api/v1/players/**").hasRole("USER")

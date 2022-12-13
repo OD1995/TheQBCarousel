@@ -2,7 +2,7 @@
 const PlainPageComponent = (props) => {
 
     return (
-        <div id="plainPage">
+        <div id="plain-page">
             <h3>
                 {props.title}
             </h3>

@@ -92,8 +92,13 @@ label {
   white-space: pre-line;
 }
 
-#plainPage {
-  padding-top: 30vh;
+#plain-page {
+  display: flex;
+  min-height: 50vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 #popup-subtitle {

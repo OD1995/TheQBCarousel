@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { formatScore } from '../../helpers/UsefulFunctions';
 import './GenericLeaderboard.css';
 
 export const GenericLeaderboard = (props) => {
 
     const [ths, setThs] = useState([]);
+    const { user: currentUser } = useSelector((state) => state.auth);
   
     useEffect(
         () => {
@@ -18,8 +20,18 @@ export const GenericLeaderboard = (props) => {
     const generateRow = (row,ix,firstRowRank) => {
         let tds = [
             <td>{firstRowRank + ix}</td>,
-            <td>{row.username}</td>
         ];
+        tds.push(
+            <td>
+                <a
+                    href={`/prediction-history/${row.username}/${props.currentSeason}`}
+                    target="_blank"
+                    className={row.username == currentUser.username + "" ? 'user-row' : ""}
+                >
+                    {row.username}
+                </a>
+            </td>
+        )
         for (const i of [1,2,3,4]) {
             var td_val = null;
             if (i in row.seasonPeriodScores) {
@@ -40,6 +52,18 @@ export const GenericLeaderboard = (props) => {
         );
     }
 
+    const getNewData = (newOrderBy) => {
+        // If new order by is same as the current one, then go back to 
+        //    ordering by season, unless already on season
+        if (newOrderBy == props.orderedBy) {
+            if (newOrderBy != 1234) {
+                props.updateData(1234);
+            }
+        } else {
+            props.updateData(newOrderBy);
+        }
+    }
+
     const generateSomeHeaders = () => {
         let ths = [];
         var upArrowNotPrinted = true;
@@ -54,6 +78,7 @@ export const GenericLeaderboard = (props) => {
                 <th
                     id={ID}
                     className='leaderboard-header br sp-col'
+                    onClick={() => getNewData(i)}
                 >
                     {text}
                 </th>
@@ -67,10 +92,9 @@ export const GenericLeaderboard = (props) => {
             <th
                 id='season-header'
                 className='leaderboard-header bl sp-col'
+                onClick={() => getNewData(1234)}
             >
                 {text2}
-                {/* Season{upArrowNotPrinted ?  "&darr;" : ''} */}
-                {/* {'&darr;'} */}
             </th>
         );
         return ths;
@@ -88,11 +112,15 @@ export const GenericLeaderboard = (props) => {
                             {ths}
                         </tr>
                     </thead>
-                    {props.rows.map(
-                        (row,ix) => {
-                            return generateRow(row,ix,props.firstRowRank);
-                        }
-                    )}
+                    <tbody
+                        className='generic-leaderboard-tbody'
+                    >
+                        {props.rows.map(
+                            (row,ix) => {
+                                return generateRow(row,ix,props.firstRowRank);
+                            }
+                        )}
+                    </tbody>
                 </table>
             </div>
         );

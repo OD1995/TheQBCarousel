@@ -30,6 +30,7 @@ import { PageDoesntExist } from './components/errors/PageDoesntExist';
 import { TestComponent2 } from './components/qbcomponents/pages/TestComponent2';
 import { GlobalLeaderboard } from './components/leaderboards/GlobalLeaderboard';
 import { CreateNewPrivateLeaderboard } from './components/leaderboards/CreateNewPrivateLeaderboard';
+import { OutsidePredictionPeriod } from './components/errors/OutsidePredictionPeriod';
 
 const App = () => {
 	const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -171,7 +172,7 @@ const App = () => {
 						<Route exact path="/login" element={<Login/>}></Route>
 						<Route exact path="/profile" element={<Profile/>} />
 						<Route exact path="/test" element={<TestComponent/>} />
-						<Route exact path="/test2" element={<TestComponent2/>} />
+						<Route exact path="/test2" element={<OutsidePredictionPeriod/>} />
 						{/* <Route exact path="/admin" component={<TestComponent/>} /> */}
 						<Route path="/mod" element={<BoardModerator/>} />
 						<Route path="/admin" element={<BoardAdmin/>}/>

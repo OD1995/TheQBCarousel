@@ -38,3 +38,16 @@
 .leaderboard-header {
     cursor: pointer;
 }
+
+.user-row {
+    border: 1.9px dashed black;
+    padding-left: 1vw;
+    padding-right: 1vw;
+}
+
+.generic-leaderboard-tbody:before {
+    /* content:"@"; */
+    /* display:block; */
+    /* line-height:10px; */
+    /* text-indent:-99999px; */
+}
