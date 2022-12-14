@@ -141,11 +141,11 @@ public class UserScoreController {
 				Float lr1Val;
 				Float lr2Val;
 				if (spID == 1234) {
-					lr1Val = Optional.ofNullable(lr1.getSeasonScore()).orElse(0.00f);
-					lr2Val = Optional.ofNullable(lr2.getSeasonScore()).orElse(0.00f);
+					lr1Val = Optional.ofNullable(lr1.getSeasonScore()).orElse(-1.00f);
+					lr2Val = Optional.ofNullable(lr2.getSeasonScore()).orElse(-1.00f);
 				} else {
-					lr1Val = Optional.ofNullable(lr1.getSeasonPeriodScores().get(spID)).orElse(0.00f);
-					lr2Val = Optional.ofNullable(lr2.getSeasonPeriodScores().get(spID)).orElse(0.00f);
+					lr1Val = Optional.ofNullable(lr1.getSeasonPeriodScores().get(spID)).orElse(-1.00f);
+					lr2Val = Optional.ofNullable(lr2.getSeasonPeriodScores().get(spID)).orElse(-1.00f);
 				}
 				return lr2Val.compareTo(lr1Val);
 			}

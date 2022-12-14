@@ -1,5 +1,5 @@
 Short term
-Have component to deal with page number buttons
+What to do if lots of pages
 Check all query params to make sure logic works, words instead of numbers etc
 Have selector if multiple years available, otherwise centre it
 Have modal to explain stuff, ? button triggers it

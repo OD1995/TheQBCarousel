@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { formatScore } from '../../helpers/UsefulFunctions';
 import './GenericLeaderboard.css';
+import { PageSelectorComponent } from './PageSelectorComponent';
 
 export const GenericLeaderboard = (props) => {
 
@@ -14,53 +15,49 @@ export const GenericLeaderboard = (props) => {
     useEffect(
         () => {
             let THs = generateSomeHeaders();
-            if (props.requestingUserRowRank) {
-                if (props.firstRowRank > props.requestingUserRowRank) {
-                    let above_rows = generateAboveBelowRows('above');
-                    setUserAboveRows(above_rows);
-                } else {
-                    let below_rows = generateAboveBelowRows('below');
-                    setUserBelowRows(below_rows);
-                }
-            }
+            let [above_rows,below_rows] = generateAboveBelowRows();
+            setUserAboveRows(above_rows);
+            setUserBelowRows(below_rows)
             setThs(THs);
         },
         [props]
     )
 
-    const generateAboveBelowRows = (typ) => {
-        let line = "|";
-        let line_row = (
-            <tr
-                key="line-row"    
-            >
-                <td><b>{line}</b></td>
-                <td><b>{line}</b></td>
-                <td><b>{line}</b></td>
-                <td><b>{line}</b></td>
-                <td><b>{line}</b></td>
-                <td><b>{line}</b></td>
-                <td><b>{line}</b></td>
-                {/* <td>{line}</td>
-                <td>{line}</td>
-                <td>{line}</td>
-                <td>{line}</td>
-                <td>{line}</td>
-                <td>{line}</td>
-                <td>{line}</td> */}
-            </tr>
-        );
-        let data_row = generateRow(
-            props.requestingUserRow,
-            99,
-            props.requestingUserRowRank,
-            true
-        );
-
-        if (typ == "above") {
-            return [data_row, line_row];
+    const generateAboveBelowRows = () => {
+        if (props.requestingUserRowRank) { 
+            let line = "|";
+            let line_row = (
+                <tr
+                    key="line-row"    
+                >
+                    <td><b>{line}</b></td>
+                    <td><b>{line}</b></td>
+                    <td><b>{line}</b></td>
+                    <td><b>{line}</b></td>
+                    <td><b>{line}</b></td>
+                    <td><b>{line}</b></td>
+                    <td><b>{line}</b></td>
+                </tr>
+            );
+            var data_row;
+            if (
+                (props.requestingUserRow) && (props.requestingUserRowRank)
+            ) {
+                data_row = generateRow(
+                    props.requestingUserRow,
+                    99,
+                    props.requestingUserRowRank,
+                    true
+                );
+            }
+            let typ = props.firstRowRank > props.requestingUserRowRank ? 'above' : 'below';
+            if (typ == "above") {
+                return [[data_row, line_row],[]];
+            } else {
+                return [[],[line_row, data_row]];
+            }
         } else {
-            return [line_row, data_row]
+            return [[],[]];
         }
     }
 
@@ -103,15 +100,15 @@ export const GenericLeaderboard = (props) => {
         );
     }
 
-    const getNewData = (newOrderBy) => {
+    const updateParentOrderBy = (newOrderBy) => {
         // If new order by is same as the current one, then go back to 
         //    ordering by season, unless already on season
         if (newOrderBy === props.orderedBy) {
             if (newOrderBy !== 1234) {
-                props.updateData(1234);
+                props.updateOrderBy(1234);
             }
         } else {
-            props.updateData(newOrderBy);
+            props.updateOrderBy(newOrderBy);
         }
     }
 
@@ -130,7 +127,7 @@ export const GenericLeaderboard = (props) => {
                     id={ID}
                     key={ID}
                     className='leaderboard-header br sp-col'
-                    onClick={() => getNewData(i)}
+                    onClick={() => updateParentOrderBy(i)}
                 >
                     {text}
                 </th>
@@ -145,7 +142,7 @@ export const GenericLeaderboard = (props) => {
                 id='season-header'
                 key='season-header'
                 className='leaderboard-header bl sp-col'
-                onClick={() => getNewData(1234)}
+                onClick={() => updateParentOrderBy(1234)}
             >
                 {text2}
             </th>
@@ -177,6 +174,11 @@ export const GenericLeaderboard = (props) => {
                         {userBelowRows}
                     </tbody>
                 </table>
+                <PageSelectorComponent
+                    pageCount={props.pageCount}
+                    currentPage={props.currentPage}
+                    updatePageNumber={props.updatePageNumber}
+                />
             </div>
         );
     } else {

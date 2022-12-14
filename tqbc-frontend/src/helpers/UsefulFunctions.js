@@ -21,3 +21,5 @@ export const makeOptionsDropdownFriendly = (array) => {
 export const formatScore = (num) => {
     return Number(num).toLocaleString(undefined,{style: 'percent', minimumFractionDigits:1});
 }
+
+export const range = n => [...Array(n).keys()]

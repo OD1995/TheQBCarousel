@@ -22,69 +22,79 @@ export const GlobalLeaderboard = () => {
     const [leaderboardSeason, setLeaderboardSeason] = useState(null);
     const { user: currentUser } = useSelector((state) => state.auth);
 
-    const updateData = (newOrderBy) => {
-        searchParams.set('orderBy', newOrderBy)
+    const updateOrderBy = (newOrderBy) => {
+        searchParams.set('orderBy', newOrderBy);
         setSearchParams(searchParams);
     }
 
+    const updatePageNumber = (newPageNumber) => {
+        searchParams.set('page', newPageNumber);
+        setSearchParams(searchParams);
+    }
+
+    const otherStuff = (unique_seasons) => {
+        // If season not in params or season not one of available options, get max season and redirect to there
+        var leaderboard_season = params.season;
+        if (
+            (leaderboard_season === null) ||
+            (!unique_seasons.includes(parseInt(leaderboard_season)))
+        ) {
+            AnswerService.getMaxSeasonForAnswers().then(
+                (res2) => {
+                    leaderboard_season = res2.data;
+                    setLeaderboardSeason(leaderboard_season);
+                    History.push(`/global-leaderboard/${leaderboard_season}?orderBy=1234&page=1`);
+                }
+            )
+        } else {
+            if (searchParams.get('orderBy') === null) {
+                searchParams.set('orderBy', 1234);
+                setSearchParams(searchParams);
+            }
+            else
+            if (![1,2,3,4,1234].includes(parseInt(searchParams.get('orderBy')))) {
+                searchParams.set('orderBy', 1234);
+                setSearchParams(searchParams);
+            }
+            else
+            if (searchParams.get('page') === null) {
+                searchParams.set('page', 1);
+                setSearchParams(searchParams);
+            }
+            else {
+                // Make sure the page number isn't too high
+                UserScoreService.getGlobalLeaderboardPageCount(leaderboard_season).then(
+                    (res3) => {
+                        let pg = parseInt(searchParams.get('page'));
+                        if (
+                            (pg > res3.data) || (pg < 1) || (isNaN(pg))
+                        ) {
+                            searchParams.set('page', 1);
+                            setSearchParams(searchParams);
+                        } else {
+                            callUserScoreService(leaderboard_season);
+                        }
+                    }
+                )
+            }
+        }
+    }
 
     useEffect(
         () => {
             document.title = 'Global Leaderboard';
             console.log("a");
-            // If season not in params or season not one of available options, get max season and redirect to there
-            AnswerService.getUniqueSeasonsForAnswers().then(
-                (res) => {
-                    var unique_seasons = res.data;
-                    var leaderboard_season = params.season;
-                    setUniqueSeasons(uniqueSeasons);
-                    if (
-                        (leaderboard_season === null) ||
-                        (!unique_seasons.includes(parseInt(leaderboard_season)))
-                    ) {
-                        AnswerService.getMaxSeasonForAnswers().then(
-                            (res2) => {
-                                leaderboard_season = res2.data;
-                                setLeaderboardSeason(leaderboard_season);
-                                History.push(`/global-leaderboard/${leaderboard_season}?orderBy=1234&page=1`);
-                                // BREAK POINT ME!!!!!!!!!!!!!!!!
-                                callUserScoreService(leaderboard_season);
-                            }
-                        )
-                    } else {
-                        if (searchParams.get('orderBy') === null) {
-                            searchParams.set('orderBy', 1234);
-                            setSearchParams(searchParams);
-                        }
-                        else
-                        if (![1,2,3,4,1234].includes(parseInt(searchParams.get('orderBy')))) {
-                            searchParams.set('orderBy', 1234);
-                            setSearchParams(searchParams);
-                        }
-                        else
-                        if (searchParams.get('page') === null) {
-                            searchParams.set('page', 1);
-                            setSearchParams(searchParams);
-                        }
-                        else {
-                            // Make sure the page number isn't too high
-                            UserScoreService.getGlobalLeaderboardPageCount(leaderboard_season).then(
-                                (res3) => {
-                                    let pg = parseInt(searchParams.get('page'));
-                                    if (
-                                        (pg > res3.data) || (pg < 1) || (isNaN(pg))
-                                    ) {
-                                        searchParams.set('page', 1);
-                                        setSearchParams(searchParams);
-                                    } else {
-                                        callUserScoreService(leaderboard_season);
-                                    }
-                                }
-                            )
-                        }
+            if (uniqueSeasons.length === 0) {
+                AnswerService.getUniqueSeasonsForAnswers().then(
+                    (res) => {
+                        var unique_seasons = res.data;
+                        setUniqueSeasons(unique_seasons);
+                        otherStuff(unique_seasons);
                     }
-                }
-            )
+                )
+            } else {
+                otherStuff(uniqueSeasons);
+            }
             
         },
         // [params,searchParams]
@@ -102,10 +112,10 @@ export const GlobalLeaderboard = () => {
             searchParams.get('page')
         ).then(
             (res) => {
-                if (res.data.requestingUserRow) {
-                    setRequestingUserRowRank(res.data.requestingUserRowRank);
-                    setRequestingUserRow(res.data.requestingUserRow);
-                }
+                // if (res.data.requestingUserRow) {
+                setRequestingUserRowRank(res.data.requestingUserRowRank);
+                setRequestingUserRow(res.data.requestingUserRow);
+                // }
                 setPageCount(res.data.pageCount);
                 setFirstRowRank(res.data.firstRowRank);
                 setLeaderboardRows(res.data.rows);
@@ -121,10 +131,13 @@ export const GlobalLeaderboard = () => {
                 global={true}
                 firstRowRank={firstRowRank}
                 orderedBy={parseInt(searchParams.get('orderBy'))}
-                updateData={updateData}
+                updateOrderBy={updateOrderBy}
+                updatePageNumber={updatePageNumber}
                 currentSeason={leaderboardSeason}
                 requestingUserRow={requestingUserRow}
                 requestingUserRowRank={requestingUserRowRank}
+                pageCount={pageCount}
+                currentPage={parseInt(searchParams.get('page'))}
             />
         );
     } else {
