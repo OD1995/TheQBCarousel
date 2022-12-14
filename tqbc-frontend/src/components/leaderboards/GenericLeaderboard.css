@@ -1,6 +1,7 @@
 .generic-leaderboard-table {
     /* border: 1px solid black; */
     border-collapse: collapse;
+    font-size: 15px;
 }
 
 #rank-header {

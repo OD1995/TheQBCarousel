@@ -185,7 +185,7 @@ public class UserScoreController {
 					break;
 				}
 			}
-			leaderboardResponse.setRequestingRowRank(rank);
+			leaderboardResponse.setRequestingUserRowRank(rank);
 			leaderboardResponse.setRequestingUserRow(requestingUserRow);
 		}
 		

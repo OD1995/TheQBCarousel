@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -205,11 +206,13 @@ public class UserScoreService {
         boolean useSeasonScore,
         Long spID
     ) {
+        Float score;
         if (useSeasonScore) {
-            return leaderboardRow.getSeasonScore();
+            score = leaderboardRow.getSeasonScore();
         } else {
-            return leaderboardRow.getSeasonPeriodScores().get(spID);
+            score = leaderboardRow.getSeasonPeriodScores().get(spID);
         }
+        return Optional.ofNullable(score).orElse(-1.00f);
     }
     
 }

@@ -191,6 +191,8 @@ const QBPredictionsComponent = () => {
                     }
                 }
             )
+        } else {
+            setCurrentSeasonPeriodID(null);
         }
     }
 

@@ -7,19 +7,66 @@ import './GenericLeaderboard.css';
 export const GenericLeaderboard = (props) => {
 
     const [ths, setThs] = useState([]);
+    const [userAboveRows, setUserAboveRows] = useState([]);
+    const [userBelowRows, setUserBelowRows] = useState([]);
     const { user: currentUser } = useSelector((state) => state.auth);
   
     useEffect(
         () => {
             let THs = generateSomeHeaders();
+            if (props.requestingUserRowRank) {
+                if (props.firstRowRank > props.requestingUserRowRank) {
+                    let above_rows = generateAboveBelowRows('above');
+                    setUserAboveRows(above_rows);
+                } else {
+                    let below_rows = generateAboveBelowRows('below');
+                    setUserBelowRows(below_rows);
+                }
+            }
             setThs(THs);
         },
-        []
+        [props]
     )
 
-    const generateRow = (row,ix,firstRowRank) => {
+    const generateAboveBelowRows = (typ) => {
+        let line = "|";
+        let line_row = (
+            <tr
+                key="line-row"    
+            >
+                <td><b>{line}</b></td>
+                <td><b>{line}</b></td>
+                <td><b>{line}</b></td>
+                <td><b>{line}</b></td>
+                <td><b>{line}</b></td>
+                <td><b>{line}</b></td>
+                <td><b>{line}</b></td>
+                {/* <td>{line}</td>
+                <td>{line}</td>
+                <td>{line}</td>
+                <td>{line}</td>
+                <td>{line}</td>
+                <td>{line}</td>
+                <td>{line}</td> */}
+            </tr>
+        );
+        let data_row = generateRow(
+            props.requestingUserRow,
+            99,
+            props.requestingUserRowRank,
+            true
+        );
+
+        if (typ == "above") {
+            return [data_row, line_row];
+        } else {
+            return [line_row, data_row]
+        }
+    }
+
+    const generateRow = (row,ix,firstRowRank,isUserRow=false) => {
         let tds = [
-            <td key='rank'>{firstRowRank + ix}</td>,
+            <td key='rank'>{isUserRow ? firstRowRank : firstRowRank + ix}</td>,
         ];
         tds.push(
             <td
@@ -121,11 +168,13 @@ export const GenericLeaderboard = (props) => {
                     <tbody
                         className='generic-leaderboard-tbody'
                     >
+                        {userAboveRows}
                         {props.rows.map(
                             (row,ix) => {
                                 return generateRow(row,ix,props.firstRowRank);
                             }
                         )}
+                        {userBelowRows}
                     </tbody>
                 </table>
             </div>

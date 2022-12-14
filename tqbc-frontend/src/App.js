@@ -47,7 +47,7 @@ const App = () => {
 
 	let defaultPage = null;
 	if (isLoggedIn) {
-		defaultPage = <Navigate replace to="/profile" />
+		defaultPage = <Navigate replace to="/qb-predictions" />
 	} else if (justLoggedOut) {
 		defaultPage = <Navigate replace to="/login" />
 	} else {

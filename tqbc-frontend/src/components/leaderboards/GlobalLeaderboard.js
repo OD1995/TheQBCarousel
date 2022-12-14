@@ -17,13 +17,14 @@ export const GlobalLeaderboard = () => {
     const [requestingUserRow, setRequestingUserRow] = useState(null);
     const [requestingUserRowRank, setRequestingUserRowRank] = useState(null);
     const [pageCount, setPageCount] = useState(1);
-    const [orderedBy, setOrderedBy] = useState(1234);
+    // const [orderedBy, setOrderedBy] = useState(1234);
     const [uniqueSeasons, setUniqueSeasons] = useState([]);
     const [leaderboardSeason, setLeaderboardSeason] = useState(null);
     const { user: currentUser } = useSelector((state) => state.auth);
 
     const updateData = (newOrderBy) => {
-
+        searchParams.set('orderBy', newOrderBy)
+        setSearchParams(searchParams);
     }
 
 
@@ -71,7 +72,7 @@ export const GlobalLeaderboard = () => {
                                 (res3) => {
                                     let pg = parseInt(searchParams.get('page'));
                                     if (
-                                        (pg > res3.data) || (pg < 1)
+                                        (pg > res3.data) || (pg < 1) || (isNaN(pg))
                                     ) {
                                         searchParams.set('page', 1);
                                         setSearchParams(searchParams);
@@ -102,8 +103,8 @@ export const GlobalLeaderboard = () => {
         ).then(
             (res) => {
                 if (res.data.requestingUserRow) {
-                    setRequestingUserRow(res.data.requestingUserRow);
                     setRequestingUserRowRank(res.data.requestingUserRowRank);
+                    setRequestingUserRow(res.data.requestingUserRow);
                 }
                 setPageCount(res.data.pageCount);
                 setFirstRowRank(res.data.firstRowRank);
@@ -122,6 +123,8 @@ export const GlobalLeaderboard = () => {
                 orderedBy={parseInt(searchParams.get('orderBy'))}
                 updateData={updateData}
                 currentSeason={leaderboardSeason}
+                requestingUserRow={requestingUserRow}
+                requestingUserRowRank={requestingUserRowRank}
             />
         );
     } else {

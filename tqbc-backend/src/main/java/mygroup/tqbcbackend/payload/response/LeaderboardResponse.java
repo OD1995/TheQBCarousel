@@ -14,7 +14,7 @@ public class LeaderboardResponse {
 
     private long firstRowRank;
 
-    private Integer requestingRowRank;
+    private Integer requestingUserRowRank;
 
     public LeaderboardResponse(List<LeaderboardRow> rows, int pageCount, long firstRowRank) {
         this.rows = rows;
@@ -55,12 +55,12 @@ public class LeaderboardResponse {
         this.firstRowRank = firstRowRank;
     }
 
-    public Integer getRequestingRowRank() {
-        return this.requestingRowRank;
+    public Integer getRequestingUserRowRank() {
+        return this.requestingUserRowRank;
     }
 
-    public void setRequestingRowRank(Integer requestingRowRank) {
-        this.requestingRowRank = requestingRowRank;
+    public void setRequestingUserRowRank(Integer requestingUserRowRank) {
+        this.requestingUserRowRank = requestingUserRowRank;
     }
 
 }

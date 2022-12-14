@@ -1,6 +1,6 @@
 Short term
+Have component to deal with page number buttons
 Check all query params to make sure logic works, words instead of numbers etc
-Get click to change rankings
 Have selector if multiple years available, otherwise centre it
 Have modal to explain stuff, ? button triggers it
 Global leaderboard
@@ -29,3 +29,4 @@ Long term
 --- Remove twitter script import and check twitter stuff works still
 --- Search for localhost in both frontend and backend and also 2022
 --- Global leaderboard will only go live once 2023 answers are in
+--- Link user to favourite Franchise rather than Team
