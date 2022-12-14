@@ -1,7 +1,8 @@
 Short term
-Set year and ordererd by in url
+Check all query params to make sure logic works, words instead of numbers etc
 Get click to change rankings
 Have selector if multiple years available, otherwise centre it
+Have modal to explain stuff, ? button triggers it
 Global leaderboard
  - top X based on average across 4 season periods (plus user if logged in)
 Private leaderboard
@@ -27,3 +28,4 @@ Long term
 --- Over the last few seasons, the number of QBs changing teams in the NFL has been increasing significantly CHECK ME
 --- Remove twitter script import and check twitter stuff works still
 --- Search for localhost in both frontend and backend and also 2022
+--- Global leaderboard will only go live once 2023 answers are in

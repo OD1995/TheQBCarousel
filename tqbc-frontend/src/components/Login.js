@@ -57,7 +57,7 @@ const Login = (props) => {
 
     if (isLoggedIn) {
         return (
-            <Navigate to="/profile" />
+            <Navigate to="/qb-predictions" />
         );
     }
 

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -38,6 +39,9 @@ public class UserScoreController {
 
 	@Autowired
 	private UserScoreRepository userScoreRepository;
+
+	// Max number of rows displayed on a leaderboard at once
+	int pageSize = 20;
 
 	@PostMapping("/calculate-user-season-scores")
 	public ResponseEntity<?> calculateUserSeasonScores(
@@ -134,14 +138,18 @@ public class UserScoreController {
 			leaderboardRows,
 			(lr1, lr2) -> {
 				Long spID = userScoreRequest.getSeasonPeriodID();
+				Float lr1Val;
+				Float lr2Val;
 				if (spID == 1234) {
-					return lr2.getSeasonScore().compareTo(lr1.getSeasonScore());
+					lr1Val = Optional.ofNullable(lr1.getSeasonScore()).orElse(0.00f);
+					lr2Val = Optional.ofNullable(lr2.getSeasonScore()).orElse(0.00f);
 				} else {
-					return lr2.getSeasonPeriodScores().get(spID).compareTo(lr1.getSeasonPeriodScores().get(spID));
+					lr1Val = Optional.ofNullable(lr1.getSeasonPeriodScores().get(spID)).orElse(0.00f);
+					lr2Val = Optional.ofNullable(lr2.getSeasonPeriodScores().get(spID)).orElse(0.00f);
 				}
+				return lr2Val.compareTo(lr1Val);
 			}
 		);
-		int pageSize = 20;
 		// Split `leaderboardRows` list into list of lists of length `pageSize`
 		List<List<LeaderboardRow>> blocks = Lists.partition(leaderboardRows, pageSize);
 		int pageCount = blocks.size();
@@ -183,4 +191,12 @@ public class UserScoreController {
 		
 		return leaderboardResponse;
 	}
+
+    @GetMapping("/get-global-leaderboard-page-count")
+    public int getGlobalLeaderboardPageCount(
+		UserScoreRequest userScoreRequest
+	) {
+		long uniqueUserCount = userScoreRepository.findUniqueUsersForSeason(userScoreRequest.getSeason());
+		return (int) Math.ceil((float) uniqueUserCount / (float) pageSize);
+    }
 }

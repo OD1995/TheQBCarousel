@@ -26,6 +26,18 @@ class AnswerService {
             }
         )
     }
+
+    getMaxSeasonForAnswers() {
+        return api.get(
+            this.base_url + "get-max-season-for-answers"
+        )
+    }
+
+    getUniqueSeasonsForAnswers() {
+        return api.get(
+            this.base_url + "get-unique-seasons-for-answers"
+        )
+    }
 }
 
 export default new AnswerService();

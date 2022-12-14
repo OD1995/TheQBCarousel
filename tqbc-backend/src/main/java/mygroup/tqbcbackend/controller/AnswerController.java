@@ -82,4 +82,14 @@ public class AnswerController {
             new MessageResponse("Success!")
         );
     }
+
+    @GetMapping("/get-max-season-for-answers")
+    public long getMaxSeasonForAnswers() {
+        return answerRepository.findMaxSeason();
+    }
+
+    @GetMapping("/get-unique-seasons-for-answers")
+    public List<Long> getUniqueSeasonsForAnswers() {
+        return answerRepository.findUniqueSeasons();
+    }
 }

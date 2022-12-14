@@ -19,14 +19,16 @@ export const GenericLeaderboard = (props) => {
 
     const generateRow = (row,ix,firstRowRank) => {
         let tds = [
-            <td>{firstRowRank + ix}</td>,
+            <td key='rank'>{firstRowRank + ix}</td>,
         ];
         tds.push(
-            <td>
+            <td
+                key='username'
+            >
                 <a
                     href={`/prediction-history/${row.username}/${props.currentSeason}`}
                     target="_blank"
-                    className={row.username == currentUser.username + "" ? 'user-row' : ""}
+                    className={row.username === currentUser.username ? 'user-row' : ""}
                 >
                     {row.username}
                 </a>
@@ -38,15 +40,17 @@ export const GenericLeaderboard = (props) => {
                 td_val = formatScore(row.seasonPeriodScores[i]);
             }
             tds.push(
-                <td>{td_val}</td>
+                <td key={i}>{td_val}</td>
             )
         }
         let season_score = formatScore(row.seasonScore);
         tds.push(
-            <td>{season_score}</td>
+            <td key='season'>{season_score}</td>
         );
         return (
-            <tr>
+            <tr
+                key={"row-" + ix}
+            >
                 {tds}
             </tr>
         );
@@ -55,8 +59,8 @@ export const GenericLeaderboard = (props) => {
     const getNewData = (newOrderBy) => {
         // If new order by is same as the current one, then go back to 
         //    ordering by season, unless already on season
-        if (newOrderBy == props.orderedBy) {
-            if (newOrderBy != 1234) {
+        if (newOrderBy === props.orderedBy) {
+            if (newOrderBy !== 1234) {
                 props.updateData(1234);
             }
         } else {
@@ -70,13 +74,14 @@ export const GenericLeaderboard = (props) => {
         for (const i of [1,2,3,4]) {
             let ID = `SP${i}-header`;
             let text = `Season Period ${i}`;
-            if (i == props.orderedBy) {
+            if (i === props.orderedBy) {
                 text += " ↓";
-                upArrowNotPrinted = true;
+                upArrowNotPrinted = false;
             }
             ths.push(
                 <th
                     id={ID}
+                    key={ID}
                     className='leaderboard-header br sp-col'
                     onClick={() => getNewData(i)}
                 >
@@ -91,6 +96,7 @@ export const GenericLeaderboard = (props) => {
         ths.push(
             <th
                 id='season-header'
+                key='season-header'
                 className='leaderboard-header bl sp-col'
                 onClick={() => getNewData(1234)}
             >
@@ -107,8 +113,8 @@ export const GenericLeaderboard = (props) => {
                 <table className="generic-leaderboard-table">
                     <thead>
                         <tr>
-                            <th class='br' id='rank-header'>{props.global ? "Global " : ""}Rank</th>
-                            <th class='br' id='user-header'>User</th>
+                            <th className='br' id='rank-header'>{props.global ? "Global " : ""}Rank</th>
+                            <th className='br' id='user-header'>User</th>
                             {ths}
                         </tr>
                     </thead>

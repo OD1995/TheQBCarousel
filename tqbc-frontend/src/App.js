@@ -101,14 +101,6 @@ const App = () => {
 								</Link>
 							</li>
 
-							{showModeratorBoard && (
-								<li className="nav-item">
-									<Link to={"/mod"} className="nav-link">
-										Moderator Board
-									</Link>
-								</li>
-							)}
-
 							{showAdminBoard && (
 								<li className="nav-item">
 									<Link to={"/admin"} className="nav-link">
@@ -189,6 +181,7 @@ const App = () => {
 						/>
 						<Route path="/email-verification" element={<EmailVerification/>}/>
 						<Route path="/global-leaderboard" element={<GlobalLeaderboard/>}/>
+						<Route path="/global-leaderboard/:season" element={<GlobalLeaderboard/>}/>
 						<Route path="/create-new-private-leaderboard" element={<CreateNewPrivateLeaderboard/>}/>
 						<Route path='/*' element={<PageDoesntExist/>}/>
 					</Routes>

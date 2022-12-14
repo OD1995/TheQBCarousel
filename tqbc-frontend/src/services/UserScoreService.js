@@ -39,6 +39,17 @@ class UserScoreService {
             }
         )
     }
+
+    getGlobalLeaderboardPageCount(season) {
+        return api.get(
+            this.base_url + "get-global-leaderboard-page-count",
+            {
+                params: {
+                    season: season
+                }
+            }
+        )
+    }
 }
 
 export default new UserScoreService();
