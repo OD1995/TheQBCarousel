@@ -385,7 +385,7 @@ const QBPredictionsComponent = () => {
                     title={popupTitle}
                     subtitle={popupSubtitle}
                     message={popupMessage}
-                ></PopupComponent>
+                />
             </div>
         );
     } else {

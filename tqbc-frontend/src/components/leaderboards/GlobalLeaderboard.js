@@ -20,6 +20,8 @@ export const GlobalLeaderboard = () => {
     // const [orderedBy, setOrderedBy] = useState(1234);
     const [uniqueSeasons, setUniqueSeasons] = useState([]);
     const [leaderboardSeason, setLeaderboardSeason] = useState(null);
+    const [popupTitle, setPopupTitle] = useState("Global Leaderboard Explainer");
+    const [popupMessage, setPopupMessage] = useState("SOME WORDS");
     const { user: currentUser } = useSelector((state) => state.auth);
 
     const updateOrderBy = (newOrderBy) => {
@@ -35,6 +37,7 @@ export const GlobalLeaderboard = () => {
     const otherStuff = (unique_seasons) => {
         // If season not in params or season not one of available options, get max season and redirect to there
         var leaderboard_season = params.season;
+        setLeaderboardSeason(params.season);
         if (
             (leaderboard_season === null) ||
             (!unique_seasons.includes(parseInt(leaderboard_season)))
@@ -138,6 +141,9 @@ export const GlobalLeaderboard = () => {
                 requestingUserRowRank={requestingUserRowRank}
                 pageCount={pageCount}
                 currentPage={parseInt(searchParams.get('page'))}
+                uniqueSeasons={uniqueSeasons}
+                popupTitle={popupTitle}
+                popupMessage={popupMessage}
             />
         );
     } else {

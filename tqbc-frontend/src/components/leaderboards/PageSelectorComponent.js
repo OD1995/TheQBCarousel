@@ -51,9 +51,7 @@ export const PageSelectorComponent = (props) => {
             //  d - page c+1
             //  e - page n
             // If there's gap between a&b or d&e, have non-clickable button divider
-            var pgNumber = 1;
             page_buttons.push(generatePageButton(1));
-            pgNumber += 1;
             if (props.currentPage !== 3) {
                 page_buttons.push(generatePageButton("~"));
             }

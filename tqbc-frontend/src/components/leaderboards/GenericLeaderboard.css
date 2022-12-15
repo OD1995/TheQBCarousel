@@ -1,7 +1,8 @@
-.generic-leaderboard-table {
+#generic-leaderboard-table {
     /* border: 1px solid black; */
     border-collapse: collapse;
     font-size: 15px;
+    /* border: 1px solid red; */
 }
 
 #rank-header {
@@ -52,7 +53,9 @@
     align-content: center;
     justify-content: center;
     align-items: center;
-    margin-top: 3vh;
+    margin-top: 4vh;
+    /* border: 1px solid green; */
+
 }
 
 .page-button {
@@ -71,4 +74,29 @@
     color: black; */
     border: 0px;
     background-color: white;
+}
+
+#generic-leaderboard-parent-div {
+    display: flex;
+    flex-direction: row;
+}
+
+#generic-leaderboard-left {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1vh;
+    /* border: 1px solid black; */
+    margin-left: 2vw;
+}
+
+#generic-leaderboard-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* border: 1px solid blueviolet; */
+    justify-content: space-around;
+    height: 80vh;
+    width: 10vw;
+    margin-top: 3vh;
+    margin-left: 4vw;
 }

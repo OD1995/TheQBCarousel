@@ -2,7 +2,9 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { formatScore } from '../../helpers/UsefulFunctions';
+import PopupComponent from '../PopUpComponent';
 import './GenericLeaderboard.css';
+import { GenericLeaderboardRightPanel } from './GenericLeaderboardRightPanel';
 import { PageSelectorComponent } from './PageSelectorComponent';
 
 export const GenericLeaderboard = (props) => {
@@ -10,6 +12,7 @@ export const GenericLeaderboard = (props) => {
     const [ths, setThs] = useState([]);
     const [userAboveRows, setUserAboveRows] = useState([]);
     const [userBelowRows, setUserBelowRows] = useState([]);
+    const [showPopup, setShowPopup] = useState(false);
     const { user: currentUser } = useSelector((state) => state.auth);
   
     useEffect(
@@ -17,7 +20,7 @@ export const GenericLeaderboard = (props) => {
             let THs = generateSomeHeaders();
             let [above_rows,below_rows] = generateAboveBelowRows();
             setUserAboveRows(above_rows);
-            setUserBelowRows(below_rows)
+            setUserBelowRows(below_rows);
             setThs(THs);
         },
         [props]
@@ -153,33 +156,47 @@ export const GenericLeaderboard = (props) => {
     if (ths.length > 0) {
 
         return (
-            <div>
-                <table className="generic-leaderboard-table">
-                    <thead>
-                        <tr>
-                            <th className='br' id='rank-header'>{props.global ? "Global " : ""}Rank</th>
-                            <th className='br' id='user-header'>User</th>
-                            {ths}
-                        </tr>
-                    </thead>
-                    <tbody
-                        className='generic-leaderboard-tbody'
-                    >
-                        {userAboveRows}
-                        {props.rows.map(
-                            (row,ix) => {
-                                return generateRow(row,ix,props.firstRowRank);
-                            }
-                        )}
-                        {userBelowRows}
-                    </tbody>
-                </table>
-                <PageSelectorComponent
-                    pageCount={props.pageCount}
-                    currentPage={props.currentPage}
-                    // pageCount={7}
-                    // currentPage={3}
-                    updatePageNumber={props.updatePageNumber}
+            <div id='generic-leaderboard-parent-div'>
+                <PopupComponent
+                    trigger={showPopup}
+                    setTrigger={setShowPopup}
+                    title={props.popupTitle}
+                    subtitle={"popupSubtitle"}
+                    message={props.popupMessage}
+                />
+                <div id='generic-leaderboard-left'>
+                    <table id="generic-leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th className='br' id='rank-header'>{props.global ? "Global " : ""}Rank</th>
+                                <th className='br' id='user-header'>User</th>
+                                {ths}
+                            </tr>
+                        </thead>
+                        <tbody
+                            className='generic-leaderboard-tbody'
+                        >
+                            {userAboveRows}
+                            {props.rows.map(
+                                (row,ix) => {
+                                    return generateRow(row,ix,props.firstRowRank);
+                                }
+                            )}
+                            {userBelowRows}
+                        </tbody>
+                    </table>
+                    <PageSelectorComponent
+                        pageCount={props.pageCount}
+                        currentPage={props.currentPage}
+                        // pageCount={7}
+                        // currentPage={3}
+                        updatePageNumber={props.updatePageNumber}
+                    />
+                </div>
+                <GenericLeaderboardRightPanel                    
+                    season={props.currentSeason}
+                    uniqueSeasons={props.uniqueSeasons}
+                    setShowPopup={setShowPopup}
                 />
             </div>
         );
