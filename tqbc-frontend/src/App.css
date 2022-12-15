@@ -123,3 +123,7 @@ label {
 .page-content {
   height: 92vh;
 }
+
+.no-hover {
+  pointer-events: none;
+}

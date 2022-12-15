@@ -13,24 +13,57 @@ export const PageSelectorComponent = (props) => {
         [props]
     )
 
+    const generatePageButton = (pgNumber) => {
+        let classN = 'page-button';
+        if (props.currentPage === pgNumber) {
+            classN += " selected-page-button";
+        } else {
+            classN += " unselected-page-button";
+        }
+        if (pgNumber === "~") {
+            classN += " no-hover"
+        }
+        var txt = pgNumber;
+        let pb = (
+            <button
+                key={"page-button-" + pgNumber}
+                className={classN}
+                onClick={() => props.updatePageNumber(pgNumber)}
+            >
+                {txt}
+            </button>
+        )
+        return pb;
+    }
+
     const createPageButtons = () => {
         let page_buttons = [];
-        for (const i of range(props.pageCount)) {
-            let classN = 'page-button';
-            if (props.currentPage === (i + 1)) {
-                classN += " selected-page-button";
-            } else {
-                classN += " unselected-page-button";
+        if (props.pageCount <= 5) {
+            for (const i of range(props.pageCount)) {
+                page_buttons.push(generatePageButton(i+1))
             }
-            page_buttons.push(
-                <button
-                    key={"page-button-" + (i + 1)}
-                    className={classN}
-                    onClick={() => props.updatePageNumber(i+1)}
-                >
-                    {i + 1}
-                </button>
-            )
+        } else {
+            // c - current page, n - total pages
+            // Always have button for:
+            //  a - page 1
+            //  b - page c-1
+            //  c - page c
+            //  d - page c+1
+            //  e - page n
+            // If there's gap between a&b or d&e, have non-clickable button divider
+            var pgNumber = 1;
+            page_buttons.push(generatePageButton(1));
+            pgNumber += 1;
+            if (props.currentPage !== 3) {
+                page_buttons.push(generatePageButton("~"));
+            }
+            for (const ix of [-1,0,1]) {
+                page_buttons.push(generatePageButton(props.currentPage+ix));
+            }
+            if (props.currentPage + 1 !== props.pageCount - 1) {
+                page_buttons.push(generatePageButton("~"));
+            }
+            page_buttons.push(generatePageButton(props.pageCount));
         }
         return page_buttons;
     }

@@ -177,6 +177,8 @@ export const GenericLeaderboard = (props) => {
                 <PageSelectorComponent
                     pageCount={props.pageCount}
                     currentPage={props.currentPage}
+                    // pageCount={7}
+                    // currentPage={3}
                     updatePageNumber={props.updatePageNumber}
                 />
             </div>
