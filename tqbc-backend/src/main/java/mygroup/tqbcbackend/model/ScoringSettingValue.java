@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -24,18 +25,19 @@ public class ScoringSettingValue {
 		targetEntity = ScoringSetting.class,
 		fetch = FetchType.LAZY
 	)
-	private ScoringSetting scoringSettingDescription;	
+	@JoinColumn(name = "ScoringSettingID", nullable = false, insertable = false, updatable = false)
+	private ScoringSetting scoringSetting;	
 	
 	public ScoringSettingValue() {
 		
 	}
 
-	public ScoringSetting getScoringSettingDescription() {
-		return scoringSettingDescription;
+	public ScoringSetting getScoringSetting() {
+		return scoringSetting;
 	}
 
-	public void setScoringSettingDescription(ScoringSetting scoringSettingDescription) {
-		this.scoringSettingDescription = scoringSettingDescription;
+	public void setScoringSetting(ScoringSetting scoringSetting) {
+		this.scoringSetting = scoringSetting;
 	}
 
 //	public long getScoringPeriodID() {

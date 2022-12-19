@@ -88,19 +88,19 @@ public class User {
 	private List<PeriodPrediction> periodPredictions;
 	
 	@OneToOne(
-			targetEntity = PrivateLeague.class,
+			targetEntity = PrivateLeaderboard.class,
 			fetch = FetchType.LAZY,
 			mappedBy = "ownerUser"
 	)
 	@Nullable
-	private PrivateLeague ownedPrivateLeague;
+	private PrivateLeaderboard ownedPrivateLeaderboard;
 	
 	@OneToMany(
-			targetEntity = PrivateLeagueMember.class,
+			targetEntity = PrivateLeaderboardMember.class,
 			fetch = FetchType.LAZY,
 			mappedBy = "user"
 	)
-	private List<PrivateLeagueMember> privateLeagueMemberships;
+	private List<PrivateLeaderboardMember> privateLeaderboardMemberships;
 	
 	@OneToMany(
 			targetEntity = UserScore.class,
@@ -221,12 +221,12 @@ public class User {
 			return false;
 		}
 		User user = (User) o;
-		return userID == user.userID && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(favouriteTeam, user.favouriteTeam) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles) && isAuthenticated == user.isAuthenticated && Objects.equals(userCreated, user.userCreated) && Objects.equals(periodPredictions, user.periodPredictions) && Objects.equals(ownedPrivateLeague, user.ownedPrivateLeague) && Objects.equals(privateLeagueMemberships, user.privateLeagueMemberships) && Objects.equals(scores, user.scores);
+		return userID == user.userID && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(favouriteTeam, user.favouriteTeam) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles) && isAuthenticated == user.isAuthenticated && Objects.equals(userCreated, user.userCreated) && Objects.equals(periodPredictions, user.periodPredictions) && Objects.equals(ownedPrivateLeaderboard, user.ownedPrivateLeaderboard) && Objects.equals(privateLeaderboardMemberships, user.privateLeaderboardMemberships) && Objects.equals(scores, user.scores);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(userID, username, email, favouriteTeam, password, roles, isAuthenticated, userCreated, periodPredictions, ownedPrivateLeague, privateLeagueMemberships, scores);
+		return Objects.hash(userID, username, email, favouriteTeam, password, roles, isAuthenticated, userCreated, periodPredictions, ownedPrivateLeaderboard, privateLeaderboardMemberships, scores);
 	}
 	
 }

@@ -24,17 +24,17 @@ public class ScoringSetting {
 	private String description;
 	
 	@OneToMany(
-			targetEntity = PrivateLeague.class,
+			targetEntity = PrivateLeaderboard.class,
 			fetch = FetchType.LAZY,
 			mappedBy = "scoringSetting"
 	)
-	private List<PrivateLeague> privateLeagues;
+	private List<PrivateLeaderboard> privateLeaderboards;
 	
 
 	@OneToMany(
 			targetEntity = ScoringSettingValue.class,
 			fetch = FetchType.LAZY,
-			mappedBy = "scoringSettingDescription"
+			mappedBy = "scoringSetting"
 	)
 	private List<ScoringSettingValue> scoringSettingValues;
 	

@@ -7,23 +7,23 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class PrivateLeagueMemberCompositeKey implements Serializable{
+public class PrivateLeaderboardMemberCompositeKey implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	@Column(name = "LeagueID")
-	private long leagueID;
+	@Column(name = "PrivateLeaderboardID")
+	private long privateLeaderboardID;
 	
 	@Column(name = "UserID")
 	private long userID;
 	
-	public PrivateLeagueMemberCompositeKey() {
+	public PrivateLeaderboardMemberCompositeKey() {
 		
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(leagueID, userID);
+		return Objects.hash(privateLeaderboardID, userID);
 	}
 
 	@Override
@@ -34,8 +34,8 @@ public class PrivateLeagueMemberCompositeKey implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PrivateLeagueMemberCompositeKey other = (PrivateLeagueMemberCompositeKey) obj;
-		return Objects.equals(leagueID, other.leagueID) && Objects.equals(userID, other.userID);
+		PrivateLeaderboardMemberCompositeKey other = (PrivateLeaderboardMemberCompositeKey) obj;
+		return Objects.equals(privateLeaderboardID, other.privateLeaderboardID) && Objects.equals(userID, other.userID);
 	}
 	
 }
