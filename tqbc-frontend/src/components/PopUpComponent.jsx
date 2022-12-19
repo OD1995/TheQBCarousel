@@ -9,7 +9,7 @@ function PopupComponent(props) {
 				onClick={() => props.setTrigger(false)}
 				>close</button>
 				{ props.children }
-				<h2>
+				<h2 id='popup-title'>
 					{props.title}
 				</h2>
 				{
