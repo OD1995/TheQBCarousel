@@ -28,3 +28,4 @@ Long term
 --- Search for localhost in both frontend and backend and also 2022
 --- Global leaderboard will only go live once 2023 answers are in
 --- Link user to favourite Franchise rather than Team
+--- Clean up register and login pages
