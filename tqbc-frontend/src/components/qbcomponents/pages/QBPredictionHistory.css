@@ -108,36 +108,6 @@
 }
 
 
-#save-button {
-    font-size: 20px !important;
-    margin: 10px 0px;
-    width: 50%;
-    justify-self: right;
-    grid-row: 10;
-    grid-column: 5;
-}
-
-.tqbc-black-button {
-    background-color: black;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.tqbc-green-button {
-    background-color: darkgreen;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.tqbc-red-button {
-    background-color: red;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
 #qb-displayer-selection {
     display: block;
     font-size: 1em;

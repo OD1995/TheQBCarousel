@@ -199,7 +199,8 @@ const Register = () => {
 
                             <div className="form-group">
                                 <button
-                                    className="btn btn-primary btn-block"
+                                    // className="btn btn-primary btn-block"
+                                    className="tqbc-black-button"
                                 >
                                     Sign Up
                                 </button>

@@ -347,8 +347,7 @@ export const TestComponent2 = () => {
                 }
                 <button
                     onClick={savePredictions}
-                    className="tqbc-black-button"
-                    id="save-button"
+                    className="tqbc-black-button save-button"
                 >
                     Save
                 </button>
