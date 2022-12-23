@@ -11,7 +11,7 @@ export const PrivateLeaderboard = () => {
             let msg = (
                 `<div>
                     <p>
-                        The global leaderboard is sorted by overall season score by default,
+                        Leaderboard are sorted by overall season score by default,
                         but it is possible to reorder by clicking the column header of any
                         of the 5 numerical columns.
                     </p>

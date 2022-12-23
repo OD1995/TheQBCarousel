@@ -18,6 +18,19 @@ class PrivateLeaderboardService {
             }
         );
     }
+
+    getPrivateLeaderboardName(
+        privateLeaderboardUUID
+    ) {
+        return api.get(
+            this.base_url + "get-private-leaderboard-name",
+            {
+                params: {
+                    privateLeaderboardUUID: privateLeaderboardUUID
+                }
+            }
+        );
+    }
 }
 
 export default new PrivateLeaderboardService();

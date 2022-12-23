@@ -45,6 +45,22 @@ public class ScoringSettingValueCompositeKey implements Serializable {
 		ScoringSettingValueCompositeKey other = (ScoringSettingValueCompositeKey) obj;
 		return scoringPeriodID == other.scoringPeriodID && scoringSettingID == other.scoringSettingID;
 	}
+
+	public long getScoringSettingID() {
+		return this.scoringSettingID;
+	}
+
+	public void setScoringSettingID(long scoringSettingID) {
+		this.scoringSettingID = scoringSettingID;
+	}
+
+	public long getScoringPeriodID() {
+		return this.scoringPeriodID;
+	}
+
+	public void setScoringPeriodID(long scoringPeriodID) {
+		this.scoringPeriodID = scoringPeriodID;
+	}
 	
 	
 }

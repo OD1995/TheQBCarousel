@@ -1,6 +1,7 @@
 package mygroup.tqbcbackend.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
@@ -45,7 +46,7 @@ public class ScoringSettingService {
             );
             scoringSettingRepository.saveAndFlush(scoringSetting);
             Long scoringSettingID = scoringSetting.getScoringSettingID();
-            IntStream.range(1,4).forEachOrdered(scoringPeriodID -> {
+            IntStream.range(1,5).forEachOrdered(scoringPeriodID -> {
                 ScoringSettingValueCompositeKey scoringSettingValueCompositeKey = new ScoringSettingValueCompositeKey(
                     scoringSettingID,
                     scoringPeriodID
@@ -67,5 +68,24 @@ public class ScoringSettingService {
             throw new RuntimeException("Multiple ScoringSettings have the same weightings...");
         }
         return scoringSetting;
+    }
+
+    public HashMap<Long,HashMap<String,Integer>> getScoringSettingValuesHashMap(
+        ScoringSetting scoringSetting
+    ) {
+        List<ScoringSettingValue> scoringSettingValues = scoringSetting.getScoringSettingValues();
+        HashMap<Long,HashMap<String,Integer>> returnMe = new HashMap<Long,HashMap<String,Integer>>();
+
+        for (ScoringSettingValue scoringSettingValue : scoringSettingValues) {
+            HashMap<String,Integer> hm = new HashMap<String,Integer>();
+            hm.put("numerator",scoringSettingValue.getNumerator());
+            hm.put("denominator",scoringSettingValue.getDenominator());
+            returnMe.put(
+                scoringSettingValue.getScoringSettingValueCompositeKey().getScoringPeriodID(),
+                hm
+            );
+        }
+
+        return returnMe;
     }
 }

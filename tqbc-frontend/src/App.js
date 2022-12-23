@@ -184,11 +184,11 @@ const App = () => {
 						<Route path="/global-leaderboard" element={<GlobalLeaderboard/>}/>
 						<Route path="/global-leaderboard/:season" element={<GlobalLeaderboard/>}/>
 						<Route
-							path="/private-leaderboard/:privateLeaderboardID"
+							path="/private-leaderboard/:privateLeaderboardUUID"
 							element={<PrivateLeaderboard/>}
 						/>
 						<Route
-							path="/private-leaderboard/:privateLeaderboardID/:season"
+							path="/private-leaderboard/:privateLeaderboardUUID/:season"
 							element={<PrivateLeaderboard/>}
 						/>
 						<Route

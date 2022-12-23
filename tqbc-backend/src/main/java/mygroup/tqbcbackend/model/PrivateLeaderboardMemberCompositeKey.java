@@ -17,6 +17,11 @@ public class PrivateLeaderboardMemberCompositeKey implements Serializable{
 	@Column(name = "UserID")
 	private long userID;
 	
+	public PrivateLeaderboardMemberCompositeKey(long privateLeaderboardID,long userID) {
+		this.privateLeaderboardID = privateLeaderboardID;
+		this.userID = userID;
+	}
+
 	public PrivateLeaderboardMemberCompositeKey() {
 		
 	}

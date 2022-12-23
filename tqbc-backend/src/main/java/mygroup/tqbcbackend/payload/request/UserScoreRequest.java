@@ -14,7 +14,7 @@ public class UserScoreRequest {
 
     private String leaderboardType;
 
-    private UUID privateLeaderboardID;
+    private UUID privateLeaderboardUUID;
 
     public long getUserID() {
         return this.userID;
@@ -56,12 +56,12 @@ public class UserScoreRequest {
         this.leaderboardType = leaderboardType;
     }
 
-    public UUID getPrivateLeaderboardID() {
-        return this.privateLeaderboardID;
+    public UUID getPrivateLeaderboardUUID() {
+        return this.privateLeaderboardUUID;
     }
 
-    public void setPrivateLeaderboardID(UUID privateLeaderboardID) {
-        this.privateLeaderboardID = privateLeaderboardID;
+    public void setPrivateLeaderboardUUID(UUID privateLeaderboardUUID) {
+        this.privateLeaderboardUUID = privateLeaderboardUUID;
     }
 
 }

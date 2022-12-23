@@ -1,7 +1,7 @@
 #generic-leaderboard-table {
     /* border: 1px solid black; */
     border-collapse: collapse;
-    font-size: 15px;
+    font-size: 14px;
     /* border: 1px solid red; */
 }
 
@@ -11,6 +11,15 @@
 
 #user-header {
     min-width: 20vw;
+}
+
+#leaderboard-title {
+    border: 2px solid black;
+    /* display: inline; */
+    width: fit-content;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    margin-left: 3vw;
 }
 
 .sp-col {
@@ -84,7 +93,7 @@
 #generic-leaderboard-left {
     display: flex;
     flex-direction: column;
-    margin-top: 1vh;
+    margin-top: 0.5vh;
     /* border: 1px solid black; */
     margin-left: 2vw;
 }

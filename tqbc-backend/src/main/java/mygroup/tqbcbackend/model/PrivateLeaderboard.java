@@ -45,6 +45,7 @@ public class PrivateLeaderboard {
 	private ScoringSetting scoringSetting;
 	
 	@Column(name = "PrivateLeaderboardUUID")
+	@org.hibernate.annotations.Type(type = "org.hibernate.type.UUIDCharType")
 	private UUID privateLeaderboardUUID;
 	
 	@OneToMany(

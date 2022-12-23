@@ -5,6 +5,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import History from '../../helpers/History';
 import { formatScore } from '../../helpers/UsefulFunctions';
 import AnswerService from '../../services/AnswerService';
+import PrivateLeaderboardService from '../../services/PrivateLeaderboardService';
 import UserScoreService from '../../services/UserScoreService';
 import PopupComponent from '../PopUpComponent';
 import './GenericLeaderboard.css';
@@ -23,9 +24,7 @@ export const GenericLeaderboard = (props) => {
     const [pageCount, setPageCount] = useState(1);
     const [uniqueSeasons, setUniqueSeasons] = useState([]);
     const [leaderboardSeason, setLeaderboardSeason] = useState(null);
-    // const [popupTitle, setPopupTitle] = useState("Private Leaderboard Explainer");
-    // const [popupMessage, setPopupMessage] = useState("SOME WORDS");
-
+    const [leaderboardName, setLeaderboardName] = useState("");
     const [ths, setThs] = useState([]);
     const [userAboveRows, setUserAboveRows] = useState([]);
     const [userBelowRows, setUserBelowRows] = useState([]);
@@ -64,12 +63,12 @@ export const GenericLeaderboard = (props) => {
                 (res2) => {
                     leaderboard_season = res2.data;
                     setLeaderboardSeason(leaderboard_season);
-                    let plID = params.privateLeaderboardID;
+                    let plUUID = params.privateLeaderboardUUID;
                     var url;
                     if (props.global) {
                         url = `/global-leaderboard/${leaderboard_season}?orderBy=1234&page=1`;
                     } else {
-                        url = `/private-leaderboard/${plID}/${leaderboard_season}?orderBy=1234&page=1`
+                        url = `/private-leaderboard/${plUUID}/${leaderboard_season}?orderBy=1234&page=1`
                     }
                     History.push(url);
                 }
@@ -93,7 +92,7 @@ export const GenericLeaderboard = (props) => {
                 // Make sure the page number isn't too high
                 UserScoreService.getLeaderboardPageCount(
                     props.global ? 'global' : 'private',
-                    params.privateLeaderboardID,
+                    params.privateLeaderboardUUID,
                     leaderboard_season
                 ).then(
                     (res3) => {
@@ -117,26 +116,39 @@ export const GenericLeaderboard = (props) => {
     ) => {
         UserScoreService.getLeaderboardData(
             props.global ? 'global' : 'private',
-            params.privateLeaderboardID,
+            params.privateLeaderboardUUID,
             leaderboard_season,
             currentUser.userID,
             searchParams.get('orderBy'),
             searchParams.get('page')
         ).then(
             (res) => {
-                // if (res.data.requestingUserRow) {
                 setRequestingUserRowRank(res.data.requestingUserRowRank);
                 setRequestingUserRow(res.data.requestingUserRow);
-                // }
                 setPageCount(res.data.pageCount);
                 setFirstRowRank(res.data.firstRowRank);
                 setLeaderboardRows(res.data.rows);
-                // setLeaderboardRows(Array(20).fill(res.data.rows[0]))
-                doRestOfUseEffect(
-                    res.data.requestingUserRowRank,
-                    res.data.requestingUserRow,
-                    res.data.firstRowRank
-                );
+                if (props.global) {
+                    setLeaderboardName("GLOBAL LEADERBOARD")
+                    doRestOfUseEffect(
+                        res.data.requestingUserRowRank,
+                        res.data.requestingUserRow,
+                        res.data.firstRowRank
+                    );
+                } else {
+                    PrivateLeaderboardService.getPrivateLeaderboardName(
+                        params.privateLeaderboardUUID
+                    ).then(
+                        (res2) => {
+                            setLeaderboardName(res2.data.toUpperCase());
+                            doRestOfUseEffect(
+                                res.data.requestingUserRowRank,
+                                res.data.requestingUserRow,
+                                res.data.firstRowRank
+                            );
+                        }
+                    )
+                }
             }
         )
     }
@@ -310,6 +322,11 @@ export const GenericLeaderboard = (props) => {
                     message={props.popupMessage}
                 />
                 <div id='generic-leaderboard-left'>
+                    <h4
+                        id='leaderboard-title'
+                    >
+                        {leaderboardName}
+                    </h4>
                     <table id="generic-leaderboard-table">
                         <thead>
                             <tr>

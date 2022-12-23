@@ -60,20 +60,36 @@ public class ScoringSettingValue {
 		this.scoringSetting = scoringSetting;
 	}
 
-//	public long getScoringPeriodID() {
-//		return scoringPeriodID;
-//	}
-//
-//	public void setScoringPeriodID(long scoringPeriodID) {
-//		this.scoringPeriodID = scoringPeriodID;
-//	}
-
 	public double getValue() {
 		return value;
 	}
 
 	public void setValue(double value) {
 		this.value = value;
+	}
+
+	public ScoringSettingValueCompositeKey getScoringSettingValueCompositeKey() {
+		return this.scoringSettingValueCompositeKey;
+	}
+
+	public void setScoringSettingValueCompositeKey(ScoringSettingValueCompositeKey scoringSettingValueCompositeKey) {
+		this.scoringSettingValueCompositeKey = scoringSettingValueCompositeKey;
+	}
+
+	public Integer getNumerator() {
+		return this.numerator;
+	}
+
+	public void setNumerator(Integer numerator) {
+		this.numerator = numerator;
+	}
+
+	public Integer getDenominator() {
+		return this.denominator;
+	}
+
+	public void setDenominator(Integer denominator) {
+		this.denominator = denominator;
 	}
 	
 }

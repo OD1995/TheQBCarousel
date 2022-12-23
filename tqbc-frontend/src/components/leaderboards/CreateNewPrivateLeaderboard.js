@@ -14,7 +14,7 @@ export const CreateNewPrivateLeaderboard = () => {
     const form = useRef();
     const [privateLeaderboardName,setPrivateLeaderboardName] = useState("");
     const [weightingValues, setWeightingValues] = useState({});
-    const [weightingErrorMessage, setWeightingErrorMessage] = useState("ab");
+    const [weightingErrorMessage, setWeightingErrorMessage] = useState("");
     const [nameErrorMessage, setNameErrorMessage] = useState("");
 	const { user: currentUser } = useSelector((state) => state.auth);
 
@@ -115,7 +115,7 @@ export const CreateNewPrivateLeaderboard = () => {
                             gridColumn: 1,
                         }}
                     >
-                        Private Leaderboard Name{"\n"}(max 30 characters)
+                        Private Leaderboard Name{"\n"}(max 20 characters)
                     </h5>
                     <div
                         style={{
@@ -130,7 +130,7 @@ export const CreateNewPrivateLeaderboard = () => {
                             value={privateLeaderboardName}
                             onChange={onChangeName}
                             // validations={[required]}
-                            maxLength={30}
+                            maxLength={20}
                             style={{
                                 width: '16.5vw'
                             }}

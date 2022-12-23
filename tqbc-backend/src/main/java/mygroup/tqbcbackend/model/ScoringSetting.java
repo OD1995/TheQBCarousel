@@ -68,4 +68,7 @@ public class ScoringSetting {
 		this.scoringSettingCreated = scoringSettingCreated;
 	}	
 	
+	public List<ScoringSettingValue> getScoringSettingValues() {
+		return this.scoringSettingValues;
+	}
 }

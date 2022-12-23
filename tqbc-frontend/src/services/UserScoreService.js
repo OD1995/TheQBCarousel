@@ -28,7 +28,7 @@ class UserScoreService {
 
     getLeaderboardData(
         leaderboardType,
-        privateLeaderboardID,
+        privateLeaderboardUUID,
         season,
         userID,
         seasonPeriodID,
@@ -39,7 +39,7 @@ class UserScoreService {
             {
                 params: {
                     leaderboardType: leaderboardType,
-                    privateLeaderboardID: privateLeaderboardID,
+                    privateLeaderboardUUID: privateLeaderboardUUID,
                     season: season,
                     userID: userID,
                     seasonPeriodID: seasonPeriodID,
@@ -51,7 +51,7 @@ class UserScoreService {
 
     getLeaderboardPageCount(
         leaderboardType,
-        privateLeaderboardID,
+        privateLeaderboardUUID,
         season
     ) {
         return api.get(
@@ -59,7 +59,7 @@ class UserScoreService {
             {
                 params: {
                     leaderboardType: leaderboardType,
-                    privateLeaderboardID: privateLeaderboardID,
+                    privateLeaderboardUUID: privateLeaderboardUUID,
                     season: season
                 }
             }
