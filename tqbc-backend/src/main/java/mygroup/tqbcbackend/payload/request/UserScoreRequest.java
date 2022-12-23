@@ -1,16 +1,20 @@
 package mygroup.tqbcbackend.payload.request;
 
+import java.util.UUID;
+
 public class UserScoreRequest {
     
     private long season;
     
     private long userID;
 
-    // private String seasonPeriod;
-
     private long pageNumber;
 
     private long seasonPeriodID;
+
+    private String leaderboardType;
+
+    private UUID privateLeaderboardID;
 
     public long getUserID() {
         return this.userID;
@@ -28,14 +32,6 @@ public class UserScoreRequest {
         this.season = season;
     }
 
-    // public String getSeasonPeriod() {
-    //     return this.seasonPeriod;
-    // }
-
-    // public void setSeasonPeriod(String seasonPeriod) {
-    //     this.seasonPeriod = seasonPeriod;
-    // }
-
     public long getPageNumber() {
         return this.pageNumber;
     }
@@ -50,6 +46,22 @@ public class UserScoreRequest {
 
     public void setSeasonPeriodID(long seasonPeriodID) {
         this.seasonPeriodID = seasonPeriodID;
+    }
+
+    public String getLeaderboardType() {
+        return this.leaderboardType;
+    }
+
+    public void setLeaderboardType(String leaderboardType) {
+        this.leaderboardType = leaderboardType;
+    }
+
+    public UUID getPrivateLeaderboardID() {
+        return this.privateLeaderboardID;
+    }
+
+    public void setPrivateLeaderboardID(UUID privateLeaderboardID) {
+        this.privateLeaderboardID = privateLeaderboardID;
     }
 
 }

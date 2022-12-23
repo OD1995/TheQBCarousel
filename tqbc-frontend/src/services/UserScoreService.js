@@ -26,11 +26,20 @@ class UserScoreService {
         );
     }
 
-    getGlobalLeaderboardData(season,userID,seasonPeriodID,pageNumber) {
+    getLeaderboardData(
+        leaderboardType,
+        privateLeaderboardID,
+        season,
+        userID,
+        seasonPeriodID,
+        pageNumber
+    ) {
         return api.get(
-            this.base_url + "get-global-leaderboard-data",
+            this.base_url + "get-leaderboard-data",
             {
                 params: {
+                    leaderboardType: leaderboardType,
+                    privateLeaderboardID: privateLeaderboardID,
                     season: season,
                     userID: userID,
                     seasonPeriodID: seasonPeriodID,
@@ -40,11 +49,17 @@ class UserScoreService {
         )
     }
 
-    getGlobalLeaderboardPageCount(season) {
+    getLeaderboardPageCount(
+        leaderboardType,
+        privateLeaderboardID,
+        season
+    ) {
         return api.get(
-            this.base_url + "get-global-leaderboard-page-count",
+            this.base_url + "get-leaderboard-page-count",
             {
                 params: {
+                    leaderboardType: leaderboardType,
+                    privateLeaderboardID: privateLeaderboardID,
                     season: season
                 }
             }

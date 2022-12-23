@@ -1,13 +1,30 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useParams, useSearchParams } from 'react-router-dom';
+import History from '../../helpers/History';
 import { formatScore } from '../../helpers/UsefulFunctions';
+import AnswerService from '../../services/AnswerService';
+import UserScoreService from '../../services/UserScoreService';
 import PopupComponent from '../PopUpComponent';
 import './GenericLeaderboard.css';
 import { GenericLeaderboardRightPanel } from './GenericLeaderboardRightPanel';
 import { PageSelectorComponent } from './PageSelectorComponent';
 
 export const GenericLeaderboard = (props) => {
+
+    const params = useParams();
+	const [searchParams, setSearchParams] = useSearchParams();
+
+    const [leaderboardRows, setLeaderboardRows] = useState([]);
+    const [firstRowRank, setFirstRowRank] = useState(null);
+    const [requestingUserRow, setRequestingUserRow] = useState(null);
+    const [requestingUserRowRank, setRequestingUserRowRank] = useState(null);
+    const [pageCount, setPageCount] = useState(1);
+    const [uniqueSeasons, setUniqueSeasons] = useState([]);
+    const [leaderboardSeason, setLeaderboardSeason] = useState(null);
+    // const [popupTitle, setPopupTitle] = useState("Private Leaderboard Explainer");
+    // const [popupMessage, setPopupMessage] = useState("SOME WORDS");
 
     const [ths, setThs] = useState([]);
     const [userAboveRows, setUserAboveRows] = useState([]);
@@ -17,17 +34,135 @@ export const GenericLeaderboard = (props) => {
   
     useEffect(
         () => {
-            let THs = generateSomeHeaders();
-            let [above_rows,below_rows] = generateAboveBelowRows();
-            setUserAboveRows(above_rows);
-            setUserBelowRows(below_rows);
-            setThs(THs);
+            let type = props.global ? "Global" : "Private"
+            document.title = type + " Leaderboard";            
+            if (uniqueSeasons.length === 0) {
+                AnswerService.getUniqueSeasonsForAnswers().then(
+                    (res) => {
+                        var unique_seasons = res.data;
+                        setUniqueSeasons(unique_seasons);
+                        otherStuff(unique_seasons);
+                    }
+                )
+            } else {
+                otherStuff(uniqueSeasons);
+            }
+
         },
-        [props]
+        [params]
     )
 
-    const generateAboveBelowRows = () => {
-        if (props.requestingUserRowRank) { 
+    const otherStuff = (unique_seasons) => {
+        // If season not in params or season not one of available options, get max season and redirect to there
+        var leaderboard_season = params.season;
+        setLeaderboardSeason(params.season);
+        if (
+            (leaderboard_season === null) ||
+            (!unique_seasons.includes(parseInt(leaderboard_season)))
+        ) {
+            AnswerService.getMaxSeasonForAnswers().then(
+                (res2) => {
+                    leaderboard_season = res2.data;
+                    setLeaderboardSeason(leaderboard_season);
+                    let plID = params.privateLeaderboardID;
+                    var url;
+                    if (props.global) {
+                        url = `/global-leaderboard/${leaderboard_season}?orderBy=1234&page=1`;
+                    } else {
+                        url = `/private-leaderboard/${plID}/${leaderboard_season}?orderBy=1234&page=1`
+                    }
+                    History.push(url);
+                }
+            )
+        } else {
+            if (searchParams.get('orderBy') === null) {
+                searchParams.set('orderBy', 1234);
+                setSearchParams(searchParams);
+            }
+            else
+            if (![1,2,3,4,1234].includes(parseInt(searchParams.get('orderBy')))) {
+                searchParams.set('orderBy', 1234);
+                setSearchParams(searchParams);
+            }
+            else
+            if (searchParams.get('page') === null) {
+                searchParams.set('page', 1);
+                setSearchParams(searchParams);
+            }
+            else {
+                // Make sure the page number isn't too high
+                UserScoreService.getLeaderboardPageCount(
+                    props.global ? 'global' : 'private',
+                    params.privateLeaderboardID,
+                    leaderboard_season
+                ).then(
+                    (res3) => {
+                        let pg = parseInt(searchParams.get('page'));
+                        if (
+                            (pg > res3.data) || (pg < 1) || (isNaN(pg))
+                        ) {
+                            searchParams.set('page', 1);
+                            setSearchParams(searchParams);
+                        } else {
+                            callUserScoreService(leaderboard_season);
+                        }
+                    }
+                )
+            }
+        }
+    }
+
+    const callUserScoreService = (
+        leaderboard_season,
+    ) => {
+        UserScoreService.getLeaderboardData(
+            props.global ? 'global' : 'private',
+            params.privateLeaderboardID,
+            leaderboard_season,
+            currentUser.userID,
+            searchParams.get('orderBy'),
+            searchParams.get('page')
+        ).then(
+            (res) => {
+                // if (res.data.requestingUserRow) {
+                setRequestingUserRowRank(res.data.requestingUserRowRank);
+                setRequestingUserRow(res.data.requestingUserRow);
+                // }
+                setPageCount(res.data.pageCount);
+                setFirstRowRank(res.data.firstRowRank);
+                setLeaderboardRows(res.data.rows);
+                // setLeaderboardRows(Array(20).fill(res.data.rows[0]))
+                doRestOfUseEffect(
+                    res.data.requestingUserRowRank,
+                    res.data.requestingUserRow,
+                    res.data.firstRowRank
+                );
+            }
+        )
+    }
+
+    const doRestOfUseEffect = (
+        requestingUserRowRank,
+        requestingUserRow,
+        firstRowRank
+    ) => {
+        let THs = generateSomeHeaders();
+        let [above_rows,below_rows] = generateAboveBelowRows(
+            requestingUserRowRank,
+            requestingUserRow,
+            firstRowRank
+        );
+        setUserAboveRows(above_rows);
+        setUserBelowRows(below_rows);
+        setThs(THs);
+    }
+
+    const generateAboveBelowRows = (
+        requestingUserRowRank,
+        requestingUserRow,
+        firstRowRank
+    ) => {
+        if (requestingUserRowRank) { 
             let line = "|";
             let line_row = (
                 <tr
@@ -44,17 +179,17 @@ export const GenericLeaderboard = (props) => {
             );
             var data_row;
             if (
-                (props.requestingUserRow) && (props.requestingUserRowRank)
+                (requestingUserRow) && (requestingUserRowRank)
             ) {
                 data_row = generateRow(
-                    props.requestingUserRow,
+                    requestingUserRow,
                     99,
-                    props.requestingUserRowRank,
+                    requestingUserRowRank,
                     true
                 );
             }
-            let typ = props.firstRowRank > props.requestingUserRowRank ? 'above' : 'below';
-            if (typ == "above") {
+            let typ = firstRowRank > requestingUserRowRank ? 'above' : 'below';
+            if (typ === "above") {
                 return [[data_row, line_row],[]];
             } else {
                 return [[],[line_row, data_row]];
@@ -73,7 +208,7 @@ export const GenericLeaderboard = (props) => {
                 key='username'
             >
                 <a
-                    href={`/prediction-history/${row.username}/${props.currentSeason}`}
+                    href={`/prediction-history/${row.username}/${leaderboardSeason}`}
                     target="_blank"
                     className={row.username === currentUser.username ? 'user-row' : ""}
                 >
@@ -103,15 +238,25 @@ export const GenericLeaderboard = (props) => {
         );
     }
 
+    const updateOrderBy = (newOrderBy) => {
+        searchParams.set('orderBy', newOrderBy);
+        setSearchParams(searchParams);
+    }
+
+    const updatePageNumber = (newPageNumber) => {
+        searchParams.set('page', newPageNumber);
+        setSearchParams(searchParams);
+    }
+
     const updateParentOrderBy = (newOrderBy) => {
         // If new order by is same as the current one, then go back to 
         //    ordering by season, unless already on season
-        if (newOrderBy === props.orderedBy) {
+        if (newOrderBy === parseInt(searchParams.get('orderBy'))) {
             if (newOrderBy !== 1234) {
-                props.updateOrderBy(1234);
+                updateOrderBy(1234);
             }
         } else {
-            props.updateOrderBy(newOrderBy);
+            updateOrderBy(newOrderBy);
         }
     }
 
@@ -121,7 +266,7 @@ export const GenericLeaderboard = (props) => {
         for (const i of [1,2,3,4]) {
             let ID = `SP${i}-header`;
             let text = `Season Period ${i}`;
-            if (i === props.orderedBy) {
+            if (i === parseInt(searchParams.get('orderBy'))) {
                 text += " ↓";
                 upArrowNotPrinted = false;
             }
@@ -177,25 +322,25 @@ export const GenericLeaderboard = (props) => {
                             className='generic-leaderboard-tbody'
                         >
                             {userAboveRows}
-                            {props.rows.map(
+                            {leaderboardRows.map(
                                 (row,ix) => {
-                                    return generateRow(row,ix,props.firstRowRank);
+                                    return generateRow(row,ix,firstRowRank);
                                 }
                             )}
                             {userBelowRows}
                         </tbody>
                     </table>
                     <PageSelectorComponent
-                        pageCount={props.pageCount}
-                        currentPage={props.currentPage}
+                        pageCount={pageCount}
+                        currentPage={parseInt(searchParams.get('page'))}
                         // pageCount={7}
                         // currentPage={3}
-                        updatePageNumber={props.updatePageNumber}
+                        updatePageNumber={updatePageNumber}
                     />
                 </div>
                 <GenericLeaderboardRightPanel                    
-                    season={props.currentSeason}
-                    uniqueSeasons={props.uniqueSeasons}
+                    season={leaderboardSeason}
+                    uniqueSeasons={uniqueSeasons}
                     setShowPopup={setShowPopup}
                 />
             </div>

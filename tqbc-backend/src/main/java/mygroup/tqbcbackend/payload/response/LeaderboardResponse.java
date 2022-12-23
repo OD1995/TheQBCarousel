@@ -16,6 +16,10 @@ public class LeaderboardResponse {
 
     private Integer requestingUserRowRank;
 
+    public LeaderboardResponse() {
+        
+    }
+
     public LeaderboardResponse(List<LeaderboardRow> rows, int pageCount, long firstRowRank) {
         this.rows = rows;
         this.pageCount = pageCount;

@@ -188,6 +188,10 @@ const App = () => {
 							element={<PrivateLeaderboard/>}
 						/>
 						<Route
+							path="/private-leaderboard/:privateLeaderboardID/:season"
+							element={<PrivateLeaderboard/>}
+						/>
+						<Route
 							path="/create-new-private-leaderboard"
 							element={<CreateNewPrivateLeaderboard/>}
 						/>
