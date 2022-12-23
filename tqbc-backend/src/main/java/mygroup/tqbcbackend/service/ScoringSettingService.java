@@ -46,13 +46,13 @@ public class ScoringSettingService {
             );
             scoringSettingRepository.saveAndFlush(scoringSetting);
             Long scoringSettingID = scoringSetting.getScoringSettingID();
-            IntStream.range(1,5).forEachOrdered(scoringPeriodID -> {
+            IntStream.range(1,5).forEachOrdered(seasonPeriodID -> {
                 ScoringSettingValueCompositeKey scoringSettingValueCompositeKey = new ScoringSettingValueCompositeKey(
                     scoringSettingID,
-                    scoringPeriodID
+                    seasonPeriodID
                 );
-                Integer numerator = weightings.get(scoringPeriodID).get("numerator");
-                Integer denominator = weightings.get(scoringPeriodID).get("denominator");
+                Integer numerator = weightings.get(seasonPeriodID).get("numerator");
+                Integer denominator = weightings.get(seasonPeriodID).get("denominator");
                 ScoringSettingValue scoringSettingValue = new ScoringSettingValue(
                     scoringSettingValueCompositeKey,
                     numerator, 
@@ -81,7 +81,7 @@ public class ScoringSettingService {
             hm.put("numerator",scoringSettingValue.getNumerator());
             hm.put("denominator",scoringSettingValue.getDenominator());
             returnMe.put(
-                scoringSettingValue.getScoringSettingValueCompositeKey().getScoringPeriodID(),
+                scoringSettingValue.getScoringSettingValueCompositeKey().getSeasonPeriodID(),
                 hm
             );
         }

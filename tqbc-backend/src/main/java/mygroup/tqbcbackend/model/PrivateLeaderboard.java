@@ -15,6 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "PrivateLeaderboards")
 public class PrivateLeaderboard {
@@ -27,11 +30,13 @@ public class PrivateLeaderboard {
 	@OneToOne(
 			targetEntity = User.class,
 			fetch = FetchType.LAZY
+			// fetch = FetchType.EAGER
 	)
 	@JoinColumn(
 		name = "OwnerUserID",
 		referencedColumnName = "UserID"
 	)
+	// @JsonManagedReference
 	private User ownerUser;
 
 	@Column(name = "PrivateLeaderboardName")
@@ -39,7 +44,7 @@ public class PrivateLeaderboard {
 		
 	@ManyToOne(
 			targetEntity = ScoringSetting.class,
-			fetch = FetchType.LAZY
+			fetch = FetchType.EAGER
 	)
 	@JoinColumn(name = "ScoringSettingID")
 	private ScoringSetting scoringSetting;
@@ -51,8 +56,10 @@ public class PrivateLeaderboard {
 	@OneToMany(
 			targetEntity = PrivateLeaderboardMember.class,
 			fetch = FetchType.LAZY,
+			// fetch = FetchType.EAGER,
 			mappedBy = "privateLeaderboard"
 	)
+	// @JsonManagedReference
 	private List<PrivateLeaderboardMember> privateLeaderboardMembers;
 	
 	public PrivateLeaderboard() {

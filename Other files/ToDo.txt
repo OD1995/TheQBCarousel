@@ -1,4 +1,5 @@
 Short term
+Edit weights for private league
 Have selector if multiple years available, otherwise centre it
 Have modal to explain stuff, ? button triggers it
 Global leaderboard

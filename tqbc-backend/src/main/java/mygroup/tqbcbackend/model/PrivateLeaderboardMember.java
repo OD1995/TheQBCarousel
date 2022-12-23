@@ -7,6 +7,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 @Table(name = "PrivateLeaderboardMembers")
@@ -17,6 +19,7 @@ public class PrivateLeaderboardMember {
 	
 	@ManyToOne(targetEntity = PrivateLeaderboard.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "PrivateLeaderboardID", nullable = false, insertable = false, updatable = false)
+	// @JsonBackReference
 	private PrivateLeaderboard privateLeaderboard;
 	
 	@ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)

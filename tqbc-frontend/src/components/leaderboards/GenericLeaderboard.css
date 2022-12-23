@@ -109,3 +109,17 @@
     margin-top: 3vh;
     margin-left: 4vw;
 }
+
+#weightings-table {
+    margin-left: 2vw;
+}
+
+#weightings-table-headers {
+    font-style: italic;
+    font-weight: normal !important;
+}
+
+.weightings-table-headers {
+    font-weight: normal;
+    width: 8vw;
+}

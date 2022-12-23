@@ -31,6 +31,32 @@ class PrivateLeaderboardService {
             }
         );
     }
+
+    getPrivateLeaderboardWeightings(
+        privateLeaderboardUUID
+    ) {
+        return api.get(
+            this.base_url + "get-private-leaderboard-weightings",
+            {
+                params: {
+                    privateLeaderboardUUID: privateLeaderboardUUID
+                }
+            }
+        );
+    }
+
+    getPrivateLeaderboard(
+        privateLeaderboardUUID
+    ) {
+        return api.get(
+            this.base_url + "get-private-leaderboard",
+            {
+                params: {
+                    privateLeaderboardUUID: privateLeaderboardUUID
+                }
+            }
+        );
+    }
 }
 
 export default new PrivateLeaderboardService();

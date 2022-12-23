@@ -14,8 +14,8 @@ public class ScoringSettingValueCompositeKey implements Serializable {
 	@Column(name = "ScoringSettingID")
 	private long scoringSettingID;
 	
-	@Column(name = "ScoringPeriodID")
-	private long scoringPeriodID;
+	@Column(name = "SeasonPeriodID")
+	private long seasonPeriodID;
 	
 	public ScoringSettingValueCompositeKey() {
 		
@@ -23,15 +23,15 @@ public class ScoringSettingValueCompositeKey implements Serializable {
 
 	public ScoringSettingValueCompositeKey(
 		long scoringSettingID,
-		long scoringPeriodID
+		long seasonPeriodID
 	) {
 		this.scoringSettingID = scoringSettingID;
-		this.scoringPeriodID = scoringPeriodID;
+		this.seasonPeriodID = seasonPeriodID;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(scoringPeriodID, scoringSettingID);
+		return Objects.hash(seasonPeriodID, scoringSettingID);
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class ScoringSettingValueCompositeKey implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		ScoringSettingValueCompositeKey other = (ScoringSettingValueCompositeKey) obj;
-		return scoringPeriodID == other.scoringPeriodID && scoringSettingID == other.scoringSettingID;
+		return seasonPeriodID == other.seasonPeriodID && scoringSettingID == other.scoringSettingID;
 	}
 
 	public long getScoringSettingID() {
@@ -54,12 +54,12 @@ public class ScoringSettingValueCompositeKey implements Serializable {
 		this.scoringSettingID = scoringSettingID;
 	}
 
-	public long getScoringPeriodID() {
-		return this.scoringPeriodID;
+	public long getSeasonPeriodID() {
+		return this.seasonPeriodID;
 	}
 
-	public void setScoringPeriodID(long scoringPeriodID) {
-		this.scoringPeriodID = scoringPeriodID;
+	public void setSeasonPeriodID(long seasonPeriodID) {
+		this.seasonPeriodID = seasonPeriodID;
 	}
 	
 	

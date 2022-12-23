@@ -1,5 +1,6 @@
 package mygroup.tqbcbackend.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -14,6 +15,7 @@ import mygroup.tqbcbackend.model.PrivateLeaderboard;
 import mygroup.tqbcbackend.model.PrivateLeaderboardMember;
 import mygroup.tqbcbackend.model.PrivateLeaderboardMemberCompositeKey;
 import mygroup.tqbcbackend.model.ScoringSetting;
+import mygroup.tqbcbackend.model.ScoringSettingValue;
 import mygroup.tqbcbackend.model.User;
 import mygroup.tqbcbackend.payload.request.PrivateLeaderboardRequest;
 import mygroup.tqbcbackend.repository.PrivateLeaderboardMemberRepository;
@@ -83,5 +85,27 @@ public class PrivateLeaderboardController {
         );
 
         return privateLeaderboard.getPrivateLeaderboardName();
+    }
+
+    @GetMapping("/get-private-leaderboard-weightings")
+    public List<ScoringSettingValue> getPrivateLeaderboardWeightings(
+        PrivateLeaderboardRequest privateLeaderboardRequest
+    ) {
+        PrivateLeaderboard privateLeaderboard = privateLeaderboardRepository.findByPrivateLeaderboardUUID(
+            privateLeaderboardRequest.getPrivateLeaderboardUUID()
+        );
+
+        return privateLeaderboard.getScoringSetting().getScoringSettingValues();
+    }
+
+    @GetMapping("/get-private-leaderboard")
+    public PrivateLeaderboard getPrivateLeaderboard(
+        PrivateLeaderboardRequest privateLeaderboardRequest
+    ) {
+        PrivateLeaderboard privateLeaderboard = privateLeaderboardRepository.findByPrivateLeaderboardUUID(
+            privateLeaderboardRequest.getPrivateLeaderboardUUID()
+        );
+
+        return privateLeaderboard;
     }
 }

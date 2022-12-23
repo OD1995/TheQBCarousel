@@ -7,7 +7,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.criteria.CriteriaBuilder.In;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "ScoringSettingValues")
@@ -15,10 +16,7 @@ public class ScoringSettingValue {
 
 	@EmbeddedId
 	private ScoringSettingValueCompositeKey scoringSettingValueCompositeKey;
-	
-//	@Column(name = "ScoringPeriodID")
-//	private long scoringPeriodID;
-	
+		
 	@Column(name = "Numerator")
 	private Integer numerator;
 
@@ -33,6 +31,7 @@ public class ScoringSettingValue {
 		fetch = FetchType.LAZY
 	)
 	@JoinColumn(name = "ScoringSettingID", nullable = false, insertable = false, updatable = false)
+	@JsonBackReference
 	private ScoringSetting scoringSetting;	
 	
 	public ScoringSettingValue() {

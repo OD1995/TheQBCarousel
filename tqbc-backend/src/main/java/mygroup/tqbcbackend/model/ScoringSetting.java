@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "ScoringSettings")
 public class ScoringSetting {
@@ -40,6 +42,7 @@ public class ScoringSetting {
 			fetch = FetchType.LAZY,
 			mappedBy = "scoringSetting"
 	)
+	@JsonManagedReference
 	private List<ScoringSettingValue> scoringSettingValues;
 	
 	

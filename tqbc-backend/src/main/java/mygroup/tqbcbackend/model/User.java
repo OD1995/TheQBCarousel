@@ -28,6 +28,8 @@ import javax.validation.constraints.Size;
 
 import org.springframework.lang.Nullable;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 @Table(	name = "Users",
@@ -93,6 +95,7 @@ public class User {
 			mappedBy = "ownerUser"
 	)
 	@Nullable
+	// @JsonBackReference
 	private PrivateLeaderboard ownedPrivateLeaderboard;
 	
 	@OneToMany(
