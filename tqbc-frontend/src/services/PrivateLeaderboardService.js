@@ -20,4 +20,4 @@ class PrivateLeaderboardService {
     }
 }
 
-export default PrivateLeaderboardService();
+export default new PrivateLeaderboardService();

@@ -14,8 +14,8 @@ export const CreateNewPrivateLeaderboard = () => {
     const form = useRef();
     const [privateLeaderboardName,setPrivateLeaderboardName] = useState("");
     const [weightingValues, setWeightingValues] = useState({});
-    const [weightingErrorMessage, setWeightingErrorMessage] = useState("");
-    const [nameErrorMessage, setNameErrorMessage] = useState("");
+    const [weightingErrorMessage, setWeightingErrorMessage] = useState("ABC");
+    const [nameErrorMessage, setNameErrorMessage] = useState("DEF");
 	const { user: currentUser } = useSelector((state) => state.auth);
 
     useEffect(
@@ -97,6 +97,11 @@ export const CreateNewPrivateLeaderboard = () => {
         <div
             id="new-private-leaderboard-div"
         >
+            <h1
+                id="new-private-leaderboard-title"
+            >
+                Create New Private Leaderboard
+            </h1>
             <Form
                 onSubmit={handleSubmit}
                 ref={form}
@@ -131,20 +136,34 @@ export const CreateNewPrivateLeaderboard = () => {
                             }}
                         />
                     </div>
-                    <p
-                        className="new-private-leaderboard-error"
+                    <div
                         style={{
                             gridRow: 2,
                             gridColumnStart: 1,
                             gridColumnEnd: 5,
                         }}
                     >
-                        {nameErrorMessage}
-                    </p>
+                        <p
+                            className="new-private-leaderboard-error"
+                        >
+                            {nameErrorMessage}
+                        </p>
+                    </div>
+                    <div
+                        style={{
+                            textAlign: "left",
+                            gridRow: 3,
+                            gridColumn: 1
+                        }}
+                    >
+                        <h5>
+                            WEIGHTINGS
+                        </h5>
+                    </div>
                     {
                         rangeInt(1,4).map(
                             (ix) => {
-                                let row = ix + 2;
+                                let row = ix + 3;
                                 let sp = ix;
                                 let txt1 = (
                                     <h5
@@ -203,25 +222,38 @@ export const CreateNewPrivateLeaderboard = () => {
                                     </div>                                        
                                 );
 
+                                let sqr = (
+                                    <div
+                                        className="empty-square"
+                                        style={{
+                                            gridRow: row,
+                                            gridColumnStart: 1,
+                                            gridColumnEnd: 5
+                                        }}
+                                    >
+                                    </div>
+                                )
+
                                 return [
                                     txt1,
                                     select1,
                                     txt2,
-                                    select2
+                                    select2,
+                                    // sqr
                                 ];
                             }
                         )
                     }
-                <p
-                    className="new-private-leaderboard-error"
-                    style={{
-                        gridRow: 7,
-                        gridColumnStart: 1,
-                        gridColumnEnd: 5
-                    }}
-                >
-                    {weightingErrorMessage}
-                </p>
+                    <p
+                        className="new-private-leaderboard-error"
+                        style={{
+                            gridRow: 8,
+                            gridColumnStart: 1,
+                            gridColumnEnd: 5
+                        }}
+                    >
+                        {weightingErrorMessage}
+                    </p>
                 </div>
                 <button
                     className="tqbc-black-button"
