@@ -1,5 +1,7 @@
 Short term
-Edit weights for private league & add link for owner to same line as title
+Add list of memberships to dropdown, with dividers
+Join page for private leaderboards
+Edit weights for private leaderboard & add link for owner to same line as title
 Private Leagues -> Create New, Join, [list of memberships]
 Global leaderboard
  - top X based on average across 4 season periods (plus user if logged in)

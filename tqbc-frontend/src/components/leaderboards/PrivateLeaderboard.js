@@ -91,7 +91,7 @@ export const PrivateLeaderboard = () => {
                                 ON THIS PAGE.
                             </p>
                             <p>
-                                <b>Private League ID: </b>${params.privateLeaderboardUUID}
+                                <b>Private Leaderboard ID: </b>${params.privateLeaderboardUUID}
                             </p>
                             <b>Season Period Weightings</b>
                             ${weightingsTable}

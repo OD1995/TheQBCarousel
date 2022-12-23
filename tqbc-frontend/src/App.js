@@ -32,6 +32,8 @@ import { GlobalLeaderboard } from './components/leaderboards/GlobalLeaderboard';
 import { CreateNewPrivateLeaderboard } from './components/leaderboards/CreateNewPrivateLeaderboard';
 import { OutsidePredictionPeriod } from './components/errors/OutsidePredictionPeriod';
 import { PrivateLeaderboard } from './components/leaderboards/PrivateLeaderboard';
+import { NavigationBar } from './components/NavigationBar';
+import { JoinPrivateLeaderboard } from './components/leaderboards/JoinPrivateLeaderboard';
 
 const App = () => {
 	const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -86,75 +88,11 @@ const App = () => {
 			<Router>
 				<div className='navigation-bar'>
 					<Navigator/>
-					<nav className="navbar navbar-expand navbar-dark bg-black">
-						<Link to={"/how-it-works"} className="navbar-brand">
-							<img
-								src={window.location.origin + '/tqbc_logos/rectangle-logo.png'}
-								id="tqbc-navbar-logo"
-								alt="The QB Carousel logo"
-							/>
-						</Link>
-
-						<div className="navbar-nav mr-auto">
-							<li className="nav-item">
-								<Link to={"/how-it-works"} className="nav-link">
-									How It Works
-								</Link>
-							</li>
-
-							{showAdminBoard && (
-								<li className="nav-item">
-									<Link to={"/admin"} className="nav-link">
-										Admin Board
-									</Link>
-								</li>
-							)}
-						</div>
-
-						{currentUser ? (
-							<div className="navbar-nav ml-auto">
-								<li className="nav-item">
-									<Link to={"/qb-predictions"} className="nav-link">
-										Prediction Board
-									</Link>
-								</li>
-								<li className="nav-item">
-									<Link to={"/prediction-history/" + currentUser.username} className="nav-link">
-										My Prediction History
-									</Link>
-								</li>
-								<li className="nav-item">
-									<Link to={"/global-leaderboard"} className="nav-link">
-										Global Leaderboard
-									</Link>
-								</li>
-								<li className="nav-item">
-									<Link to={"/create-new-private-leaderboard"} className="nav-link">
-										New Private Leaderboard
-									</Link>
-								</li>
-								<li className="nav-item">
-									<a href="/login" className="nav-link" onClick={logOut}>
-										Log Out
-									</a>
-								</li>
-							</div>
-						) : (
-							<div className="navbar-nav ml-auto">
-								<li className="nav-item">
-									<Link to={"/login"} className="nav-link">
-										Log In
-									</Link>
-								</li>
-
-								<li className="nav-item">
-									<Link to={"/register"} className="nav-link">
-										Register
-									</Link>
-								</li>
-							</div>
-						)}
-					</nav>
+					<NavigationBar
+						showAdminBoard={showAdminBoard}
+						currentUser={currentUser}
+						logout={logout}
+					/>
 				</div>
 				<NavigateSetter/>
 				<div className="component-container page-content">
@@ -194,6 +132,10 @@ const App = () => {
 						<Route
 							path="/create-new-private-leaderboard"
 							element={<CreateNewPrivateLeaderboard/>}
+						/>
+						<Route
+							path="/join-private-leaderboard"
+							element={<JoinPrivateLeaderboard/>}
 						/>
 						<Route path='/*' element={<PageDoesntExist/>}/>
 					</Routes>
