@@ -25,7 +25,7 @@
 }
 
 #new-private-leaderboard-submit {
-    margin-top: 5vh;
+    margin-top: 3vh;
 }
 
 .new-private-leaderboard-error {
@@ -42,4 +42,10 @@
     border: 1px solid red;
     height: 10vh;
     width: 42vw;
+}
+
+#weightings-text {
+    grid-row: 3;
+    grid-column: 1;
+    justify-self: left;
 }

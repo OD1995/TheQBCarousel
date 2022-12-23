@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import mygroup.tqbcbackend.model.ScoringSetting;
 import mygroup.tqbcbackend.model.ScoringSettingValue;
@@ -13,6 +14,7 @@ import mygroup.tqbcbackend.model.ScoringSettingValueCompositeKey;
 import mygroup.tqbcbackend.repository.ScoringSettingRepository;
 import mygroup.tqbcbackend.repository.ScoringSettingValueRepository;
 
+@Service
 public class ScoringSettingService {
 
     @Autowired

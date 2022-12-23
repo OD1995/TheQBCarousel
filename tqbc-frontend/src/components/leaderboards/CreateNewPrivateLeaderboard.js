@@ -14,8 +14,8 @@ export const CreateNewPrivateLeaderboard = () => {
     const form = useRef();
     const [privateLeaderboardName,setPrivateLeaderboardName] = useState("");
     const [weightingValues, setWeightingValues] = useState({});
-    const [weightingErrorMessage, setWeightingErrorMessage] = useState("ABC");
-    const [nameErrorMessage, setNameErrorMessage] = useState("DEF");
+    const [weightingErrorMessage, setWeightingErrorMessage] = useState("ab");
+    const [nameErrorMessage, setNameErrorMessage] = useState("");
 	const { user: currentUser } = useSelector((state) => state.auth);
 
     useEffect(
@@ -149,17 +149,11 @@ export const CreateNewPrivateLeaderboard = () => {
                             {nameErrorMessage}
                         </p>
                     </div>
-                    <div
-                        style={{
-                            textAlign: "left",
-                            gridRow: 3,
-                            gridColumn: 1
-                        }}
+                    <h5
+                        id='weightings-text'
                     >
-                        <h5>
-                            WEIGHTINGS
-                        </h5>
-                    </div>
+                        WEIGHTINGS
+                    </h5>
                     {
                         rangeInt(1,4).map(
                             (ix) => {
