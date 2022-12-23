@@ -359,6 +359,7 @@ export const GenericLeaderboard = (props) => {
                     season={leaderboardSeason}
                     uniqueSeasons={uniqueSeasons}
                     setShowPopup={setShowPopup}
+                    weightingsTable={props.weightingsTable}
                 />
             </div>
         );

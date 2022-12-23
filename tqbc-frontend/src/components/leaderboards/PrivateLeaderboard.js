@@ -11,7 +11,7 @@ export const PrivateLeaderboard = () => {
     const [weightingsTable, setWeightingsTable] = useState("");
     const params = useParams();
 
-    const createWeightingsTable = (privateLeaderboardWeightings) => {
+    const createWeightingsTable = (privateLeaderboardWeightings,_id_) => {
         let weightings = {};
         for (const val of privateLeaderboardWeightings) {
             let fraction = val.numerator + " / " + val.denominator;
@@ -25,7 +25,7 @@ export const PrivateLeaderboard = () => {
         let weightingsTable = (
             `
             <table
-                id='weightings-table'
+                id='${_id_}'
             >
                 <thead>
                     <tr
@@ -43,17 +43,17 @@ export const PrivateLeaderboard = () => {
                         <td>${weightings[1].decimal}</td>
                     </tr>
                     <tr>
-                        <td>1</td>
+                        <td>2</td>
                         <td>${weightings[2].fraction}</td>
                         <td>${weightings[2].decimal}</td>
                     </tr>
                     <tr>
-                        <td>1</td>
+                        <td>3</td>
                         <td>${weightings[3].fraction}</td>
                         <td>${weightings[3].decimal}</td>
                     </tr>
                     <tr>
-                        <td>1</td>
+                        <td>4</td>
                         <td>${weightings[4].fraction}</td>
                         <td>${weightings[4].decimal}</td>
                     </tr>
@@ -70,8 +70,8 @@ export const PrivateLeaderboard = () => {
                 params.privateLeaderboardUUID
             ).then(
                 (res) => {
-                    let weightingsTable = createWeightingsTable(res.data);
-                    setWeightingsTable(weightingsTable);
+                    let weightingsTable = createWeightingsTable(res.data,"popup-weightings-table");
+                    setWeightingsTable(createWeightingsTable(res.data,"right-weightings-table"));
                     let msg = (
                         `<div>
                             <p>

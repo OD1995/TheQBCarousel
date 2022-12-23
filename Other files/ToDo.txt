@@ -1,7 +1,6 @@
 Short term
-Edit weights for private league
-Have selector if multiple years available, otherwise centre it
-Have modal to explain stuff, ? button triggers it
+Edit weights for private league & add link for owner to same line as title
+Private Leagues -> Create New, Join, [list of memberships]
 Global leaderboard
  - top X based on average across 4 season periods (plus user if logged in)
 Private leaderboard

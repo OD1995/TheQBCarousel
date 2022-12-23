@@ -11,6 +11,16 @@ export const GenericLeaderboardRightPanel = (props) => {
             >
                 {props.season}
             </h1>
+            {
+                props.weightingsTable && (
+                    <div>
+                        <b>Season Period Weightings</b>
+                        <span
+                                dangerouslySetInnerHTML={{__html: props.weightingsTable}}
+                        />
+                    </div>
+                )
+            }
             <button
                 className="tqbc-black-button"
                 onClick={() => props.setShowPopup(true)}
