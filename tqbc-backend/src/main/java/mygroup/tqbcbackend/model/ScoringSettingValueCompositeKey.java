@@ -21,6 +21,14 @@ public class ScoringSettingValueCompositeKey implements Serializable {
 		
 	}
 
+	public ScoringSettingValueCompositeKey(
+		long scoringSettingID,
+		long scoringPeriodID
+	) {
+		this.scoringSettingID = scoringSettingID;
+		this.scoringPeriodID = scoringPeriodID;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(scoringPeriodID, scoringSettingID);

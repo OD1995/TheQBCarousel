@@ -5,15 +5,18 @@ import Select from "react-select";
 import { makeOptionsDropdownFriendly, makeValueDropdownFriendly, range, rangeInt, round_number } from "../../helpers/UsefulFunctions";
 import './CreateNewPrivateLeaderboard.css';
 import { useEffect } from "react";
+import PrivateLeaderboardService from "../../services/PrivateLeaderboardService";
+import { useSelector } from "react-redux";
+import History from "../../helpers/History";
 
 export const CreateNewPrivateLeaderboard = () => {
 
     const form = useRef();
-    const [pageJustLoaded, setPageJustLoaded] = useState(true);
     const [privateLeaderboardName,setPrivateLeaderboardName] = useState("");
     const [weightingValues, setWeightingValues] = useState({});
     const [weightingErrorMessage, setWeightingErrorMessage] = useState("");
     const [nameErrorMessage, setNameErrorMessage] = useState("");
+	const { user: currentUser } = useSelector((state) => state.auth);
 
     useEffect(
         () => {
@@ -50,7 +53,6 @@ export const CreateNewPrivateLeaderboard = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setPageJustLoaded(false);
         let weightingsSum = sumWeightings(weightingValues);
         let weighting_result = false;
         if (weightingsSum !== 1) {
@@ -63,7 +65,15 @@ export const CreateNewPrivateLeaderboard = () => {
         }
         let name_result = validateName();
         if (weighting_result && name_result) {
-
+            PrivateLeaderboardService.postPrivateLeaderboardData(
+                currentUser.userID,
+                privateLeaderboardName,
+                weightingValues
+            ).then(
+                (res) => {
+                    History.push(`/private-leaderboard/${res.data}`);
+                }
+            )
         }
     }
 

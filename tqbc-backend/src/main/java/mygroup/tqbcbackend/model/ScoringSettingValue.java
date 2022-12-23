@@ -7,6 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.criteria.CriteriaBuilder.In;
 
 @Entity
 @Table(name = "ScoringSettingValues")
@@ -18,6 +19,12 @@ public class ScoringSettingValue {
 //	@Column(name = "ScoringPeriodID")
 //	private long scoringPeriodID;
 	
+	@Column(name = "Numerator")
+	private Integer numerator;
+
+	@Column(name = "Denominator")
+	private Integer denominator;
+
 	@Column(name = "Value")
 	private double value;
 	
@@ -30,6 +37,19 @@ public class ScoringSettingValue {
 	
 	public ScoringSettingValue() {
 		
+	}
+
+	public ScoringSettingValue(
+		ScoringSettingValueCompositeKey scoringSettingValueCompositeKey,
+		Integer numerator,
+		Integer denominator,
+		double value
+	) {
+		super();
+		this.scoringSettingValueCompositeKey = scoringSettingValueCompositeKey;
+		this.numerator = numerator;
+		this.denominator = denominator;
+		this.value = value;
 	}
 
 	public ScoringSetting getScoringSetting() {

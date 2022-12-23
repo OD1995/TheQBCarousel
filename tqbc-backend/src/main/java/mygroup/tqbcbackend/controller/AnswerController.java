@@ -78,9 +78,7 @@ public class AnswerController {
             );
         }
         answerRepository.saveAll(answerList);
-        return ResponseEntity.ok(
-            new MessageResponse("Success!")
-        );
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/get-max-season-for-answers")

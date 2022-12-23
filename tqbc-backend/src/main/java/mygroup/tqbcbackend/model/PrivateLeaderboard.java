@@ -58,12 +58,16 @@ public class PrivateLeaderboard {
 		
 	}
 
-	public PrivateLeaderboard(long privateLeaderboardID, User ownerUser, ScoringSetting scoringSetting) {
+	public PrivateLeaderboard(
+		User ownerUser,
+		ScoringSetting scoringSetting,
+		String privateLeaderboardName
+	) {
 		super();
-		this.privateLeaderboardID = privateLeaderboardID;
 		this.ownerUser = ownerUser;
 		this.scoringSetting = scoringSetting;
 		this.privateLeaderboardUUID = UUID.randomUUID();
+		this.privateLeaderboardName = privateLeaderboardName;
 	}
 
 

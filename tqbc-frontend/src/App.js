@@ -31,6 +31,7 @@ import { TestComponent2 } from './components/qbcomponents/pages/TestComponent2';
 import { GlobalLeaderboard } from './components/leaderboards/GlobalLeaderboard';
 import { CreateNewPrivateLeaderboard } from './components/leaderboards/CreateNewPrivateLeaderboard';
 import { OutsidePredictionPeriod } from './components/errors/OutsidePredictionPeriod';
+import { PrivateLeaderboard } from './components/leaderboards/PrivateLeaderboard';
 
 const App = () => {
 	const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -182,7 +183,14 @@ const App = () => {
 						<Route path="/email-verification" element={<EmailVerification/>}/>
 						<Route path="/global-leaderboard" element={<GlobalLeaderboard/>}/>
 						<Route path="/global-leaderboard/:season" element={<GlobalLeaderboard/>}/>
-						<Route path="/create-new-private-leaderboard" element={<CreateNewPrivateLeaderboard/>}/>
+						<Route
+							path="/private-leaderboard/:privateLeaderboardID"
+							element={<PrivateLeaderboard/>}
+						/>
+						<Route
+							path="/create-new-private-leaderboard"
+							element={<CreateNewPrivateLeaderboard/>}
+						/>
 						<Route path='/*' element={<PageDoesntExist/>}/>
 					</Routes>
 				</div>

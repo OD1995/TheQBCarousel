@@ -127,15 +127,18 @@ export const AnswerEntryModal = (props) => {
             props.teamID,
             answerIDs,
             props.answerTypeID
+        ).then(
+            (res) => {
+                props.pushDataToParent(
+                    props.conference,
+                    props.teamID,
+                    answerIDs,
+                    answerNames,
+                    props.answerTypeID
+                );
+                props.setIsOpen(false);
+            }
         )
-        props.pushDataToParent(
-            props.conference,
-            props.teamID,
-            answerIDs,
-            answerNames,
-            props.answerTypeID
-        );
-        props.setIsOpen(false);
     }
 
     useEffect(
