@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { NavBarDropdown } from "./NavBarDropdown";
+import './NavigationBar.css';
 
 export const NavigationBar = (props) => {
 
@@ -76,7 +77,11 @@ export const NavigationBar = (props) => {
                         }
                     </li>
                     <li className="nav-item">
-                        <a href="/login" className="nav-link" onClick={props.logOut}>
+                        <a
+                            href="/login"
+                            className="nav-link"
+                            onClick={props.logOut}
+                        >
                             Log Out
                         </a>
                     </li>

@@ -91,7 +91,7 @@ const App = () => {
 					<NavigationBar
 						showAdminBoard={showAdminBoard}
 						currentUser={currentUser}
-						logout={logout}
+						logOut={logOut}
 					/>
 				</div>
 				<NavigateSetter/>

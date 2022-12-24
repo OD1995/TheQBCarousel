@@ -71,6 +71,7 @@ export const CreateNewPrivateLeaderboard = () => {
                 weightingValues
             ).then(
                 (res) => {
+                    // Update private leaderboard memberships
                     History.push(`/private-leaderboard/${res.data}`);
                 }
             )

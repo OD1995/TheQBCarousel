@@ -1,4 +1,5 @@
 Short term
+More than one row with the given identifier was found: 1, for class: mygroup.tqbcbackend.model.PrivateLeaderboard
 Add list of memberships to dropdown, with dividers
 Join page for private leaderboards
 Edit weights for private leaderboard & add link for owner to same line as title

@@ -1,6 +1,10 @@
 package mygroup.tqbcbackend.payload.response;
 
+import java.util.HashMap;
 import java.util.List;
+
+import mygroup.tqbcbackend.model.PrivateLeaderboard;
+import mygroup.tqbcbackend.model.PrivateLeaderboardMember;
 
 public class JwtResponse {
 
@@ -11,6 +15,7 @@ public class JwtResponse {
 	private String username;
 	private String email;
 	private List<String> roles;
+	private List<HashMap<String,String>> privateLeaderboardInfos;
 	
 	public JwtResponse(
 		String accessToken,
@@ -18,7 +23,8 @@ public class JwtResponse {
 		long userID,
 		String username,
 		String email,
-		List<String> roles
+		List<String> roles,
+		List<HashMap<String,String>> privateLeaderboardInfos
 	) {
 		this.accessToken = accessToken;
 		this.refreshToken = refreshToken;
@@ -26,6 +32,7 @@ public class JwtResponse {
 		this.username = username;
 		this.email = email;
 		this.roles = roles;
+		this.privateLeaderboardInfos = privateLeaderboardInfos;
 	}
 	public String getAccessToken() {
 		return accessToken;
@@ -68,6 +75,17 @@ public class JwtResponse {
 	}
 	public void setRoles(List<String> roles) {
 		this.roles = roles;
+	}
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+
+	public List<HashMap<String,String>> getPrivateLeaderboardInfos() {
+		return this.privateLeaderboardInfos;
+	}
+
+	public void setPrivateLeaderboardInfos(List<HashMap<String,String>> privateLeaderboardInfos) {
+		this.privateLeaderboardInfos = privateLeaderboardInfos;
 	}
 	
 }

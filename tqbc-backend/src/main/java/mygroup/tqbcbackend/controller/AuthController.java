@@ -1,7 +1,9 @@
 package mygroup.tqbcbackend.controller;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import mygroup.tqbcbackend.exception.TokenRefreshException;
 import mygroup.tqbcbackend.model.ConfirmationToken;
 import mygroup.tqbcbackend.model.ERole;
+import mygroup.tqbcbackend.model.PrivateLeaderboardMember;
 import mygroup.tqbcbackend.model.RefreshToken;
 import mygroup.tqbcbackend.model.Role;
 import mygroup.tqbcbackend.model.User;
@@ -45,6 +48,7 @@ import mygroup.tqbcbackend.repository.UserRepository;
 import mygroup.tqbcbackend.security.jwt.JwtUtils;
 import mygroup.tqbcbackend.security.service.UserDetailsImpl;
 import mygroup.tqbcbackend.service.EmailSenderService;
+import mygroup.tqbcbackend.service.PrivateLeaderboardService;
 import mygroup.tqbcbackend.service.RefreshTokenService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -87,17 +91,25 @@ public class AuthController {
 	
 	@Value("${tqdm.app.frontEndURL}")
 	private String frontEndURL;
+
+	@Autowired
+	private PrivateLeaderboardService privateLeaderboardService;
 		
 	@PostMapping("/login")
 	public ResponseEntity<?> authenticateUser(
 			@Valid @RequestBody LoginRequest loginRequest
 	) {
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(
-						loginRequest.getUsername(),
-						loginRequest.getPassword()
-				)
+		UsernamePasswordAuthenticationToken upat = new UsernamePasswordAuthenticationToken(
+			loginRequest.getUsername(),
+			loginRequest.getPassword()
 		);
+		Authentication authentication = authenticationManager.authenticate(upat);
+		// Authentication authentication = authenticationManager.authenticate(
+		// 		new UsernamePasswordAuthenticationToken(
+		// 				loginRequest.getUsername(),
+		// 				loginRequest.getPassword()
+		// 		)
+		// );
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 		String jwt = jwtUtils.generateJwtToken(userDetails);
@@ -105,13 +117,17 @@ public class AuthController {
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 		RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getUserID());
+		List<HashMap<String,String>> privateLeaderboardInfos = privateLeaderboardService.getPrivateLeaderboardInfos(
+			userDetails.getUserID()
+		);
 		JwtResponse jwtResponse = new JwtResponse(
 				jwt,
 				refreshToken.getRefreshToken(),
 				userDetails.getUserID(),
 				userDetails.getUsername(),
 				userDetails.getEmail(),
-				roles
+				roles,
+				privateLeaderboardInfos
 		);
 		return ResponseEntity.ok(jwtResponse);
 	}

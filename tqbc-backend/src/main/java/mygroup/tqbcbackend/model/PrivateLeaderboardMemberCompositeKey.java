@@ -42,5 +42,21 @@ public class PrivateLeaderboardMemberCompositeKey implements Serializable{
 		PrivateLeaderboardMemberCompositeKey other = (PrivateLeaderboardMemberCompositeKey) obj;
 		return Objects.equals(privateLeaderboardID, other.privateLeaderboardID) && Objects.equals(userID, other.userID);
 	}
+
+	public long getPrivateLeaderboardID() {
+		return this.privateLeaderboardID;
+	}
+
+	public void setPrivateLeaderboardID(long privateLeaderboardID) {
+		this.privateLeaderboardID = privateLeaderboardID;
+	}
+
+	public long getUserID() {
+		return this.userID;
+	}
+
+	public void setUserID(long userID) {
+		this.userID = userID;
+	}
 	
 }

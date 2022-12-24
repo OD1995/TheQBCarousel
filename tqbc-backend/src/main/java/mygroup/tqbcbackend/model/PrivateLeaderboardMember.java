@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -20,6 +21,7 @@ public class PrivateLeaderboardMember {
 	@ManyToOne(targetEntity = PrivateLeaderboard.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "PrivateLeaderboardID", nullable = false, insertable = false, updatable = false)
 	// @JsonBackReference
+	// @JsonManagedReference
 	private PrivateLeaderboard privateLeaderboard;
 	
 	@ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
@@ -47,4 +49,11 @@ public class PrivateLeaderboardMember {
 		this.privateLeaderboardMemberCompositeKey = privateLeaderboardMemberCompositeKey;
 	}
 	
+	public PrivateLeaderboard getPrivateLeaderboard() {
+		return this.privateLeaderboard;
+	}
+
+	public void setPrivateLeaderboard(PrivateLeaderboard privateLeaderboard) {
+		this.privateLeaderboard = privateLeaderboard;
+	}
 }

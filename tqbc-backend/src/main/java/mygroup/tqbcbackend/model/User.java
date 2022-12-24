@@ -216,6 +216,10 @@ public class User {
 		this.userCreated = userCreated;
 	}
 
+	public List<PrivateLeaderboardMember> getPrivateLeaderboardMemberships() {
+		return this.privateLeaderboardMemberships;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == this)
