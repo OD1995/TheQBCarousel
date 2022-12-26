@@ -89,14 +89,14 @@ public class User {
 	)
 	private List<PeriodPrediction> periodPredictions;
 	
-	@OneToOne(
+	@OneToMany(
 			targetEntity = PrivateLeaderboard.class,
 			fetch = FetchType.LAZY,
 			mappedBy = "ownerUser"
 	)
 	@Nullable
 	// @JsonBackReference
-	private PrivateLeaderboard ownedPrivateLeaderboard;
+	private List<PrivateLeaderboard> ownedPrivateLeaderboards;
 	
 	@OneToMany(
 			targetEntity = PrivateLeaderboardMember.class,
@@ -228,12 +228,12 @@ public class User {
 			return false;
 		}
 		User user = (User) o;
-		return userID == user.userID && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(favouriteTeam, user.favouriteTeam) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles) && isAuthenticated == user.isAuthenticated && Objects.equals(userCreated, user.userCreated) && Objects.equals(periodPredictions, user.periodPredictions) && Objects.equals(ownedPrivateLeaderboard, user.ownedPrivateLeaderboard) && Objects.equals(privateLeaderboardMemberships, user.privateLeaderboardMemberships) && Objects.equals(scores, user.scores);
+		return userID == user.userID && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(favouriteTeam, user.favouriteTeam) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles) && isAuthenticated == user.isAuthenticated && Objects.equals(userCreated, user.userCreated) && Objects.equals(periodPredictions, user.periodPredictions) && Objects.equals(ownedPrivateLeaderboards, user.ownedPrivateLeaderboards) && Objects.equals(privateLeaderboardMemberships, user.privateLeaderboardMemberships) && Objects.equals(scores, user.scores);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(userID, username, email, favouriteTeam, password, roles, isAuthenticated, userCreated, periodPredictions, ownedPrivateLeaderboard, privateLeaderboardMemberships, scores);
+		return Objects.hash(userID, username, email, favouriteTeam, password, roles, isAuthenticated, userCreated, periodPredictions, ownedPrivateLeaderboards, privateLeaderboardMemberships, scores);
 	}
 	
 }
