@@ -1,9 +1,19 @@
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import TokenService from "../services/Token.service";
 
 export const NavBarDropdown = (props) => {
 
-    const { user: currentUser } = useSelector((state) => state.auth);
+    const [privateLeaderboardInfos, setPrivateLeaderboardInfos] = useState([]);
+
+    useEffect(
+        () => {
+            let a = TokenService.getPrivateLeaderboardInfos();
+            setPrivateLeaderboardInfos(a);
+        },
+        []
+    )
 
     return (
         <div
@@ -13,7 +23,7 @@ export const NavBarDropdown = (props) => {
             onClick={() => props.setShow(false)}
         >
             {
-                currentUser.privateLeaderboardInfos.map(
+                privateLeaderboardInfos.map(
                     (pli) => {
                         let A = (
                             <li className="nav-item">

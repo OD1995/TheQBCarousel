@@ -21,21 +21,15 @@
 }
 
 #new-private-leaderboard-div {
-    margin-top: 3vh;
+    /* margin-top: 3vh; */
 }
 
 #new-private-leaderboard-submit {
     margin-top: 3vh;
 }
 
-.new-private-leaderboard-error {
-    height: 3vh;
-    color: red;
-}
 
 #new-private-leaderboard-title {
-    margin-left: 5vw;
-    font-size: 200%;
 }
 
 .empty-square {

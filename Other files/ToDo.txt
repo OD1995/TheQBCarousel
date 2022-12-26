@@ -1,6 +1,5 @@
 Short term
-More than one row with the given identifier was found: 1, for class: mygroup.tqbcbackend.model.PrivateLeaderboard
-Add list of memberships to dropdown, with dividers
+
 Join page for private leaderboards
 Edit weights for private leaderboard & add link for owner to same line as title
 Private Leagues -> Create New, Join, [list of memberships]
@@ -32,3 +31,5 @@ Long term
 --- Global leaderboard will only go live once 2023 answers are in
 --- Link user to favourite Franchise rather than Team
 --- Clean up register and login pages
+--- Clean up admin board
+--- Bulk reminder email sendouts

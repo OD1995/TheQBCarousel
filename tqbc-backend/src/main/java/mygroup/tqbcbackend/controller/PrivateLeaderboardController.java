@@ -1,11 +1,13 @@
 package mygroup.tqbcbackend.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,7 @@ import mygroup.tqbcbackend.payload.request.PrivateLeaderboardRequest;
 import mygroup.tqbcbackend.repository.PrivateLeaderboardMemberRepository;
 import mygroup.tqbcbackend.repository.PrivateLeaderboardRepository;
 import mygroup.tqbcbackend.repository.UserRepository;
+import mygroup.tqbcbackend.service.PrivateLeaderboardService;
 import mygroup.tqbcbackend.service.ScoringSettingService;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,6 +46,9 @@ public class PrivateLeaderboardController {
 
     @Autowired
     private PrivateLeaderboardMemberRepository privateLeaderboardMemberRepository;
+
+    @Autowired
+    private PrivateLeaderboardService privateLeaderboardService;
     
     @PostMapping("/post-private-leaderboard-data")
     public UUID postPrivateLeaderboardData(
@@ -107,5 +113,30 @@ public class PrivateLeaderboardController {
         );
 
         return privateLeaderboard;
+    }
+
+    @GetMapping("/get-private-leaderboard-infos")
+    public List<HashMap<String,String>> getPrivateLeaderboardInfos(
+        long userID
+    ) {
+        return privateLeaderboardService.getPrivateLeaderboardInfos(userID);
+    }
+
+    @PostMapping("/join-private-leaderboard")
+    public ResponseEntity<?> joinPrivateLeaderboard(
+        @Valid @RequestBody PrivateLeaderboardRequest privateLeaderboardRequest
+    ) {
+        PrivateLeaderboard privateLeaderboard = privateLeaderboardRepository.findByPrivateLeaderboardUUID(
+            privateLeaderboardRequest.getPrivateLeaderboardUUID()
+        );
+        PrivateLeaderboardMemberCompositeKey plmck = new PrivateLeaderboardMemberCompositeKey(
+            privateLeaderboard.getPrivateLeaderboardID(),
+            privateLeaderboardRequest.getUserID()
+        );        
+        PrivateLeaderboardMember privateLeaderboardMember = new PrivateLeaderboardMember(
+            plmck
+        );
+        privateLeaderboardMemberRepository.save(privateLeaderboardMember);
+        return ResponseEntity.ok().build();
     }
 }

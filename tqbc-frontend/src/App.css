@@ -134,3 +134,17 @@ label {
     grid-row: 10;
     grid-column: 5;
 }
+
+.big-h1-title {
+    margin-left: 5vw;
+    font-size: 200%;
+}
+
+.private-leaderboard-membership-parent-div {
+    margin-top: 3vh;
+}
+
+.new-private-leaderboard-error {
+    height: 3vh;
+    color: red;
+}

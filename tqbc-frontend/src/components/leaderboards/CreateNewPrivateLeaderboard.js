@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import PrivateLeaderboardService from "../../services/PrivateLeaderboardService";
 import { useSelector } from "react-redux";
 import History from "../../helpers/History";
+import TokenService from "../../services/Token.service";
 
 export const CreateNewPrivateLeaderboard = () => {
 
@@ -64,7 +65,15 @@ export const CreateNewPrivateLeaderboard = () => {
             weighting_result = true;
         }
         let name_result = validateName();
-        if (weighting_result && name_result) {
+        let name_not_already_used = true;
+        for (const pli of TokenService.getPrivateLeaderboardInfos()) {
+            if (privateLeaderboardName === pli.name) {
+                let txt2 = `You already have a private leaderboard named '${privateLeaderboardName}'`;
+                setNameErrorMessage(txt2);
+                name_not_already_used = false;
+            }
+        }
+        if (weighting_result && name_result && name_not_already_used) {
             PrivateLeaderboardService.postPrivateLeaderboardData(
                 currentUser.userID,
                 privateLeaderboardName,
@@ -72,7 +81,14 @@ export const CreateNewPrivateLeaderboard = () => {
             ).then(
                 (res) => {
                     // Update private leaderboard memberships
-                    History.push(`/private-leaderboard/${res.data}`);
+                    PrivateLeaderboardService.getPrivateLeaderboardInfos(
+                        currentUser.userID
+                    ).then(
+                        (res2) => {
+                            TokenService.setPrivateLeaderboardInfos(res2.data);
+                            History.push(`/private-leaderboard/${res.data}`);
+                        }
+                    )
                 }
             )
         }
@@ -97,9 +113,11 @@ export const CreateNewPrivateLeaderboard = () => {
     return (
         <div
             id="new-private-leaderboard-div"
+            className="private-leaderboard-membership-parent-div"
         >
             <h1
                 id="new-private-leaderboard-title"
+                className="big-h1-title"
             >
                 Create New Private Leaderboard
             </h1>

@@ -57,6 +57,32 @@ class PrivateLeaderboardService {
             }
         );
     }
+
+    getPrivateLeaderboardInfos(
+        userID
+    ) {
+        return api.get(
+            this.base_url + "get-private-leaderboard-infos",
+            {
+                params: {
+                    userID: userID
+                }
+            }
+        );
+    }
+
+    joinPrivateLeaderboard(
+        userID,
+        privateLeaderboardUUID
+    ) {
+        return api.post(
+            this.base_url + "join-private-leaderboard",
+            {
+                userID: userID,
+                privateLeaderboardUUID: privateLeaderboardUUID
+            }
+        );
+    }
 }
 
 export default new PrivateLeaderboardService();
