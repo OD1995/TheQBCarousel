@@ -38,6 +38,7 @@ import mygroup.tqbcbackend.payload.request.LoginRequest;
 import mygroup.tqbcbackend.payload.request.SignupRequest;
 import mygroup.tqbcbackend.payload.request.TokenRefreshRequest;
 import mygroup.tqbcbackend.payload.response.JwtResponse;
+import mygroup.tqbcbackend.payload.response.LoginResponse;
 import mygroup.tqbcbackend.payload.response.MessageResponse;
 import mygroup.tqbcbackend.payload.response.TokenRefreshResponse;
 import mygroup.tqbcbackend.repository.ConfirmationTokenRepository;
@@ -129,7 +130,10 @@ public class AuthController {
 				roles,
 				privateLeaderboardInfos
 		);
-		return ResponseEntity.ok(jwtResponse);
+
+		LoginResponse loginResponse = new LoginResponse(jwtResponse, privateLeaderboardInfos);
+
+		return ResponseEntity.ok(loginResponse);
 	}
 	
 	@PostMapping("/register")

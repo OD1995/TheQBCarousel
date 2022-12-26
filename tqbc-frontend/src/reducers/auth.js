@@ -7,10 +7,11 @@ import {
 } from "../actions/types";
 
 const user = JSON.parse(localStorage.getItem("user"));
+const privateLeaderboardInfos = JSON.parse(localStorage.getItem("privateLeaderboardInfos"));
 
 const initialState = user
-    ? { isLoggedIn: true, user }
-    : { isLoggedIn: false, user: null };
+    ? { isLoggedIn: true, user, privateLeaderboardInfos}
+    : { isLoggedIn: false, user: null, privateLeaderboardInfos: [] };
 
 export default function (state = initialState, action) {
     const {type, payload} = action;
@@ -30,7 +31,8 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 isLoggedIn: true,
-                user: payload.user
+                user: payload.user,
+                privateLeaderboardInfos: payload.privateLeaderboardInfos
             };
         case LOGIN_FAIL:
             return {

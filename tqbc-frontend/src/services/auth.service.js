@@ -1,5 +1,6 @@
 import api from './api.js';
 import History from "../helpers/History";
+import TokenService from './Token.service.js';
 
 const register = (username, favTeam, email, password) => {
     return api.post(
@@ -40,8 +41,11 @@ const login = (username, password) => {
         }
     )
     .then((response) => {
-        if (response.data.accessToken) {
-            localStorage.setItem("user",JSON.stringify(response.data));
+        if (response.data.user.accessToken) {
+            // localStorage.setItem("user",JSON.stringify(response.data.user));
+            TokenService.setUser(response.data.user);
+            // localStorage.setItem("privateLeaderboardInfos",JSON.stringify(response.data.privateLeaderboardInfos));
+            TokenService.setPrivateLeaderboardInfos(response.data.privateLeaderboardInfos);
         }
 
         return response.data;
@@ -50,7 +54,10 @@ const login = (username, password) => {
 
 const logout = (history) => {
     localStorage.setItem("justLoggedOut",true);
-    localStorage.removeItem("user");
+    // localStorage.removeItem("user");
+    TokenService.removeUser();
+    // localStorage.removeItem("privateLeaderboardInfos");
+    TokenService.removePrivateLeaderboardInfos();
     History.push("/login");
 };
 

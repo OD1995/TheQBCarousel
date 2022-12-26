@@ -107,7 +107,8 @@ export const login = (username, password) => (dispatch) => {
                 {
                     type: LOGIN_SUCCESS,
                     payload: {
-                        user: data
+                        user: data.user,
+                        privateLeaderboardInfos: data.privateLeaderboardInfos
                     }
                 }
             );
