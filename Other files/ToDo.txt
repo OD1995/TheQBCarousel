@@ -1,6 +1,8 @@
 Short term
-
-Join page for private leaderboards
+privateLeaderboardInfos -> privateLeaderboardInfoList, privateLeaderboardInfoDict, privateLeaderboardUUIDs
+check that user is in private leaderboard before they can view it
+use privateLeaderboardInfoDict to get name and whether user is the owner
+set all three with one call
 Edit weights for private leaderboard & add link for owner to same line as title
 Private Leagues -> Create New, Join, [list of memberships]
 Global leaderboard

@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,14 +21,17 @@ import mygroup.tqbcbackend.model.ScoringSetting;
 import mygroup.tqbcbackend.model.ScoringSettingValue;
 import mygroup.tqbcbackend.model.User;
 import mygroup.tqbcbackend.payload.request.PrivateLeaderboardRequest;
+import mygroup.tqbcbackend.payload.response.MessageResponse;
 import mygroup.tqbcbackend.repository.PrivateLeaderboardMemberRepository;
 import mygroup.tqbcbackend.repository.PrivateLeaderboardRepository;
 import mygroup.tqbcbackend.repository.UserRepository;
+import mygroup.tqbcbackend.security.jwt.JwtUtils;
 import mygroup.tqbcbackend.service.PrivateLeaderboardService;
 import mygroup.tqbcbackend.service.ScoringSettingService;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 
 @CrossOrigin(origins = "*")
@@ -49,6 +53,9 @@ public class PrivateLeaderboardController {
 
     @Autowired
     private PrivateLeaderboardService privateLeaderboardService;
+
+    @Autowired
+    private JwtUtils jwtUtils;
     
     @PostMapping("/post-private-leaderboard-data")
     public UUID postPrivateLeaderboardData(
@@ -111,6 +118,32 @@ public class PrivateLeaderboardController {
             );
         }
         return hm;
+    }
+
+    @PostMapping("/set-private-leaderboard-weightings")
+    public ResponseEntity<?> setPrivateLeaderboardWeightings(
+        @Valid @RequestBody PrivateLeaderboardRequest privateLeaderboardRequest,
+        @RequestHeader (name = "Authorization") String token
+    ) {
+        String requestingUsername = jwtUtils.getUserNameFromJwtToken(token);
+        User requestingUser = userRepository.findByUsername(
+            jwtUtils.getUserNameFromJwtToken(token)
+        ).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + requestingUsername));
+        Long requestingUserID = requestingUser.getUserID();
+        
+        PrivateLeaderboard privateLeaderboard = privateLeaderboardRepository.findByPrivateLeaderboardUUID(
+            privateLeaderboardRequest.getPrivateLeaderboardUUID()
+        );
+        if (privateLeaderboard.getOwnerUser().getUserID() == requestingUserID) {
+            ScoringSetting scoringSetting = scoringSettingService.getScoringSetting(
+                privateLeaderboardRequest.getWeightings()
+            );
+            privateLeaderboard.setScoringSetting(scoringSetting);
+            privateLeaderboardRepository.save(privateLeaderboard);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("/get-private-leaderboard")

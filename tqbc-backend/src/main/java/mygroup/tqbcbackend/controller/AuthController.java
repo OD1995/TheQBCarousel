@@ -1,7 +1,6 @@
 package mygroup.tqbcbackend.controller;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 import mygroup.tqbcbackend.exception.TokenRefreshException;
 import mygroup.tqbcbackend.model.ConfirmationToken;
 import mygroup.tqbcbackend.model.ERole;
-import mygroup.tqbcbackend.model.PrivateLeaderboardMember;
 import mygroup.tqbcbackend.model.RefreshToken;
 import mygroup.tqbcbackend.model.Role;
 import mygroup.tqbcbackend.model.User;
@@ -127,8 +125,7 @@ public class AuthController {
 				userDetails.getUserID(),
 				userDetails.getUsername(),
 				userDetails.getEmail(),
-				roles,
-				privateLeaderboardInfos
+				roles
 		);
 
 		LoginResponse loginResponse = new LoginResponse(jwtResponse, privateLeaderboardInfos);

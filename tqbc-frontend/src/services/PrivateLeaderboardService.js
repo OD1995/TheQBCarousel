@@ -45,6 +45,21 @@ class PrivateLeaderboardService {
         );
     }
 
+    setPrivateLeaderboardWeightings(
+        userID,
+        privateLeaderboardUUID,
+        weightings
+    ) {
+        return api.post(
+            this.base_url + "set-private-leaderboard-weightings",
+            {
+                userID: userID,
+                privateLeaderboardUUID: privateLeaderboardUUID,
+                weightings: weightings
+            }
+        );
+    }
+
     getPrivateLeaderboard(
         privateLeaderboardUUID
     ) {

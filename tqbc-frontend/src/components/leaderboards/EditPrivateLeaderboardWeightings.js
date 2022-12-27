@@ -3,6 +3,8 @@ import { makeOptionsDropdownFriendly, makeValueDropdownFriendly, range, rangeInt
 import Select from "react-select";
 import PrivateLeaderboardService from "../../services/PrivateLeaderboardService";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import History from "../../helpers/History";
 
 export const EditPrivateLeaderboardWeights = () => {
     
@@ -11,6 +13,7 @@ export const EditPrivateLeaderboardWeights = () => {
     const [weightingValues, setWeightingValues] = useState({});
     const [weightingErrorMessage, setWeightingErrorMessage] = useState("");
     const [ready, setReady] = useState(false);
+    const { user: currentUser } = useSelector((state) => state.auth);
 
     const setNewWeightValue = (ev,sp,typ) => {
         setWeightingValues(
@@ -22,6 +25,41 @@ export const EditPrivateLeaderboardWeights = () => {
                 }
             })
         )
+    }
+
+    const updateWeightings = () => {
+        let weightingsSum = sumWeightings(weightingValues);
+        let weighting_result = true;
+        if (weightingsSum !== 1) {
+            // let rounded = Math.round(Math.round((weightingsSum + Number.EPSILON) * 100) / 100)
+            let rounded = round_number(weightingsSum,3);
+            let txt = `The sum of your weightings is not 1 (${rounded}), please adjust and re-submit`;
+            setWeightingErrorMessage(txt);
+            weighting_result = false;
+        }
+        console.log(weightingValues);
+        if (weighting_result) {
+            PrivateLeaderboardService.setPrivateLeaderboardWeightings(
+                currentUser.userID,
+                params.privateLeaderboardUUID,
+                weightingValues
+            ).then(
+                (res) => {
+                    History.push(`/private-leaderboard/${params.privateLeaderboardUUID}`)
+                }
+            )
+        }
+
+    }
+
+    const sumWeightings = (wv) => {
+        let total = 0;
+        for (const sp of rangeInt(1,4)) {
+            let num = wv[sp].numerator;
+            let den = wv[sp].denominator;
+            total += num / den;
+        }
+        return total;
     }
 
     useEffect(
@@ -154,7 +192,7 @@ export const EditPrivateLeaderboardWeights = () => {
                                                 defaultValue={makeValueDropdownFriendly(num)}
                                                 onChange={ev => setNewWeightValue(ev,sp,"numerator")}
                                                 options={makeOptionsDropdownFriendly(rangeInt(0,20))}
-                                                isSearchable={false}
+                                                isSearchable={true}
                                                 key={"numerator-" + sp}
                                                 id={"numerator-" + sp}
                                             />
@@ -171,7 +209,7 @@ export const EditPrivateLeaderboardWeights = () => {
                                                 defaultValue={makeValueDropdownFriendly(den)}
                                                 onChange={ev => setNewWeightValue(ev,sp,"denominator")}
                                                 options={makeOptionsDropdownFriendly(rangeInt(1,20))}
-                                                isSearchable={false}
+                                                isSearchable={true}
                                                 key={"denominator-" + sp}
                                                 id={"denominator-" + sp}
                                             />
@@ -214,6 +252,7 @@ export const EditPrivateLeaderboardWeights = () => {
                     <button
                         className="tqbc-black-button"
                         id='new-private-leaderboard-submit'
+                        onClick={() => updateWeightings()}
                     >
                         Save Private Leaderboard Weightings
                     </button>

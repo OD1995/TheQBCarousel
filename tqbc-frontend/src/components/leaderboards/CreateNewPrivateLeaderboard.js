@@ -39,6 +39,7 @@ export const CreateNewPrivateLeaderboard = () => {
             setNameErrorMessage("Private leaderboard name is required");
             return false;
         }
+        setNameErrorMessage("");
         return true;
     };
 
@@ -62,6 +63,7 @@ export const CreateNewPrivateLeaderboard = () => {
             let txt = `The sum of your weightings is not 1 (${rounded}), please adjust and re-submit`;
             setWeightingErrorMessage(txt);
         } else {
+            setWeightingErrorMessage("");
             weighting_result = true;
         }
         let name_result = validateName();
@@ -72,6 +74,9 @@ export const CreateNewPrivateLeaderboard = () => {
                 setNameErrorMessage(txt2);
                 name_not_already_used = false;
             }
+        }
+        if (name_not_already_used) {
+            setNameErrorMessage("");
         }
         if (weighting_result && name_result && name_not_already_used) {
             PrivateLeaderboardService.postPrivateLeaderboardData(

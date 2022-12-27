@@ -9,7 +9,6 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -52,6 +51,7 @@ public class UserScoreController {
 
 	@Autowired
 	private ScoringSettingService scoringSettingService;
+	
 
 	@PostMapping("/calculate-user-season-scores")
 	public ResponseEntity<?> calculateUserSeasonScores(

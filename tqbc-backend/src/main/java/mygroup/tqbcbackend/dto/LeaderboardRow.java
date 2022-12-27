@@ -1,11 +1,6 @@
 package mygroup.tqbcbackend.dto;
 
-import java.io.Serializable;
 import java.util.HashMap;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import mygroup.tqbcbackend.model.User;
 
 public class LeaderboardRow {
     
