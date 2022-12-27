@@ -94,14 +94,23 @@ public class PrivateLeaderboardController {
     }
 
     @GetMapping("/get-private-leaderboard-weightings")
-    public List<ScoringSettingValue> getPrivateLeaderboardWeightings(
+    // public List<ScoringSettingValue> getPrivateLeaderboardWeightings(
+    public HashMap<Long,ScoringSettingValue> getPrivateLeaderboardWeightings(
         PrivateLeaderboardRequest privateLeaderboardRequest
     ) {
         PrivateLeaderboard privateLeaderboard = privateLeaderboardRepository.findByPrivateLeaderboardUUID(
             privateLeaderboardRequest.getPrivateLeaderboardUUID()
         );
 
-        return privateLeaderboard.getScoringSetting().getScoringSettingValues();
+        // return privateLeaderboard.getScoringSetting().getScoringSettingValues();
+        HashMap<Long,ScoringSettingValue> hm = new HashMap<Long,ScoringSettingValue>();
+        for (ScoringSettingValue ssv : privateLeaderboard.getScoringSetting().getScoringSettingValues()) {
+            hm.put(
+                ssv.getScoringSettingValueCompositeKey().getSeasonPeriodID(),
+                ssv
+            );
+        }
+        return hm;
     }
 
     @GetMapping("/get-private-leaderboard")

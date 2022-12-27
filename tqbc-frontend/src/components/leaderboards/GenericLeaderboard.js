@@ -322,11 +322,30 @@ export const GenericLeaderboard = (props) => {
                     message={props.popupMessage}
                 />
                 <div id='generic-leaderboard-left'>
-                    <h4
-                        id='leaderboard-title'
+                    <div
+                        id='title-div'
                     >
-                        {leaderboardName}
-                    </h4>
+                        <h4
+                            className='leaderboard-titles'
+                            id='leaderboard-title-left'
+                        >
+                            {leaderboardName}
+                        </h4>
+                        {
+                            (!props.global) && (
+                                <h6
+                                    className='leaderboard-titles'
+                                    id='leaderboard-title-right'
+                                >
+                                    <a
+                                        href={`/edit-private-leaderboard-weightings/${params.privateLeaderboardUUID}`}
+                                    >
+                                        Edit Leaderboard Weightings
+                                    </a>
+                                </h6>
+                            )
+                        }
+                    </div>
                     <table id="generic-leaderboard-table">
                         <thead>
                             <tr>

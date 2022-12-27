@@ -24,6 +24,7 @@ export const formatScore = (num) => {
 
 export const range = n => [...Array(n).keys()];
 
+// from & to are inclusive
 export const rangeInt = (from,to) => Array.from( { length: to-from+1 }, (e, i) => i + from );
 
 export const round_number = (number,dp) => {

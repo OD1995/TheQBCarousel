@@ -34,6 +34,7 @@ import { OutsidePredictionPeriod } from './components/errors/OutsidePredictionPe
 import { PrivateLeaderboard } from './components/leaderboards/PrivateLeaderboard';
 import { NavigationBar } from './components/NavigationBar';
 import { JoinPrivateLeaderboard } from './components/leaderboards/JoinPrivateLeaderboard';
+import { EditPrivateLeaderboardWeights } from './components/leaderboards/EditPrivateLeaderboardWeightings';
 
 const App = () => {
 	const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -136,6 +137,10 @@ const App = () => {
 						<Route
 							path="/join-private-leaderboard"
 							element={<JoinPrivateLeaderboard/>}
+						/>
+						<Route
+							path="/edit-private-leaderboard-weightings/:privateLeaderboardUUID"
+							element={<EditPrivateLeaderboardWeights/>}
 						/>
 						<Route path='/*' element={<PageDoesntExist/>}/>
 					</Routes>

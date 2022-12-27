@@ -125,6 +125,7 @@ export const CreateNewPrivateLeaderboard = () => {
                 onSubmit={handleSubmit}
                 ref={form}
                 id="new-private-leaderboard-form"
+                className="private-leaderboard-form"
             >
                 <div id='create-new-private-leaderboard-grid'>
                     <h5

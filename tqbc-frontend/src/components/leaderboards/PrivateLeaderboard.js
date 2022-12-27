@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { round_number } from "../../helpers/UsefulFunctions";
+import { rangeInt, round_number } from "../../helpers/UsefulFunctions";
 import PrivateLeaderboardService from "../../services/PrivateLeaderboardService";
 import { GenericLeaderboard } from "./GenericLeaderboard";
 
@@ -13,7 +13,8 @@ export const PrivateLeaderboard = () => {
 
     const createWeightingsTable = (privateLeaderboardWeightings,_id_) => {
         let weightings = {};
-        for (const val of privateLeaderboardWeightings) {
+        for (const ix of rangeInt(1,4)) {
+            let val = privateLeaderboardWeightings[ix];
             let fraction = val.numerator + " / " + val.denominator;
             let decimal = round_number(val.numerator/val.denominator,3);
             weightings[val.scoringSettingValueCompositeKey.seasonPeriodID] = {
