@@ -1,25 +1,11 @@
 Short term
-privateLeaderboardInfos -> privateLeaderboardInfoList, privateLeaderboardInfoDict, privateLeaderboardUUIDs
-check that user is in private leaderboard before they can view it
-use privateLeaderboardInfoDict to get name and whether user is the owner
-set all three with one call
-Edit weights for private leaderboard & add link for owner to same line as title
-Private Leagues -> Create New, Join, [list of memberships]
-Global leaderboard
- - top X based on average across 4 season periods (plus user if logged in)
-Private leaderboard
- - have hover and dropdown on nav bar to list private leagues
-Generic
- - hyperlink to user's prediction history
- - allow user to order using column header, make request by clicking on header
- - pop up to explain scoring (score of 0 for missed period etc)
- - ordered alphabetically before first set of answers are in
+2023 predictions are divided by 3, other seasons by 4, for global leaderboard, add to info box
 
 Long term
 -X- Have predictions board show predictions if already been made in the prediction period
 -X- Visualise historical predictions
 -X- Integrate Google Analytics
---- Calculate and visualise points and league tables
+-X- Calculate and visualise points and league tables
 --- Give login/signup buttons some space
 --- Replace message with modal or own page - register/sign in
 -X- Make API endpoints only usable from frontend
@@ -35,3 +21,4 @@ Long term
 --- Clean up register and login pages
 --- Clean up admin board
 --- Bulk reminder email sendouts
+--- Go through all pages and remove duplicate requests

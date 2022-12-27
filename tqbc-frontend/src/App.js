@@ -35,13 +35,16 @@ import { PrivateLeaderboard } from './components/leaderboards/PrivateLeaderboard
 import { NavigationBar } from './components/NavigationBar';
 import { JoinPrivateLeaderboard } from './components/leaderboards/JoinPrivateLeaderboard';
 import { EditPrivateLeaderboardWeights } from './components/leaderboards/EditPrivateLeaderboardWeightings';
+import TokenService from './services/Token.service';
 
 const App = () => {
 	const [showModeratorBoard, setShowModeratorBoard] = useState(false);
 	const [showAdminBoard, setShowAdminBoard] = useState(false);
 	const { user: currentUser } = useSelector((state) => state.auth);
 	const { isLoggedIn } = useSelector(state => state.auth);
-	const justLoggedOut = JSON.parse(localStorage.getItem("justLoggedOut"));
+
+	// const justLoggedOut = JSON.parse(localStorage.getItem("justLoggedOut"));
+	const justLoggedOut = TokenService.getJustLoggedOut();
 	
 	const dispatch = useDispatch();
 

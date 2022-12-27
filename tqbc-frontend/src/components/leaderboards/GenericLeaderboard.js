@@ -6,6 +6,7 @@ import History from '../../helpers/History';
 import { formatScore } from '../../helpers/UsefulFunctions';
 import AnswerService from '../../services/AnswerService';
 import PrivateLeaderboardService from '../../services/PrivateLeaderboardService';
+import TokenService from '../../services/Token.service';
 import UserScoreService from '../../services/UserScoreService';
 import PopupComponent from '../PopUpComponent';
 import './GenericLeaderboard.css';
@@ -29,6 +30,7 @@ export const GenericLeaderboard = (props) => {
     const [userAboveRows, setUserAboveRows] = useState([]);
     const [userBelowRows, setUserBelowRows] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
+    const [isOwner, setIsOwner] = useState(false);
     const { user: currentUser } = useSelector((state) => state.auth);
   
     useEffect(
@@ -128,27 +130,39 @@ export const GenericLeaderboard = (props) => {
                 setPageCount(res.data.pageCount);
                 setFirstRowRank(res.data.firstRowRank);
                 setLeaderboardRows(res.data.rows);
+                // if (props.global) {
+                //     setLeaderboardName("GLOBAL LEADERBOARD")
+                //     doRestOfUseEffect(
+                //         res.data.requestingUserRowRank,
+                //         res.data.requestingUserRow,
+                //         res.data.firstRowRank
+                //     );
+                // } else {
+                //     PrivateLeaderboardService.getPrivateLeaderboardName(
+                //         params.privateLeaderboardUUID
+                //     ).then(
+                //         (res2) => {
+                //             setLeaderboardName(res2.data.toUpperCase());
+                //             doRestOfUseEffect(
+                //                 res.data.requestingUserRowRank,
+                //                 res.data.requestingUserRow,
+                //                 res.data.firstRowRank
+                //             );
+                //         }
+                //     )
+                // }
+                let privateLeaderboardInfo = TokenService.getPrivateLeaderboardInfoDict()[params.privateLeaderboardUUID];
                 if (props.global) {
                     setLeaderboardName("GLOBAL LEADERBOARD")
-                    doRestOfUseEffect(
-                        res.data.requestingUserRowRank,
-                        res.data.requestingUserRow,
-                        res.data.firstRowRank
-                    );
                 } else {
-                    PrivateLeaderboardService.getPrivateLeaderboardName(
-                        params.privateLeaderboardUUID
-                    ).then(
-                        (res2) => {
-                            setLeaderboardName(res2.data.toUpperCase());
-                            doRestOfUseEffect(
-                                res.data.requestingUserRowRank,
-                                res.data.requestingUserRow,
-                                res.data.firstRowRank
-                            );
-                        }
-                    )
+                    setLeaderboardName(privateLeaderboardInfo.name.toUpperCase())
                 }
+                doRestOfUseEffect(
+                    res.data.requestingUserRowRank,
+                    res.data.requestingUserRow,
+                    res.data.firstRowRank,
+                    privateLeaderboardInfo
+                );
             }
         )
     }
@@ -156,8 +170,10 @@ export const GenericLeaderboard = (props) => {
     const doRestOfUseEffect = (
         requestingUserRowRank,
         requestingUserRow,
-        firstRowRank
+        firstRowRank,
+        privateLeaderboardInfo
     ) => {
+        setIsOwner(privateLeaderboardInfo.isOwner === "1");
         let THs = generateSomeHeaders();
         let [above_rows,below_rows] = generateAboveBelowRows(
             requestingUserRowRank,
@@ -332,7 +348,7 @@ export const GenericLeaderboard = (props) => {
                             {leaderboardName}
                         </h4>
                         {
-                            (!props.global) && (
+                            ((!props.global) && isOwner) && (
                                 <h6
                                     className='leaderboard-titles'
                                     id='leaderboard-title-right'

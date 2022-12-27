@@ -27,8 +27,11 @@ public class PrivateLeaderboardService {
 		for (PrivateLeaderboardMember privateLeaderboardMember : privateLeaderboardMembers) {
             HashMap<String,String> hm = new HashMap<String,String>();
             PrivateLeaderboard privateLeaderboard = privateLeaderboardMember.getPrivateLeaderboard();
+            Boolean isOwnerBool = privateLeaderboard.getOwnerUser().getUserID() == userID;
+            String isOwnerString = isOwnerBool ? "1" : "0";
             hm.put("name", privateLeaderboard.getPrivateLeaderboardName());
-            hm.put("uuid",privateLeaderboard.getPrivateLeaderboardUUID().toString());
+            hm.put("uuid", privateLeaderboard.getPrivateLeaderboardUUID().toString());
+            hm.put("isOwner", isOwnerString);
             privateLeaderboardInfos.add(hm);
         }
         return privateLeaderboardInfos;

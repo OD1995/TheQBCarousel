@@ -9,8 +9,7 @@ export const NavBarDropdown = (props) => {
 
     useEffect(
         () => {
-            let a = TokenService.getPrivateLeaderboardInfos();
-            setPrivateLeaderboardInfos(a);
+            setPrivateLeaderboardInfos(TokenService.getPrivateLeaderboardInfoList());
         },
         []
     )

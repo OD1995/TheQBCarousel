@@ -24,12 +24,35 @@ class TokenService {
         localStorage.setItem("user",JSON.stringify(user));
     }
 
-    getPrivateLeaderboardInfos() {
-        return JSON.parse(localStorage.getItem("privateLeaderboardInfos"));
+    getPrivateLeaderboardInfoList() {
+        return JSON.parse(localStorage.getItem("privateLeaderboardInfoList"));
+    }
+
+    getPrivateLeaderboardInfoDict() {
+        return JSON.parse(localStorage.getItem("privateLeaderboardInfoDict"));
+    }
+
+    getPrivateLeaderboardUUIDs() {
+        return JSON.parse(localStorage.getItem("privateLeaderboardUUIDs"));
+    }
+
+    getPrivateLeaderboardNames() {
+        return JSON.parse(localStorage.getItem("privateLeaderboardNames"));
     }
 
     setPrivateLeaderboardInfos(privateLeaderboardInfos) {
-        localStorage.setItem("privateLeaderboardInfos",JSON.stringify(privateLeaderboardInfos));
+        localStorage.setItem("privateLeaderboardInfoList",JSON.stringify(privateLeaderboardInfos));
+        let privateLeaderboardInfoDict = {};
+        let privateLeaderboardUUIDs = [];
+        let privateLeaderboardNames = [];
+        for (const pli of privateLeaderboardInfos) {
+            privateLeaderboardInfoDict[pli.uuid] = pli;
+            privateLeaderboardUUIDs.push(pli.uuid);
+            privateLeaderboardNames.push(pli.name);
+        }
+        localStorage.setItem("privateLeaderboardUUIDs",JSON.stringify(privateLeaderboardUUIDs));
+        localStorage.setItem("privateLeaderboardInfoDict",JSON.stringify(privateLeaderboardInfoDict));
+        localStorage.setItem("privateLeaderboardNames",JSON.stringify(privateLeaderboardNames));
     }
 
     removePrivateLeaderboardInfos() {
@@ -38,6 +61,14 @@ class TokenService {
 
     removeUser() {
         localStorage.removeItem('user');
+    }
+
+    getJustLoggedOut() {
+        return JSON.parse(localStorage.getItem("justLoggedOut"));
+    }
+
+    setJustLoggedOut(jlo) {
+        localStorage.setItem('justLoggedOut',jlo);
     }
 }
 

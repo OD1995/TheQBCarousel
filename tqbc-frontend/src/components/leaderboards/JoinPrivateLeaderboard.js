@@ -23,15 +23,21 @@ export const JoinPrivateLeaderboard = () => {
             setErrorMessage(
                 "The private leaderboard UUID must be exactly 36 characters long"
             )
+        } else {
+            setErrorMessage("");
         }
-        var already_member_result = true;
-        for (const pli of TokenService.getPrivateLeaderboardInfos()) {
-            if (newPrivateLeaderboardUUID === pli.uuid) {
-                already_member_result = false;
-                setErrorMessage(
-                    "You are already a member of this private leaderboard"
-                )
-            }
+        // var already_member_result = true;
+        // for (const pli of TokenService.getPrivateLeaderboardInfos()) {
+        //     if (newPrivateLeaderboardUUID === pli.uuid) {
+        //         already_member_result = false;
+        //         setErrorMessage(
+        //             "You are already a member of this private leaderboard"
+        //         )
+        //     }
+        // }
+        let already_member_result = TokenService.getPrivateLeaderboardUUIDs().includes(newPrivateLeaderboardUUID);
+        if (already_member_result) {
+            setErrorMessage("You are already a member of this private leaderboard");
         }
         if (uuid_result && already_member_result) {
             PrivateLeaderboardService.joinPrivateLeaderboard(

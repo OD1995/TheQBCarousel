@@ -53,7 +53,8 @@ const login = (username, password) => {
 };
 
 const logout = (history) => {
-    localStorage.setItem("justLoggedOut",true);
+    // localStorage.setItem("justLoggedOut",true);
+    TokenService.setJustLoggedOut(true);
     // localStorage.removeItem("user");
     TokenService.removeUser();
     // localStorage.removeItem("privateLeaderboardInfos");

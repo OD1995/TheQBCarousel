@@ -11,6 +11,7 @@ import {
 import AuthService from "../services/auth.service"
 import EventBus from "../common/EventBus";
 import { Link, useNavigate } from "react-router-dom";
+import TokenService from "../services/Token.service";
 
 
 export const register = (username, favTeam, email, password) => (dispatch) => {
@@ -159,7 +160,8 @@ export const updateAccessToken = (refreshToken) => (dispatch) => {
         (response) => {
             const user = JSON.parse(localStorage.getItem("user"));
             user.accessToken = response.data.accessToken;
-            localStorage.setItem("user",JSON.stringify(user));
+            // localStorage.setItem("user",JSON.stringify(user));
+            TokenService.setUser(user);
             return Promise.resolve();
         },
         (error) => {

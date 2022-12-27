@@ -67,16 +67,18 @@ export const CreateNewPrivateLeaderboard = () => {
             weighting_result = true;
         }
         let name_result = validateName();
-        let name_not_already_used = true;
-        for (const pli of TokenService.getPrivateLeaderboardInfos()) {
-            if (privateLeaderboardName === pli.name) {
-                let txt2 = `You already have a private leaderboard named '${privateLeaderboardName}'`;
-                setNameErrorMessage(txt2);
-                name_not_already_used = false;
-            }
-        }
-        if (name_not_already_used) {
-            setNameErrorMessage("");
+        // let name_not_already_used = true;
+        // for (const pli of TokenService.getPrivateLeaderboardInfos()) {
+        //     if (privateLeaderboardName === pli.name) {
+        //         let txt2 = `You already have a private leaderboard named '${privateLeaderboardName}'`;
+        //         setNameErrorMessage(txt2);
+        //         name_not_already_used = false;
+        //     }
+        // }
+        let name_not_already_used = !TokenService.getPrivateLeaderboardNames().includes(privateLeaderboardName);
+        if (!name_not_already_used) {
+            let txt2 = `You already have a private leaderboard named '${privateLeaderboardName}'`;
+            setNameErrorMessage(txt2);
         }
         if (weighting_result && name_result && name_not_already_used) {
             PrivateLeaderboardService.postPrivateLeaderboardData(

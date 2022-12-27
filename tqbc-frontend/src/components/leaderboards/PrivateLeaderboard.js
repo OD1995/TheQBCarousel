@@ -1,14 +1,18 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import History from "../../helpers/History";
 import { rangeInt, round_number } from "../../helpers/UsefulFunctions";
 import PrivateLeaderboardService from "../../services/PrivateLeaderboardService";
+import TokenService from "../../services/Token.service";
 import { GenericLeaderboard } from "./GenericLeaderboard";
 
 export const PrivateLeaderboard = () => {
     
     const [popupMessage, setPopupMessage] = useState("");
     const [weightingsTable, setWeightingsTable] = useState("");
+    const [isMember, setIsMember] = useState(false);
+    const [ready, setReady] = useState(false);
     const params = useParams();
 
     const createWeightingsTable = (privateLeaderboardWeightings,_id_) => {
@@ -67,50 +71,66 @@ export const PrivateLeaderboard = () => {
 
     useEffect(
         () => {
-            PrivateLeaderboardService.getPrivateLeaderboardWeightings(
-                params.privateLeaderboardUUID
-            ).then(
-                (res) => {
-                    let weightingsTable = createWeightingsTable(res.data,"popup-weightings-table");
-                    setWeightingsTable(createWeightingsTable(res.data,"right-weightings-table"));
-                    let msg = (
-                        `<div>
-                            <p>
-                                Leaderboards are sorted by overall season score by default,
-                                but it is possible to reorder by clicking the column header of any
-                                of the 5 numerical columns.
-                            </p>
-                            <p>
-                                The overall season score for private leaderboards is calculated by
-                                using weightingss for each season period which were set when the
-                                private leaderboard was created. The weightings are shown below and
-                                can be edited ON THIS PAGE.
-                            </p>
-                            <p>
-                                To invite people to this private leaderboard, send them the private
-                                leaderboard ID, also shown below. The ID should then be entered
-                                ON THIS PAGE.
-                            </p>
-                            <p>
-                                <b>Private Leaderboard ID: </b>${params.privateLeaderboardUUID}
-                            </p>
-                            <b>Season Period Weightings</b>
-                            ${weightingsTable}
-                        </div>`
-                    )
-                    setPopupMessage(msg);            
-                }
-            )
+            let privateLeaderboardUUIDs = TokenService.getPrivateLeaderboardUUIDs() ?? [];
+            if (privateLeaderboardUUIDs.includes(params.privateLeaderboardUUID)) {
+                setIsMember(true);
+                PrivateLeaderboardService.getPrivateLeaderboardWeightings(
+                    params.privateLeaderboardUUID
+                ).then(
+                    (res) => {
+                        let weightingsTable = createWeightingsTable(res.data,"popup-weightings-table");
+                        setWeightingsTable(createWeightingsTable(res.data,"right-weightings-table"));
+                        let msg = (
+                            `<div>
+                                <p>
+                                    Leaderboards are sorted by overall season score by default,
+                                    but it is possible to reorder by clicking the column header of any
+                                    of the 5 numerical columns.
+                                </p>
+                                <p>
+                                    The overall season score for private leaderboards is calculated by
+                                    using weightingss for each season period which were set when the
+                                    private leaderboard was created. The weightings are shown below and
+                                    can be edited ON THIS PAGE.
+                                </p>
+                                <p>
+                                    To invite people to this private leaderboard, send them the private
+                                    leaderboard ID, also shown below. The ID should then be entered
+                                    ON THIS PAGE.
+                                </p>
+                                <p>
+                                    <b>Private Leaderboard ID: </b>${params.privateLeaderboardUUID}
+                                </p>
+                                <b>Season Period Weightings</b>
+                                ${weightingsTable}
+                            </div>`
+                        )
+                        setPopupMessage(msg);    
+                        setReady(true);        
+                    }
+                )
+            } else {
+                setReady(true);
+            }
         },
         []
     )
     
-    return (
-        <GenericLeaderboard
-            global={false}
-            weightingsTable={weightingsTable}
-            popupTitle="Private Leaderboard Explainer"
-            popupMessage={popupMessage}
-        />
-    );
+    if (ready) {
+        if (isMember) {
+            return (
+                <GenericLeaderboard
+                    global={false}
+                    weightingsTable={weightingsTable}
+                    popupTitle="Private Leaderboard Explainer"
+                    popupMessage={popupMessage}
+                />
+            );
+        } else {
+            History.push("/nope");
+            return null;
+        }
+    } else {
+        return null;
+    }
 }
