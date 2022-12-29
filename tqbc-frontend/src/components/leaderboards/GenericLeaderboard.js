@@ -130,27 +130,6 @@ export const GenericLeaderboard = (props) => {
                 setPageCount(res.data.pageCount);
                 setFirstRowRank(res.data.firstRowRank);
                 setLeaderboardRows(res.data.rows);
-                // if (props.global) {
-                //     setLeaderboardName("GLOBAL LEADERBOARD")
-                //     doRestOfUseEffect(
-                //         res.data.requestingUserRowRank,
-                //         res.data.requestingUserRow,
-                //         res.data.firstRowRank
-                //     );
-                // } else {
-                //     PrivateLeaderboardService.getPrivateLeaderboardName(
-                //         params.privateLeaderboardUUID
-                //     ).then(
-                //         (res2) => {
-                //             setLeaderboardName(res2.data.toUpperCase());
-                //             doRestOfUseEffect(
-                //                 res.data.requestingUserRowRank,
-                //                 res.data.requestingUserRow,
-                //                 res.data.firstRowRank
-                //             );
-                //         }
-                //     )
-                // }
                 let privateLeaderboardInfo = TokenService.getPrivateLeaderboardInfoDict()[params.privateLeaderboardUUID];
                 if (props.global) {
                     setLeaderboardName("GLOBAL LEADERBOARD")
@@ -173,7 +152,9 @@ export const GenericLeaderboard = (props) => {
         firstRowRank,
         privateLeaderboardInfo
     ) => {
-        setIsOwner(privateLeaderboardInfo.isOwner === "1");
+        if (!props.global) {
+            setIsOwner(privateLeaderboardInfo.isOwner === "1");
+        }
         let THs = generateSomeHeaders();
         let [above_rows,below_rows] = generateAboveBelowRows(
             requestingUserRowRank,

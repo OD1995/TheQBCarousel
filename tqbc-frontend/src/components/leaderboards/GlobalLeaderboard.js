@@ -15,11 +15,18 @@ export const GlobalLeaderboard = () => {
                         of the 5 numerical columns.
                     </p>
                     <p>
-                        The overall season score for the global leaderboard is calculated by
-                        summing the scores across the 4 season periods and then dividing by 4.
-                        In other words each season period is equally weighted but having no
-                        predictions for a season period lowers the overall season score.
+                        Normally, the overall season score for the global leaderboard is
+                        calculated by summing the scores across the 4 season periods and
+                        then dividing by 4. In other words each season period is equally
+                        weighted but having no predictions for a season period lowers
+                        the overall season score.
                     </p>
+                    <p>
+                        However, for predictions for the 2023
+                        season, TheQBCarousel.com only opened during the second prediction
+                        period, so the season score has been calculated the same way, but
+                        will be divided by 3 rather than 4.
+                    </P
                     <p>
                         For private leaderboards, it is possible to change the weightings
                         assigned to each season period

@@ -89,8 +89,10 @@ public class UserScoreService {
             }
         }
         periodPredictionRepository.saveAll(periodPredictions);
-        // Loop through correctsMap and generate equally weighted season-long scores, with missing periods marked as 0
+        // Loop through correctsMap and generate equally weighted season-long scores, 
+        //     with missing periods marked as 0
         List<UserScore> userScores = new ArrayList<>();
+        Integer seasonDivider = season == 2023 ? 3 : 4;
         for (Long userID : correctsMap.keySet()) {
             Float totalScore = 0.0f;
             String seasonPredictionPeriodIDString = "";
@@ -119,7 +121,7 @@ public class UserScoreService {
                 totalScore += score;
                 seasonPredictionPeriodIDString += ppID;
             }
-            Float seasonScore = totalScore / 4;
+            Float seasonScore = totalScore / seasonDivider;
             Long seasonPredictionPeriodID = Long.parseLong(seasonPredictionPeriodIDString);
             UserScoreCompositeKey seasonUSCK = new UserScoreCompositeKey(
                 seasonPredictionPeriodID,
