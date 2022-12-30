@@ -165,7 +165,7 @@ export const updateAccessToken = (refreshToken) => (dispatch) => {
             return Promise.resolve();
         },
         (error) => {
-            const notInDatabaseErrorString = `Failed for [${refreshToken}]: Refresh token is not in database!`;
+            const notInDatabaseErrorString = `Failed for [${refreshToken}]: Refresh token is not in database`;
             if (error.response.data.message === notInDatabaseErrorString) {
                 dispatch(
                     {

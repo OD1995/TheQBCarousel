@@ -23,6 +23,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
 import org.springframework.lang.Nullable;
@@ -114,12 +115,12 @@ public class User {
 	}
 
 	public User(
-			@NotBlank @Size(max = 20) String username,
-			@Email String email,
-			Franchise favouriteFranchise,
-			@NotBlank @Size(max = 120) String password,
-			boolean isAuthenticated,
-			Date userCreated
+		@NotBlank @Size(max = 20) String username,
+		@Email String email,
+		Franchise favouriteFranchise,
+		@NotBlank @Size(max = 120) String password,
+		boolean isAuthenticated,
+		Date userCreated
 	) {
 		super();
 		this.username = username;
@@ -130,7 +131,24 @@ public class User {
 		this.isAuthenticated = isAuthenticated;
 		this.userCreated = userCreated;
 	}
-	
+
+	public User(
+		@NotBlank @Size(max = 20) String username,
+		@Email String email,
+		@NotBlank @Size(max = 120) String password,
+		boolean isAuthenticated,
+		Date userCreated
+	) {
+		super();
+		this.username = username;
+		this.email = email;
+		// this.favouriteFranchise = favouriteFranchise;
+		this.password = password;
+		// this.roles = roles;
+		this.isAuthenticated = isAuthenticated;
+		this.userCreated = userCreated;
+	}
+
 //	public User(
 //			@NotBlank @Size(max = 20) String username,
 //			@Email String email,

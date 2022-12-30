@@ -15,5 +15,22 @@ class AuthService {
             }
         )
     }
+
+    register(
+        username,
+        favTeamID,
+        email,
+        password
+    ) {
+        return api.post(
+            this.base_url + "register",
+            {
+                username,
+                favTeamID,
+                email,
+                password
+            }
+        )
+    }
 }
 export default new AuthService();

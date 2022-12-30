@@ -154,6 +154,11 @@ label {
     color: red;
 }
 
+.tqbc-green-message {
+    height: 3vh;
+    color: green;
+}
+
 .private-leaderboard-form {
     display: flex;
     flex-direction: column;

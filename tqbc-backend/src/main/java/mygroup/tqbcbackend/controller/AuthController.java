@@ -28,8 +28,10 @@ import org.springframework.web.bind.annotation.RestController;
 import mygroup.tqbcbackend.exception.TokenRefreshException;
 import mygroup.tqbcbackend.model.ConfirmationToken;
 import mygroup.tqbcbackend.model.ERole;
+import mygroup.tqbcbackend.model.Franchise;
 import mygroup.tqbcbackend.model.RefreshToken;
 import mygroup.tqbcbackend.model.Role;
+import mygroup.tqbcbackend.model.Team;
 import mygroup.tqbcbackend.model.User;
 import mygroup.tqbcbackend.payload.request.EmailVerificationRequest;
 import mygroup.tqbcbackend.payload.request.LoginRequest;
@@ -40,6 +42,7 @@ import mygroup.tqbcbackend.payload.response.LoginResponse;
 import mygroup.tqbcbackend.payload.response.MessageResponse;
 import mygroup.tqbcbackend.payload.response.TokenRefreshResponse;
 import mygroup.tqbcbackend.repository.ConfirmationTokenRepository;
+import mygroup.tqbcbackend.repository.FranchiseRepository;
 import mygroup.tqbcbackend.repository.RefreshTokenRepository;
 import mygroup.tqbcbackend.repository.RoleRepository;
 import mygroup.tqbcbackend.repository.TeamRepository;
@@ -93,6 +96,9 @@ public class AuthController {
 
 	@Autowired
 	private PrivateLeaderboardService privateLeaderboardService;
+
+	@Autowired
+	private FranchiseRepository franchiseRepository;
 		
 	@PostMapping("/login")
 	public ResponseEntity<?> authenticateUser(
@@ -135,24 +141,36 @@ public class AuthController {
 		if (userRepository.existsByUsername(signupRequest.getUsername())) {
 			return ResponseEntity
 					.badRequest()
-					.body(new MessageResponse("Error: Username is already taken!"));
+					.body(new MessageResponse("Error: Username is already taken"));
 		}
 		
 		if (userRepository.existsByEmail(signupRequest.getEmail())) {
 			return ResponseEntity
 					.badRequest()
-					.body(new MessageResponse("Error: Email is already in use!"));
+					.body(new MessageResponse("Error: Email is already in use"));
 		}
-		
-		// Create new user's account
-		User user = new User(
+		User user;
+		if (signupRequest.getFavTeamID() != null) {
+			Team favTeam = teamRepository.findByTeamID(signupRequest.getFavTeamID());
+			Franchise franchise = franchiseRepository.findByFranchiseID(favTeam.getFranchise().getFranchiseID());
+			user = new User(
 				signupRequest.getUsername(),
 				signupRequest.getEmail(),
-				teamRepository.findByTeamID(signupRequest.getFavTeamID()),
+				franchise,
 				encoder.encode(signupRequest.getPassword()),
 				false,
 				new Date()
-		);
+			);
+		} else {
+			user = new User(
+				signupRequest.getUsername(),
+				signupRequest.getEmail(),
+				encoder.encode(signupRequest.getPassword()),
+				false,
+				new Date()
+			);
+		}
+		
 		Set<Role> roles = new HashSet<>();
 		
 		Role userRole = roleRepository.findByName(ERole.ROLE_USER)
@@ -241,7 +259,7 @@ public class AuthController {
 			})
 			.orElseThrow(() -> new TokenRefreshException(
 				requestRefreshToken,
-				"Refresh token is not in database!"
+				"Refresh token is not in database"
 			));
 	}
 }

@@ -2,17 +2,17 @@ import api from './api.js';
 import History from "../helpers/History";
 import TokenService from './Token.service.js';
 
-const register = (username, favTeam, email, password) => {
-    return api.post(
-        "/v1/auth/register",
-        {
-            username,
-            favTeam,
-            email,
-            password
-        }
-    );
-};
+// const register = (username, favTeam, email, password) => {
+//     return api.post(
+//         "/v1/auth/register",
+//         {
+//             username,
+//             favTeam,
+//             email,
+//             password
+//         }
+//     );
+// };
 
 const verifyEmail = (token) => {
     return api.post(
@@ -32,25 +32,25 @@ const updateAccessToken = (refreshToken) => {
     )
 }
 
-const login = (username, password) => {
-    return api.post(
-        "/v1/auth/login",
-        {
-            username,
-            password
-        }
-    )
-    .then((response) => {
-        if (response.data.user.accessToken) {
-            // localStorage.setItem("user",JSON.stringify(response.data.user));
-            TokenService.setUser(response.data.user);
-            // localStorage.setItem("privateLeaderboardInfos",JSON.stringify(response.data.privateLeaderboardInfos));
-            TokenService.setPrivateLeaderboardInfos(response.data.privateLeaderboardInfos);
-        }
+// const login = (username, password) => {
+//     return api.post(
+//         "/v1/auth/login",
+//         {
+//             username,
+//             password
+//         }
+//     )
+//     .then((response) => {
+//         if (response.data.user.accessToken) {
+//             // localStorage.setItem("user",JSON.stringify(response.data.user));
+//             TokenService.setUser(response.data.user);
+//             // localStorage.setItem("privateLeaderboardInfos",JSON.stringify(response.data.privateLeaderboardInfos));
+//             TokenService.setPrivateLeaderboardInfos(response.data.privateLeaderboardInfos);
+//         }
 
-        return response.data;
-    });
-};
+//         return response.data;
+//     });
+// };
 
 const logout = (history) => {
     // localStorage.setItem("justLoggedOut",true);
@@ -63,9 +63,9 @@ const logout = (history) => {
 };
 
 export default {
-    register,
+    // register,
     verifyEmail,
-    login,
+    // login,
     logout,
     updateAccessToken
 };

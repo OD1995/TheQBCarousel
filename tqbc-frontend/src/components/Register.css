@@ -43,5 +43,28 @@
 }
 
 #register-error {
+    
+}
+
+
+#register-result-div {
+    /* border: 1px solid green; */
+    /* position: relative; */
+    /* text-align: center; */
+    display: grid;
+    grid-template-columns: 30vw;
+    grid-template-rows: 5h;
+    justify-items: center;
     margin-top: 5vh;
+}
+
+.register-result {
+    /* margin-top: 5vh; */
+    /* position: absolute; */
+    /* right: 0; */
+    /* top: 0; */
+    /* width: 0%; */
+    /* height: 50px; */
+    /* border: 1px solid purple ; */
+    /* background: blue; */
 }

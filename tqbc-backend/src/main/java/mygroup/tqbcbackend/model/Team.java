@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Teams")
 public class Team {
@@ -81,6 +83,7 @@ public class Team {
 		fetch = FetchType.LAZY
 	)
 	@JoinColumn(name = "FranchiseID")
+	@JsonIgnore
 	Franchise franchise;
 	
 	
@@ -181,6 +184,14 @@ public class Team {
 
 	public void setDefaultPlayer(Player defaultPlayer) {
 		this.defaultPlayer = defaultPlayer;
+	}
+
+	public Franchise getFranchise() {
+		return this.franchise;
+	}
+
+	public void setFranchise(Franchise franchise) {
+		this.franchise = franchise;
 	}
 
 }
