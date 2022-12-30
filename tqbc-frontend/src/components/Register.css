@@ -1,0 +1,47 @@
+#register-parent-div {
+    margin-top: 3vh;
+}
+
+#register-input-parent-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* margin-top: 5vh; */
+}
+
+.register-input-div {
+    display: flex;
+}
+
+.register-input {
+    /* margin-left: 3vw; */
+    width: 20vw;
+    text-align: center;
+}
+
+.register-error {
+    margin-top: 4vh;
+    margin-bottom: 4vh;
+}
+
+#register-input-grid {
+    display: grid;
+    grid-template-columns: 15vw 25vw;
+    grid-template-rows: repeat(7,7vh);
+    text-align: center;
+    justify-content: center;
+    justify-items: center;
+    justify-self: center;
+    align-items: center;
+    align-self: center;
+    align-content: center;
+    /* border: 1px solid green; */
+}
+
+#register-button {
+    margin-top: 5vh;
+}
+
+#register-error {
+    margin-top: 5vh;
+}

@@ -54,11 +54,11 @@ public class User {
 	
 //	@Nullable
 	@ManyToOne(
-			targetEntity = Team.class,
+			targetEntity = Franchise.class,
 			fetch = FetchType.LAZY
 	)
-	@JoinColumn(name = "FavouriteTeamID")
-	private Team favouriteTeam;
+	@JoinColumn(name = "FavouriteFranchiseID")
+	private Franchise favouriteFranchise;
 	
 	@NotBlank
 	@Size(max = 120)
@@ -116,7 +116,7 @@ public class User {
 	public User(
 			@NotBlank @Size(max = 20) String username,
 			@Email String email,
-			Team favouriteTeam,
+			Franchise favouriteFranchise,
 			@NotBlank @Size(max = 120) String password,
 			boolean isAuthenticated,
 			Date userCreated
@@ -124,7 +124,7 @@ public class User {
 		super();
 		this.username = username;
 		this.email = email;
-		this.favouriteTeam = favouriteTeam;
+		this.favouriteFranchise = favouriteFranchise;
 		this.password = password;
 //		this.roles = roles;
 		this.isAuthenticated = isAuthenticated;
@@ -173,12 +173,12 @@ public class User {
 		this.email = email;
 	}
 
-	public Team getFavouriteTeam() {
-		return favouriteTeam;
+	public Franchise getFavouriteFranchise() {
+		return favouriteFranchise;
 	}
 
-	public void setFavouriteTeam(Team favouriteTeam) {
-		this.favouriteTeam = favouriteTeam;
+	public void setFavouriteFranchise(Franchise favouriteFranchise) {
+		this.favouriteFranchise = favouriteFranchise;
 	}
 
 	public String getPassword() {
@@ -225,12 +225,12 @@ public class User {
 			return false;
 		}
 		User user = (User) o;
-		return userID == user.userID && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(favouriteTeam, user.favouriteTeam) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles) && isAuthenticated == user.isAuthenticated && Objects.equals(userCreated, user.userCreated) && Objects.equals(periodPredictions, user.periodPredictions) && Objects.equals(ownedPrivateLeaderboards, user.ownedPrivateLeaderboards) && Objects.equals(privateLeaderboardMemberships, user.privateLeaderboardMemberships) && Objects.equals(scores, user.scores);
+		return userID == user.userID && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(favouriteFranchise, user.favouriteFranchise) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles) && isAuthenticated == user.isAuthenticated && Objects.equals(userCreated, user.userCreated) && Objects.equals(periodPredictions, user.periodPredictions) && Objects.equals(ownedPrivateLeaderboards, user.ownedPrivateLeaderboards) && Objects.equals(privateLeaderboardMemberships, user.privateLeaderboardMemberships) && Objects.equals(scores, user.scores);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(userID, username, email, favouriteTeam, password, roles, isAuthenticated, userCreated, periodPredictions, ownedPrivateLeaderboards, privateLeaderboardMemberships, scores);
+		return Objects.hash(userID, username, email, favouriteFranchise, password, roles, isAuthenticated, userCreated, periodPredictions, ownedPrivateLeaderboards, privateLeaderboardMemberships, scores);
 	}
 	
 }

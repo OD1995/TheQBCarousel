@@ -7,6 +7,7 @@ Clean up register page
 Add email model
 UserID, EmailType, YesNo
 Types:PredictionPeriodOpen (email just after pp has opened), PredictionPeriodClose (email about 1 week before pp closes)
+Only allow unsubscription by clicking on link of relevant email, no page to do it
 
 Long term
 -X- Have predictions board show predictions if already been made in the prediction period

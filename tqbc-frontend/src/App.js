@@ -15,6 +15,7 @@ import QBPredictionHistoryComponent from './components/qbcomponents/pages/QBPred
 import Navigator from './components/Navigator';
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Register2 from "./components/Register2";
 import Profile from "./components/Profile";
 import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
@@ -104,6 +105,7 @@ const App = () => {
 						<Route index element={defaultPage}/>
 						<Route exact path="/how-it-works" element={<HowItWorksComponent/>}/>
 						<Route exact path="/register" element={<Register/>} />
+						<Route exact path="/register2" element={<Register2/>} />
 						<Route exact path="/login" element={<Login/>}></Route>
 						<Route exact path="/profile" element={<Profile/>} />
 						<Route exact path="/test" element={<TestComponent/>} />

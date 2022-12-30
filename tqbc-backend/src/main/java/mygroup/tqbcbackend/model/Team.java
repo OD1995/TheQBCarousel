@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -61,12 +62,12 @@ public class Team {
 	)
 	private List<PeriodPrediction> periodPredictions;
 	
-	@OneToMany(
-			targetEntity = User.class,
-			fetch = FetchType.LAZY,
-			mappedBy = "favouriteTeam"
-	)
-	private List<User> fans;
+	// @OneToMany(
+	// 		targetEntity = User.class,
+	// 		fetch = FetchType.LAZY,
+	// 		mappedBy = "favouriteTeam"
+	// )
+	// private List<User> fans;
 	
 	@OneToMany(
 			targetEntity = Answer.class,
@@ -74,7 +75,13 @@ public class Team {
 			mappedBy = "team"
 	)
 	private List<Answer> answers;
-	
+
+	@ManyToOne(
+		targetEntity = Franchise.class,
+		fetch = FetchType.LAZY
+	)
+	@JoinColumn(name = "FranchiseID")
+	Franchise franchise;
 	
 	
 	public Team() {

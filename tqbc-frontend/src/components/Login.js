@@ -23,7 +23,7 @@ const Login = (props) => {
 
     const dispatch = useDispatch();
 
-    const handleLogin2 = () => {
+    const handleLogin = () => {
         setUsernameError("");
         setPasswordError("");
         setLoginError("");
@@ -157,7 +157,7 @@ const Login = (props) => {
                 <button
                     id="login-button"
                     className="tqbc-black-button"
-                    onClick={handleLogin2}
+                    onClick={handleLogin}
                     
                 >
                     Login
