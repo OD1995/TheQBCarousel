@@ -1,18 +1,27 @@
 Short term
+Add franchise model
+Use franchise for user fav team
+Link franchise to team
+Show new user the current teams and then save the linked franchise
+Clean up register page
+Add email model
+UserID, EmailType, YesNo
+Types:PredictionPeriodOpen (email just after pp has opened), PredictionPeriodClose (email about 1 week before pp closes)
 
 Long term
 -X- Have predictions board show predictions if already been made in the prediction period
 -X- Visualise historical predictions
 -X- Integrate Google Analytics
 -X- Calculate and visualise points and league tables
---- Give login/signup buttons some space
+-X- Give login/signup buttons some space
 --- Replace message with modal or own page - register/sign in
 -X- Make API endpoints only usable from frontend
 -X- Prediction board only visible if in prediction period (redirect to error "outside of prediction period" page)
 --- Remove all logging before launch
 -X- Allow users to request new player options
 -X- Deal with scenario where we're not inside a prediction period
---- Over the last few seasons, the number of QBs changing teams in the NFL has been increasing significantly CHECK ME
+-X- Over the last few seasons, the number of QBs changing teams in the NFL has been increasing significantly CHECK ME
+  - https://sports.yahoo.com/why-has-qb-movement-spiked-so-much-in-recent-years-three-former-nfl-g-ms-weigh-in-130035575.html?guccounter=1&guce_referrer=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS8&guce_referrer_sig=AQAAANeFLRPwGItoG3-fSI8dFmm6F3pagPeWfNg2baWaXLU47VepRKiqE9wlWnVhBwpm27uR0zI4DrVoAmefUVh7rGcauxDnObW0suPaZ0kMVhGiibx9Fx4NdrqTWwEs1is2uytzXtpy5T5FAx9aLTAT6CK3CAFb76ZUrH6i71nhRsZY
 --- Remove twitter script import and check twitter stuff works still
 --- Search for localhost in both frontend and backend and also 2022
 --- Global leaderboard will only go live once 2023 answers are in

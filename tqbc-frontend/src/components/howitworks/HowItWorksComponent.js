@@ -30,8 +30,8 @@ export const HowItWorksComponent = () => {
                     <br></br>
                     <h3>The Concept</h3>
                     <p>
-                        Over the last few seasons, the number of QBs changing teams in the NFL has been increasing
-                        significantly CHECK ME. Each year, the QB carousel spins faster and faster. This site is a platform that allows you to:
+                        Over the last few seasons, the number of QBs changing teams in the NFL has been increasing.
+                        Each year, the QB carousel spins faster and faster. This site is a platform that allows you to:
                     </p>
                     <ul>
                         <li key="concept-item1">
