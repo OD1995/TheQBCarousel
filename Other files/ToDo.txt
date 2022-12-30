@@ -1,5 +1,4 @@
 Short term
-2023 predictions are divided by 3, other seasons by 4, for global leaderboard, add to info box
 
 Long term
 -X- Have predictions board show predictions if already been made in the prediction period

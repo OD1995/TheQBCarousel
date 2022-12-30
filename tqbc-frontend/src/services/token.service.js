@@ -56,7 +56,10 @@ class TokenService {
     }
 
     removePrivateLeaderboardInfos() {
-        localStorage.removeItem('privateLeaderboardInfos');
+        localStorage.removeItem("privateLeaderboardUUIDs");
+        localStorage.removeItem("privateLeaderboardInfoDict");
+        localStorage.removeItem("privateLeaderboardNames");
+        localStorage.removeItem("privateLeaderboardInfoList");
     }
 
     removeUser() {

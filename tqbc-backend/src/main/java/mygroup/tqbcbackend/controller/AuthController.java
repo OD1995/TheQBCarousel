@@ -98,11 +98,6 @@ public class AuthController {
 	public ResponseEntity<?> authenticateUser(
 			@Valid @RequestBody LoginRequest loginRequest
 	) {
-		// UsernamePasswordAuthenticationToken upat = new UsernamePasswordAuthenticationToken(
-		// 	loginRequest.getUsername(),
-		// 	loginRequest.getPassword()
-		// );
-		// Authentication authentication = authenticationManager.authenticate(upat);
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(
 						loginRequest.getUsername(),

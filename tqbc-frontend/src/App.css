@@ -149,6 +149,11 @@ label {
     color: red;
 }
 
+.tqbc-red-error {
+    height: 3vh;
+    color: red;
+}
+
 .private-leaderboard-form {
     display: flex;
     flex-direction: column;
