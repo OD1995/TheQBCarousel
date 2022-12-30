@@ -1,0 +1,6 @@
+package mygroup.tqbcbackend.model;
+
+public enum EEmailSubscriptionType {
+    EMAILSUBSCRIPTIONTYPE_PREDICTIONPERIODOPEN,
+    EMAILSUBSCRIPTIONTYPE_PREDICTIONPERIODCLOSE
+}
