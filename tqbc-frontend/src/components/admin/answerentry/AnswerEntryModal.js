@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Select from 'react-select';
 import { useRef } from "react";
-import AnswerService from "../../services/AnswerService";
+import AnswerService from "../../../services/AnswerService";
 
 
 export const AnswerEntryModal = (props) => {

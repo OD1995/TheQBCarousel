@@ -15,7 +15,7 @@ Long term
 -X- Integrate Google Analytics
 -X- Calculate and visualise points and league tables
 -X- Give login/signup buttons some space
---- Replace message with modal or own page - register/sign in
+-X- Replace message with modal or own page - register/sign in
 -X- Make API endpoints only usable from frontend
 -X- Prediction board only visible if in prediction period (redirect to error "outside of prediction period" page)
 --- Remove all logging before launch
@@ -27,7 +27,7 @@ Long term
 --- Search for localhost in both frontend and backend and also 2022
 --- Global leaderboard will only go live once 2023 answers are in
 --- Link user to favourite Franchise rather than Team
---- Clean up register and login pages
+-X- Clean up register and login pages
 --- Clean up admin board
 --- Bulk reminder email sendouts
 --- Go through all pages and remove duplicate requests

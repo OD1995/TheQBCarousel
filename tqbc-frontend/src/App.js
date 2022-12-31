@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import {
 	BrowserRouter as Router,
-	Link,
 	Navigate,
 	Route,
 	Routes
@@ -21,7 +20,7 @@ import EventBus from "./common/EventBus";
 import { SET_MESSAGE } from './actions/types';
 import { TestComponent } from './components/TestComponent';
 import { NavigateSetter } from './helpers/NavigateSetter';
-import { AnswerEntry } from './components/answerentry/AnswerEntry';
+import { AnswerEntry } from './components/admin/answerentry/AnswerEntry';
 import { HowItWorksComponent } from './components/howitworks/HowItWorksComponent';
 import { PageDoesntExist } from './components/errors/PageDoesntExist';
 import { GlobalLeaderboard } from './components/leaderboards/GlobalLeaderboard';
@@ -32,15 +31,15 @@ import { NavigationBar } from './components/generic/NavigationBar';
 import { JoinPrivateLeaderboard } from './components/leaderboards/JoinPrivateLeaderboard';
 import { EditPrivateLeaderboardWeights } from './components/leaderboards/EditPrivateLeaderboardWeightings';
 import TokenService from './services/Token.service';
-import AdminBoard from './components/accountmanagement/AdminBoard';
+import AdminBoard from './components/admin/AdminBoard';
+import { PredictionMarking } from './components/admin/PredictionMarking';
+import { EmailSendOuts } from './components/admin/EmailSendOuts';
 
 const App = () => {
-	const [showModeratorBoard, setShowModeratorBoard] = useState(false);
 	const [showAdminBoard, setShowAdminBoard] = useState(false);
 	const { user: currentUser } = useSelector((state) => state.auth);
 	const { isLoggedIn } = useSelector(state => state.auth);
 
-	// const justLoggedOut = JSON.parse(localStorage.getItem("justLoggedOut"));
 	const justLoggedOut = TokenService.getJustLoggedOut();
 	
 	const dispatch = useDispatch();
@@ -60,10 +59,8 @@ const App = () => {
 
 	useEffect(() => {
 		if (currentUser) {
-			setShowModeratorBoard(currentUser.roles.includes("ROLE_MODERATOR"));
 			setShowAdminBoard(currentUser.roles.includes("ROLE_ADMIN"));
 		} else {
-			setShowModeratorBoard(false);
 			setShowAdminBoard(false);
 		}
 
@@ -139,6 +136,14 @@ const App = () => {
 						<Route
 							path="/edit-private-leaderboard-weightings/:privateLeaderboardUUID"
 							element={<EditPrivateLeaderboardWeights/>}
+						/>
+						<Route
+							path="/prediction-marking"
+							element={<PredictionMarking/>}
+						/>
+						<Route
+							path="/email-send-outs"
+							element={<EmailSendOuts/>}
 						/>
 						<Route path='/*' element={<PageDoesntExist/>}/>
 					</Routes>

@@ -1,6 +1,5 @@
 package mygroup.tqbcbackend.payload.response;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class JwtResponse {

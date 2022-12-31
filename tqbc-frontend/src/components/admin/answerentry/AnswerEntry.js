@@ -4,12 +4,11 @@ import './AnswerEntry.css';
 import { useState } from "react";
 import { AnswerEntryModal } from "./AnswerEntryModal";
 import { useEffect } from "react";
-import AnswerTypeService from "../../services/AnswerTypeService";
+import AnswerTypeService from "../../../services/AnswerTypeService";
 import { useParams } from "react-router-dom";
-import History from "../../helpers/History";
-import PlayerService from "../../services/PlayerService";
-import TeamService from "../../services/TeamService";
-import AnswerService from "../../services/AnswerService";
+import PlayerService from "../../../services/PlayerService";
+import TeamService from "../../../services/TeamService";
+import AnswerService from "../../../services/AnswerService";
 import { useRef } from "react";
 import { useImmer } from "use-immer";
 
