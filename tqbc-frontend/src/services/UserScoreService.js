@@ -4,12 +4,11 @@ class UserScoreService {
 
     base_url = "/v1/user-scores/"
 
-    calculateUserScoreForSeason(userID,season) {
+    calculateUserScoreForSeason(season) {
         return api.post(
             this.base_url + "calculate-user-season-scores",
             {
-                userID: userID,
-                season: season   
+                season   
             }
         );
     }

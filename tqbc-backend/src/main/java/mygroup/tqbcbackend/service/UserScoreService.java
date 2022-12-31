@@ -40,6 +40,9 @@ public class UserScoreService {
     ) {
         // Get answers for season
         List<Answer> answers = answerRepository.findByTeam_Season(season);
+        if (answers.size() == 0) {
+            throw new RuntimeException("No answers in db for " + season);
+        }
         // Convert to map with key: teamID, value: array of players
         Map<Long, List<Player>> teamIDPlayerArrayMap = new HashMap<Long, List<Player>>();
         for (Answer answer : answers) {

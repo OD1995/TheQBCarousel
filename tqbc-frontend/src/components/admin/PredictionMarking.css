@@ -1,0 +1,22 @@
+#prediction-marking-inputs-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#prediction-marking-season-input-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
+
+#prediction-marking-season-input {
+    margin-left: 2vw;
+    text-align: center;
+}
+
+#prediction-marking-response-text {
+    margin-top: 5vh;
+}

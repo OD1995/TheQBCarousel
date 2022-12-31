@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import History from "../../helpers/History"
 import AnalysisService from "../../services/AnalysisService";
 import TokenService from "../../services/Token.service";
-import UserScoreService from "../../services/UserScoreService";
 import './AdminBoard.css';
 
 const AdminBoard = () => {
