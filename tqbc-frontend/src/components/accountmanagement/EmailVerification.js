@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { verifyEmail } from "../actions/auth";
+import { verifyEmail } from "../../actions/auth";
 import { useDispatch, useSelector } from "react-redux";
-import PlainPageComponent from "./PlainPageComponent";
+import PlainPageComponent from "../generic/PlainPageComponent";
 
 
 const EmailVerification = () => {

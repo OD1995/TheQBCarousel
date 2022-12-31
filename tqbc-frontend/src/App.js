@@ -9,16 +9,13 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
-import ListTeamComponent from './components/ListTeamComponent';
 import QBPredictionsComponent from './components/qbcomponents/pages/QBPredictions';
 import QBPredictionHistoryComponent from './components/qbcomponents/pages/QBPredictionHistory';
-import Navigator from './components/Navigator';
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Profile from "./components/Profile";
-import BoardModerator from "./components/BoardModerator";
-import BoardAdmin from "./components/BoardAdmin";
-import EmailVerification from "./components/EmailVerification";
+import Navigator from './components/generic/Navigator';
+import Login from "./components/accountmanagement/Login";
+import Register from "./components/accountmanagement/Register";
+import Profile from "./components/accountmanagement/Profile";
+import EmailVerification from "./components/accountmanagement/EmailVerification";
 import { logout } from "./actions/auth";
 import EventBus from "./common/EventBus";
 import { SET_MESSAGE } from './actions/types';
@@ -27,15 +24,15 @@ import { NavigateSetter } from './helpers/NavigateSetter';
 import { AnswerEntry } from './components/answerentry/AnswerEntry';
 import { HowItWorksComponent } from './components/howitworks/HowItWorksComponent';
 import { PageDoesntExist } from './components/errors/PageDoesntExist';
-import { TestComponent2 } from './components/qbcomponents/pages/TestComponent2';
 import { GlobalLeaderboard } from './components/leaderboards/GlobalLeaderboard';
 import { CreateNewPrivateLeaderboard } from './components/leaderboards/CreateNewPrivateLeaderboard';
 import { OutsidePredictionPeriod } from './components/errors/OutsidePredictionPeriod';
 import { PrivateLeaderboard } from './components/leaderboards/PrivateLeaderboard';
-import { NavigationBar } from './components/NavigationBar';
+import { NavigationBar } from './components/generic/NavigationBar';
 import { JoinPrivateLeaderboard } from './components/leaderboards/JoinPrivateLeaderboard';
 import { EditPrivateLeaderboardWeights } from './components/leaderboards/EditPrivateLeaderboardWeightings';
 import TokenService from './services/Token.service';
+import AdminBoard from './components/accountmanagement/AdminBoard';
 
 const App = () => {
 	const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -109,10 +106,8 @@ const App = () => {
 						<Route exact path="/test" element={<TestComponent/>} />
 						<Route exact path="/test2" element={<OutsidePredictionPeriod/>} />
 						{/* <Route exact path="/admin" component={<TestComponent/>} /> */}
-						<Route path="/mod" element={<BoardModerator/>} />
-						<Route path="/admin" element={<BoardAdmin/>}/>
+						<Route path="/admin" element={<AdminBoard/>}/>
 						<Route path='/answer-entry/:season' element={<AnswerEntry/>}/>
-						<Route path="/list-teams" element={<ListTeamComponent/>}></Route>
 						<Route path="/qb-predictions" element={<QBPredictionsComponent/>}/>
 						<Route
 							path="/prediction-history/:username/"

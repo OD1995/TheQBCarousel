@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom"
 
-import { clearMessage } from "../actions/message";
-import TokenService from "../services/Token.service";
+import { clearMessage } from "../../actions/message";
+import TokenService from "../../services/Token.service";
 
 const Navigator = () => {
     const location = useLocation();

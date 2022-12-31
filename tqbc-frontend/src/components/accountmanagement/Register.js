@@ -3,8 +3,8 @@ import Select from "react-select";
 import { isEmail, isAlphanumeric } from "validator";
 import "./Register.css";
 
-import TeamService from "../services/TeamService";
-import AuthService from "../services/AuthService";
+import TeamService from "../../services/TeamService";
+import AuthService from "../../services/AuthService";
 
 
 const Register = () => {

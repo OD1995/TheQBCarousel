@@ -1,12 +1,12 @@
 Short term
-Add franchise model
-Use franchise for user fav team
-Link franchise to team
-Show new user the current teams and then save the linked franchise
-Clean up register page
-Add email model
-UserID, EmailType, YesNo
-Types:PredictionPeriodOpen (email just after pp has opened), PredictionPeriodClose (email about 1 week before pp closes)
+Admin board
+ - link to
+  - answers page
+  - calculate user scores page
+  - send out email page
+ - summary stats
+  - total users
+  - users by prediction period
 Only allow unsubscription by clicking on link of relevant email, no page to do it
 
 Long term

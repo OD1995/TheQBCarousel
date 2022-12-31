@@ -1,13 +1,12 @@
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import './Login.css';
 
-import { login } from "../actions/auth";
-import AuthService from "../services/AuthService";
-import { LOGIN_SUCCESS } from "../actions/types";
-import History from "../helpers/History";
-import TokenService from "../services/Token.service";
+import AuthService from "../../services/AuthService";
+import { LOGIN_SUCCESS } from "../../actions/types";
+import History from "../../helpers/History";
+import TokenService from "../../services/Token.service";
+import './Login.css';
 
 
 
@@ -21,6 +20,20 @@ const Login = (props) => {
 
     const { isLoggedIn } = useSelector(state => state.auth);
 
+    useEffect(
+        () => {
+            const keyEnter = (ev) => {
+                if (ev.key === 'Enter') {
+                    handleLogin();
+                }
+            }
+            document.addEventListener('keydown',keyEnter);
+            return () => {
+                document.removeEventListener('keydown',keyEnter);
+            }
+        }
+    )
+    
     const dispatch = useDispatch();
 
     const handleLogin = () => {

@@ -2,8 +2,8 @@ import React, { useEffect,useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import QBSelector from '../components/QBSelector';
-import PopupComponent from '../../PopUpComponent';
 import PredictionPeriodChanger from '../../PredictionPeriodChanger';
+import { PopupComponent } from '../../generic/PopUpComponent';
 
 import ConferenceService from '../../../services/ConferenceService';
 import TeamService from '../../../services/TeamService';

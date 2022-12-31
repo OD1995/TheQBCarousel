@@ -1,4 +1,4 @@
-import PlainPageComponent from "../PlainPageComponent"
+import PlainPageComponent from "../generic/PlainPageComponent";
 
 export const PageDoesntExist = () => {
     return (

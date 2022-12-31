@@ -1,6 +1,6 @@
-import '../styles/PopupComponent.css';
+import './PopupComponent.css';
 
-function PopupComponent(props) {
+export const PopupComponent = (props) => {
 	return (props.trigger) ? (
 		<div className="popup">
 			<div className="popup-inner">
@@ -30,5 +30,3 @@ function PopupComponent(props) {
 		</div>
 	) : "";
 }
-
-export default PopupComponent;
