@@ -1,0 +1,40 @@
+/* #estno-parent-div {
+} */
+
+#estno-buttons-div {
+    display: flex;
+    flex-direction: column;    
+    align-items: center;
+    min-height: 50vh;
+    justify-content: space-evenly;
+}
+
+#estyes-parent-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#estyes-inputs-div {
+    display: flex;
+    max-width: 80vw;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-top: 10vh;
+}
+
+.estyes-replacer-div {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2vh;
+    align-items: center;
+}
+
+.estyes-input-box {
+    margin-left: 2vw;
+    text-align: center;
+}
+
+#estyes-update-button {
+    margin-top: 5vh;
+}

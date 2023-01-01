@@ -26,17 +26,22 @@ public class EmailSubscriptionType {
     @Column(name = "Description")
     private String description;
 
+    @Column(name = "EmailSubscriptionTypeTidy")
+    private String emailSubscriptionTypeTidy;
+
     public EmailSubscriptionType() {
     }
 
     public EmailSubscriptionType(
         long emailSubscriptionTypeID,
         EEmailSubscriptionType emailSubscriptionType,
-        String description
+        String description,
+        String emailSubscriptionTypeTidy
     ) {
         this.emailSubscriptionTypeID = emailSubscriptionTypeID;
         this.emailSubscriptionType = emailSubscriptionType;
         this.description = description;
+        this.emailSubscriptionTypeTidy = emailSubscriptionTypeTidy;
     }
 
 
@@ -62,6 +67,14 @@ public class EmailSubscriptionType {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getEmailSubscriptionTypeTidy() {
+        return this.emailSubscriptionTypeTidy;
+    }
+
+    public void setEmailSubscriptionTypeTidy(String emailSubscriptionTypeTidy) {
+        this.emailSubscriptionTypeTidy = emailSubscriptionTypeTidy;
     }
 
 }

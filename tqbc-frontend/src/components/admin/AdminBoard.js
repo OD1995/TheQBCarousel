@@ -14,7 +14,7 @@ const AdminBoard = () => {
         () => {
             const user = TokenService.getUser();
             if (!user.roles.includes("ROLE_ADMIN")) {
-                History.navigate("/nope");
+                History.push("/nope");
             }
             AnalysisService.getAdminBoardSummaryStats().then(
                 (res) => {

@@ -50,11 +50,6 @@ export const NavigationBar = (props) => {
                             Global Leaderboard
                         </Link>
                     </li>
-                    {/* <li className="nav-item">
-                        <Link to={"/create-new-private-leaderboard"} className="nav-link">
-                            New Private Leaderboard
-                        </Link>
-                    </li> */}
                     <li
                         id="private-leaderboard-link"
                         onMouseEnter={() => setShowPrivateLeaderboardDropdown(true)}

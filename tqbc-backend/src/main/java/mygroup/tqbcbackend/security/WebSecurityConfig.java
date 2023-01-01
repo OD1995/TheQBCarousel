@@ -63,7 +63,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/api/v1/period-predictions/**").hasRole("USER")
 			.antMatchers("/api/v1/user-scores/**").hasRole("USER")
 			.antMatchers("/api/v1/private-leaderboards/**").hasRole("USER")
-			.antMatchers("/api/v1/analysis/**").permitAll()
+			.antMatchers("/api/v1/analysis/**").hasRole("ADMIN")
+			.antMatchers("/api/v1/emails/**").permitAll()//hasRole("ADMIN")
 			.anyRequest().authenticated();
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}

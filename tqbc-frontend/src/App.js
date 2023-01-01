@@ -33,7 +33,7 @@ import { EditPrivateLeaderboardWeights } from './components/leaderboards/EditPri
 import TokenService from './services/Token.service';
 import AdminBoard from './components/admin/AdminBoard';
 import { PredictionMarking } from './components/admin/PredictionMarking';
-import { EmailSendOuts } from './components/admin/EmailSendOuts';
+import { EmailSendOuts } from './components/admin/emailsendouts/EmailSendOuts';
 
 const App = () => {
 	const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -143,6 +143,10 @@ const App = () => {
 						/>
 						<Route
 							path="/email-send-outs"
+							element={<EmailSendOuts/>}
+						/>
+						<Route
+							path="/email-send-outs/:emailSubscriptionTypeID"
 							element={<EmailSendOuts/>}
 						/>
 						<Route path='/*' element={<PageDoesntExist/>}/>
