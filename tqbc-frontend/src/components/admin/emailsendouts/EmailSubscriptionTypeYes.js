@@ -6,7 +6,7 @@ export const EmailSubscriptionTypeYes = () => {
 
     const [originalHTML, setOriginalHTML] = useState("");
     const [displayedHTML, setDisplayedHTML] = useState("");
-    // const [replacerVals, setReplacerVals] = useState({a:1});
+    const [showAreYouSure, setShowAreYouSure] = useState(false)
     const [replacerInputs, setReplacerInputs] = useState([]);
     
     const [searchParams, setSearchParams] = useSearchParams();
@@ -39,6 +39,13 @@ export const EmailSubscriptionTypeYes = () => {
         []
     )
 
+    useEffect(
+        () => {
+            let a=1;
+        },
+        [searchParams]
+    )
+
     const generateReplacerInputs = (input_list) => {
         let ri = [];
         for (const il of input_list) {
@@ -56,8 +63,10 @@ export const EmailSubscriptionTypeYes = () => {
                     </h5>
                     <input
                         className="estyes-input-box"
-                        onChange={(ev) => updateReplacerVals(ev,il)}
-                        value={startingVal}
+                        id={il}
+                        // value={startingVal}
+                        // onChange={(ev) => updateReplacerVals(ev,il)}
+                        onChange={updateReplacerVals}
                     />
                 </div>
             )
@@ -65,13 +74,18 @@ export const EmailSubscriptionTypeYes = () => {
         setReplacerInputs(ri);
     }
 
-    const updateReplacerVals = (ev,key) => {
+    const updateReplacerVals = (ev) => {
         // setReplacerVals(
-        //     prevState => ({
-        //         ...prevState,
-        //         [key]: ev.target.value
-        //     })
+        //     prevState => {
+        //         let a = 1;
+        //         let b ={
+        //             ...prevState,
+        //             [key]: ev.target.value
+        //         };
+        //         return b; 
+        //     }
         // );
+        let key = ev.target.id;
         if (ev.target.value !== "") {
             searchParams.set(key,ev.target.value);
             setSearchParams(searchParams);
@@ -91,6 +105,10 @@ export const EmailSubscriptionTypeYes = () => {
     }
 
     const handleUpdateClick = () => {
+        // for (const [key,value] of replacerVals.entries()) {
+        //     searchParams.set(key,value);
+        // }
+        // setSearchParams(searchParams);
         doReplacements(originalHTML);
     }
 
@@ -99,6 +117,7 @@ export const EmailSubscriptionTypeYes = () => {
             id="estyes-parent-div"
         >
             <span
+                id="estyes-dangerous-span"
                 dangerouslySetInnerHTML={{__html:displayedHTML}}
             />
             <div
@@ -106,13 +125,37 @@ export const EmailSubscriptionTypeYes = () => {
             >
                 {replacerInputs}
             </div>
-            <button
-                id="estyes-update-button"
-                className="tqbc-green-button"
-                onClick={handleUpdateClick}
+            <div
+                id="estyes-buttons-div"
             >
-                Update
-            </button>
+                {
+                    showAreYouSure && (
+                        <button
+                            className="tqbc-red-button"
+                        >
+                            Are You Completely Sure
+                        </button>
+                    )
+                }
+                <button
+                    id="estyes-update-button"
+                    className="tqbc-green-button"
+                    onClick={handleUpdateClick}
+                >
+                    Update
+                </button>
+                <button
+                    className="tqbc-green-button"
+                >
+                    Send Email To Just Me
+                </button>
+                <button
+                    className="tqbc-black-button"
+                    onClick={() => setShowAreYouSure(true)}
+                >
+                    Send Email To All Users
+                </button>
+            </div>
         </div>
     );
 }

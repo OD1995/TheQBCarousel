@@ -36,5 +36,17 @@
 }
 
 #estyes-update-button {
+    
+}
+
+#estyes-dangerous-span {
+    text-align: left;
+}
+
+#estyes-buttons-div {
+    display: flex;
+    flex-direction: row;
     margin-top: 5vh;
+    width: 60vw;
+    justify-content: space-evenly;
 }
