@@ -30,7 +30,10 @@ public class EmailBuilderService {
 	private EmailSenderService emailSenderService;
 
     @Autowired
-    private JavaMailSender javaMailSender;
+    private JavaMailSender javaMailSender;	
+	
+	@Value("${tqdm.app.frontEndURL}")
+	private String frontEndURL;
 
     public void sendReminderEmail(
         long emailSubscriptionTypeID,
@@ -43,31 +46,35 @@ public class EmailBuilderService {
         String toEventDateTimeET,
         String unsubscribeURL
     ) {
-        try {
-            String content = getEmailSubscriptionTypeTemplate(emailSubscriptionTypeID);
-            content = doReplacements(
-                content,
-                username,
-                ordinalPredictionPeriod,
-                predictionSeason,
-                qbPredictionsURL,
-                daysLeft,
-                toEvent,
-                toEventDateTimeET,
-                unsubscribeURL
-            );
-            MimeMessage message = javaMailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message);
-            helper.setTo("oliverdernie1@gmail.com");
-            Long unix = System.currentTimeMillis();
-            helper.setSubject("The QB Carousel - " + unix);
-            helper.setFrom(fromEmailAddress);
-            // mailMessage.setText(content,true);
-            helper.setText(content, true);
-            javaMailSender.send(helper.getMimeMessage());
-        } catch (MessagingException e) {
-            Integer a = 1;
-        }
+        // try {
+            // MimeMessage message = javaMailSender.createMimeMessage();
+            // MimeMessageHelper helper = new MimeMessageHelper(message);
+            // helper.setTo("oliverdernie1@gmail.com");
+            // Long unix = System.currentTimeMillis();
+            // helper.setSubject("The QB Carousel - " + unix);
+            // helper.setFrom(fromEmailAddress);
+            // // mailMessage.setText(content,true);
+            // helper.setText(content, true);
+            // javaMailSender.send(helper.getMimeMessage());
+        // } catch (MessagingException e) {
+        //     Integer a = 1;
+        // }
+        String content = getEmailSubscriptionTypeTemplate(emailSubscriptionTypeID);
+        content = doNonUsernameReplacements(
+            content,
+            ordinalPredictionPeriod,
+            predictionSeason,
+            qbPredictionsURL,
+            daysLeft,
+            toEvent,
+            toEventDateTimeET
+        );
+        sendEmail(
+            "oliverdernie1@gmail.com",
+            fromEmailAddress,
+            "The QB Carousel - " + System.currentTimeMillis(),
+            content
+        );
     }
 
     public void sendEmail(
@@ -89,25 +96,24 @@ public class EmailBuilderService {
         }
     }
 
-    private String doReplacements(
+    private String doNonUsernameReplacements(
         String content,
-        String username,
         String ordinalPredictionPeriod,
         String predictionSeason,
         String qbPredictionsURL,
         String daysLeft,
         String toEvent,
-        String toEventDateTimeET,
-        String unsubscribeURL
+        String toEventDateTimeET
     ) {
-        content = content.replace("[username]", username);
         content = content.replace("[ordinalPredictionPeriod]", ordinalPredictionPeriod);
         content = content.replace("[predictionSeason]", predictionSeason);
-        content = content.replace("[qbPredictionsURL]", qbPredictionsURL);
         content = content.replace("[daysLeft]", daysLeft);
         content = content.replace("[toEvent]", toEvent);
         content = content.replace("[toEventDateTimeET]", toEventDateTimeET);
-        content = content.replace("[unsubscribeURL]", unsubscribeURL);
+        content = content.replace(
+            "[qbPredictionsURL]",
+            frontEndURL + "/qb-predictions"
+        );
         return content;
     }
 
