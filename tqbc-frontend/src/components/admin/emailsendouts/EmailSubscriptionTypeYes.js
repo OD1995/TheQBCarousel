@@ -8,6 +8,8 @@ export const EmailSubscriptionTypeYes = () => {
     const [displayedHTML, setDisplayedHTML] = useState("");
     const [showAreYouSure, setShowAreYouSure] = useState(false)
     const [replacerInputs, setReplacerInputs] = useState([]);
+    const [actionResult, setActionResult] = useState("testing");
+    const [actionResultColour, setActionResultColour] = useState("black");
     
     const [searchParams, setSearchParams] = useSearchParams();
     const params = useParams();
@@ -16,11 +18,11 @@ export const EmailSubscriptionTypeYes = () => {
         1 : [
             'ordinalPredictionPeriod',
             'predictionSeason',
-            'qbPredictionsURL',
+            // 'qbPredictionsURL',
             'daysLeft',
             'toEvent',
             'toEventDateTimeET',
-            'unsubscribeURL'
+            // 'unsubscribeURL'
         ]
     }
 
@@ -37,13 +39,6 @@ export const EmailSubscriptionTypeYes = () => {
             )
         },
         []
-    )
-
-    useEffect(
-        () => {
-            let a=1;
-        },
-        [searchParams]
     )
 
     const generateReplacerInputs = (input_list) => {
@@ -64,8 +59,6 @@ export const EmailSubscriptionTypeYes = () => {
                     <input
                         className="estyes-input-box"
                         id={il}
-                        // value={startingVal}
-                        // onChange={(ev) => updateReplacerVals(ev,il)}
                         onChange={updateReplacerVals}
                     />
                 </div>
@@ -75,16 +68,6 @@ export const EmailSubscriptionTypeYes = () => {
     }
 
     const updateReplacerVals = (ev) => {
-        // setReplacerVals(
-        //     prevState => {
-        //         let a = 1;
-        //         let b ={
-        //             ...prevState,
-        //             [key]: ev.target.value
-        //         };
-        //         return b; 
-        //     }
-        // );
         let key = ev.target.id;
         if (ev.target.value !== "") {
             searchParams.set(key,ev.target.value);
@@ -98,18 +81,29 @@ export const EmailSubscriptionTypeYes = () => {
     const doReplacements = (txt) => {
         var dh = txt;
         for (const [key,value] of searchParams.entries()) {
-            // let A = Object.keys({myFirstName})[0]
             dh = dh.replace("["+key+"]",value);
         }
         setDisplayedHTML(dh);
     }
 
     const handleUpdateClick = () => {
-        // for (const [key,value] of replacerVals.entries()) {
-        //     searchParams.set(key,value);
-        // }
-        // setSearchParams(searchParams);
         doReplacements(originalHTML);
+    }
+
+    const sendEmailToJustMe = () => {
+        EmailService.sendEmailJustToMe(
+            displayedHTML
+        ).then(
+            (res) => {
+                setActionResultColour("green")
+                setActionResult("Success")
+            }
+        ).catch(
+            (err) => {
+                setActionResultColour("red");
+                setActionResult(err.response.data.message);
+            }
+        )
     }
 
     return (
@@ -137,6 +131,16 @@ export const EmailSubscriptionTypeYes = () => {
                         </button>
                     )
                 }
+                {
+                    showAreYouSure && (
+                        <button
+                            className="tqbc-red-button"
+                            onClick={() => setShowAreYouSure(false)}
+                        >
+                            No
+                        </button>
+                    )
+                }
                 <button
                     id="estyes-update-button"
                     className="tqbc-green-button"
@@ -146,6 +150,7 @@ export const EmailSubscriptionTypeYes = () => {
                 </button>
                 <button
                     className="tqbc-green-button"
+                    onClick={sendEmailToJustMe}
                 >
                     Send Email To Just Me
                 </button>
@@ -156,6 +161,14 @@ export const EmailSubscriptionTypeYes = () => {
                     Send Email To All Users
                 </button>
             </div>
+            <p
+                style={{
+                    color: actionResultColour,
+                    marginTop: "8vh"
+                }}
+            >
+                {actionResult}
+            </p>
         </div>
     );
 }

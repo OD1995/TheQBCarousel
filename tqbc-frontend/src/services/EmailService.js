@@ -21,6 +21,17 @@ class EmailService {
             }
         );
     }
+
+    sendEmailJustToMe(
+        emailHtml
+    ) {
+        return api.post(
+            this.base_url + "send-email-just-to-me",
+            {
+                emailHtml
+            }
+        )
+    }
 }
 
 export default new EmailService();

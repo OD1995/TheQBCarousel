@@ -70,6 +70,25 @@ public class EmailBuilderService {
         }
     }
 
+    public void sendEmail(
+        String toEmailAddress,
+        String fromEmailAddress,
+        String subject,
+        String htmlBody
+    ) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message);
+            helper.setTo(toEmailAddress);
+            helper.setSubject(subject);
+            helper.setFrom(fromEmailAddress);
+            helper.setText(htmlBody, true);
+            javaMailSender.send(helper.getMimeMessage());
+        } catch (MessagingException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
     private String doReplacements(
         String content,
         String username,
