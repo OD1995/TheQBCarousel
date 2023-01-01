@@ -4,10 +4,8 @@ public class SendEmailRequest {
 
     private String emailHtml;
 
+    private long emailSubscriptionTypeID;
 
-    // public SendEmailRequest(String emailHtml) {
-    //     this.emailHtml = emailHtml;
-    // }
 
     public String getEmailHtml() {
         return this.emailHtml;
@@ -16,5 +14,14 @@ public class SendEmailRequest {
     public void setEmailHtml(String emailHtml) {
         this.emailHtml = emailHtml;
     }
+
+    public long getEmailSubscriptionTypeID() {
+        return this.emailSubscriptionTypeID;
+    }
+
+    public void setEmailSubscriptionTypeID(long emailSubscriptionTypeID) {
+        this.emailSubscriptionTypeID = emailSubscriptionTypeID;
+    }
+    
 
 }

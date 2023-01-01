@@ -45,17 +45,18 @@ public class EmailController {
 
     @GetMapping("/send-email")
     public void sendEmail() {
-        emailBuilderService.sendReminderEmail(
-            1,
-            "OliD",
-            "first",
-            "2023",
-            "http://localhost:8081/qb-predictions",
-            "100",
-            "KO of the 2022 Regular Season opener",
-            "7.20pm (US Eastern Time) on 9th September 2022",
-            "http://localhost:8081/qb-predictions"
-        );
+        // emailBuilderService.sendReminderEmail(
+        //     1,
+        //     "OliD",
+        //     "first",
+        //     "2023",
+        //     "http://localhost:8081/qb-predictions",
+        //     "100",
+        //     "KO of the 2022 Regular Season opener",
+        //     "7.20pm (US Eastern Time) on 9th September 2022",
+        //     "http://localhost:8081/qb-predictions"
+        // );
+        emailBuilderService.bulkSendEmails();
     }
 
     @GetMapping("/get-email-subscription-type-template")

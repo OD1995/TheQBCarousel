@@ -3,8 +3,16 @@ package mygroup.tqbcbackend.service;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+import java.util.stream.IntStream;
 
+import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
+import javax.mail.Session;
+import javax.mail.Transport;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +42,18 @@ public class EmailBuilderService {
 	
 	@Value("${tqdm.app.frontEndURL}")
 	private String frontEndURL;
+
+    @Value("${spring.mail.host}")
+	private String host;
+
+    @Value("${spring.mail.port}")
+	private String port;
+
+    @Value("${spring.mail.username}")
+	private String username;
+
+    @Value("${spring.mail.password}")
+	private String password;
 
     public void sendReminderEmail(
         long emailSubscriptionTypeID,
@@ -77,9 +97,9 @@ public class EmailBuilderService {
         );
     }
 
-    public void sendEmail(
+
+    private MimeMessage createMessage(
         String toEmailAddress,
-        String fromEmailAddress,
         String subject,
         String htmlBody
     ) {
@@ -90,10 +110,20 @@ public class EmailBuilderService {
             helper.setSubject(subject);
             helper.setFrom(fromEmailAddress);
             helper.setText(htmlBody, true);
-            javaMailSender.send(helper.getMimeMessage());
+            return helper.getMimeMessage();
         } catch (MessagingException e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    public void sendEmail(
+        String toEmailAddress,
+        String fromEmailAddress,
+        String subject,
+        String htmlBody
+    ) {
+        MimeMessage msg = createMessage(toEmailAddress, subject, htmlBody);
+        javaMailSender.send(msg);
     }
 
     private String doNonUsernameReplacements(
@@ -126,6 +156,50 @@ public class EmailBuilderService {
             String content = Files.asCharSource(file, Charsets.UTF_8).read();
             return content;
         } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public void bulkSendEmails(
+        // String emailHtml,
+        // long emailSubscriptionTypeID
+    ) {
+        List<Message> messages = new ArrayList<Message>();
+        IntStream.range(0, 50).forEach(
+            i -> {
+                messages.add(
+                    createMessage(
+                        "oliverdernie1@gmail.com",
+                        "Test3",
+                        "Test3"
+                    )
+                );
+            }
+        );
+        
+        Properties props = new Properties();
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.connectiontimeout", "50000");
+        props.put("mail.smtp.writetimeout", "50000");
+        props.put("mail.smtp.starttls.required", "true");
+        props.put("mail.smtp.timeout", "50000");
+        props.put("mail.transport.protocol", "smtp");
+        Session session = Session.getDefaultInstance(props);
+        try {
+            try (Transport t = session.getTransport()) {
+                t.connect(
+                    host,
+                    Integer.parseInt(port),
+                    username,
+                    password
+                );
+                for(Message m : messages) {
+                    m.saveChanges();
+                    t.sendMessage(m, m.getAllRecipients());
+                }
+            }
+        } catch (MessagingException  e) {
             throw new RuntimeException(e.getMessage());
         }
     }
