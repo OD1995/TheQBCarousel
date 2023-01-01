@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
-import mygroup.tqbcbackend.model.EmailSubscriptionType;
+import mygroup.tqbcbackend.model.EmailType;
 import mygroup.tqbcbackend.payload.request.SendEmailRequest;
-import mygroup.tqbcbackend.repository.EmailSubscriptionTypeRepository;
+import mygroup.tqbcbackend.repository.EmailTypeRepository;
 import mygroup.tqbcbackend.service.EmailBuilderService;
 
 @CrossOrigin(origins = "*")
@@ -30,7 +30,7 @@ import mygroup.tqbcbackend.service.EmailBuilderService;
 public class EmailController {
     
     @Autowired
-    private EmailSubscriptionTypeRepository emailSubscriptionTypeRepository;
+    private EmailTypeRepository emailTypeRepository;
     
     @Autowired
     private EmailBuilderService emailBuilderService;
@@ -39,8 +39,8 @@ public class EmailController {
 	private String fromEmailAddress;
 
     @GetMapping("/get-email-subscription-types")
-    public List<EmailSubscriptionType> getEmailSubscriptionTypes() {
-        return emailSubscriptionTypeRepository.findAll();
+    public List<EmailType> getEmailSubscriptionTypes() {
+        return emailTypeRepository.findByIsSubscriptionTrue();
     }
 
     @GetMapping("/send-email")

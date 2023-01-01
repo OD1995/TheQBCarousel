@@ -158,16 +158,17 @@ public class AuthController {
 				signupRequest.getEmail(),
 				franchise,
 				encoder.encode(signupRequest.getPassword()),
-				false,
-				new Date()
+				false
+				// new Date()
+				// Instant.now()
 			);
 		} else {
 			user = new User(
 				signupRequest.getUsername(),
 				signupRequest.getEmail(),
 				encoder.encode(signupRequest.getPassword()),
-				false,
-				new Date()
+				false
+				// new Date()
 			);
 		}
 		

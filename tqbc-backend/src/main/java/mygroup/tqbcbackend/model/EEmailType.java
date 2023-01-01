@@ -1,0 +1,7 @@
+package mygroup.tqbcbackend.model;
+
+public enum EEmailType {
+    EMAILTYPE_PREDICTIONPERIODOPEN,
+    EMAILTYPE_PREDICTIONPERIODCLOSE,
+    EMAILTYPE_EMAILVERIFICATION
+}

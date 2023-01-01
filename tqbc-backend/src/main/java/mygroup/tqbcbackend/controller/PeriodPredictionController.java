@@ -76,7 +76,6 @@ public class PeriodPredictionController {
 					userID,
 					prediction.getTeamID(),
 					playerMap.get(prediction.getPlayerID()),
-					new Date(),
 					null
 			);
 			

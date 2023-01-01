@@ -7,7 +7,9 @@ Admin board
  - summary stats
   - total users
   - users by prediction period
-Only allow unsubscription by clicking on link of relevant email, no page to do it
+Only allow unsubscription by clicking on link of relevant email, no page to do it, use referrer to go to page
+Check if reset password is possible
+Check refresh token last usage updates
 
 Long term
 -X- Have predictions board show predictions if already been made in the prediction period
@@ -26,8 +28,8 @@ Long term
 --- Remove twitter script import and check twitter stuff works still
 --- Search for localhost in both frontend and backend and also 2022
 --- Global leaderboard will only go live once 2023 answers are in
---- Link user to favourite Franchise rather than Team
+-X- Link user to favourite Franchise rather than Team
 -X- Clean up register and login pages
---- Clean up admin board
+-X- Clean up admin board
 --- Bulk reminder email sendouts
 --- Go through all pages and remove duplicate requests

@@ -1,5 +1,6 @@
 package mygroup.tqbcbackend.model;
 
+import java.time.Instant;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -36,8 +37,8 @@ public class PeriodPrediction {
 	private Player player;
 	
 	@Column(name = "PredictionDateTimeUTC")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date predictionDateTimeUTC;
+	// @Temporal(TemporalType.TIMESTAMP)
+	private Instant predictionDateTimeUTC;
 	
 	@Column(name = "IsCorrect")
 	private Boolean isCorrect;
@@ -46,11 +47,17 @@ public class PeriodPrediction {
 
 	}
 
-	public PeriodPrediction(long predictionPeriodID, long userID, long teamID, Player player, Date predictionDateTimeUTC, Boolean isCorrect) {
+	public PeriodPrediction(
+		long predictionPeriodID,
+		long userID,
+		long teamID,
+		Player player,
+		Boolean isCorrect
+	) {
 		super();
 		this.periodPredictionCompositeKey = new PeriodPredictionCompositeKey(predictionPeriodID, userID, teamID);
 		this.player = player;
-		this.predictionDateTimeUTC = predictionDateTimeUTC;
+		this.predictionDateTimeUTC = Instant.now();
 		this.isCorrect = isCorrect;
 	}
 
@@ -70,7 +77,7 @@ public class PeriodPrediction {
 		this.player = player;
 	}
 
-	public Date getPredictionDateTimeUTC() {
+	public Instant getPredictionDateTimeUTC() {
 		return predictionDateTimeUTC;
 	}
 

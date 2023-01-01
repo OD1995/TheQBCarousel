@@ -1,5 +1,6 @@
 package mygroup.tqbcbackend.model;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -76,9 +77,8 @@ public class User {
 	@Column(name = "IsAuthenticated")
 	private boolean isAuthenticated;
 		
-	@Column(name = "UserCreated")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date userCreated;
+	@Column(name = "UserCreatedDateTimeUTC")
+	private Instant userCreatedDateTimeUTC;
 	
 	@OneToMany(
 		targetEntity = PeriodPrediction.class,
@@ -88,27 +88,34 @@ public class User {
 	private List<PeriodPrediction> periodPredictions;
 	
 	@OneToMany(
-			targetEntity = PrivateLeaderboard.class,
-			fetch = FetchType.LAZY,
-			mappedBy = "ownerUser"
+		targetEntity = PrivateLeaderboard.class,
+		fetch = FetchType.LAZY,
+		mappedBy = "ownerUser"
 	)
 	@Nullable
 	// @JsonBackReference
 	private List<PrivateLeaderboard> ownedPrivateLeaderboards;
 	
 	@OneToMany(
-			targetEntity = PrivateLeaderboardMember.class,
-			fetch = FetchType.LAZY,
-			mappedBy = "user"
+		targetEntity = PrivateLeaderboardMember.class,
+		fetch = FetchType.LAZY,
+		mappedBy = "user"
 	)
 	private List<PrivateLeaderboardMember> privateLeaderboardMemberships;
 	
 	@OneToMany(
-			targetEntity = UserScore.class,
-			fetch = FetchType.LAZY,
-			mappedBy = "user"
+		targetEntity = UserScore.class,
+		fetch = FetchType.LAZY,
+		mappedBy = "user"
 	)
 	private List<UserScore> scores;
+
+	@OneToMany(
+		targetEntity = EmailHistory.class,
+		fetch = FetchType.LAZY,
+		mappedBy = "user"
+	)
+	private List<EmailHistory> emailsReceived;
 	
 	public User() {
 		
@@ -119,8 +126,8 @@ public class User {
 		@Email String email,
 		Franchise favouriteFranchise,
 		@NotBlank @Size(max = 120) String password,
-		boolean isAuthenticated,
-		Date userCreated
+		boolean isAuthenticated
+		// Date userCreated
 	) {
 		super();
 		this.username = username;
@@ -129,15 +136,15 @@ public class User {
 		this.password = password;
 //		this.roles = roles;
 		this.isAuthenticated = isAuthenticated;
-		this.userCreated = userCreated;
+		this.userCreatedDateTimeUTC = Instant.now();
 	}
 
 	public User(
 		@NotBlank @Size(max = 20) String username,
 		@Email String email,
 		@NotBlank @Size(max = 120) String password,
-		boolean isAuthenticated,
-		Date userCreated
+		boolean isAuthenticated
+		// Date userCreated
 	) {
 		super();
 		this.username = username;
@@ -146,26 +153,8 @@ public class User {
 		this.password = password;
 		// this.roles = roles;
 		this.isAuthenticated = isAuthenticated;
-		this.userCreated = userCreated;
+		this.userCreatedDateTimeUTC = Instant.now();
 	}
-
-//	public User(
-//			@NotBlank @Size(max = 20) String username,
-//			@Email String email,
-//			null,
-//			@NotBlank @Size(max = 120) String password,
-//			boolean isAuthenticated,
-//			Date userCreated
-//	) {
-//		super();
-//		this.username = username;
-//		this.email = email;
-//		this.favouriteTeam = favouriteTeam;
-//		this.password = password;
-////		this.roles = roles;
-//		this.isAuthenticated = isAuthenticated;
-//		this.userCreated = userCreated;
-//	}
 
 	public long getUserID() {
 		return userID;
@@ -223,12 +212,12 @@ public class User {
 		this.isAuthenticated = isAuthenticated;
 	}
 
-	public Date getUserCreated() {
-		return userCreated;
+	public Instant getUserCreatedDateTimeUTC() {
+		return userCreatedDateTimeUTC;
 	}
 
-	public void setUserCreated(Date userCreated) {
-		this.userCreated = userCreated;
+	public void setUserCreatedDateTimeUTC(Instant userCreatedDateTimeUTC) {
+		this.userCreatedDateTimeUTC = userCreatedDateTimeUTC;
 	}
 
 	public List<PrivateLeaderboardMember> getPrivateLeaderboardMemberships() {
@@ -243,12 +232,12 @@ public class User {
 			return false;
 		}
 		User user = (User) o;
-		return userID == user.userID && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(favouriteFranchise, user.favouriteFranchise) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles) && isAuthenticated == user.isAuthenticated && Objects.equals(userCreated, user.userCreated) && Objects.equals(periodPredictions, user.periodPredictions) && Objects.equals(ownedPrivateLeaderboards, user.ownedPrivateLeaderboards) && Objects.equals(privateLeaderboardMemberships, user.privateLeaderboardMemberships) && Objects.equals(scores, user.scores);
+		return userID == user.userID && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(favouriteFranchise, user.favouriteFranchise) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles) && isAuthenticated == user.isAuthenticated && Objects.equals(userCreatedDateTimeUTC, user.userCreatedDateTimeUTC) && Objects.equals(periodPredictions, user.periodPredictions) && Objects.equals(ownedPrivateLeaderboards, user.ownedPrivateLeaderboards) && Objects.equals(privateLeaderboardMemberships, user.privateLeaderboardMemberships) && Objects.equals(scores, user.scores);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(userID, username, email, favouriteFranchise, password, roles, isAuthenticated, userCreated, periodPredictions, ownedPrivateLeaderboards, privateLeaderboardMemberships, scores);
+		return Objects.hash(userID, username, email, favouriteFranchise, password, roles, isAuthenticated, userCreatedDateTimeUTC, periodPredictions, ownedPrivateLeaderboards, privateLeaderboardMemberships, scores);
 	}
 	
 }

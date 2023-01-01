@@ -1,5 +1,6 @@
 package mygroup.tqbcbackend.model;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.UUID;
 
@@ -14,6 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.criteria.CriteriaBuilder.In;
 
 @Entity
 @Table(name = "ConfirmationTokens")
@@ -26,9 +28,9 @@ public class ConfirmationToken {
 	@Column(name = "ConfirmationToken")
 	private String confirmationToken;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CreatedDate")
-	private Date createdDate;
+	// @Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CreatedDateTimeUTC")
+	private Instant createdDateTimeUTC;
 	
 	@OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
 	@JoinColumn(nullable = false, name = "UserID")
@@ -40,7 +42,7 @@ public class ConfirmationToken {
 	
 	public ConfirmationToken(User user) {
 		this.user = user;
-		createdDate = new Date();
+		this.createdDateTimeUTC = Instant.now();
 		confirmationToken = UUID.randomUUID().toString();
 	}
 
@@ -60,12 +62,12 @@ public class ConfirmationToken {
 		this.confirmationToken = confirmationToken;
 	}
 
-	public Date getCreatedDate() {
-		return createdDate;
+	public Instant getCreatedDateTimeUTC() {
+		return createdDateTimeUTC;
 	}
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
+	public void setCreatedDateTimeUTC(Instant createdDateTimeUTC) {
+		this.createdDateTimeUTC = createdDateTimeUTC;
 	}
 
 	public User getUser() {
