@@ -5,7 +5,7 @@ import './PredictionMarking.css';
 export const PredictionMarking = () => {
     
     const [season, setSeason] = useState("");
-    const [responseText, setResponseText] = useState("some example text")
+    const [responseText, setResponseText] = useState("")
     const [responseColour, setResponseColour] = useState("black");
 
     const onChangeSeason = (ev) => {

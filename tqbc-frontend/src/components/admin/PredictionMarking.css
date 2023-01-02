@@ -20,3 +20,9 @@
 #prediction-marking-response-text {
     margin-top: 5vh;
 }
+
+#soqe-content-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.mail.Message;
 import javax.management.RuntimeErrorException;
 import javax.validation.Valid;
 
@@ -30,6 +31,7 @@ import mygroup.tqbcbackend.model.EmailTemplate;
 import mygroup.tqbcbackend.model.EmailType;
 import mygroup.tqbcbackend.model.User;
 import mygroup.tqbcbackend.payload.request.SendEmailRequest;
+import mygroup.tqbcbackend.payload.response.SendOutQueuedEmailsResponse;
 import mygroup.tqbcbackend.repository.EmailHistoryRepository;
 import mygroup.tqbcbackend.repository.EmailSubscriptionRepository;
 import mygroup.tqbcbackend.repository.EmailTemplateRepository;
@@ -68,21 +70,21 @@ public class EmailController {
         return emailTypeRepository.findByIsSubscriptionTrue();
     }
 
-    @GetMapping("/send-email")
-    public void sendEmail() {
-        // emailBuilderService.sendReminderEmail(
-        //     1,
-        //     "OliD",
-        //     "first",
-        //     "2023",
-        //     "http://localhost:8081/qb-predictions",
-        //     "100",
-        //     "KO of the 2022 Regular Season opener",
-        //     "7.20pm (US Eastern Time) on 9th September 2022",
-        //     "http://localhost:8081/qb-predictions"
-        // );
-        emailBuilderService.bulkSendEmails();
-    }
+    // @GetMapping("/send-email")
+    // public void sendEmail() {
+    //     // emailBuilderService.sendReminderEmail(
+    //     //     1,
+    //     //     "OliD",
+    //     //     "first",
+    //     //     "2023",
+    //     //     "http://localhost:8081/qb-predictions",
+    //     //     "100",
+    //     //     "KO of the 2022 Regular Season opener",
+    //     //     "7.20pm (US Eastern Time) on 9th September 2022",
+    //     //     "http://localhost:8081/qb-predictions"
+    //     // );
+    //     emailBuilderService.bulkSendEmails();
+    // }
 
     @PostMapping("/queue-email-to-all-subscribed-users")
     public int queueEmailToAllSubscribedUsers(
@@ -147,5 +149,27 @@ public class EmailController {
             "Test " + System.currentTimeMillis(),
             sendEmailRequest.getEmailHtml()
         );
+    }
+
+    @GetMapping("/get-total-unsent-emails-count")
+    public int getTotalUnsentEmailsCount() {
+        return emailHistoryRepository.countByEmailSentDateTimeUTCIsNull();
+    }
+
+    @GetMapping("/send-out-queued-emails")
+    public SendOutQueuedEmailsResponse sendOutQueuedEmails() {
+        // Get all unsent emails
+        List<EmailHistory> emailsToSend = emailHistoryRepository.findByEmailSentDateTimeUTCIsNull();
+        // Send them
+        SendOutQueuedEmailsResponse r = emailBuilderService.bulkSendQueuedEmails(emailsToSend);
+        // List<String> E = new ArrayList<String>();
+        // E.add("example 1");
+        // E.add("another example");
+        // SendOutQueuedEmailsResponse r = new SendOutQueuedEmailsResponse(
+        //     10,
+        //     E
+        // );
+        return r;
+        // throw new RuntimeException("hi");
     }
 }

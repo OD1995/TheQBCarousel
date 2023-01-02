@@ -8,7 +8,7 @@ export const EmailSubscriptionTypeYes = () => {
     const [displayedHTML, setDisplayedHTML] = useState("");
     const [showAreYouSure, setShowAreYouSure] = useState(false)
     const [replacerInputs, setReplacerInputs] = useState([]);
-    const [actionResult, setActionResult] = useState("testing");
+    const [actionResult, setActionResult] = useState("");
     const [actionResultColour, setActionResultColour] = useState("black");
     
     const [searchParams, setSearchParams] = useSearchParams();

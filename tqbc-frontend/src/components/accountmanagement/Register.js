@@ -231,7 +231,7 @@ const Register = () => {
                             gridColumn: 1
                         }}
                     >
-                        Favourite Team
+                        Fav Team
                     </h5>
                     <div
                         style={{

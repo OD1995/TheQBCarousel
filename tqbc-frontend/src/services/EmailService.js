@@ -45,7 +45,19 @@ class EmailService {
                 emailSubscriptionTypeID,
                 predictionPeriodID
             }
-        )
+        );
+    }
+
+    getTotalUnsentEmailsCount() {
+        return api.get(
+            this.base_url + "get-total-unsent-emails-count"
+        );
+    }
+
+    sendOutQueuedEmails() {
+        return api.get(
+            this.base_url + "send-out-queued-emails"
+        );
     }
 }
 

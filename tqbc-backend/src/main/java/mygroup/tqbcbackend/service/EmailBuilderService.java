@@ -3,6 +3,7 @@ package mygroup.tqbcbackend.service;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -29,6 +30,8 @@ import com.google.common.io.Files;
 import io.micrometer.core.instrument.util.IOUtils;
 import mygroup.tqbcbackend.model.EmailHistory;
 import mygroup.tqbcbackend.model.User;
+import mygroup.tqbcbackend.payload.response.SendOutQueuedEmailsResponse;
+import mygroup.tqbcbackend.repository.EmailHistoryRepository;
 
 @Service
 public class EmailBuilderService {
@@ -56,6 +59,9 @@ public class EmailBuilderService {
 
     @Value("${spring.mail.password}")
 	private String password;
+
+    @Autowired
+    private EmailHistoryRepository emailHistoryRepository;
 
     public void sendReminderEmail(
         long emailSubscriptionTypeID,
@@ -100,7 +106,7 @@ public class EmailBuilderService {
     }
 
 
-    private MimeMessage createMessage(
+    public MimeMessage createMessage(
         String toEmailAddress,
         String subject,
         String htmlBody
@@ -167,19 +173,20 @@ public class EmailBuilderService {
         // long emailSubscriptionTypeID
         // List<Message> messages
         // List<EmailHistory> emails
+        List<Message> messages
     ) {
-        List<Message> messages = new ArrayList<Message>();
-        IntStream.range(0, 10).forEach(
-            i -> {
-                messages.add(
-                    createMessage(
-                        "oliverdernie1@gmail.com",
-                        "Test4",
-                        "Test4"
-                    )
-                );
-            }
-        );
+        // List<Message> messages = new ArrayList<Message>();
+        // IntStream.range(0, 10).forEach(
+        //     i -> {
+        //         messages.add(
+        //             createMessage(
+        //                 "oliverdernie1@gmail.com",
+        //                 "Test4",
+        //                 "Test4"
+        //             )
+        //         );
+        //     }
+        // );
         
         Properties props = new Properties();
         props.put("mail.smtp.starttls.enable", "true");
@@ -207,6 +214,57 @@ public class EmailBuilderService {
         } catch (MessagingException  e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    public SendOutQueuedEmailsResponse bulkSendQueuedEmails(
+        List<EmailHistory> emailsToSend
+    ) {
+        Properties props = new Properties();
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.connectiontimeout", "50000");
+        props.put("mail.smtp.writetimeout", "50000");
+        props.put("mail.smtp.starttls.required", "true");
+        props.put("mail.smtp.timeout", "50000");
+        props.put("mail.transport.protocol", "smtp");
+        Session session = Session.getInstance(props);
+        List<String> errors = new ArrayList<String>();
+        Integer emailsSentCount = 0;
+        try {
+            try (Transport t = session.getTransport()) {
+                t.connect(
+                    host,
+                    Integer.parseInt(port),
+                    username,
+                    password
+                );
+                for (EmailHistory emailHistory : emailsToSend) {
+                    try {
+                        String emailBody = buildEmailBodyForUser(
+                            emailHistory.getEmailTemplate().getEmailTemplate(),
+                            emailHistory.getUser()
+                        );
+                        Message msg = createMessage(
+                            emailHistory.getToEmailAddress(),
+                            emailHistory.getEmailTemplate().getEmailSubject(),
+                            emailBody  
+                        );
+                        // Maybe comment out the line below
+                        msg.saveChanges();
+                        t.sendMessage(msg, msg.getAllRecipients());
+                        emailHistory.setEmailSentDateTimeUTC(Instant.now());
+                        emailHistoryRepository.save(emailHistory);
+                        emailsSentCount += 1;
+                    } catch (MessagingException e) {
+                        errors.add(e.getMessage());
+                    }
+                }
+            }
+        } catch (MessagingException  e) {
+            // throw new RuntimeException(e.getMessage());
+            errors.add(e.getMessage());
+        }
+        return new SendOutQueuedEmailsResponse(emailsSentCount, errors);
     }
 
     public String buildEmailBodyForUser(

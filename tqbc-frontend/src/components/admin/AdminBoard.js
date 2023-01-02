@@ -88,7 +88,12 @@ const AdminBoard = () => {
                     <a
                         href="/email-send-outs"
                     >
-                        Email Send Outs
+                        Queue Email Send Outs
+                    </a>
+                    <a
+                        href="/send-out-queued-emails"
+                    >
+                        Send Out Queued Emails
                     </a>
                 </div>
             </div>

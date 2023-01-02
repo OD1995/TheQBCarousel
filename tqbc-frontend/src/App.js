@@ -34,6 +34,7 @@ import TokenService from './services/Token.service';
 import AdminBoard from './components/admin/AdminBoard';
 import { PredictionMarking } from './components/admin/PredictionMarking';
 import { EmailSendOuts } from './components/admin/emailsendouts/EmailSendOuts';
+import { SendOutQueuedEmails } from './components/admin/emailsendouts/SendOutQueuedEmails';
 
 const App = () => {
 	const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -148,6 +149,10 @@ const App = () => {
 						<Route
 							path="/email-send-outs/:emailSubscriptionTypeID"
 							element={<EmailSendOuts/>}
+						/>
+						<Route
+							path="/send-out-queued-emails"
+							element={<SendOutQueuedEmails/>}
 						/>
 						<Route path='/*' element={<PageDoesntExist/>}/>
 					</Routes>
