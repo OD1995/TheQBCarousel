@@ -36,6 +36,8 @@ import { PredictionMarking } from './components/admin/PredictionMarking';
 import { EmailSendOuts } from './components/admin/emailsendouts/EmailSendOuts';
 import { SendOutQueuedEmails } from './components/admin/emailsendouts/SendOutQueuedEmails';
 import { Unsubscribe } from './components/accountmanagement/Unsubscribe';
+import { ForgottenPasswordEmailEntry } from './components/accountmanagement/ForgottenPasswordEmailEntry';
+import { ForgottenPasswordPasswordEntry } from './components/accountmanagement/ForgottenPasswordPasswordEntry';
 
 const App = () => {
 	const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -158,6 +160,14 @@ const App = () => {
 						<Route
 							path="/unsubscribe/:emailSubscriptionType"
 							element={<Unsubscribe/>}
+						/>
+						<Route
+							path="/forgotten-password/email-entry"
+							element={<ForgottenPasswordEmailEntry/>}
+						/>
+						<Route
+							path="/forgotten-password/password-entry"
+							element={<ForgottenPasswordPasswordEntry/>}
 						/>
 						<Route path='/*' element={<PageDoesntExist/>}/>
 					</Routes>

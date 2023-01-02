@@ -231,12 +231,19 @@ public class EmailBuilderService {
         return S;
     }
 
-    public void sendVerificationEmail(
+    public void sendNonSubscriptionTypeEmail(
+        long emailTemplateID,
         User user,
         ConfirmationToken confirmationToken
     ) {
+
+        // 1 = email verification
+        // 2 = password reset
+
         // Get the template used for email verification
-        EmailTemplate emailTemplate = emailTemplateRepository.findByEmailTemplateID(1);
+        EmailTemplate emailTemplate = emailTemplateRepository.findByEmailTemplateID(
+            emailTemplateID
+        );
         // Create an email history row
         EmailHistory emailHistory = new EmailHistory(
             user,

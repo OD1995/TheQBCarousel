@@ -173,6 +173,16 @@ const Login = (props) => {
                     >
                         {passwordError}
                     </p>
+                    <a
+                        href="/forgotten-password/email-entry"
+                        style={{
+                            gridRow: 5,
+                            gridColumnStart: 1,
+                            gridColumnEnd: 3
+                        }}
+                    >
+                        Forgotten Password?
+                    </a>
 
                 </div>
                 <button

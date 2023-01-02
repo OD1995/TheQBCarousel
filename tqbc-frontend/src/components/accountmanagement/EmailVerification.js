@@ -11,11 +11,9 @@ const EmailVerification = () => {
 
     const dispatch = useDispatch();
 
-    console.log("message: " + message);
-
     useEffect(
         () => {
-            searchParams.get("token")
+            // searchParams.get("token")
             let token = searchParams.get("token");
             dispatch(verifyEmail(token));
         },

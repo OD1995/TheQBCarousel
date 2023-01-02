@@ -32,5 +32,40 @@ class AuthService {
             }
         )
     }
+
+    sendPasswordResetEmail(
+        email
+    ) {
+        return api.post(
+            this.base_url + "send-password-reset-email",
+            {
+                email
+            }
+        )
+    }
+
+    checkPasswordResetToken(
+        token
+    ) {
+        return api.post(
+            this.base_url + "check-password-reset-token",
+            {
+                token
+            }
+        )
+    }
+
+    updateUserPassword(
+        userID,
+        password
+    ) {
+        return api.post(
+            this.base_url + "update-user-password",
+            {
+                userID,
+                password
+            }
+        )
+    }
 }
 export default new AuthService();

@@ -19,3 +19,23 @@ VALUES
     The QB Carousel
     </p>
 </div>');
+
+-- Create password reset email template
+INSERT INTO emailtemplates
+(EmailTemplateID, EmailSubject, EmailTypeID, EmailTemplate)
+VALUES
+(2,'The QB Carousel - Password Reset',4,
+'<div>
+    <p>
+        Hi [username]
+    </p>
+    <p>
+        To set a new password, please
+        <a href="tqbcDomain/forgotten-password/password-entry?token=[confirmationToken]">click here</a>.
+    </p>
+    <p
+        style="white-space: pre-line;"
+    >Thanks
+    The QB Carousel
+    </p>
+</div>');

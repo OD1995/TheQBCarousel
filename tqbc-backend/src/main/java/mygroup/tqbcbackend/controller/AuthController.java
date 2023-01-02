@@ -19,6 +19,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,6 +40,7 @@ import mygroup.tqbcbackend.model.Team;
 import mygroup.tqbcbackend.model.User;
 import mygroup.tqbcbackend.payload.request.EmailVerificationRequest;
 import mygroup.tqbcbackend.payload.request.LoginRequest;
+import mygroup.tqbcbackend.payload.request.PasswordResetRequest;
 import mygroup.tqbcbackend.payload.request.SignupRequest;
 import mygroup.tqbcbackend.payload.request.TokenRefreshRequest;
 import mygroup.tqbcbackend.payload.response.JwtResponse;
@@ -197,7 +199,11 @@ public class AuthController {
 		// Create confirmation token then email user to verify address
 		ConfirmationToken confirmationToken = new ConfirmationToken(user);
 		confirmationTokenRepository.save(confirmationToken);
-		emailBuilderService.sendVerificationEmail(user, confirmationToken);
+		emailBuilderService.sendNonSubscriptionTypeEmail(
+			1,
+			user,
+			confirmationToken
+		);
 		// SimpleMailMessage mailMessage = new SimpleMailMessage();
 		// mailMessage.setTo(user.getEmail());
 		// mailMessage.setSubject("The QB Carousel - Email Verification");
@@ -291,5 +297,51 @@ public class AuthController {
 				requestRefreshToken,
 				"Refresh token is not in database"
 			));
+	}
+
+    @PostMapping("/send-password-reset-email")
+    public ResponseEntity<?> sendPasswordResetEmail(
+        @Valid @RequestBody PasswordResetRequest passwordResetRequest
+    ) {
+        String email = passwordResetRequest.getEmail();
+        User user = userRepository.findByEmail(email)
+					.orElseThrow(() -> new UsernameNotFoundException("User Not Found with email: " + email));
+        // Create confirmation token then email user to verify address
+		ConfirmationToken confirmationToken = new ConfirmationToken(user);
+		confirmationTokenRepository.save(confirmationToken);
+		emailBuilderService.sendNonSubscriptionTypeEmail(
+			2,
+			user,
+			confirmationToken
+		);
+        return ResponseEntity.ok().build();
+    }
+
+	@PostMapping("/check-password-reset-token")
+	public long checkPasswordResetToken(
+			@Valid @RequestBody PasswordResetRequest passwordResetRequest
+	) {
+		ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(
+			passwordResetRequest.getToken()
+		);
+		
+		if (token != null) {
+			User user = userRepository.findByEmailIgnoreCase(token.getUser().getEmail());
+			return user.getUserID();
+		} else {
+			throw new RuntimeException("Invalid token");
+		}
+	}
+
+	@PostMapping("/update-user-password")
+	public ResponseEntity<?> updateUserPassword(
+		@Valid @RequestBody PasswordResetRequest passwordResetRequest
+	) {
+		User user = userRepository.findByUserID(passwordResetRequest.getUserID());
+		user.setPassword(
+			encoder.encode(passwordResetRequest.getPassword())
+		);
+		userRepository.save(user);
+		return ResponseEntity.ok().build();
 	}
 }

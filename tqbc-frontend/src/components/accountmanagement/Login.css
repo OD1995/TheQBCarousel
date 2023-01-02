@@ -27,7 +27,7 @@
 #login-input-grid {
     display: grid;
     grid-template-columns: 15vw 25vw;
-    grid-template-rows: repeat(4,8vh);
+    grid-template-rows: repeat(5,8vh);
     text-align: center;
     justify-content: center;
     justify-items: center;
