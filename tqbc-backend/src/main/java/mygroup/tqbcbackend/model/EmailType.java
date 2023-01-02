@@ -37,11 +37,11 @@ public class EmailType {
     private boolean isSubscription;
 
     @OneToMany(
-        targetEntity = EmailHistory.class,
+        targetEntity = EmailTemplate.class,
         fetch = FetchType.LAZY,
         mappedBy = "emailType"
     )
-    private List<EmailHistory> emailsSent;
+    private List<EmailTemplate> emailTemplates;
 
     public EmailType() {
     }

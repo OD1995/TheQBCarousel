@@ -6,6 +6,8 @@ public class SendEmailRequest {
 
     private long emailSubscriptionTypeID;
 
+    private long predictionPeriodID;
+
 
     public String getEmailHtml() {
         return this.emailHtml;
@@ -21,7 +23,14 @@ public class SendEmailRequest {
 
     public void setEmailSubscriptionTypeID(long emailSubscriptionTypeID) {
         this.emailSubscriptionTypeID = emailSubscriptionTypeID;
+    }    
+
+    public long getPredictionPeriodID() {
+        return this.predictionPeriodID;
     }
-    
+
+    public void setPredictionPeriodID(long predictionPeriodID) {
+        this.predictionPeriodID = predictionPeriodID;
+    }
 
 }

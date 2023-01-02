@@ -20,37 +20,18 @@ public class EmailHistory {
 
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "EmailHistoryID")
     private long emailHistoryID;
 
     @ManyToOne(
         targetEntity = User.class,
-        fetch = FetchType.LAZY
+        fetch = FetchType.EAGER
     )
-    @JoinColumn(
-        name = "UserID",
-        nullable = false,
-        insertable = false,
-        updatable = false
-    )
+    @JoinColumn(name = "UserID")
     private User user;
-
-    @ManyToOne(
-        targetEntity = EmailType.class,
-        fetch = FetchType.LAZY
-    )
-    @JoinColumn(
-        name = "EmailTypeID",
-        nullable = false,
-        insertable = false,
-        updatable = false
-    )
-    private EmailType emailType;
 
     @Column(name = "ToEmailAddress")
     private String toEmailAddress;
-
-    @Column(name = "PredictionPeriodID")
-    private long predictionPeriodID;
 
     @Column(name = "RowCreatedDateTimeUTC")
 	private Instant rowCreatedDateTimeUTC;
@@ -58,20 +39,26 @@ public class EmailHistory {
     @Column(name = "EmailSentDateTimeUTC")
     private Instant emailSentDateTimeUTC;
 
+    @ManyToOne(
+        targetEntity = EmailTemplate.class,
+        fetch = FetchType.LAZY
+    )
+    @JoinColumn(name = "EmailTemplateID")
+    private EmailTemplate emailTemplate;
+    
+
     public EmailHistory() {
     }
 
     public EmailHistory(
-        long emailHistoryID, User user, EmailType emailType, String toEmailAddress, 
-        long predictionPeriodID, Instant rowCreatedDateTimeUTC, Instant emailSentDateTimeUTC
+        User user,
+        String toEmailAddress,
+        EmailTemplate emailTemplate
     ) {
-        this.emailHistoryID = emailHistoryID;
         this.user = user;
-        this.emailType = emailType;
         this.toEmailAddress = toEmailAddress;
-        this.predictionPeriodID = predictionPeriodID;
-        this.rowCreatedDateTimeUTC = rowCreatedDateTimeUTC;
-        this.emailSentDateTimeUTC = emailSentDateTimeUTC;
+        this.rowCreatedDateTimeUTC = Instant.now();
+        this.emailTemplate = emailTemplate;
     }
 
     public long getEmailHistoryID() {
@@ -90,28 +77,12 @@ public class EmailHistory {
         this.user = user;
     }
 
-    public EmailType getEmailType() {
-        return this.emailType;
-    }
-
-    public void setEmailType(EmailType emailType) {
-        this.emailType = emailType;
-    }
-
     public String getToEmailAddress() {
         return this.toEmailAddress;
     }
 
     public void setToEmailAddress(String toEmailAddress) {
         this.toEmailAddress = toEmailAddress;
-    }
-
-    public long getPredictionPeriodID() {
-        return this.predictionPeriodID;
-    }
-
-    public void setPredictionPeriodID(long predictionPeriodID) {
-        this.predictionPeriodID = predictionPeriodID;
     }
 
     public Instant getRowCreatedDateTimeUTC() {
@@ -129,5 +100,14 @@ public class EmailHistory {
     public void setEmailSentDateTimeUTC(Instant emailSentDateTimeUTC) {
         this.emailSentDateTimeUTC = emailSentDateTimeUTC;
     }
+
+    public EmailTemplate getEmailTemplate() {
+        return this.emailTemplate;
+    }
+
+    public void setEmailTemplate(EmailTemplate emailTemplate) {
+        this.emailTemplate = emailTemplate;
+    }
+
 
 }

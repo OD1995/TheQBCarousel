@@ -27,10 +27,10 @@ export const EmailSubscriptionTypeNo = () => {
             btns.push(
                 <button
                     className="tqbc-black-button"
-                    onClick={() => navigateAway(D.emailSubscriptionTypeID)}
-                    key={D.emailSubscriptionTypeID}
+                    onClick={() => navigateAway(D.emailTypeID)}
+                    key={D.emailTypeID}
                 >
-                    {D.emailSubscriptionTypeTidy}
+                    {D.emailTypeTidy}
                 </button>
             )
         }

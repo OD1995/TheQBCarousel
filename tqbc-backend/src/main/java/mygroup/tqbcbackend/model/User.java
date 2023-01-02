@@ -110,12 +110,12 @@ public class User {
 	)
 	private List<UserScore> scores;
 
-	@OneToMany(
-		targetEntity = EmailHistory.class,
-		fetch = FetchType.LAZY,
-		mappedBy = "user"
-	)
-	private List<EmailHistory> emailsReceived;
+	// @OneToMany(
+	// 	targetEntity = EmailHistory.class,
+	// 	fetch = FetchType.LAZY,
+	// 	mappedBy = "user"
+	// )
+	// private List<EmailHistory> emailsReceived;
 	
 	public User() {
 		

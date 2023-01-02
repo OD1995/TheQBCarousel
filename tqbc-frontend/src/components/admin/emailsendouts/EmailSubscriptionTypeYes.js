@@ -16,7 +16,7 @@ export const EmailSubscriptionTypeYes = () => {
 
     const replacers = {
         1 : [
-            'ordinalPredictionPeriod',
+            // 'ordinalPredictionPeriod',
             'predictionSeason',
             // 'qbPredictionsURL',
             'daysLeft',
@@ -106,6 +106,24 @@ export const EmailSubscriptionTypeYes = () => {
         )
     }
 
+    const queueEmailToAll = () => {
+        EmailService.queueEmailToAllSubscribedUsers(
+            displayedHTML,
+            parseInt(params.emailSubscriptionTypeID),
+            parseInt(searchParams.get('predictionPeriodID'))
+        ).then(
+            (res) => {
+                setActionResultColour("green")
+                setActionResult(res.data + " emails queued");
+            }
+        ).catch(
+            (err) => {
+                setActionResultColour("red");
+                setActionResult(err.response.data.message);
+            }
+        )
+    }
+
     return (
         <div
             id="estyes-parent-div"
@@ -114,6 +132,18 @@ export const EmailSubscriptionTypeYes = () => {
                 id="estyes-dangerous-span"
                 dangerouslySetInnerHTML={{__html:displayedHTML}}
             />
+            <div
+                id="estyes-prediction-period-div"
+            >
+                <h4>
+                    Prediction Period
+                </h4>
+                <input
+                    className="estyes-input-box"
+                    id="predictionPeriodID"
+                    onChange={updateReplacerVals}
+                />
+            </div>
             <div
                 id="estyes-inputs-div"
             >
@@ -126,6 +156,7 @@ export const EmailSubscriptionTypeYes = () => {
                     showAreYouSure && (
                         <button
                             className="tqbc-red-button"
+                            onClick={queueEmailToAll}
                         >
                             Are You Completely Sure
                         </button>
@@ -158,7 +189,7 @@ export const EmailSubscriptionTypeYes = () => {
                     className="tqbc-black-button"
                     onClick={() => setShowAreYouSure(true)}
                 >
-                    Send Email To All Users
+                    Queue Email To All Users
                 </button>
             </div>
             <p

@@ -7,6 +7,7 @@ Admin board
  - summary stats
   - total users
   - users by prediction period
+Make sure URLs working for emails
 Only allow unsubscription by clicking on link of relevant email, no page to do it, use referrer to go to page
 Check if reset password is possible
 Check refresh token last usage updates

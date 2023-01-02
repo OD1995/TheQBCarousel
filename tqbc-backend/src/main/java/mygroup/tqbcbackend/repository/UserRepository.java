@@ -1,5 +1,6 @@
 package mygroup.tqbcbackend.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,4 +18,5 @@ public interface UserRepository extends JpaRepository<User, String>{
 	long count();
 	User findByEmailIgnoreCase(String email);
 	User findByUserID(long userID);
+	List<User> findByUserIDIn(List<Long> userIDs);
 }

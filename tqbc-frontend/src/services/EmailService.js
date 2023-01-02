@@ -32,6 +32,21 @@ class EmailService {
             }
         )
     }
+
+    queueEmailToAllSubscribedUsers(
+        emailHtml,
+        emailSubscriptionTypeID,
+        predictionPeriodID
+    ) {
+        return api.post(
+            this.base_url + "queue-email-to-all-subscribed-users",
+            {
+                emailHtml,
+                emailSubscriptionTypeID,
+                predictionPeriodID
+            }
+        )
+    }
 }
 
 export default new EmailService();

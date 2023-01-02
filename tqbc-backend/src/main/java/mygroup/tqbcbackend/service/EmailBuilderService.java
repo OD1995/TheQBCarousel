@@ -27,6 +27,8 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
 import io.micrometer.core.instrument.util.IOUtils;
+import mygroup.tqbcbackend.model.EmailHistory;
+import mygroup.tqbcbackend.model.User;
 
 @Service
 public class EmailBuilderService {
@@ -163,15 +165,17 @@ public class EmailBuilderService {
     public void bulkSendEmails(
         // String emailHtml,
         // long emailSubscriptionTypeID
+        // List<Message> messages
+        // List<EmailHistory> emails
     ) {
         List<Message> messages = new ArrayList<Message>();
-        IntStream.range(0, 50).forEach(
+        IntStream.range(0, 10).forEach(
             i -> {
                 messages.add(
                     createMessage(
                         "oliverdernie1@gmail.com",
-                        "Test3",
-                        "Test3"
+                        "Test4",
+                        "Test4"
                     )
                 );
             }
@@ -185,7 +189,7 @@ public class EmailBuilderService {
         props.put("mail.smtp.starttls.required", "true");
         props.put("mail.smtp.timeout", "50000");
         props.put("mail.transport.protocol", "smtp");
-        Session session = Session.getDefaultInstance(props);
+        Session session = Session.getInstance(props);
         try {
             try (Transport t = session.getTransport()) {
                 t.connect(
@@ -195,6 +199,7 @@ public class EmailBuilderService {
                     password
                 );
                 for(Message m : messages) {
+                    // Maybe comment out the line below
                     m.saveChanges();
                     t.sendMessage(m, m.getAllRecipients());
                 }
@@ -202,5 +207,14 @@ public class EmailBuilderService {
         } catch (MessagingException  e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    public String buildEmailBodyForUser(
+        String emailTemplate,
+        User user
+    ) {
+        String S = emailTemplate;
+        S = S.replace("[username]", user.getUsername());
+        return S;
     }
 }

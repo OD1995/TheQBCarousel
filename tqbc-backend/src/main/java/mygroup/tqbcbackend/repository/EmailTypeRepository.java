@@ -11,4 +11,5 @@ import mygroup.tqbcbackend.model.EmailType;
 public interface EmailTypeRepository extends JpaRepository<EmailType,String> {
     
     public List<EmailType> findByIsSubscriptionTrue();
+    public EmailType findByEmailTypeID(long emailTypeID);
 }
