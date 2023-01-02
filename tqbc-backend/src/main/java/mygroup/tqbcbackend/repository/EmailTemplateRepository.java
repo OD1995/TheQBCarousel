@@ -6,4 +6,5 @@ import mygroup.tqbcbackend.model.EmailTemplate;
 
 public interface EmailTemplateRepository extends JpaRepository<EmailTemplate,String> {
     
+    public EmailTemplate findByEmailTemplateID(long emailTemplateID);
 }

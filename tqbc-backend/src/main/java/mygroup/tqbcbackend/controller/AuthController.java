@@ -1,6 +1,7 @@
 package mygroup.tqbcbackend.controller;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,6 +29,9 @@ import org.springframework.web.bind.annotation.RestController;
 import mygroup.tqbcbackend.exception.TokenRefreshException;
 import mygroup.tqbcbackend.model.ConfirmationToken;
 import mygroup.tqbcbackend.model.ERole;
+import mygroup.tqbcbackend.model.EmailSubscription;
+import mygroup.tqbcbackend.model.EmailSubscriptionCompositeKey;
+import mygroup.tqbcbackend.model.EmailType;
 import mygroup.tqbcbackend.model.Franchise;
 import mygroup.tqbcbackend.model.RefreshToken;
 import mygroup.tqbcbackend.model.Role;
@@ -42,6 +46,8 @@ import mygroup.tqbcbackend.payload.response.LoginResponse;
 import mygroup.tqbcbackend.payload.response.MessageResponse;
 import mygroup.tqbcbackend.payload.response.TokenRefreshResponse;
 import mygroup.tqbcbackend.repository.ConfirmationTokenRepository;
+import mygroup.tqbcbackend.repository.EmailSubscriptionRepository;
+import mygroup.tqbcbackend.repository.EmailTypeRepository;
 import mygroup.tqbcbackend.repository.FranchiseRepository;
 import mygroup.tqbcbackend.repository.RefreshTokenRepository;
 import mygroup.tqbcbackend.repository.RoleRepository;
@@ -49,6 +55,7 @@ import mygroup.tqbcbackend.repository.TeamRepository;
 import mygroup.tqbcbackend.repository.UserRepository;
 import mygroup.tqbcbackend.security.jwt.JwtUtils;
 import mygroup.tqbcbackend.security.service.UserDetailsImpl;
+import mygroup.tqbcbackend.service.EmailBuilderService;
 import mygroup.tqbcbackend.service.EmailSenderService;
 import mygroup.tqbcbackend.service.PrivateLeaderboardService;
 import mygroup.tqbcbackend.service.RefreshTokenService;
@@ -99,6 +106,15 @@ public class AuthController {
 
 	@Autowired
 	private FranchiseRepository franchiseRepository;
+
+	@Autowired
+	private EmailTypeRepository emailTypeRepository;
+
+	@Autowired
+	private EmailSubscriptionRepository emailSubscriptionRepository;
+
+	@Autowired
+	private EmailBuilderService emailBuilderService;
 		
 	@PostMapping("/login")
 	public ResponseEntity<?> authenticateUser(
@@ -159,8 +175,6 @@ public class AuthController {
 				franchise,
 				encoder.encode(signupRequest.getPassword()),
 				false
-				// new Date()
-				// Instant.now()
 			);
 		} else {
 			user = new User(
@@ -168,7 +182,6 @@ public class AuthController {
 				signupRequest.getEmail(),
 				encoder.encode(signupRequest.getPassword()),
 				false
-				// new Date()
 			);
 		}
 		
@@ -179,29 +192,45 @@ public class AuthController {
 		roles.add(userRole);
 		
 		user.setRoles(roles);
-		userRepository.save(user);
+		userRepository.saveAndFlush(user);
 		
 		// Create confirmation token then email user to verify address
 		ConfirmationToken confirmationToken = new ConfirmationToken(user);
 		confirmationTokenRepository.save(confirmationToken);
-		
-		SimpleMailMessage mailMessage = new SimpleMailMessage();
-		mailMessage.setTo(user.getEmail());
-		mailMessage.setSubject("The QB Carousel - Email Verification");
-		mailMessage.setFrom(fromEmailAddress);
-		mailMessage.setText(
-			"Hi "
-			+ user.getUsername()
-			+ "\n\n"
-			+ "Thank you for registering at TheQBCarousel.com! "
-			+ "Please verify your email address by clicking here: "
-			+ frontEndURL
-			+ "/email-verification?token="
-			+ confirmationToken.getConfirmationToken()
-			+ "\n\n"
-			+ "Thanks"
-		);
-		emailSenderService.sendMail(mailMessage);		
+		emailBuilderService.sendVerificationEmail(user, confirmationToken);
+		// SimpleMailMessage mailMessage = new SimpleMailMessage();
+		// mailMessage.setTo(user.getEmail());
+		// mailMessage.setSubject("The QB Carousel - Email Verification");
+		// mailMessage.setFrom(fromEmailAddress);
+		// mailMessage.setText(
+		// 	"Hi "
+		// 	+ user.getUsername()
+		// 	+ "\n\n"
+		// 	+ "Thank you for registering at TheQBCarousel.com! "
+		// 	+ "Please verify your email address by clicking here: "
+		// 	+ frontEndURL
+		// 	+ "/email-verification?token="
+		// 	+ confirmationToken.getConfirmationToken()
+		// 	+ "\n\n"
+		// 	+ "Thanks"
+		// );
+		// emailSenderService.sendMail(mailMessage);
+
+		// Subscribe user to all subscriptions
+		List<EmailSubscription> newSubscriptions = new ArrayList<EmailSubscription>();
+		List<EmailType> emailSubscriptionTypes = emailTypeRepository.findByIsSubscriptionTrue();
+		for (EmailType emailType : emailSubscriptionTypes) {
+			EmailSubscriptionCompositeKey esck = new EmailSubscriptionCompositeKey(
+				user.getUserID(),
+				emailType.getEmailTypeID()
+			);
+			EmailSubscription es = new EmailSubscription(
+				esck,
+				true
+			);
+			newSubscriptions.add(es);
+		}
+		emailSubscriptionRepository.saveAll(newSubscriptions);
 		
 		return ResponseEntity.ok(
 			new MessageResponse(

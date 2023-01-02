@@ -28,10 +28,13 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
 import io.micrometer.core.instrument.util.IOUtils;
+import mygroup.tqbcbackend.model.ConfirmationToken;
 import mygroup.tqbcbackend.model.EmailHistory;
+import mygroup.tqbcbackend.model.EmailTemplate;
 import mygroup.tqbcbackend.model.User;
 import mygroup.tqbcbackend.payload.response.SendOutQueuedEmailsResponse;
 import mygroup.tqbcbackend.repository.EmailHistoryRepository;
+import mygroup.tqbcbackend.repository.EmailTemplateRepository;
 
 @Service
 public class EmailBuilderService {
@@ -62,6 +65,8 @@ public class EmailBuilderService {
 
     @Autowired
     private EmailHistoryRepository emailHistoryRepository;
+
+    @Autowired EmailTemplateRepository emailTemplateRepository;
 
     public void sendReminderEmail(
         long emailSubscriptionTypeID,
@@ -99,7 +104,6 @@ public class EmailBuilderService {
         );
         sendEmail(
             "oliverdernie1@gmail.com",
-            fromEmailAddress,
             "The QB Carousel - " + System.currentTimeMillis(),
             content
         );
@@ -126,7 +130,6 @@ public class EmailBuilderService {
 
     public void sendEmail(
         String toEmailAddress,
-        String fromEmailAddress,
         String subject,
         String htmlBody
     ) {
@@ -164,54 +167,6 @@ public class EmailBuilderService {
             String content = Files.asCharSource(file, Charsets.UTF_8).read();
             return content;
         } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-
-    public void bulkSendEmails(
-        // String emailHtml,
-        // long emailSubscriptionTypeID
-        // List<Message> messages
-        // List<EmailHistory> emails
-        List<Message> messages
-    ) {
-        // List<Message> messages = new ArrayList<Message>();
-        // IntStream.range(0, 10).forEach(
-        //     i -> {
-        //         messages.add(
-        //             createMessage(
-        //                 "oliverdernie1@gmail.com",
-        //                 "Test4",
-        //                 "Test4"
-        //             )
-        //         );
-        //     }
-        // );
-        
-        Properties props = new Properties();
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.connectiontimeout", "50000");
-        props.put("mail.smtp.writetimeout", "50000");
-        props.put("mail.smtp.starttls.required", "true");
-        props.put("mail.smtp.timeout", "50000");
-        props.put("mail.transport.protocol", "smtp");
-        Session session = Session.getInstance(props);
-        try {
-            try (Transport t = session.getTransport()) {
-                t.connect(
-                    host,
-                    Integer.parseInt(port),
-                    username,
-                    password
-                );
-                for(Message m : messages) {
-                    // Maybe comment out the line below
-                    m.saveChanges();
-                    t.sendMessage(m, m.getAllRecipients());
-                }
-            }
-        } catch (MessagingException  e) {
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -267,12 +222,54 @@ public class EmailBuilderService {
         return new SendOutQueuedEmailsResponse(emailsSentCount, errors);
     }
 
-    public String buildEmailBodyForUser(
+    private String buildEmailBodyForUser(
         String emailTemplate,
         User user
     ) {
         String S = emailTemplate;
         S = S.replace("[username]", user.getUsername());
         return S;
+    }
+
+    public void sendVerificationEmail(
+        User user,
+        ConfirmationToken confirmationToken
+    ) {
+        // Get the template used for email verification
+        EmailTemplate emailTemplate = emailTemplateRepository.findByEmailTemplateID(1);
+        // Create an email history row
+        EmailHistory emailHistory = new EmailHistory(
+            user,
+            user.getEmail(),
+            emailTemplate
+        );
+        emailHistoryRepository.saveAndFlush(emailHistory);
+        // Replace both username and confirmation token to get email body to send
+        String emailBody = replaceUsernameAndConfirmationToken(
+            emailTemplate.getEmailTemplate(),
+            user,
+            confirmationToken
+        );
+        // Send email
+        sendEmail(
+            user.getEmail(),
+            emailTemplate.getEmailSubject(),
+            emailBody
+        );
+        emailHistory.setEmailSentDateTimeUTC(Instant.now());
+        emailHistoryRepository.save(emailHistory);
+    }
+
+    public String replaceUsernameAndConfirmationToken(
+        String emailBody,
+        User user,
+        ConfirmationToken confirmationToken
+    ) {
+        String emailBody1 = buildEmailBodyForUser(emailBody, user);
+        String emailBody2 = emailBody1.replace(
+            "[confirmationToken]",
+            confirmationToken.getConfirmationToken()
+        );
+        return emailBody2;
     }
 }

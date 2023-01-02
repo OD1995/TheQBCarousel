@@ -73,22 +73,6 @@ public class EmailController {
         return emailTypeRepository.findByIsSubscriptionTrue();
     }
 
-    // @GetMapping("/send-email")
-    // public void sendEmail() {
-    //     // emailBuilderService.sendReminderEmail(
-    //     //     1,
-    //     //     "OliD",
-    //     //     "first",
-    //     //     "2023",
-    //     //     "http://localhost:8081/qb-predictions",
-    //     //     "100",
-    //     //     "KO of the 2022 Regular Season opener",
-    //     //     "7.20pm (US Eastern Time) on 9th September 2022",
-    //     //     "http://localhost:8081/qb-predictions"
-    //     // );
-    //     emailBuilderService.bulkSendEmails();
-    // }
-
     @PostMapping("/queue-email-to-all-subscribed-users")
     public int queueEmailToAllSubscribedUsers(
         @Valid @RequestBody SendEmailRequest sendEmailRequest
@@ -122,10 +106,6 @@ public class EmailController {
             User user = hm.get(
                 emailSubscription.getEmailSubscriptionCompositeKey().getUserID()
             );
-            // String emailBody = emailBuilderService.buildEmailBodyForUser(
-            //     sendEmailRequest.getEmailHtml(),
-            //     user
-            // );
             EmailHistory emailHistory = new EmailHistory(
                 user,
                 user.getEmail(),
@@ -148,7 +128,6 @@ public class EmailController {
     ) {
         emailBuilderService.sendEmail(
             "oliverdernie1@gmail.com",
-            fromEmailAddress,
             "Test " + System.currentTimeMillis(),
             sendEmailRequest.getEmailHtml()
         );
