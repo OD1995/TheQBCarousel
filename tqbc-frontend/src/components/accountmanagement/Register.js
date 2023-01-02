@@ -20,6 +20,7 @@ const Register = () => {
     const [favTeamError, setFavTeamError] = useState("");
     const [registerError, setRegisterError] = useState("");
     const [registerSuccess, setRegisterSuccess] = useState("")
+    const [buttonDisabled, setButtonDisabled] = useState(false);
     
     useEffect(() => {
         TeamService.getActiveTeams().then(
@@ -66,6 +67,7 @@ const Register = () => {
     }
 
     const handleRegister = () => {
+        setButtonDisabled(true);
         setUsernameError("");
         setEmailError("");
         setPasswordError("");
@@ -126,6 +128,8 @@ const Register = () => {
                     setRegisterError(err.response.data.message);
                 }
             )
+        } else {
+            setButtonDisabled(false);
         }
     }
 
@@ -264,7 +268,8 @@ const Register = () => {
                 <button
                     id="register-button"
                     className="tqbc-black-button"
-                    onClick={handleRegister}                    
+                    onClick={handleRegister} 
+                    disabled={buttonDisabled}                   
                 >
                     Register
                 </button>

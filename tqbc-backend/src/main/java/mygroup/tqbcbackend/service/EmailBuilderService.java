@@ -270,6 +270,10 @@ public class EmailBuilderService {
             "[confirmationToken]",
             confirmationToken.getConfirmationToken()
         );
-        return emailBody2;
+        String emailBody3 = emailBody2.replaceAll(
+            "tqbcDomain",
+            frontEndURL
+        );
+        return emailBody3;
     }
 }

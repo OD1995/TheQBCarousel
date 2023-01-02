@@ -26,7 +26,7 @@ public class EmailTemplate {
     private String emailSubject;
 
     @Column(name = "PredictionPeriodID")
-    private long predictionPeriodID;
+    private Long predictionPeriodID;
 
     @ManyToOne(
         targetEntity = EmailType.class,

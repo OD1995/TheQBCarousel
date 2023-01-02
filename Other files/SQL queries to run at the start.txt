@@ -1,4 +1,4 @@
--- Create email verification emal template
+-- Create email verification email template
 INSERT INTO emailtemplates
 (EmailTemplateID, EmailSubject, EmailTypeID, EmailTemplate)
 VALUES
@@ -7,11 +7,11 @@ VALUES
         Hi [username]
     </p>
     <p>
-        Thank you for registering at <a href="https://www.TheQBCarousel.com">TheQBCarousel.com!</a>
+        Thank you for registering at <a href="tqbcDomain">TheQBCarousel.com!</a>
     </p>
     <p>
         Please verify your email
-        by <a href="[tqbcDomain]/email-verification?token=[confirmationToken]">clicking here</a>.
+        by <a href="tqbcDomain/email-verification?token=[confirmationToken]">clicking here</a>.
     </p>
     <p
         style="white-space: pre-line;"

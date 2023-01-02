@@ -1,7 +1,7 @@
 Short term
+Make sure confirmation email working properly
 Check if reset password is possible
 Check refresh token last usage updates
-Create new subscriptions for new users
 Make sure all pages can only be accessed by the right person (either user or admin)
 http://localhost:8081/unsubscribe/EMAILTYPE_PREDICTIONPERIODOPEN
 

@@ -52,10 +52,11 @@
     /* position: relative; */
     /* text-align: center; */
     display: grid;
-    grid-template-columns: 30vw;
+    grid-template-columns: 80vw;
     grid-template-rows: 5h;
     justify-items: center;
     margin-top: 5vh;
+    text-align: center;
 }
 
 .register-result {
