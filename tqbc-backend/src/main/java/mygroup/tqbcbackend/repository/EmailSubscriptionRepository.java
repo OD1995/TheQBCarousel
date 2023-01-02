@@ -28,4 +28,9 @@ public interface EmailSubscriptionRepository extends JpaRepository<EmailSubscrip
 
     )
     public List<Long> findUserIDsByValueTrueAndEmailSubscriptionTypeID(long emailSubscriptionTypeID);
+
+    public EmailSubscription findByEmailSubscriptionCompositeKey_UserIDAndEmailSubscriptionCompositeKey_EmailSubscriptionTypeID(
+        long userID,
+        long emailSubscriptionTypeID
+    );
 }

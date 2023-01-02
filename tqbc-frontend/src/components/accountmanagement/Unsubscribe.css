@@ -1,0 +1,25 @@
+#unsubscribe-content-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10vh;
+}
+
+.unsubscribe-text-div {
+    display: flex;
+    flex-direction: row;
+    margin-top: 3vh;
+    margin-bottom: 2vh;
+}
+
+.unsubscribe-text-value {
+    font-weight: normal;
+    margin-left: 1vw;
+}
+
+#unsubscribe-button-options {
+    margin-top: 3vh;
+    display: flex;
+    width: 30vw;
+    justify-content: space-evenly;
+}

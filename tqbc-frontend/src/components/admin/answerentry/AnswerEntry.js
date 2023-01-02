@@ -44,7 +44,7 @@ export const AnswerEntry = () => {
         conferenceDones: conferenceDones
     }
 
-    let params = useParams();
+    const params = useParams();
     
     const revealModal = (team,teamID,type,pIDs,conference) => {
         setCellTeam(team);
@@ -124,46 +124,41 @@ export const AnswerEntry = () => {
 
     useEffect(
         () => {
-            try {
-
-                AnswerTypeService.getAllAnswerTypes().then(
-                    (res) => {
-                        let answer_types = {};
-                        for (const at_obj of res.data) {
-                            answer_types[at_obj.answerTypeID] = at_obj.answerTypeTidy;
-                        }
-                        setAnswerTypes(answer_types);
-                        PlayerService.getActivePlayers().then(
-                            (res2) => {
-                                let players_array = [
-                                    {
-                                        label : 'N/A',
-                                        value : 0
-                                    }
-                                ];
-                                let player_lookup = {};
-                                for (const player_obj of res2.data) {
-                                    const dropdown_data = {
-                                        label : player_obj.name,
-                                        value : player_obj.playerID
-                                    };
-                                    players_array.push(dropdown_data);
-                                    player_lookup[player_obj.playerID] = player_obj.name;
-                                }
-                                setPlayers(players_array);
-                                setPlayerLookup(player_lookup);
-                            }
-                        )
-                        for (const conference of ['AFC','NFC']) {
-                            generateConferenceData(conference);
-                        }
-                        // generateConferenceData('AFC',setDataAFC,setDoneAFC);
-                        // generateConferenceData('NFC',setDataNFC,setDoneNFC);
+            AnswerTypeService.getAllAnswerTypes().then(
+                (res) => {
+                    let answer_types = {};
+                    for (const at_obj of res.data) {
+                        answer_types[at_obj.answerTypeID] = at_obj.answerTypeTidy;
                     }
-                )
-            } catch (eee) {
-                let a = 1;
-            }
+                    setAnswerTypes(answer_types);
+                    PlayerService.getActivePlayers().then(
+                        (res2) => {
+                            let players_array = [
+                                {
+                                    label : 'N/A',
+                                    value : 0
+                                }
+                            ];
+                            let player_lookup = {};
+                            for (const player_obj of res2.data) {
+                                const dropdown_data = {
+                                    label : player_obj.name,
+                                    value : player_obj.playerID
+                                };
+                                players_array.push(dropdown_data);
+                                player_lookup[player_obj.playerID] = player_obj.name;
+                            }
+                            setPlayers(players_array);
+                            setPlayerLookup(player_lookup);
+                        }
+                    )
+                    for (const conference of ['AFC','NFC']) {
+                        generateConferenceData(conference);
+                    }
+                    // generateConferenceData('AFC',setDataAFC,setDoneAFC);
+                    // generateConferenceData('NFC',setDataNFC,setDoneNFC);
+                }
+            )
         },
         []
     )

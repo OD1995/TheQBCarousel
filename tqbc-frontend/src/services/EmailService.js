@@ -59,6 +59,32 @@ class EmailService {
             this.base_url + "send-out-queued-emails"
         );
     }
+
+    getEmailSubscriptionType(
+        emailSubscriptionType
+    ) {
+        return api.get(
+            this.base_url + "get-email-subscription-type",
+            {
+                params: {
+                    emailSubscriptionType
+                }
+            }
+        )
+    }
+
+    unsubscribeUser(
+        userID,
+        emailSubscriptionTypeID
+    ) {
+        return api.post(
+            this.base_url + "unsubscribe-user",
+            {
+                userID,
+                emailSubscriptionTypeID
+            }
+        )
+    }
 }
 
 export default new EmailService();

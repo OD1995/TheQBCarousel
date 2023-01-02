@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 
 import AuthService from "../../services/AuthService";
 import { LOGIN_SUCCESS } from "../../actions/types";
@@ -19,6 +19,7 @@ const Login = (props) => {
     const [loginError, setLoginError] = useState("")
 
     const { isLoggedIn } = useSelector(state => state.auth);
+    const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(
         () => {
@@ -71,7 +72,12 @@ const Login = (props) => {
                             }
                         }
                     );
-                    History.push("/qb-predictions");
+                    // if (searchParams.get("next") !== null) {
+                    //     History.push(searchParams.get("next"));
+                    // } else {
+                    //     History.push("/qb-predictions");
+                    // }
+                    // History.push("/how-it-works")
                 }
             ).catch(
                 (err) => {
@@ -90,9 +96,11 @@ const Login = (props) => {
     }
 
     if (isLoggedIn) {
-        return (
-            <Navigate to="/qb-predictions" />
-        );
+        if (searchParams.get("next") !== null) {
+            return <Navigate to={searchParams.get("next")}/>
+        } else {
+            return <Navigate to="/how-it-works"/>
+        }
     }
 
     return (

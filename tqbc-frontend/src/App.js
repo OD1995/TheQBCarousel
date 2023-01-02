@@ -35,6 +35,7 @@ import AdminBoard from './components/admin/AdminBoard';
 import { PredictionMarking } from './components/admin/PredictionMarking';
 import { EmailSendOuts } from './components/admin/emailsendouts/EmailSendOuts';
 import { SendOutQueuedEmails } from './components/admin/emailsendouts/SendOutQueuedEmails';
+import { Unsubscribe } from './components/accountmanagement/Unsubscribe';
 
 const App = () => {
 	const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -153,6 +154,10 @@ const App = () => {
 						<Route
 							path="/send-out-queued-emails"
 							element={<SendOutQueuedEmails/>}
+						/>
+						<Route
+							path="/unsubscribe/:emailSubscriptionType"
+							element={<Unsubscribe/>}
 						/>
 						<Route path='/*' element={<PageDoesntExist/>}/>
 					</Routes>

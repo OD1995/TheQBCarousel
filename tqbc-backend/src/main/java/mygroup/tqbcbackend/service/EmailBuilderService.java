@@ -250,7 +250,7 @@ public class EmailBuilderService {
                             emailBody  
                         );
                         // Maybe comment out the line below
-                        msg.saveChanges();
+                        // msg.saveChanges();
                         t.sendMessage(msg, msg.getAllRecipients());
                         emailHistory.setEmailSentDateTimeUTC(Instant.now());
                         emailHistoryRepository.save(emailHistory);

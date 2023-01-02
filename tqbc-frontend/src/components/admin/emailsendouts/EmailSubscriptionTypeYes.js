@@ -16,14 +16,17 @@ export const EmailSubscriptionTypeYes = () => {
 
     const replacers = {
         1 : [
-            // 'ordinalPredictionPeriod',
             'predictionSeason',
-            // 'qbPredictionsURL',
             'daysLeft',
             'toEvent',
             'toEventDateTimeET',
-            // 'unsubscribeURL'
-        ]
+        ],
+        2 : [
+            'daysLeft',
+            'toEvent',
+            'toEventDateTimeET',
+        ],
+        
     }
 
     useEffect(
@@ -80,6 +83,7 @@ export const EmailSubscriptionTypeYes = () => {
 
     const doReplacements = (txt) => {
         var dh = txt;
+        dh = dh.replaceAll("[tqbcDomain]", window.location.origin);
         for (const [key,value] of searchParams.entries()) {
             dh = dh.replace("["+key+"]",value);
         }

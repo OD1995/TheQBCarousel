@@ -57,8 +57,7 @@ export const SendOutQueuedEmails = () => {
             </h1>
             <div
                 id="soqe-content-div"
-            >
-                
+            >                
                 <h5>
                     Total Unsent Rows: {totalUnsentRows}
                 </h5>

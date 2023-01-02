@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.metrics.export.wavefront.WavefrontProperties.Sender;
+import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,12 +26,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
+import mygroup.tqbcbackend.model.EEmailType;
 import mygroup.tqbcbackend.model.EmailHistory;
 import mygroup.tqbcbackend.model.EmailSubscription;
 import mygroup.tqbcbackend.model.EmailTemplate;
 import mygroup.tqbcbackend.model.EmailType;
 import mygroup.tqbcbackend.model.User;
 import mygroup.tqbcbackend.payload.request.SendEmailRequest;
+import mygroup.tqbcbackend.payload.request.UnsubscribeRequest;
 import mygroup.tqbcbackend.payload.response.SendOutQueuedEmailsResponse;
 import mygroup.tqbcbackend.repository.EmailHistoryRepository;
 import mygroup.tqbcbackend.repository.EmailSubscriptionRepository;
@@ -162,14 +165,27 @@ public class EmailController {
         List<EmailHistory> emailsToSend = emailHistoryRepository.findByEmailSentDateTimeUTCIsNull();
         // Send them
         SendOutQueuedEmailsResponse r = emailBuilderService.bulkSendQueuedEmails(emailsToSend);
-        // List<String> E = new ArrayList<String>();
-        // E.add("example 1");
-        // E.add("another example");
-        // SendOutQueuedEmailsResponse r = new SendOutQueuedEmailsResponse(
-        //     10,
-        //     E
-        // );
         return r;
-        // throw new RuntimeException("hi");
+    }
+
+    @GetMapping("/get-email-subscription-type")
+    public EmailType getEmailSubscriptionType(
+        String emailSubscriptionType
+    ) {
+        EEmailType eEmailType = EEmailType.valueOf(emailSubscriptionType);
+        return emailTypeRepository.findByEmailType(eEmailType);
+    }
+
+    @PostMapping("/unsubscribe-user")
+    public ResponseEntity<?> unsubscribeUser(
+        @Valid @RequestBody UnsubscribeRequest unsubscribeRequest
+    ) {
+        EmailSubscription emailSubscription = emailSubscriptionRepository.findByEmailSubscriptionCompositeKey_UserIDAndEmailSubscriptionCompositeKey_EmailSubscriptionTypeID(
+            unsubscribeRequest.getUserID(),
+            unsubscribeRequest.getEmailSubscriptionTypeID()
+        );
+        emailSubscription.setValue(false);
+        emailSubscriptionRepository.save(emailSubscription);
+        return ResponseEntity.ok().build();
     }
 }

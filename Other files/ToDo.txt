@@ -12,6 +12,7 @@ Only allow unsubscription by clicking on link of relevant email, no page to do i
 Check if reset password is possible
 Check refresh token last usage updates
 Create new subscriptions for new users
+Make sure all pages can only be accessed by the right person (either user or admin)
 
 Long term
 -X- Have predictions board show predictions if already been made in the prediction period
