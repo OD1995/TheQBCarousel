@@ -35,20 +35,25 @@ export const GenericLeaderboard = (props) => {
   
     useEffect(
         () => {
-            let type = props.global ? "Global" : "Private"
-            document.title = type + " Leaderboard";            
-            if (uniqueSeasons.length === 0) {
-                AnswerService.getUniqueSeasonsForAnswers().then(
-                    (res) => {
-                        var unique_seasons = res.data;
-                        setUniqueSeasons(unique_seasons);
-                        otherStuff(unique_seasons);
-                    }
-                )
+            let user = TokenService.getUser();
+            if (props.global & (user === null)) {
+                History.push("/nope");
             } else {
-                otherStuff(uniqueSeasons);
-            }
 
+                let type = props.global ? "Global" : "Private"
+                document.title = type + " Leaderboard";            
+                if (uniqueSeasons.length === 0) {
+                    AnswerService.getUniqueSeasonsForAnswers().then(
+                        (res) => {
+                            var unique_seasons = res.data;
+                            setUniqueSeasons(unique_seasons);
+                            otherStuff(unique_seasons);
+                        }
+                    )
+                } else {
+                    otherStuff(uniqueSeasons);
+                }
+            }
         },
         [params]
     )

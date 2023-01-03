@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import History from "../../helpers/History";
+import TokenService from "../../services/Token.service";
 import UserScoreService from "../../services/UserScoreService";
 import './PredictionMarking.css';
 
@@ -7,6 +10,18 @@ export const PredictionMarking = () => {
     const [season, setSeason] = useState("");
     const [responseText, setResponseText] = useState("")
     const [responseColour, setResponseColour] = useState("black");
+
+    useEffect(
+        () => {
+            const user = TokenService.getUser();
+            if (user === null) {
+                History.push("/nope");
+            } else if (!user.roles.includes("ROLE_ADMIN")) {
+                History.push("/nope");
+            }
+        },
+        []
+    )
 
     const onChangeSeason = (ev) => {
         setSeason(ev.target.value);

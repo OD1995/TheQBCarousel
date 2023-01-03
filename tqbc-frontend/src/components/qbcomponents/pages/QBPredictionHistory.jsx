@@ -10,6 +10,7 @@ import PeriodPredictionService from '../../../services/PeriodPredictionService';
 import { useParams } from 'react-router-dom';
 import History from '../../../helpers/History';
 import { QBPredictionHistoryRightPanel } from '../components/QBPredictionHistoryRightPanel';
+import TokenService from '../../../services/Token.service';
 // import PredictionPeriodService from '../../../services/PredictionPeriodService';
 
 const QBPredictionHistoryComponent = () => {
@@ -27,13 +28,18 @@ const QBPredictionHistoryComponent = () => {
         () => {
             document.title = "Prediction History";
             setAllLoaded(false);
-            // If season not in params or season not one of available options, get max season and redirect to there
-            setUserID(JSON.parse(localStorage.getItem("user")).userID);
-            PeriodPredictionService.getUniqueSeasons(params.username).then(
+            // If season not in params or season not one of available options,
+            //    get max season and redirect to there
+            // let user = TokenService.getUser();
+            // setUserID(user.userID);
+            PeriodPredictionService.getUniqueSeasonsAndUserID(params.username).then(
                 result => {
                     var history_season;
-                    // var options = [2022];
-                    var unique_seasons = result.data;
+                    let array_result = result.data
+                    // Using .pop() should save the element in user_id and then remove it
+                    let user_id = array_result.pop();
+                    setUserID(user_id);
+                    var unique_seasons = array_result;
                     setUniqueSeasons(unique_seasons);
                     if (
                         (params.season === null) || (!unique_seasons.includes(parseInt(params.season)))

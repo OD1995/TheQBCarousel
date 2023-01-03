@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import History from "../../../helpers/History";
 import EmailService from "../../../services/EmailService";
+import TokenService from "../../../services/Token.service";
 
 export const SendOutQueuedEmails = () => {
 
@@ -9,12 +12,19 @@ export const SendOutQueuedEmails = () => {
     const [responseColour, setResponseColour] = useState("black");
 
     useEffect(
-        () => {
-            EmailService.getTotalUnsentEmailsCount().then(
-                (res) => {
-                    setTotalUnsentRows(res.data);
-                }
-            )
+        () => {            
+            const user = TokenService.getUser();
+            if (user === null) {
+                History.push("/nope");
+            } else if (!user.roles.includes("ROLE_ADMIN")) {
+                History.push("/nope");
+            } else {
+                EmailService.getTotalUnsentEmailsCount().then(
+                    (res) => {
+                        setTotalUnsentRows(res.data);
+                    }
+                )
+            }
         },
         []
     )

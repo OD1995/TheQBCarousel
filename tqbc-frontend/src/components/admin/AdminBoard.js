@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import History from "../../helpers/History"
 import AnalysisService from "../../services/AnalysisService";
 import TokenService from "../../services/Token.service";
@@ -10,18 +11,23 @@ const AdminBoard = () => {
     const [tableHeader, setTableHeader] = useState(null);
     const [tableRow, setTableRow] = useState(null)
 
+    const { user: currentUser } = useSelector((state) => state.auth);
+
     useEffect(
         () => {
             const user = TokenService.getUser();
-            if (!user.roles.includes("ROLE_ADMIN")) {
+            if (user === null) {
                 History.push("/nope");
+            } else if (!user.roles.includes("ROLE_ADMIN")) {
+                History.push("/nope");
+            } else {
+                AnalysisService.getAdminBoardSummaryStats().then(
+                    (res) => {
+                        setTotalUsers(res.data.totalUserCount)
+                        setTableData(res.data.usersByPredictionPeriod)
+                    }
+                )
             }
-            AnalysisService.getAdminBoardSummaryStats().then(
-                (res) => {
-                    setTotalUsers(res.data.totalUserCount)
-                    setTableData(res.data.usersByPredictionPeriod)
-                }
-            )
         },
         []
     );

@@ -42,7 +42,7 @@ public class TeamController {
 
 	// Get all teams for a season
 	@GetMapping("/get-season-teams")
-	@PreAuthorize("hasRole('USER')")
+	// @PreAuthorize("hasRole('USER')")
 	public List<Team> getSeasonTeams(
 		TeamRequest teamRequest
 	) {

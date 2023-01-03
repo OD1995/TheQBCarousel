@@ -106,14 +106,17 @@ public class PeriodPredictionController {
 		return periodPredictionRepository.findMaxSeason(userID);
 	}
 
-	@GetMapping("/get-unique-seasons-for-user")
+	@GetMapping("/get-unique-seasons-and-userID-for-user")
 	public List<Long> getUniqueSeasonsForUser(
 		PredictionHistoryRequest predictionHistoryRequest
 	) {
 		String username = predictionHistoryRequest.getUsername();
 		User user = userRepository.findByUsername(username)
 				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-		return periodPredictionRepository.findDistinctSeasons(user.getUserID());
+		List<Long> distinctSeasons = periodPredictionRepository.findDistinctSeasons(user.getUserID());
+		// Yes, I know this is very lazy
+		distinctSeasons.add(user.getUserID());
+		return distinctSeasons;
 	}
 	
 	@GetMapping("/get-season-predictions")

@@ -17,6 +17,8 @@ import './QBPage.css';
 import PeriodPredictionService from '../../../services/PeriodPredictionService';
 import { OutsidePredictionPeriod } from '../../errors/OutsidePredictionPeriod';
 import { SocialMediaRequest } from '../components/SocialMediaRequest';
+import TokenService from '../../../services/Token.service';
+import History from '../../../helpers/History';
 
 const QBPredictionsComponent = () => {
     // const [teamIDList, setTeamIDList] = useState([]);
@@ -48,8 +50,13 @@ const QBPredictionsComponent = () => {
 
 
     useEffect(() => {
-        document.title = 'Prediction Board'
-        callTeamsService();
+        let user = TokenService.getUser();
+        if (user === null) {
+            History.push("/login");
+        } else {
+            document.title = 'Prediction Board'
+            callTeamsService();
+        }
 
         // PredictionPeriodService
     },[]);

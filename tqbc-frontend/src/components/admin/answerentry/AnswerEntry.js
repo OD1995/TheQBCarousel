@@ -11,6 +11,9 @@ import TeamService from "../../../services/TeamService";
 import AnswerService from "../../../services/AnswerService";
 import { useRef } from "react";
 import { useImmer } from "use-immer";
+import { useSelector } from "react-redux";
+import History from "../../../helpers/History";
+import TokenService from "../../../services/Token.service";
 
 export const AnswerEntry = () => {
 
@@ -26,16 +29,8 @@ export const AnswerEntry = () => {
     const [playerLookup,setPlayerLookup] = useState({});
     const [currentAnswerIDs, setCurrentAnswerIDs] = useState([]);
     const [modalConference, setModalConference] = useState(null);
-    // const [updateCount, setUpdateCount] = useState(0);
-    // const [conferenceData, setConferenceData] = useState({});
-    // const [conferencesDone, setConferencesDone] = useState({AFC:false,NFC:false});
-    // const [dataAFC, setDataAFC] = useState({});
-    // const [dataNFC, setDataNFC] = useState({});
-    // const [doneAFC, setDoneAFC] = useState(false);
-    // const [doneNFC, setDoneNFC] = useState(false);
-    // const [conferenceData, setConferenceData] = useState({});
     const [conferenceData, setConferenceData] = useImmer({});
-    const [conferenceDones, setConferenceDones] = useState({})
+    const [conferenceDones, setConferenceDones] = useState({});
 
     const stateRef = useRef();
 
@@ -74,7 +69,6 @@ export const AnswerEntry = () => {
                 for (const team_obj of res.data) {
                     teams_obj[team_obj.teamID] = team_obj;
                 }
-                // setTeamsObject(teams_obj);
                 AnswerService.getAnswersForConferenceSeason(conference,params.season).then(
                     (res2) => {
                         let answers_obj = {};
@@ -91,9 +85,6 @@ export const AnswerEntry = () => {
                                 answers_obj[key] = item;
                             }
                         }
-                        // setAnswersObject(answers_obj);
-                        // generateTableHeaders();
-                        // generateTableRows(teams_obj,answers_obj);
                         setConferenceData(
                             {
                                 ...stateRef.current.conferenceData,
@@ -109,13 +100,6 @@ export const AnswerEntry = () => {
                                 [conference]: true
                             }
                         )
-                        // setDataCallback(
-                        //     {
-                        //         teams: teams_obj,
-                        //         answers: answers_obj
-                        //     }
-                        // );
-                        // setDoneCallback(true);
                     }
                 )
             }
@@ -124,41 +108,48 @@ export const AnswerEntry = () => {
 
     useEffect(
         () => {
-            AnswerTypeService.getAllAnswerTypes().then(
-                (res) => {
-                    let answer_types = {};
-                    for (const at_obj of res.data) {
-                        answer_types[at_obj.answerTypeID] = at_obj.answerTypeTidy;
-                    }
-                    setAnswerTypes(answer_types);
-                    PlayerService.getActivePlayers().then(
-                        (res2) => {
-                            let players_array = [
-                                {
-                                    label : 'N/A',
-                                    value : 0
-                                }
-                            ];
-                            let player_lookup = {};
-                            for (const player_obj of res2.data) {
-                                const dropdown_data = {
-                                    label : player_obj.name,
-                                    value : player_obj.playerID
-                                };
-                                players_array.push(dropdown_data);
-                                player_lookup[player_obj.playerID] = player_obj.name;
-                            }
-                            setPlayers(players_array);
-                            setPlayerLookup(player_lookup);
+            const user = TokenService.getUser();
+            if (user === null) {
+                History.push("/nope");
+            } else if (!user.roles.includes("ROLE_ADMIN")) {
+                History.push("/nope");
+            } else {
+                AnswerTypeService.getAllAnswerTypes().then(
+                    (res) => {
+                        let answer_types = {};
+                        for (const at_obj of res.data) {
+                            answer_types[at_obj.answerTypeID] = at_obj.answerTypeTidy;
                         }
-                    )
-                    for (const conference of ['AFC','NFC']) {
-                        generateConferenceData(conference);
+                        setAnswerTypes(answer_types);
+                        PlayerService.getActivePlayers().then(
+                            (res2) => {
+                                let players_array = [
+                                    {
+                                        label : 'N/A',
+                                        value : 0
+                                    }
+                                ];
+                                let player_lookup = {};
+                                for (const player_obj of res2.data) {
+                                    const dropdown_data = {
+                                        label : player_obj.name,
+                                        value : player_obj.playerID
+                                    };
+                                    players_array.push(dropdown_data);
+                                    player_lookup[player_obj.playerID] = player_obj.name;
+                                }
+                                setPlayers(players_array);
+                                setPlayerLookup(player_lookup);
+                            }
+                        )
+                        for (const conference of ['AFC','NFC']) {
+                            generateConferenceData(conference);
+                        }
+                        // generateConferenceData('AFC',setDataAFC,setDoneAFC);
+                        // generateConferenceData('NFC',setDataNFC,setDoneNFC);
                     }
-                    // generateConferenceData('AFC',setDataAFC,setDoneAFC);
-                    // generateConferenceData('NFC',setDataNFC,setDoneNFC);
-                }
-            )
+                )
+            }
         },
         []
     )

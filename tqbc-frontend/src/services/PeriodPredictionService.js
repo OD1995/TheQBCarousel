@@ -75,11 +75,11 @@ class PeriodPredictionService {
         );
     }
 
-    getUniqueSeasons(
+    getUniqueSeasonsAndUserID(
         username
     ) {
         return api.get(
-            this.base_url + "get-unique-seasons-for-user",
+            this.base_url + "get-unique-seasons-and-userID-for-user",
             {
                 params: {
                     username: username
