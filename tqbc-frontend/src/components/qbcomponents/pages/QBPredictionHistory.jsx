@@ -7,7 +7,7 @@ import '../pages/QBPredictionHistory.css';
 // import { PopupComponent } from '../../generic/PopUpComponent';
 // import { useSelector } from 'react-redux';
 import PeriodPredictionService from '../../../services/PeriodPredictionService';
-import { useParams } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router-dom';
 import History from '../../../helpers/History';
 import { QBPredictionHistoryRightPanel } from '../components/QBPredictionHistoryRightPanel';
 import TokenService from '../../../services/Token.service';
@@ -16,6 +16,8 @@ import TokenService from '../../../services/Token.service';
 const QBPredictionHistoryComponent = () => {
     const params = useParams();
     const [allLoaded, setAllLoaded] = useState(false);
+    // const [redirect, setRedirect] = useState(false);
+    const [reload, setReload] = useState(false);
     const [teamIDList, setTeamIDList] = useState([]);
     const [conferences, setConferences] = useState([]);
     const [teamIDPeriodPredictionDict, setTeamIDPeriodPredictionDict] = useState("setTeamIDPeriodPredictionDict");
@@ -27,7 +29,7 @@ const QBPredictionHistoryComponent = () => {
     useEffect(
         () => {
             document.title = "Prediction History";
-            setAllLoaded(false);
+            // setAllLoaded(false);
             // If season not in params or season not one of available options,
             //    get max season and redirect to there
             // let user = TokenService.getUser();
@@ -48,8 +50,10 @@ const QBPredictionHistoryComponent = () => {
                             result => {
                                 history_season = result.data;
                                 setHistorySeason(history_season);
+                                // setRedirect(true);
                                 History.push(`/prediction-history/${params.username}/${history_season}`);
-                                callTeamsService(history_season);
+                                setReload(true);
+                                // callTeamsService(history_season);
                             }
                         );
                     } else {
@@ -61,23 +65,17 @@ const QBPredictionHistoryComponent = () => {
                 }
             )
         },
-        [params]
+        // [params]
+        [reload]
     );
 
     const callTeamsService = (history_season) => {
         TeamService.getSeasonTeams(history_season).then(
             (res) => {
-                // Create dict where key is teamID and value is row from `teams`
-                let teams_dict = {};
-                // let default_dict = {};
                 let team_id_list = [];
                 for (const team_obj of res.data) {
-                    // console.log(team_obj);
-                    // teams_dict[team_obj.teamID] = team_obj;
-                    // default_dict[team_obj.defaultPlayer.playerID] = team_obj.teamID;
                     team_id_list.push(team_obj.teamID);
                 }
-                // setTeams(teams_dict);
                 setTeamIDList(team_id_list);
                 callConferenceService(history_season);
             }
@@ -104,9 +102,7 @@ const QBPredictionHistoryComponent = () => {
             }
         )
     }
-    if (
-        allLoaded
-    ) {
+    if (allLoaded) {
         return (
             <div id="qb-history-container">
                 <div className='qb-history-box qb-grid'>
