@@ -139,7 +139,7 @@ export const ForgottenPasswordPasswordEntry = () => {
                         onClick={handleSubmit}
                         id="fppe-button"
                     >
-                        Send Password Reset Email
+                        Update Password
                     </button>
                     <p
                         style={{

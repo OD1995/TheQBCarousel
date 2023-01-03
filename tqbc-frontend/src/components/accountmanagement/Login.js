@@ -99,7 +99,7 @@ const Login = (props) => {
         if (searchParams.get("next") !== null) {
             return <Navigate to={searchParams.get("next")}/>
         } else {
-            return <Navigate to="/how-it-works"/>
+            return <Navigate to="/qb-predictions"/>
         }
     }
 

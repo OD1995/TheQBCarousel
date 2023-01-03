@@ -18,7 +18,7 @@ import mygroup.tqbcbackend.repository.UserRepository;
 @Service
 public class RefreshTokenService {
     
-    @Value("${tqdm.app.jwtRefreshExpirationMs}")
+    @Value("${tqdm.app.refreshTokenExpirationMs}")
     private Long refreshTokenExpirationMs;
 
     @Autowired

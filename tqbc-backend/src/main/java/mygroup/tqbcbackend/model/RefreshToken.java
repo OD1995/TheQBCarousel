@@ -18,7 +18,7 @@ public class RefreshToken {
 
     // RefreshToken is generated at login and then LastUsageDateTime is updated
     //    every time it is used to create a new access token. When it hasn't been
-    //    used to create a new access token for `jwtRefreshExpirationMs` then it
+    //    used to create a new access token for `refreshTokenExpirationMs` then it
     //    has expired
     
     @Id
