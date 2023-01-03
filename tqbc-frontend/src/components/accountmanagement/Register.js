@@ -25,8 +25,6 @@ const Register = () => {
     useEffect(() => {
         TeamService.getActiveTeams().then(
             (res) => {
-                // console.log("activeTeams");
-                // console.log(res.data);
                 let teams_array = [
                     {
                         label: "n/a",
@@ -42,10 +40,6 @@ const Register = () => {
                     );
                 }
                 setFavTeamList(teams_array);
-                // console.log("favTeamList");
-                // console.log(favTeamList);
-                // console.log("teams_array");
-                // console.log(teams_array);
             }
         )
     },[])

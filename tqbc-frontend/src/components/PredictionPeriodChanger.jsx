@@ -6,11 +6,6 @@ const PredictionPeriodChanger = (props) => {
     const [season, setSeason] = useState(props.currentSeason);
     const [seasonPeriodID, setSeasonPeriodID] = useState(props.currentSeasonPeriodID);
 
-    // console.log("props");
-    // console.log(props);
-    // console.log("season: " + season);
-    // console.log("spID: " + seasonPeriodID);
-
     useEffect(
         () => {
             setSeason(props.currentSeason);
@@ -27,24 +22,24 @@ const PredictionPeriodChanger = (props) => {
     }
 
     const sendSeasonToParent = (event) => {
-        console.log("season: " + event.value);
+        // console.log("season: " + event.value);
         setSeason(event.value);
     }
 
     const sendSeasonPeriodIDToParent = (event) => {
-        console.log("seasonPeriodID: " + event.value);
+        // console.log("seasonPeriodID: " + event.value);
         setSeasonPeriodID(event.value)
     }
 
     const savePredictionPeriodID = () => {
         let comboID = season + "---" + seasonPeriodID;
-        console.log("comboID: " + comboID);
+        // console.log("comboID: " + comboID);
         props.parentStateUpdater(comboID);
     }
 
     const resetPredictionPeriodID = () => {
         props.predictionPeriodIDResetter();
-        console.log("resets done");
+        // console.log("resets done");
     }
 
     return (

@@ -1,6 +1,5 @@
 Short term
 
-Check refresh token last usage updates
 
 Long term
 -X- Have predictions board show predictions if already been made in the prediction period
@@ -11,7 +10,7 @@ Long term
 -X- Replace message with modal or own page - register/sign in
 -X- Make API endpoints only usable from frontend
 -X- Prediction board only visible if in prediction period (redirect to error "outside of prediction period" page)
---- Remove all logging before launch
+-X- Remove all logging before launch
 -X- Allow users to request new player options
 -X- Deal with scenario where we're not inside a prediction period
 -X- Over the last few seasons, the number of QBs changing teams in the NFL has been increasing significantly CHECK ME
@@ -23,4 +22,4 @@ Long term
 -X- Clean up register and login pages
 -X- Clean up admin board
 -X- Bulk reminder email sendouts
---- Go through all pages and remove duplicate requests
+-X- Go through all pages and remove duplicate requests

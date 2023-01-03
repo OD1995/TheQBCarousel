@@ -36,7 +36,6 @@ export const AnswerEntryModal = (props) => {
         let startAgain = checker(Object.values(tempShowSelects));
         
         if (startAgain) {
-            console.log("generateSelects1");
             const nextIdx = Math.max(...Object.keys(tempShowSelects)) + 1;
             setSelects(
                 {
@@ -143,7 +142,6 @@ export const AnswerEntryModal = (props) => {
 
     useEffect(
         () => {
-            console.log("useEffect1");
             let selects_obj = {};
             let playerIDS_obj = {};
             let ss_obj = {}
@@ -164,13 +162,6 @@ export const AnswerEntryModal = (props) => {
             setShowSelects(ss_obj);
         },
         []
-    )
-
-    useEffect(
-        () => {
-            console.log("useEffect2");
-        },
-        [playerIDs,selects]
     )
 
     if (Object.keys(selects).length > 0) {

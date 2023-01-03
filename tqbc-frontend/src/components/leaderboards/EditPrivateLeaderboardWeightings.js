@@ -39,7 +39,6 @@ export const EditPrivateLeaderboardWeights = () => {
             setWeightingErrorMessage(txt);
             weighting_result = false;
         }
-        console.log(weightingValues);
         if (weighting_result) {
             PrivateLeaderboardService.setPrivateLeaderboardWeightings(
                 currentUser.userID,

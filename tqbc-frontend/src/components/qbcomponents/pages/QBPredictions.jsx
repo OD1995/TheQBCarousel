@@ -185,10 +185,7 @@ const QBPredictionsComponent = () => {
                             setCurrentSeasonPeriodID(spID);
                             setTrueSeasonPeriodID(spID);
                         }
-                        // console.log("currentSeason: " + currentSeason);
-                        // console.log("currentSeasonPeriodID: " + currentSeasonPeriodID);
                         period_lookup[ssn + "---" + spID] = predictionPeriod.predictionPeriodID;
-                        // console.log("-------------------")
                     }
                     setUniqueSeasons(unique_season_dicts);
                     setUniqueSeasonPeriodIDs(unique_season_period_IDs_dicts);
@@ -228,7 +225,7 @@ const QBPredictionsComponent = () => {
     const showAndHideBottomLeftMessage = async () => {
         // Display message, wait 3 secs, hide message
         setDisplayBottomLeftMessage(true);
-        console.log("about to sleep");
+        // console.log("about to sleep");
         await sleep(3*1000);
         setDisplayBottomLeftMessage(false);
     }
@@ -243,7 +240,6 @@ const QBPredictionsComponent = () => {
         for (const [teamID, prediction] of Object.entries(currentDropdownValues)) {
             if (prediction.value in selectionsDict) {
                 msg = "You have predicted that <b>" + prediction.label + txt;
-                // console.log(msg);
                 break;
             } else {
                 selectionsDict[prediction.value] = teamID;

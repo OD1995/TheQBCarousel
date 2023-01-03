@@ -18,7 +18,7 @@ const Navigator = () => {
                 // localStorage.setItem('justLoggedOut',false);
                 TokenService.setJustLoggedOut(false);
             } else {
-                console.log("Changing location, clearMessage called");
+                // console.log("Changing location, clearMessage called");
                 // Clear messsage when changing location
                 dispatch(clearMessage()); 
             }
