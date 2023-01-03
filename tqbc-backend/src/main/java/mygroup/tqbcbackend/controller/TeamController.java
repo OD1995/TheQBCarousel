@@ -16,7 +16,6 @@ import mygroup.tqbcbackend.payload.request.ActiveConferenceTeamsRequest;
 import mygroup.tqbcbackend.payload.request.TeamRequest;
 import mygroup.tqbcbackend.repository.TeamRepository;
 
-//@CrossOrigin(origins = "http://localhost:3000")
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/teams")

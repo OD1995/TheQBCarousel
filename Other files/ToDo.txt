@@ -16,7 +16,7 @@ Long term
 -X- Over the last few seasons, the number of QBs changing teams in the NFL has been increasing significantly CHECK ME
   - https://sports.yahoo.com/why-has-qb-movement-spiked-so-much-in-recent-years-three-former-nfl-g-ms-weigh-in-130035575.html?guccounter=1&guce_referrer=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS8&guce_referrer_sig=AQAAANeFLRPwGItoG3-fSI8dFmm6F3pagPeWfNg2baWaXLU47VepRKiqE9wlWnVhBwpm27uR0zI4DrVoAmefUVh7rGcauxDnObW0suPaZ0kMVhGiibx9Fx4NdrqTWwEs1is2uytzXtpy5T5FAx9aLTAT6CK3CAFb76ZUrH6i71nhRsZY
 -X- Remove twitter script import and check twitter stuff works still
---- Search for localhost in both frontend and backend and also 2022
+-X- Search for localhost in both frontend and backend and also 2022
 --- Global leaderboard will only go live once 2023 answers are in
 -X- Link user to favourite Franchise rather than Team
 -X- Clean up register and login pages

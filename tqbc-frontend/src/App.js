@@ -119,8 +119,8 @@ const App = () => {
 							element={<QBPredictionHistoryComponent/>}
 						/>
 						<Route path="/email-verification" element={<EmailVerification/>}/>
-						<Route path="/global-leaderboard" element={<GlobalLeaderboard/>}/>
-						<Route path="/global-leaderboard/:season" element={<GlobalLeaderboard/>}/>
+						{/* <Route path="/global-leaderboard" element={<GlobalLeaderboard/>}/> */}
+						{/* <Route path="/global-leaderboard/:season" element={<GlobalLeaderboard/>}/> */}
 						<Route
 							path="/private-leaderboard/:privateLeaderboardUUID"
 							element={<PrivateLeaderboard/>}

@@ -13,7 +13,6 @@ import mygroup.tqbcbackend.payload.request.ConferenceRequest;
 import mygroup.tqbcbackend.repository.ConferenceRepository;
 
 
-//@CrossOrigin(origins = "http://localhost:3000")
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/conferences")
