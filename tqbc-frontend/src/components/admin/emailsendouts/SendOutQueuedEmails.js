@@ -19,6 +19,7 @@ export const SendOutQueuedEmails = () => {
             } else if (!user.roles.includes("ROLE_ADMIN")) {
                 History.push("/nope");
             } else {
+                document.title = "Send Out Queued Emails";
                 EmailService.getTotalUnsentEmailsCount().then(
                     (res) => {
                         setTotalUnsentRows(res.data);

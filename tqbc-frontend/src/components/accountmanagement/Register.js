@@ -23,6 +23,7 @@ const Register = () => {
     const [buttonDisabled, setButtonDisabled] = useState(false);
     
     useEffect(() => {
+        document.title = "Register";
         TeamService.getActiveTeams().then(
             (res) => {
                 let teams_array = [

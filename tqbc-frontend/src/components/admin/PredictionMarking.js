@@ -18,6 +18,8 @@ export const PredictionMarking = () => {
                 History.push("/nope");
             } else if (!user.roles.includes("ROLE_ADMIN")) {
                 History.push("/nope");
+            } else {
+                document.title = "Prediction Marking"
             }
         },
         []

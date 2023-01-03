@@ -23,6 +23,7 @@ const Login = (props) => {
 
     useEffect(
         () => {
+            document.title = "Login";
             const keyEnter = (ev) => {
                 if (ev.key === 'Enter') {
                     handleLogin();

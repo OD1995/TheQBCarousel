@@ -21,15 +21,21 @@ export const CreateNewPrivateLeaderboard = () => {
 
     useEffect(
         () => {
-            let wv = {};
-            for (const sp of rangeInt(1,4)) {
-                let sp_dict = {
-                    numerator: 1,
-                    denominator: 4
-                };
-                wv[sp] = sp_dict;
+            let user = TokenService.getUser();
+            if (user === null) {
+                History.push("/nope");
+            } else {
+                document.title = "Create New Private Leaderboard";
+                let wv = {};
+                for (const sp of rangeInt(1,4)) {
+                    let sp_dict = {
+                        numerator: 1,
+                        denominator: 4
+                    };
+                    wv[sp] = sp_dict;
+                }
+                setWeightingValues(wv);
             }
-            setWeightingValues(wv);
         },
         []
     )

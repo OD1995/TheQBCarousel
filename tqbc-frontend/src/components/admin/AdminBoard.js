@@ -21,6 +21,7 @@ const AdminBoard = () => {
             } else if (!user.roles.includes("ROLE_ADMIN")) {
                 History.push("/nope");
             } else {
+                document.title = 'Admin Board';
                 AnalysisService.getAdminBoardSummaryStats().then(
                     (res) => {
                         setTotalUsers(res.data.totalUserCount)

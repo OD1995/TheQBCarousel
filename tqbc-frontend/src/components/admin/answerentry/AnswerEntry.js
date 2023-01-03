@@ -114,6 +114,7 @@ export const AnswerEntry = () => {
             } else if (!user.roles.includes("ROLE_ADMIN")) {
                 History.push("/nope");
             } else {
+                document.title = "Answer Entry";
                 AnswerTypeService.getAllAnswerTypes().then(
                     (res) => {
                         let answer_types = {};

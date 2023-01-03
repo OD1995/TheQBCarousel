@@ -7,7 +7,7 @@ import History from "../../../helpers/History";
 import { useEffect } from "react";
 import TokenService from "../../../services/Token.service";
 
-export const EmailSendOuts = () => {
+export const QueueEmailSendOuts = () => {
     
     const params = useParams();
 
@@ -18,6 +18,8 @@ export const EmailSendOuts = () => {
                 History.push("/nope");
             } else if (!user.roles.includes("ROLE_ADMIN")) {
                 History.push("/nope");
+            } else {
+                document.title = "Queue Email Send Outs";
             }
         },
         []

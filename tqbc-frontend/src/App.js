@@ -33,11 +33,11 @@ import { EditPrivateLeaderboardWeights } from './components/leaderboards/EditPri
 import TokenService from './services/Token.service';
 import AdminBoard from './components/admin/AdminBoard';
 import { PredictionMarking } from './components/admin/PredictionMarking';
-import { EmailSendOuts } from './components/admin/emailsendouts/EmailSendOuts';
 import { SendOutQueuedEmails } from './components/admin/emailsendouts/SendOutQueuedEmails';
 import { Unsubscribe } from './components/accountmanagement/Unsubscribe';
 import { ForgottenPasswordEmailEntry } from './components/accountmanagement/ForgottenPasswordEmailEntry';
 import { ForgottenPasswordPasswordEntry } from './components/accountmanagement/ForgottenPasswordPasswordEntry';
+import { QueueEmailSendOuts } from './components/admin/emailsendouts/QueueEmailSendOuts';
 
 const App = () => {
 	const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -147,11 +147,11 @@ const App = () => {
 						/>
 						<Route
 							path="/email-send-outs"
-							element={<EmailSendOuts/>}
+							element={<QueueEmailSendOuts/>}
 						/>
 						<Route
 							path="/email-send-outs/:emailSubscriptionTypeID"
-							element={<EmailSendOuts/>}
+							element={<QueueEmailSendOuts/>}
 						/>
 						<Route
 							path="/send-out-queued-emails"

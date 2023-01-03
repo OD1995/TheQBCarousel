@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import History from '../../helpers/History';
@@ -10,6 +11,18 @@ export const JoinPrivateLeaderboard = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [newPrivateLeaderboardUUID, setNewPrivateLeaderboardUUID] = useState("");
 	const { user: currentUser } = useSelector((state) => state.auth);
+
+
+    useEffect(
+        () => {
+            let user = TokenService.getUser();
+            if (user === null) {
+                History.push("/nope");
+            } else {
+                document.title = "Join Private Leaderboard"
+            }
+        }
+    )
 
 
     const onChangeUUID = (ev) => {
