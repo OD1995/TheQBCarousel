@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "UserScores")
+@Table(name = "userscores")
 public class UserScore {
 	
 	@EmbeddedId

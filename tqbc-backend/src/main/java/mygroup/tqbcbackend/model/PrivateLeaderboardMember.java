@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "PrivateLeaderboardMembers")
+@Table(name = "privateleaderboardmembers")
 public class PrivateLeaderboardMember {
 	
 	@EmbeddedId

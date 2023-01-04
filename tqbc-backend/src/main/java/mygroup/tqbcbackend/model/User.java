@@ -31,7 +31,7 @@ import org.springframework.lang.Nullable;
 
 
 @Entity
-@Table(	name = "Users",
+@Table(	name = "users",
 		uniqueConstraints = {
 				@UniqueConstraint(columnNames = "Username"),
 				@UniqueConstraint(columnNames = "Email")
@@ -68,7 +68,7 @@ public class User {
 	private String password;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable( name = "UserRoles",
+	@JoinTable( name = "userroles",
 				joinColumns = @JoinColumn(name = "UserID"),
 				inverseJoinColumns = @JoinColumn(name = "RoleID")
 	)

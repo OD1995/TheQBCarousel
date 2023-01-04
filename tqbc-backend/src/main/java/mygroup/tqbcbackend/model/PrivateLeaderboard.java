@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "PrivateLeaderboards")
+@Table(name = "privateleaderboards")
 public class PrivateLeaderboard {
 
 	@Id

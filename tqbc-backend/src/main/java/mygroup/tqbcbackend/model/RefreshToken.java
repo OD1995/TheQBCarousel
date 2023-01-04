@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "RefreshTokens")
+@Table(name = "refreshtokens")
 public class RefreshToken {
 
     // RefreshToken is generated at login and then LastUsageDateTime is updated

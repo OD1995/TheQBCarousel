@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "EmailTypes")
+@Table(name = "emailtypes")
 public class EmailType {
 
     @Id

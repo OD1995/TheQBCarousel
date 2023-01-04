@@ -14,7 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "PeriodPredictions")
+@Table(name = "periodpredictions")
 public class PeriodPrediction {
 	
 	@EmbeddedId

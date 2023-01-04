@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "EmailHistory")
+@Table(name = "emailhistory")
 public class EmailHistory {
 
     @Id

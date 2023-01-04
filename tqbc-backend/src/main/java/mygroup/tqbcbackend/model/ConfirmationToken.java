@@ -13,12 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.criteria.CriteriaBuilder.In;
 
 @Entity
-@Table(name = "ConfirmationTokens")
+@Table(name = "confirmationtokens")
 public class ConfirmationToken {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

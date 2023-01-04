@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "PredictionPeriods")
+@Table(name = "predictionperiods")
 public class PredictionPeriod {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
