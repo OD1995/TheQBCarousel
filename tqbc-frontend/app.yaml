@@ -1,0 +1,5 @@
+runtime: nodejs16
+env: standard
+service: default
+env_variables:
+  REACT_APP_BACKEND_BASE_URL: https://theqbcarousel.com/

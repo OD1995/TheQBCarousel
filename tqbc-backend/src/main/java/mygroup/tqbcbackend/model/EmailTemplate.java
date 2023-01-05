@@ -1,8 +1,10 @@
 package mygroup.tqbcbackend.model;
 
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,7 +34,13 @@ public class EmailTemplate {
         targetEntity = EmailType.class,
         fetch = FetchType.LAZY
     )
-    @JoinColumn(name = "EmailTypeID")
+    @JoinColumn(
+        name = "EmailTypeID",
+		foreignKey = @ForeignKey(
+			name = "none",
+			value = ConstraintMode.NO_CONSTRAINT
+		)
+	)
     private EmailType emailType;
 
     public EmailTemplate() {

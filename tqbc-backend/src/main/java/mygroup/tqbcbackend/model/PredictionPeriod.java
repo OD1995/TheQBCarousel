@@ -3,8 +3,10 @@ package mygroup.tqbcbackend.model;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,11 +31,25 @@ public class PredictionPeriod {
 	private Long seasonPeriodID;
 	
 	@OneToOne(targetEntity = Event.class, fetch = FetchType.EAGER)
-	@JoinColumn(nullable = true, name = "FromEventID")
+	@JoinColumn(
+		name = "FromEventID",
+		nullable = true,
+		foreignKey = @ForeignKey(
+			name = "none",
+			value = ConstraintMode.NO_CONSTRAINT
+		)
+	)
 	private Event fromEvent;
 	
 	@OneToOne(targetEntity = Event.class, fetch = FetchType.EAGER)
-	@JoinColumn(nullable = true, name = "ToEventID")
+	@JoinColumn(
+		name = "ToEventID",
+		nullable = true,
+		foreignKey = @ForeignKey(
+			name = "none",
+			value = ConstraintMode.NO_CONSTRAINT
+		)
+	)
 	private Event toEvent;
 	
 	@Column(name = "HowItWorks")

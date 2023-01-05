@@ -3,8 +3,10 @@ package mygroup.tqbcbackend.model;
 import java.time.Instant;
 
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +29,13 @@ public class RefreshToken {
     private long refreshTokenID;
 
     @OneToOne(targetEntity = User.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "UserID")
+    @JoinColumn(
+        name = "UserID",
+		foreignKey = @ForeignKey(
+			name = "none",
+			value = ConstraintMode.NO_CONSTRAINT
+		)
+	)
     private User user;
 
     @Column(nullable = false, unique = true, name = "RefreshToken")

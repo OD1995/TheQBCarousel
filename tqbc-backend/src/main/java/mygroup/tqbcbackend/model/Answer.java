@@ -1,8 +1,10 @@
 package mygroup.tqbcbackend.model;
 
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,21 +24,39 @@ public class Answer {
 			targetEntity = Team.class,
 			fetch = FetchType.EAGER
 	)
-	@JoinColumn(name = "TeamID")
+	@JoinColumn(
+		name = "TeamID",
+		foreignKey = @ForeignKey(
+			name = "none",
+			value = ConstraintMode.NO_CONSTRAINT
+		)
+	)
 	private Team team;
 	
 	@ManyToOne(
 			targetEntity = Player.class,
 			fetch = FetchType.EAGER
 	)
-	@JoinColumn(name = "PlayerID")
+	@JoinColumn(
+		name = "PlayerID",
+		foreignKey = @ForeignKey(
+			name = "none",
+			value = ConstraintMode.NO_CONSTRAINT
+		)
+	)
 	private Player player;
 
 	@ManyToOne(
 			targetEntity = AnswerType.class,
 			fetch = FetchType.EAGER
 	)
-	@JoinColumn(name = "AnswerTypeID")
+	@JoinColumn(
+		name = "AnswerTypeID",
+		foreignKey = @ForeignKey(
+			name = "none",
+			value = ConstraintMode.NO_CONSTRAINT
+		)
+	)
 	private AnswerType answerType;
 	
 	public Answer() {

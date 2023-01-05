@@ -1,8 +1,10 @@
 package mygroup.tqbcbackend.model;
 
+import javax.persistence.ConstraintMode;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -16,13 +18,33 @@ public class PrivateLeaderboardMember {
 	private PrivateLeaderboardMemberCompositeKey privateLeaderboardMemberCompositeKey;
 	
 	@ManyToOne(targetEntity = PrivateLeaderboard.class, fetch = FetchType.LAZY)
-	@JoinColumn(name = "PrivateLeaderboardID", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(
+		name = "PrivateLeaderboardID",
+		nullable = false,
+		insertable = false,
+		updatable = false,
+		foreignKey = @ForeignKey(
+			name = "none",
+			value = ConstraintMode.NO_CONSTRAINT
+		)
+	
+	)
 	// @JsonBackReference
 	// @JsonManagedReference
 	private PrivateLeaderboard privateLeaderboard;
 	
 	@ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
-	@JoinColumn(name = "UserID", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(
+		name = "UserID",
+		nullable = false,
+		insertable = false,
+		updatable = false,
+		foreignKey = @ForeignKey(
+			name = "none",
+			value = ConstraintMode.NO_CONSTRAINT
+		)
+	
+	)
 	private User user;
 	
 	

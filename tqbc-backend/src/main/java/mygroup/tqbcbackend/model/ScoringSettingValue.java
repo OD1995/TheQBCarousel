@@ -1,9 +1,11 @@
 package mygroup.tqbcbackend.model;
 
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -30,7 +32,16 @@ public class ScoringSettingValue {
 		targetEntity = ScoringSetting.class,
 		fetch = FetchType.LAZY
 	)
-	@JoinColumn(name = "ScoringSettingID", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(
+		name = "ScoringSettingID",
+		nullable = false,
+		insertable = false,
+		updatable = false,
+		foreignKey = @ForeignKey(
+			name = "none",
+			value = ConstraintMode.NO_CONSTRAINT
+		)
+	)
 	@JsonBackReference
 	private ScoringSetting scoringSetting;	
 	

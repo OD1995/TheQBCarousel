@@ -4,8 +4,10 @@ import java.time.Instant;
 
 import javax.annotation.Generated;
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +29,13 @@ public class EmailHistory {
         targetEntity = User.class,
         fetch = FetchType.EAGER
     )
-    @JoinColumn(name = "UserID")
+    @JoinColumn(
+        name = "UserID",
+		foreignKey = @ForeignKey(
+			name = "none",
+			value = ConstraintMode.NO_CONSTRAINT
+		)
+	)
     private User user;
 
     @Column(name = "ToEmailAddress")
@@ -43,7 +51,13 @@ public class EmailHistory {
         targetEntity = EmailTemplate.class,
         fetch = FetchType.LAZY
     )
-    @JoinColumn(name = "EmailTemplateID")
+    @JoinColumn(
+        name = "EmailTemplateID",
+		foreignKey = @ForeignKey(
+			name = "none",
+			value = ConstraintMode.NO_CONSTRAINT
+		)
+	)
     private EmailTemplate emailTemplate;
     
 

@@ -8,8 +8,10 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -59,7 +61,13 @@ public class User {
 			targetEntity = Franchise.class,
 			fetch = FetchType.LAZY
 	)
-	@JoinColumn(name = "FavouriteFranchiseID")
+	@JoinColumn(
+		name = "FavouriteFranchiseID",
+		foreignKey = @ForeignKey(
+			name = "none",
+			value = ConstraintMode.NO_CONSTRAINT
+		)
+	)
 	private Franchise favouriteFranchise;
 	
 	@NotBlank
@@ -68,9 +76,22 @@ public class User {
 	private String password;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable( name = "userroles",
-				joinColumns = @JoinColumn(name = "UserID"),
-				inverseJoinColumns = @JoinColumn(name = "RoleID")
+	@JoinTable(
+		name = "userroles",
+		joinColumns = @JoinColumn(
+			name = "UserID",
+			foreignKey = @ForeignKey(
+				name = "none",
+				value = ConstraintMode.NO_CONSTRAINT
+			)		
+		),
+		inverseJoinColumns = @JoinColumn(
+			name = "RoleID",
+			foreignKey = @ForeignKey(
+				name = "none",
+				value = ConstraintMode.NO_CONSTRAINT
+			)
+		)
 	)
 	private Set<Role> roles = new HashSet<>();
 	

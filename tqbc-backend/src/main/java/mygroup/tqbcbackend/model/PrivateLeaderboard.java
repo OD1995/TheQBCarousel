@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,13 +26,17 @@ public class PrivateLeaderboard {
 	private long privateLeaderboardID;
 		
 	@ManyToOne(
-			targetEntity = User.class,
-			fetch = FetchType.LAZY
-			// fetch = FetchType.EAGER
+		targetEntity = User.class,
+		fetch = FetchType.LAZY
+		// fetch = FetchType.EAGER
 	)
 	@JoinColumn(
 		name = "OwnerUserID",
-		referencedColumnName = "UserID"
+		referencedColumnName = "UserID",
+		foreignKey = @ForeignKey(
+			name = "none",
+			value = ConstraintMode.NO_CONSTRAINT
+		)
 	)
 	// @JsonManagedReference
 	private User ownerUser;
@@ -39,10 +45,16 @@ public class PrivateLeaderboard {
 	private String privateLeaderboardName;
 		
 	@ManyToOne(
-			targetEntity = ScoringSetting.class,
-			fetch = FetchType.EAGER
+		targetEntity = ScoringSetting.class,
+		fetch = FetchType.EAGER
 	)
-	@JoinColumn(name = "ScoringSettingID")
+	@JoinColumn(
+		name = "ScoringSettingID",
+		foreignKey = @ForeignKey(
+			name = "none",
+			value = ConstraintMode.NO_CONSTRAINT
+		)
+	)
 	private ScoringSetting scoringSetting;
 	
 	@Column(name = "PrivateLeaderboardUUID")
@@ -50,10 +62,10 @@ public class PrivateLeaderboard {
 	private UUID privateLeaderboardUUID;
 	
 	@OneToMany(
-			targetEntity = PrivateLeaderboardMember.class,
-			fetch = FetchType.LAZY,
-			// fetch = FetchType.EAGER,
-			mappedBy = "privateLeaderboard"
+		targetEntity = PrivateLeaderboardMember.class,
+		fetch = FetchType.LAZY,
+		// fetch = FetchType.EAGER,
+		mappedBy = "privateLeaderboard"
 	)
 	// @JsonManagedReference
 	// @JsonBackReference
