@@ -25,6 +25,7 @@
     "react-usestateref": "^1.0.8",
     "react-validation": "^3.0.7",
     "redux": "^4.1.2",
+    "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
     "use-immer": "^0.8.1",
     "validator": "^13.7.0",
@@ -55,6 +56,5 @@
     ]
   },
   "devDependencies": {
-    "redux-devtools-extension": "^2.13.9"
   }
 }
