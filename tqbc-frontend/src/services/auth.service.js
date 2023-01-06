@@ -1,6 +1,6 @@
 import api from './api.js';
 import History from "../helpers/History";
-import TokenService from './Token.service.js';
+import TokenService from './Boken.service.js';
 
 // const register = (username, favTeam, email, password) => {
 //     return api.post(

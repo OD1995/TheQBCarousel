@@ -1,6 +1,6 @@
 import axios from "axios";
 import EventBus from "../common/EventBus";
-import TokenService from "./Token.service";
+import TokenService from "./Boken.service";
 
 const instance = axios.create(
     {
