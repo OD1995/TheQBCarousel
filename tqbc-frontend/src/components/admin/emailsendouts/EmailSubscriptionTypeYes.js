@@ -47,10 +47,6 @@ export const EmailSubscriptionTypeYes = () => {
     const generateReplacerInputs = (input_list) => {
         let ri = [];
         for (const il of input_list) {
-            var startingVal = "";
-            if (searchParams.has(il)) {
-                startingVal = searchParams.get(il);
-            }
             ri.push(
                 <div
                     className="estyes-replacer-div"

@@ -20,12 +20,14 @@ const EmailVerification = () => {
         []
     )
 
+    var title;
+    var paragraph;
     if (message === "failure") {
-        var title = "Email Verification Failure";
-        var paragraph = "The provided token is not valid";
+        title = "Email Verification Failure";
+        paragraph = "The provided token is not valid";
     } else {
-        var title = "Email Verification Success";
-        var paragraph = "Your email address has been successfully verified! ";
+        title = "Email Verification Success";
+        paragraph = "Your email address has been successfully verified! ";
         paragraph += "You can now login and start your predictions.";
     }
     return (

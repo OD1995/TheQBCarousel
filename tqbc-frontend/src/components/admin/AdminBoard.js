@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import History from "../../helpers/History"
 import AnalysisService from "../../services/AnalysisService";
 import TokenService from "../../services/Token.service";
@@ -10,8 +9,6 @@ const AdminBoard = () => {
     const [totalUsers, setTotalUsers] = useState(0);
     const [tableHeader, setTableHeader] = useState(null);
     const [tableRow, setTableRow] = useState(null)
-
-    const { user: currentUser } = useSelector((state) => state.auth);
 
     useEffect(
         () => {

@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Select from "react-select";
-import { makeOptionsDropdownFriendly, makeValueDropdownFriendly, range, rangeInt, round_number } from "../../helpers/UsefulFunctions";
+import { makeOptionsDropdownFriendly, makeValueDropdownFriendly, rangeInt, round_number } from "../../helpers/UsefulFunctions";
 import './CreateNewPrivateLeaderboard.css';
 import { useEffect } from "react";
 import PrivateLeaderboardService from "../../services/PrivateLeaderboardService";
@@ -249,17 +249,17 @@ export const CreateNewPrivateLeaderboard = () => {
                                     </div>                                        
                                 );
 
-                                let sqr = (
-                                    <div
-                                        className="empty-square"
-                                        style={{
-                                            gridRow: row,
-                                            gridColumnStart: 1,
-                                            gridColumnEnd: 5
-                                        }}
-                                    >
-                                    </div>
-                                )
+                                // let sqr = (
+                                //     <div
+                                //         className="empty-square"
+                                //         style={{
+                                //             gridRow: row,
+                                //             gridColumnStart: 1,
+                                //             gridColumnEnd: 5
+                                //         }}
+                                //     >
+                                //     </div>
+                                // )
 
                                 return [
                                     txt1,

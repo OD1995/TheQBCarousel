@@ -4,13 +4,12 @@ import { Navigate, useSearchParams } from "react-router-dom";
 
 import AuthService from "../../services/AuthService";
 import { LOGIN_SUCCESS } from "../../actions/types";
-import History from "../../helpers/History";
 import TokenService from "../../services/Token.service";
 import './Login.css';
 
 
 
-const Login = (props) => {
+const Login = () => {
 
     const [usernameEmail, setUsernameEmail] = useState("");
     const [password, setPassword] = useState("");

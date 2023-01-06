@@ -11,7 +11,6 @@ import TeamService from "../../../services/TeamService";
 import AnswerService from "../../../services/AnswerService";
 import { useRef } from "react";
 import { useImmer } from "use-immer";
-import { useSelector } from "react-redux";
 import History from "../../../helpers/History";
 import TokenService from "../../../services/Token.service";
 

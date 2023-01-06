@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import History from "../../../helpers/History";
 import EmailService from "../../../services/EmailService";
 import TokenService from "../../../services/Token.service";

@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { useSearchParams } from "react-router-dom"
 import AuthService from "../../services/AuthService";
-import EmailService from "../../services/EmailService";
 import './ForgottenPassword.css';
 
 export const ForgottenPasswordEmailEntry = () => {

@@ -21,7 +21,7 @@ export const HowItWorksComponent = () => {
         []
     )
 
-    if (exampleSeason != 0) {
+    if (exampleSeason !== 0) {
 
         return (
             <div className="container">

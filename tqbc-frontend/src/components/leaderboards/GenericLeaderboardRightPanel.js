@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { SeasonSelector } from "../qbcomponents/components/SeasonSelector";
 
 export const GenericLeaderboardRightPanel = (props) => {

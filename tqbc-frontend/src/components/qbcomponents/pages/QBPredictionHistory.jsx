@@ -4,14 +4,10 @@ import ConferenceService from '../../../services/ConferenceService';
 import TeamService from '../../../services/TeamService';
 import '../pages/QBPredictions.css';
 import '../pages/QBPredictionHistory.css';
-// import { PopupComponent } from '../../generic/PopUpComponent';
-// import { useSelector } from 'react-redux';
 import PeriodPredictionService from '../../../services/PeriodPredictionService';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import History from '../../../helpers/History';
 import { QBPredictionHistoryRightPanel } from '../components/QBPredictionHistoryRightPanel';
-import TokenService from '../../../services/Token.service';
-// import PredictionPeriodService from '../../../services/PredictionPeriodService';
 
 const QBPredictionHistoryComponent = () => {
     const params = useParams();

@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react"
 import { useSearchParams } from "react-router-dom"
-import History from "../../helpers/History";
 import AuthService from "../../services/AuthService";
 import PlainPageComponent from "../generic/PlainPageComponent";
 import './ForgottenPassword.css';
@@ -137,6 +136,7 @@ export const ForgottenPasswordPasswordEntry = () => {
                     <button
                         className="tqbc-black-button"
                         onClick={handleSubmit}
+                        disabled={disableButton}
                         id="fppe-button"
                     >
                         Update Password

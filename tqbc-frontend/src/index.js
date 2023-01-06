@@ -5,10 +5,7 @@ import store from "./store";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-// import * as serviceWorker from "./serviceWorker";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter } from 'react-router-dom';
-// import { history } from './helpers/history';
 
 ReactDOM.render(
 	<Provider store={store}>
