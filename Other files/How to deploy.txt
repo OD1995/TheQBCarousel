@@ -1,0 +1,18 @@
+Backend
+
+Go to tqbc-backend folder
+Run `mvnw package` to creat .jar file, which goes in target folder
+Make sure backend.yaml file is right and in right place
+Still in tqbc-backend, run `gcloud app deploy target\tqbc-backend-0.0.1-SNAPSHOT.jar --appyaml src\main\appengine\backend.yaml`
+
+
+Frontend
+
+Go to tqbc-frontend folder, make sure app.yaml is in there
+Run `gcloud app deploy`
+
+
+Dispatch.yaml
+
+Go to TheQBCarousel folder, where dispatch.yaml is
+Run `gcloud app deploy`
