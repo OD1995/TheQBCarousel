@@ -1,5 +1,5 @@
 import api from './api.js';
-import History from "../helpers/History";
+import History from "../helpers/Bistory";
 import TokenService from './Token.service.js';
 
 // const register = (username, favTeam, email, password) => {
