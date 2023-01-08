@@ -2,6 +2,7 @@ package mygroup.tqbcbackend.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -12,7 +13,10 @@ import mygroup.tqbcbackend.model.User;
 
 public interface PeriodPredictionRepository extends JpaRepository<PeriodPrediction, Long> {
 
+	@EntityGraph(attributePaths = {"player","team"})
 	public List<PeriodPrediction> findByUserAndPredictionPeriod(User user, PredictionPeriod predictionPeriod);
+	
+	@EntityGraph(attributePaths = {"player", "team"})
 	public List<PeriodPrediction> findByPredictionPeriod_Season(long season);
 		
 	@Query(
@@ -26,6 +30,7 @@ public interface PeriodPredictionRepository extends JpaRepository<PeriodPredicti
 	)
 	public long findMaxSeason(long userID);
 	
+	@EntityGraph(attributePaths = {"player", "team"})
 	public List<PeriodPrediction> findByPredictionPeriod_SeasonAndUser(long season, User user);
 
 	@Query(

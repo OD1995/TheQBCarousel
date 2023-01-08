@@ -75,13 +75,6 @@
     align-self: center;
 }
 
-#bottom-left-message {
-    grid-row: 10;
-    grid-column-start: 4;
-    grid-column-end: 6;
-    justify-self: center;
-    align-self: center;
-}
 
 .bottom-left-message-green {
     color: green;

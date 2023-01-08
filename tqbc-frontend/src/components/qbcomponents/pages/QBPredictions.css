@@ -32,10 +32,11 @@
 
 #bottom-left-message {
     grid-row: 10;
-    grid-column-start: 4;
-    grid-column-end: 6;
-    justify-self: center;
+    grid-column: 5;
+    justify-self: left;
     align-self: center;
+    text-align: left;
+    margin-left: 2vw;
 }
 
 .bottom-left-message-green {
