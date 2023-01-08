@@ -58,6 +58,12 @@ export const HowItWorksComponent = () => {
                         predictionPeriodsData={predictionPeriodsData}
                     />
                     <br></br>
+                    <b>
+                        Please note: as TheQBCarousel.com was not launched until after the end of the 2022 NFL Regular Season,
+                        SP1 of the 2023 prediction season did not happen.
+                    </b>
+                    <br/>
+                    <br/>
                     <p>
                         Once the draft has started, the prediction window for the upcoming season closes.
                         The prediction window for the next season then opens with the kick off of the first game of the new season.
