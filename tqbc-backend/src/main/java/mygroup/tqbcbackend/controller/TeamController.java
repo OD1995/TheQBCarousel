@@ -1,5 +1,6 @@
 package mygroup.tqbcbackend.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,9 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import mygroup.tqbcbackend.model.Player;
 import mygroup.tqbcbackend.model.Team;
 import mygroup.tqbcbackend.payload.request.ActiveConferenceTeamsRequest;
 import mygroup.tqbcbackend.payload.request.TeamRequest;
+import mygroup.tqbcbackend.payload.response.TestReponse;
+import mygroup.tqbcbackend.repository.PlayerRepository;
 import mygroup.tqbcbackend.repository.TeamRepository;
 
 @CrossOrigin(origins = "*")
@@ -25,6 +29,9 @@ public class TeamController {
 
 	@Autowired
 	private TeamRepository teamRepository;
+
+	@Autowired
+	private PlayerRepository playerRepository;
 	
 	// Get all teams
 	@GetMapping("/all")
@@ -67,4 +74,22 @@ public class TeamController {
 			activeConferenceTeamsRequest.getConference()
 		);
 	}
+
+	@GetMapping("/test1")
+	public List<Team> test1() {
+		return teamRepository.findByIsActiveTrue();
+	}
+
+	@GetMapping("/test2")
+	public List<Player> test2() {
+		return playerRepository.findByIsActiveTrueOrderByNameAsc();
+	}
+	
+	@GetMapping("/test3")
+	public TestReponse test3() {
+		List<Team> T = teamRepository.findByIsActiveTrue();
+		List<Player> P = playerRepository.findByIsActiveTrueOrderByNameAsc();
+		return new TestReponse(T, P);
+	}
+		
 }
