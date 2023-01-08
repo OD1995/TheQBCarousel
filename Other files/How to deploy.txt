@@ -1,15 +1,18 @@
 Backend
 
-Go to tqbc-backend folder
+Go to tqbc-backend folder, make sure application.properties profile is prod
 Run `mvnw package` to creat .jar file, which goes in target folder
--- Make sure backend.yaml file is right and in right place
--- Still in tqbc-backend, run `gcloud app deploy target\tqbc-backend-0.0.1-SNAPSHOT.jar --appyaml src\main\appengine\backend.yaml`
+                  -- Make sure backend.yaml file is right and in right place
+                  -- Still in tqbc-backend, run `gcloud app deploy target\tqbc-backend-0.0.1-SNAPSHOT.jar --appyaml src\main\appengine\backend.yaml`
 https://blog.codecentric.de/spring-boot-flyio
 Create image, can be seen in Docker Desktop in the Images section:
- - Run `pack build ghcr.io/od1995/tqbc-backend-flyio:latest --builder paketobuildpacks/builder:base --path target\tqbc-backend-0.0.1-SNAPSHOT.jar
+ - Run `pack build ghcr.io/od1995/tqbc-backend-flyio:latest --builder paketobuildpacks/builder:base --path target\tqbc-backend-0.0.1-SNAPSHOT.jar`
 Publish container to ghcr (GitHub Container Registry):
  - Run `pack build ghcr.io/od1995/tqbc-backend-flyio:latest --builder paketobuildpacks/builder:base --path target\tqbc-backend-0.0.1-SNAPSHOT.jar --env "BP_OCI_SOURCE=https://github.com/od1995/TheQBCarousel" --publish`
-
+                Deploy container image to fly.io:
+                 - `flyctl launch --image ghcr.io/od1995/tqbc-backend-flyio:latest`
+Deploy, which I think updates the image just created
+ - Run `flyctl deploy`
 
 Frontend
 

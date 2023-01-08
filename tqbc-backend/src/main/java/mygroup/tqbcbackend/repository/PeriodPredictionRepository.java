@@ -16,7 +16,7 @@ public interface PeriodPredictionRepository extends JpaRepository<PeriodPredicti
 	public List<PeriodPrediction> findByPredictionPeriod_Season(long season);
 		
 	@Query(
-		value = "SELECT MAX(PredictionPeriodID) FROM PeriodPredictions WHERE UserID = ?1",
+		value = "SELECT MAX(PredictionPeriodID) FROM periodpredictions WHERE UserID = ?1",
 		nativeQuery = true
 	)
 	public long findMaxPredictionPeriodID(long userID);
@@ -36,7 +36,7 @@ public interface PeriodPredictionRepository extends JpaRepository<PeriodPredicti
 	@Query(
 		value = "SELECT 	predictionPeriodID, \n" +
 				"			COUNT(DISTINCT userID) AS distinctUsers \n" +
-				"FROM 		PeriodPredictions pp \n" +
+				"FROM 		periodpredictions pp \n" +
 				"GROUP BY 	pp.predictionPeriodID \n" +
 				"ORDER BY 	pp.predictionPeriodID ASC",
 		nativeQuery = true
