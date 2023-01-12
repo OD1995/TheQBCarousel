@@ -1,5 +1,6 @@
 import React from "react"
 import { useState,useEffect } from "react";
+import { TQBCLoading } from "../../generic/TQBCLoading";
 
 export const AnswerEntryTable = (props) => {
 
@@ -109,6 +110,6 @@ export const AnswerEntryTable = (props) => {
             </table>
         )
     } else {
-        return null;
+        return <TQBCLoading/>;
     }
 }

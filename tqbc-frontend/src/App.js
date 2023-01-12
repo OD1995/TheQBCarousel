@@ -18,14 +18,14 @@ import EmailVerification from "./components/accountmanagement/EmailVerification"
 import { logout } from "./actions/auth";
 import EventBus from "./common/EventBus";
 import { SET_MESSAGE } from './actions/types';
-import { TestComponent } from './components/TestComponent';
+// import { TestComponent } from './components/TestComponent';
 import { NavigateSetter } from './helpers/NavigateSetter';
 import { AnswerEntry } from './components/admin/answerentry/AnswerEntry';
 import { HowItWorksComponent } from './components/howitworks/HowItWorksComponent';
 import { PageDoesntExist } from './components/errors/PageDoesntExist';
-import { GlobalLeaderboard } from './components/leaderboards/GlobalLeaderboard';
+// import { GlobalLeaderboard } from './components/leaderboards/GlobalLeaderboard';
 import { CreateNewPrivateLeaderboard } from './components/leaderboards/CreateNewPrivateLeaderboard';
-import { OutsidePredictionPeriod } from './components/errors/OutsidePredictionPeriod';
+// import { OutsidePredictionPeriod } from './components/errors/OutsidePredictionPeriod';
 import { PrivateLeaderboard } from './components/leaderboards/PrivateLeaderboard';
 import { NavigationBar } from './components/generic/NavigationBar';
 import { JoinPrivateLeaderboard } from './components/leaderboards/JoinPrivateLeaderboard';
@@ -38,6 +38,7 @@ import { Unsubscribe } from './components/accountmanagement/Unsubscribe';
 import { ForgottenPasswordEmailEntry } from './components/accountmanagement/ForgottenPasswordEmailEntry';
 import { ForgottenPasswordPasswordEntry } from './components/accountmanagement/ForgottenPasswordPasswordEntry';
 import { QueueEmailSendOuts } from './components/admin/emailsendouts/QueueEmailSendOuts';
+// import { TQBCLoading } from './components/generic/TQBCLoading';
 
 const App = () => {
 	const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -104,8 +105,8 @@ const App = () => {
 						<Route exact path="/register" element={<Register/>} />
 						<Route exact path="/login" element={<Login/>}></Route>
 						<Route exact path="/profile" element={<Profile/>} />
-						<Route exact path="/test" element={<TestComponent/>} />
-						<Route exact path="/test2" element={<OutsidePredictionPeriod/>} />
+						{/* <Route exact path="/test" element={<TestComponent/>} /> */}
+						{/* <Route exact path="/test2" element={<OutsidePredictionPeriod/>} /> */}
 						{/* <Route exact path="/admin" component={<TestComponent/>} /> */}
 						<Route path="/admin" element={<AdminBoard/>}/>
 						<Route path='/answer-entry/:season' element={<AnswerEntry/>}/>

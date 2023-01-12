@@ -5,6 +5,7 @@ import History from "../../helpers/History";
 import { rangeInt, round_number } from "../../helpers/UsefulFunctions";
 import PrivateLeaderboardService from "../../services/PrivateLeaderboardService";
 import TokenService from "../../services/Token.service";
+import { TQBCLoading } from "../generic/TQBCLoading";
 import { GenericLeaderboard } from "./GenericLeaderboard";
 
 export const PrivateLeaderboard = () => {
@@ -131,6 +132,6 @@ export const PrivateLeaderboard = () => {
             return null;
         }
     } else {
-        return null;
+        return <TQBCLoading/>;
     }
 }

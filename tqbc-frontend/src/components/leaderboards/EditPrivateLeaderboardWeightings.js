@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import History from "../../helpers/History";
 import TokenService from "../../services/Token.service";
+import { TQBCLoading } from "../generic/TQBCLoading";
 
 export const EditPrivateLeaderboardWeights = () => {
     
@@ -290,6 +291,6 @@ export const EditPrivateLeaderboardWeights = () => {
 
         }
     } else {
-        return null;
+        return <TQBCLoading/>;
     }
 }

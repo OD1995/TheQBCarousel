@@ -13,6 +13,7 @@ import { useRef } from "react";
 import { useImmer } from "use-immer";
 import History from "../../../helpers/History";
 import TokenService from "../../../services/Token.service";
+import { TQBCLoading } from "../../generic/TQBCLoading";
 
 export const AnswerEntry = () => {
 
@@ -191,6 +192,6 @@ export const AnswerEntry = () => {
             </div>
         )
     } else {
-        return null;
+        return <TQBCLoading/>;
     }
 }

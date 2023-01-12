@@ -19,6 +19,7 @@ import { OutsidePredictionPeriod } from '../../errors/OutsidePredictionPeriod';
 import { SocialMediaRequest } from '../components/SocialMediaRequest';
 import TokenService from '../../../services/Token.service';
 import History from '../../../helpers/History';
+import { TQBCLoading } from '../../generic/TQBCLoading';
 
 const QBPredictionsComponent = () => {
     // const [teamIDList, setTeamIDList] = useState([]);
@@ -391,7 +392,7 @@ const QBPredictionsComponent = () => {
             </div>
         );
     } else {
-        return null
+        return <TQBCLoading/>
     }
 }
 

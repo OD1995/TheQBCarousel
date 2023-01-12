@@ -1,4 +1,5 @@
 import Select from 'react-select';
+import { TQBCLoading } from '../../generic/TQBCLoading';
 import './QBSelector.css';
 
 const QBSelector = (props) => {
@@ -39,7 +40,7 @@ const QBSelector = (props) => {
             </div>
         )
     } else {
-        return null
+        return <TQBCLoading/>
     }
 }
 

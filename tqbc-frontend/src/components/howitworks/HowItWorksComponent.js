@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { PredictionPeriodsTable } from "./PredictionPeriodsTable";
 import PredictionPeriodService from "../../services/PredictionPeriodService";
 import "./HowItWorks.css";
+import { TQBCLoading } from "../generic/TQBCLoading";
 
 export const HowItWorksComponent = () => {
     const [exampleSeason, setExampleSeason] = useState(0);
@@ -102,6 +103,6 @@ export const HowItWorksComponent = () => {
             </div>
         );
     } else {
-        return null;
+        return <TQBCLoading/>;
     }
 };

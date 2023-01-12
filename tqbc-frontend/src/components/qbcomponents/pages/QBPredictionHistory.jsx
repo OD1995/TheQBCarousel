@@ -8,6 +8,7 @@ import PeriodPredictionService from '../../../services/PeriodPredictionService';
 import { useParams } from 'react-router-dom';
 import History from '../../../helpers/History';
 import { QBPredictionHistoryRightPanel } from '../components/QBPredictionHistoryRightPanel';
+import { TQBCLoading } from '../../generic/TQBCLoading';
 
 const QBPredictionHistoryComponent = () => {
     const params = useParams();
@@ -143,7 +144,7 @@ const QBPredictionHistoryComponent = () => {
             </div>
         )
     } else {
-        return null
+        return <TQBCLoading/>
     }
 }
 

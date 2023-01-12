@@ -9,6 +9,7 @@ import AnswerService from '../../services/AnswerService';
 import TokenService from '../../services/Token.service';
 import UserScoreService from '../../services/UserScoreService';
 import { PopupComponent } from '../generic/PopUpComponent';
+import { TQBCLoading } from '../generic/TQBCLoading';
 import './GenericLeaderboard.css';
 import { GenericLeaderboardRightPanel } from './GenericLeaderboardRightPanel';
 import { PageSelectorComponent } from './PageSelectorComponent';
@@ -20,8 +21,8 @@ export const GenericLeaderboard = (props) => {
 
     const [leaderboardRows, setLeaderboardRows] = useState([]);
     const [firstRowRank, setFirstRowRank] = useState(null);
-    const [requestingUserRow, setRequestingUserRow] = useState(null);
-    const [requestingUserRowRank, setRequestingUserRowRank] = useState(null);
+    // const [requestingUserRow, setRequestingUserRow] = useState(null);
+    // const [requestingUserRowRank, setRequestingUserRowRank] = useState(null);
     const [pageCount, setPageCount] = useState(1);
     const [uniqueSeasons, setUniqueSeasons] = useState([]);
     const [leaderboardSeason, setLeaderboardSeason] = useState(null);
@@ -130,8 +131,8 @@ export const GenericLeaderboard = (props) => {
             searchParams.get('page')
         ).then(
             (res) => {
-                setRequestingUserRowRank(res.data.requestingUserRowRank);
-                setRequestingUserRow(res.data.requestingUserRow);
+                // setRequestingUserRowRank(res.data.requestingUserRowRank);
+                // setRequestingUserRow(res.data.requestingUserRow);
                 setPageCount(res.data.pageCount);
                 setFirstRowRank(res.data.firstRowRank);
                 setLeaderboardRows(res.data.rows);
@@ -385,6 +386,6 @@ export const GenericLeaderboard = (props) => {
             </div>
         );
     } else {
-        return null;
+        return <TQBCLoading/>;
     }
 }

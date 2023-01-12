@@ -1,3 +1,4 @@
+import { TQBCLoading } from "../../generic/TQBCLoading";
 
 const QBDisplayer = (props) => {
 
@@ -75,7 +76,7 @@ const QBDisplayer = (props) => {
             </div>
         )
     } else {
-        return null
+        return <TQBCLoading/>
     }
 }
 

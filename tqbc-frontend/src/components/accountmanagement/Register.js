@@ -121,6 +121,7 @@ const Register = () => {
             ).catch(
                 (err) => {
                     setRegisterError(err.response.data.message);
+                    setButtonDisabled(false);
                 }
             )
         } else {
