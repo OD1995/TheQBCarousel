@@ -78,6 +78,7 @@ export const HowItWorksComponent = () => {
                         The global leaderboard equally weighs the 4 season periods to come up with a single score for the whole prediction season.
                         Private leaderboards allow you to set your own weightings.
                         For example, you may wish to give more weight to the earlier season periods compared to the later season periods.
+                        Once the 2023 NFL season has started, the global leaderboard will open.
                     </p>
                     <br></br>
                     <h3>Correct Answers</h3>

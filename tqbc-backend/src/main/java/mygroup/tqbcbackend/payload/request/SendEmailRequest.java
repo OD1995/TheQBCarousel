@@ -8,6 +8,8 @@ public class SendEmailRequest {
 
     private long predictionPeriodID;
 
+    private String username;
+
 
     public String getEmailHtml() {
         return this.emailHtml;
@@ -32,5 +34,12 @@ public class SendEmailRequest {
     public void setPredictionPeriodID(long predictionPeriodID) {
         this.predictionPeriodID = predictionPeriodID;
     }
-
+    
+    public String getUsername() {
+        return this.username;
+    }
+    
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

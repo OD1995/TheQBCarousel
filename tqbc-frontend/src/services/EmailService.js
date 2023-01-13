@@ -33,6 +33,19 @@ class EmailService {
         )
     }
 
+    sendReportedIssueEmail(
+        emailHtml,
+        username
+    ) {
+        return api.post(
+            this.base_url + "send-reported-issue-email",
+            {
+                emailHtml,
+                username
+            }
+        )
+    }
+
     queueEmailToAllSubscribedUsers(
         emailHtml,
         emailSubscriptionTypeID,

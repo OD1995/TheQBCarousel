@@ -41,7 +41,7 @@ export const ForgottenPasswordPasswordEntry = () => {
     const handleSubmit = () => {
         setDisableButton(true);
         setRequestResultColour("black")
-        setRequestResult("");
+        setRequestResult("Loading..");
         if (password1 === password2) {
             if (password1.length === 0) {
                 setRequestResultColour("red");
@@ -134,7 +134,7 @@ export const ForgottenPasswordPasswordEntry = () => {
                         />
                     </div>
                     <button
-                        className="tqbc-black-button"
+                        className={"tqbc-black-button" + (disableButton ? " disabled-button" : "")}
                         onClick={handleSubmit}
                         disabled={disableButton}
                         id="fppe-button"

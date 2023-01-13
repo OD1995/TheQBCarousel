@@ -9,11 +9,12 @@ import { useParams } from 'react-router-dom';
 import History from '../../../helpers/History';
 import { QBPredictionHistoryRightPanel } from '../components/QBPredictionHistoryRightPanel';
 import { TQBCLoading } from '../../generic/TQBCLoading';
+import PlainPageComponent from '../../generic/PlainPageComponent';
 
 const QBPredictionHistoryComponent = () => {
     const params = useParams();
     const [allLoaded, setAllLoaded] = useState(false);
-    // const [redirect, setRedirect] = useState(false);
+    const [noPredictionHistoryAvailable, setNoPredictionHistoryAvailable] = useState(false);
     const [reload, setReload] = useState(false);
     const [teamIDList, setTeamIDList] = useState([]);
     const [conferences, setConferences] = useState([]);
@@ -26,11 +27,8 @@ const QBPredictionHistoryComponent = () => {
     useEffect(
         () => {
             document.title = "Prediction History";
-            // setAllLoaded(false);
             // If season not in params or season not one of available options,
             //    get max season and redirect to there
-            // let user = TokenService.getUser();
-            // setUserID(user.userID);
             PeriodPredictionService.getUniqueSeasonsAndUserID(params.username).then(
                 result => {
                     var history_season;
@@ -51,6 +49,11 @@ const QBPredictionHistoryComponent = () => {
                                 History.push(`/prediction-history/${params.username}/${history_season}`);
                                 setReload(true);
                                 // callTeamsService(history_season);
+                            }
+                        ).catch(
+                            (err) => {
+                                // No prediction history available for the user
+                                setNoPredictionHistoryAvailable(true);
                             }
                         );
                     } else {
@@ -99,7 +102,14 @@ const QBPredictionHistoryComponent = () => {
             }
         )
     }
-    if (allLoaded) {
+    if (noPredictionHistoryAvailable) {
+        return (
+            <PlainPageComponent
+                title="No Prediction History Available"
+                paragraph={`User '${params.username}' has not made any predictions yet`}
+            />
+        )
+    } else if (allLoaded) {
         return (
             <div id="qb-history-container">
                 <div className='qb-history-box qb-grid'>

@@ -16,6 +16,8 @@ const Login = () => {
     const [usernameError, setUsernameError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [loginError, setLoginError] = useState("")
+    const [loginErrorColour, setLoginErrorColour] = useState("black");
+    const [buttonDisabled, setButtonDisabled] = useState(false);
 
     const { isLoggedIn } = useSelector(state => state.auth);
     const [searchParams, setSearchParams] = useSearchParams();
@@ -38,9 +40,11 @@ const Login = () => {
     const dispatch = useDispatch();
 
     const handleLogin = () => {
+        setButtonDisabled(true);
         setUsernameError("");
         setPasswordError("");
-        setLoginError("");
+        setLoginErrorColour("black");
+        setLoginError("Loading..");
         var username_ok = true;
         if (usernameEmail.length === 0) {
             setUsernameError(
@@ -81,6 +85,7 @@ const Login = () => {
                 }
             ).catch(
                 (err) => {
+                    setLoginErrorColour("red");
                     setLoginError(err.response.data.message);
                 }
             )
@@ -187,15 +192,18 @@ const Login = () => {
                 </div>
                 <button
                     id="login-button"
-                    className="tqbc-black-button"
+                    className={"tqbc-black-button" + (buttonDisabled ? " disabled-button" : "")}
                     onClick={handleLogin}
-                    
+                    disabled={buttonDisabled}
                 >
                     Login
                 </button>
                 <p
                     id="login-error"
-                    className="tqbc-red-error"
+                    // className="tqbc-red-error"
+                    style={{
+                        color: loginErrorColour
+                    }}
                 >
                     {loginError}
                 </p>

@@ -9,6 +9,23 @@
     padding-right: 5px;
 }
 
+#message-and-button {
+    grid-column: 5;
+    grid-row: 10;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+#qbp-save-button {
+    width: 9vw;
+}
+
+#bottom-message {
+    width: 9vw;
+    text-align: center;
+}
+
 #prediction-period-changer {
     display: grid;
     /* grid-template-columns: 10% 20% 15% 20% 10% 25%; */
@@ -30,18 +47,6 @@
 }
 
 
-#bottom-left-message {
-    grid-row: 10;
-    grid-column: 5;
-    justify-self: left;
-    align-self: center;
-    text-align: left;
-    margin-left: 2vw;
-}
-
-.bottom-left-message-green {
-    color: green;
-}
 
 .AFC {
     background-color: rgba(206,17,38,0.8);

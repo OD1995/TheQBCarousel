@@ -43,9 +43,9 @@ const QBPredictionsComponent = () => {
     const [currentSeason, setCurrentSeason] = useState("currentSeason");
     const [trueSeasonPeriodID, setTrueSeasonPeriodID] = useState("trueSeasonPeriodID");
     const [currentSeasonPeriodID, setCurrentSeasonPeriodID] = useState("currentSeasonPeriodID");
-    const [bottomLeftMessage, setBottomLeftMessage] = useState("bottomLeftMessage");
-    const [displayBottomLeftMessage, setDisplayBottomLeftMessage] = useState(false);
-    const [bottomLeftMessageClass, setBottomLeftMessageClass] = useState("bottomLeftMessageClass");
+    const [bottomMessage, setBottomMessage] = useState("");
+    const [displayBottomMessage, setDisplayBottomMessage] = useState(false);
+    const [bottomMessageColour, setBottomMessageColour] = useState("black");
     const { user: currentUser } = useSelector((state) => state.auth);
     const [outsidePredictionPeriod, setOutsidePredictionPeriod] = useState(false);
 
@@ -223,12 +223,13 @@ const QBPredictionsComponent = () => {
         return new Promise((resolve) => setTimeout(resolve, ms));
       }
 
-    const showAndHideBottomLeftMessage = async () => {
-        // Display message, wait 3 secs, hide message
-        setDisplayBottomLeftMessage(true);
+    const showAndHideBottomMessage = async () => {
+        // Not needed anymore because "Loading.." already displayed
+        // // Display message, wait 3 secs, hide message
+        // setDisplayBottomMessage(true);
         // console.log("about to sleep");
         await sleep(3*1000);
-        setDisplayBottomLeftMessage(false);
+        setDisplayBottomMessage(false);
     }
 
 
@@ -254,15 +255,18 @@ const QBPredictionsComponent = () => {
         }
         if (msg === "All OK") {
             // Post dropdown values to backend
+            setBottomMessage("Loading..");
+            setBottomMessageColour("black");
+            setDisplayBottomMessage(true);
             postPredictions(
                 currentPredictionPeriodID,
                 currentUser.userID,
                 selectionsArray
             ).then(
                 (res) => {
-                    setBottomLeftMessage("Success!");
-                    setBottomLeftMessageClass("bottom-left-message-green")
-                    showAndHideBottomLeftMessage();
+                    setBottomMessageColour("green");
+                    setBottomMessage("Success!");
+                    showAndHideBottomMessage();
                 }
             ).catch(
                 (error) => {
@@ -348,12 +352,27 @@ const QBPredictionsComponent = () => {
                         }
                     )
                 }
-                <button
-                    onClick={savePredictions}
-                    className="tqbc-black-button save-button"
-                >
-                    Save
-                </button>
+                <div id="message-and-button">
+                    <button
+                        id="qbp-save-button"
+                        className="tqbc-black-button save-button"
+                        onClick={savePredictions}
+                    >
+                        Save
+                    </button>
+                    {
+                        displayBottomMessage && (
+                            <h5
+                                style={{
+                                    color: bottomMessageColour
+                                }}
+                                id="bottom-message"
+                            >
+                                {bottomMessage}
+                            </h5>
+                        )
+                    }
+                </div>
                 {
                     showPredictionPeriodChanger && (
                         <PredictionPeriodChanger
@@ -370,16 +389,6 @@ const QBPredictionsComponent = () => {
                 {
                     (!showPredictionPeriodChanger) && (
                         <SocialMediaRequest/>
-                    )
-                }
-                {
-                    displayBottomLeftMessage && (
-                        <h4
-                            className={bottomLeftMessageClass}
-                            id="bottom-left-message"
-                        >
-                            {bottomLeftMessage}
-                        </h4>
                     )
                 }
                 <PopupComponent

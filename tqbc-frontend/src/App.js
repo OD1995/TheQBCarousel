@@ -25,7 +25,6 @@ import { HowItWorksComponent } from './components/howitworks/HowItWorksComponent
 import { PageDoesntExist } from './components/errors/PageDoesntExist';
 // import { GlobalLeaderboard } from './components/leaderboards/GlobalLeaderboard';
 import { CreateNewPrivateLeaderboard } from './components/leaderboards/CreateNewPrivateLeaderboard';
-// import { OutsidePredictionPeriod } from './components/errors/OutsidePredictionPeriod';
 import { PrivateLeaderboard } from './components/leaderboards/PrivateLeaderboard';
 import { NavigationBar } from './components/generic/NavigationBar';
 import { JoinPrivateLeaderboard } from './components/leaderboards/JoinPrivateLeaderboard';
@@ -38,7 +37,7 @@ import { Unsubscribe } from './components/accountmanagement/Unsubscribe';
 import { ForgottenPasswordEmailEntry } from './components/accountmanagement/ForgottenPasswordEmailEntry';
 import { ForgottenPasswordPasswordEntry } from './components/accountmanagement/ForgottenPasswordPasswordEntry';
 import { QueueEmailSendOuts } from './components/admin/emailsendouts/QueueEmailSendOuts';
-// import { TQBCLoading } from './components/generic/TQBCLoading';
+import { ReportAnIssue } from './components/errors/ReportAnIssue';
 
 const App = () => {
 	const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -169,6 +168,10 @@ const App = () => {
 						<Route
 							path="/forgotten-password/password-entry"
 							element={<ForgottenPasswordPasswordEntry/>}
+						/>
+						<Route
+							path="/report-an-issue"
+							element={<ReportAnIssue/>}
 						/>
 						<Route path='/*' element={<PageDoesntExist/>}/>
 					</Routes>

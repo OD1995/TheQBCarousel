@@ -16,7 +16,7 @@ export const ForgottenPasswordEmailEntry = () => {
 
     const handleSubmit = () => {
         setDisableButton(true);
-        setRequestResult("")
+        setRequestResult("Loading..")
         setRequestResultColour("black")
         AuthService.sendPasswordResetEmail(
             email
@@ -58,7 +58,7 @@ export const ForgottenPasswordEmailEntry = () => {
                     />
                 </div>
                 <button
-                    className="tqbc-black-button"
+                    className={"tqbc-black-button" + (disableButton ? " disabled-button" : "")}
                     onClick={handleSubmit}
                     disabled={disableButton}
                     id="fpee-button"

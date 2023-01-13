@@ -18,8 +18,8 @@ const Register = () => {
     const [favTeam, setFavTeam] = useState("");
     const [favTeamList, setFavTeamList] = useState([]);
     const [favTeamError, setFavTeamError] = useState("");
-    const [registerError, setRegisterError] = useState("");
-    const [registerSuccess, setRegisterSuccess] = useState("")
+    const [registerResult, setRegisterResult] = useState("");
+    const [registerResultColour, setRegisterResultColour] = useState("black");
     const [buttonDisabled, setButtonDisabled] = useState(false);
     
     useEffect(() => {
@@ -67,8 +67,9 @@ const Register = () => {
         setEmailError("");
         setPasswordError("");
         setFavTeamError("");
-        setRegisterError("");
-        setRegisterSuccess("");
+        setRegisterResult("Loading..")
+        // setRegisterError("");
+        // setRegisterSuccess("");
         // Username
         var username_ok = false;
         if (username.length === 0) {
@@ -116,11 +117,13 @@ const Register = () => {
                 password
             ).then(
                 (res) => {
-                    setRegisterSuccess(res.data.message);
+                    setRegisterResultColour("green");
+                    setRegisterResult(res.data.message);
                 }
             ).catch(
                 (err) => {
-                    setRegisterError(err.response.data.message);
+                    setRegisterResultColour("red");
+                    setRegisterResult(err.response.data.message);
                     setButtonDisabled(false);
                 }
             )
@@ -263,7 +266,7 @@ const Register = () => {
                 </div>
                 <button
                     id="register-button"
-                    className="tqbc-black-button"
+                    className={"tqbc-black-button" + (buttonDisabled ? " disabled-button" : "")}
                     onClick={handleRegister} 
                     disabled={buttonDisabled}                   
                 >
@@ -273,6 +276,13 @@ const Register = () => {
                     id="register-result-div"
                 >
                     <p
+                        style={{
+                            color: registerResultColour
+                        }}
+                    >
+                        {registerResult}
+                    </p>
+                    {/* <p
                         id="register-error"
                         className="tqbc-red-error register-result"
                         style={{
@@ -291,7 +301,7 @@ const Register = () => {
                         }}
                     >
                         {registerSuccess}
-                    </p>
+                    </p> */}
                 </div>
 
             </div>

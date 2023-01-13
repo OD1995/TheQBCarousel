@@ -1,0 +1,15 @@
+#rai-content-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#rai-input {
+    width: 80%;
+    height: 40vh;
+}
+
+#rai-submit {
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}

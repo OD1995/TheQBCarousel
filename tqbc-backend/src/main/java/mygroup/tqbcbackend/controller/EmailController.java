@@ -137,6 +137,23 @@ public class EmailController {
         );
     }
 
+    @PostMapping("/send-reported-issue-email")
+    public void sendReportedIssueEmail (
+        @Valid @RequestBody SendEmailRequest sendEmailRequest
+    ) {
+        String subject;
+        if (sendEmailRequest.getUsername() != null) {
+            subject = "Reported Issue From " + sendEmailRequest.getUsername();
+        } else {
+            subject = "Reported Issue From Non-User";
+        }
+        emailBuilderService.sendEmail(
+            "theqbcarousel@gmail.com",
+            subject,
+            sendEmailRequest.getEmailHtml()
+        );
+    }
+
     @GetMapping("/get-total-unsent-emails-count")
     public int getTotalUnsentEmailsCount() {
         return emailHistoryRepository.countByEmailSentDateTimeUTCIsNull();

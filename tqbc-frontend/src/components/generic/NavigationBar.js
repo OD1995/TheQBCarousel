@@ -96,6 +96,21 @@ export const NavigationBar = (props) => {
                     </li>
                 </div>
             )}
+            <div id="report-an-issue-div" className="navbar-nav">
+                <li 
+                    className="nav-item"
+                >
+                    <Link
+                        to="/report-an-issue"
+                        id="report-an-issue-link"
+                        className="nav-link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Report An Issue
+                    </Link>
+                </li>
+            </div>
         </nav>
     )
 }

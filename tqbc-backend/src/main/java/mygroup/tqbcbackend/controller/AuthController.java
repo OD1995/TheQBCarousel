@@ -130,26 +130,35 @@ public class AuthController {
 		);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-		String jwt = jwtUtils.generateJwtToken(userDetails);
-		List<String> roles = userDetails.getAuthorities().stream()
-				.map(item -> item.getAuthority())
-				.collect(Collectors.toList());
-		RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getUserID());
-		List<HashMap<String,String>> privateLeaderboardInfos = privateLeaderboardService.getPrivateLeaderboardInfos(
-			userDetails.getUserID()
-		);
-		JwtResponse jwtResponse = new JwtResponse(
-				jwt,
-				refreshToken.getRefreshToken(),
-				userDetails.getUserID(),
-				userDetails.getUsername(),
-				userDetails.getEmail(),
-				roles
-		);
-
-		LoginResponse loginResponse = new LoginResponse(jwtResponse, privateLeaderboardInfos);
-
-		return ResponseEntity.ok(loginResponse);
+		User user = userRepository.findByUserID(userDetails.getUserID());
+		if (user.isAuthenticated()) {
+			String jwt = jwtUtils.generateJwtToken(userDetails);
+			List<String> roles = userDetails.getAuthorities().stream()
+					.map(item -> item.getAuthority())
+					.collect(Collectors.toList());
+			RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getUserID());
+			List<HashMap<String,String>> privateLeaderboardInfos = privateLeaderboardService.getPrivateLeaderboardInfos(
+				userDetails.getUserID()
+			);
+			JwtResponse jwtResponse = new JwtResponse(
+					jwt,
+					refreshToken.getRefreshToken(),
+					userDetails.getUserID(),
+					userDetails.getUsername(),
+					userDetails.getEmail(),
+					roles
+			);
+	
+			LoginResponse loginResponse = new LoginResponse(jwtResponse, privateLeaderboardInfos);
+	
+			return ResponseEntity.ok(loginResponse);
+		} else {
+			return ResponseEntity
+			.badRequest()
+			.body(new MessageResponse(
+				"Error: Please verify your email by following the link in the email sent to " + user.getEmail()
+			));
+		}
 	}
 	
 	@PostMapping("/register")

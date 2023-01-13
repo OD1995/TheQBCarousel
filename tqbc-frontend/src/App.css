@@ -159,6 +159,10 @@ label {
     color: green;
 }
 
+.disabled-button {
+    cursor: not-allowed;
+}
+
 .private-leaderboard-form {
     display: flex;
     flex-direction: column;

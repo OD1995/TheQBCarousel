@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Select from "react-select";
+import { isAlphanumeric } from "validator";
 import { makeOptionsDropdownFriendly, makeValueDropdownFriendly, rangeInt, round_number } from "../../helpers/UsefulFunctions";
 import './CreateNewPrivateLeaderboard.css';
 import { useEffect } from "react";
@@ -44,6 +45,10 @@ export const CreateNewPrivateLeaderboard = () => {
         if ((!privateLeaderboardName)) {
             setNameErrorMessage("Private leaderboard name is required");
             return false;
+        } else if (!isAlphanumeric(privateLeaderboardName,"en-GB",{ignore:"_"})) {
+            setNameErrorMessage(
+                "Your private leaderboard name must use only numbers, letters and underscores"
+            );
         }
         setNameErrorMessage("");
         return true;
@@ -73,14 +78,6 @@ export const CreateNewPrivateLeaderboard = () => {
             weighting_result = true;
         }
         let name_result = validateName();
-        // let name_not_already_used = true;
-        // for (const pli of TokenService.getPrivateLeaderboardInfos()) {
-        //     if (privateLeaderboardName === pli.name) {
-        //         let txt2 = `You already have a private leaderboard named '${privateLeaderboardName}'`;
-        //         setNameErrorMessage(txt2);
-        //         name_not_already_used = false;
-        //     }
-        // }
         let name_not_already_used = !TokenService.getPrivateLeaderboardNames().includes(privateLeaderboardName);
         if (!name_not_already_used) {
             let txt2 = `You already have a private leaderboard named '${privateLeaderboardName}'`;
