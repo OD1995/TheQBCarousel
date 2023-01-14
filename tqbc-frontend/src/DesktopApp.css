@@ -1,0 +1,180 @@
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-link {
+    color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+.card-container.card {
+    max-width: 350px !important;
+    padding: 40px 40px;
+}
+
+.card {
+    background-color: #f7f7f7;
+    padding: 20px 25px 30px;
+    margin: 0 auto 25px;
+    margin-top: 50px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.profile-img-card {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.component-container {
+    padding-top: 2vh;
+}
+
+.display-linebreak {
+    white-space: pre-line;
+}
+
+#plain-page {
+    display: flex;
+    min-height: 50vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+#popup-subtitle {
+    display: block;
+    font-size: 1em;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: 500;
+}
+
+.page-content {
+    height: 92vh;
+}
+
+.no-hover {
+    pointer-events: none;
+}
+
+.tqbc-black-button {
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.tqbc-green-button {
+    background-color: darkgreen;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.tqbc-red-button {
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.save-button {
+	font-size: 20px !important;
+    margin: 10px 0px;
+    width: 50%;
+    justify-self: right;
+    grid-row: 10;
+    grid-column: 5;
+}
+
+.big-h1-title {
+    margin-left: 5vw;
+    font-size: 200%;
+}
+
+.private-leaderboard-membership-parent-div {
+    margin-top: 3vh;
+}
+
+.new-private-leaderboard-error {
+    height: 3vh;
+    color: red;
+}
+
+.tqbc-red-error {
+    height: 3vh;
+    color: red;
+}
+
+.tqbc-green-message {
+    height: 3vh;
+    color: green;
+}
+
+.disabled-button {
+    cursor: not-allowed;
+}
+
+.private-leaderboard-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3vh;
+}
+
+#tqbc-loading-parent {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
