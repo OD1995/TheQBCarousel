@@ -14,6 +14,7 @@ export const EditPrivateLeaderboardWeights = () => {
     const [privateLeaderboardName,setPrivateLeaderboardName] = useState("");
     const [weightingValues, setWeightingValues] = useState({});
     const [weightingErrorMessage, setWeightingErrorMessage] = useState("");
+    const [weightingErrorMessageColour, setWeightingErrorMessageColour] = useState("red");
     const [ready, setReady] = useState(false);
     const [isOwner, setIsOwner] = useState(false);
     const { user: currentUser } = useSelector((state) => state.auth);
@@ -37,10 +38,13 @@ export const EditPrivateLeaderboardWeights = () => {
             // let rounded = Math.round(Math.round((weightingsSum + Number.EPSILON) * 100) / 100)
             let rounded = round_number(weightingsSum,3);
             let txt = `The sum of your weightings is not 1 (${rounded}), please adjust and re-submit`;
+            setWeightingErrorMessageColour("red");
             setWeightingErrorMessage(txt);
             weighting_result = false;
         }
         if (weighting_result) {
+            setWeightingErrorMessageColour("black");
+            setWeightingErrorMessage("Loading..");
             PrivateLeaderboardService.setPrivateLeaderboardWeightings(
                 currentUser.userID,
                 params.privateLeaderboardUUID,
@@ -48,6 +52,11 @@ export const EditPrivateLeaderboardWeights = () => {
             ).then(
                 (res) => {
                     History.push(`/private-leaderboard/${params.privateLeaderboardUUID}`)
+                }
+            ).catch(
+                (err) => {
+                    setWeightingErrorMessageColour("red");
+                    setWeightingErrorMessage(err.response.data.message);
                 }
             )
         }
@@ -268,11 +277,12 @@ export const EditPrivateLeaderboardWeights = () => {
                                 )
                             }
                             <p
-                                className="new-private-leaderboard-error"
                                 style={{
                                     gridRow: 8,
                                     gridColumnStart: 1,
-                                    gridColumnEnd: 5
+                                    gridColumnEnd: 5,
+                                    height: "3vh",
+                                    color: weightingErrorMessageColour
                                 }}
                             >
                                 {weightingErrorMessage}

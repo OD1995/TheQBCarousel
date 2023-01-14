@@ -9,6 +9,7 @@ import './JoinPrivateLeaderboard.css';
 export const JoinPrivateLeaderboard = () => {
 
     const [errorMessage, setErrorMessage] = useState("");
+    const [errorMessageColour, setErrorMessageColour] = useState("red");
     const [newPrivateLeaderboardUUID, setNewPrivateLeaderboardUUID] = useState("");
 	const { user: currentUser } = useSelector((state) => state.auth);
 
@@ -33,6 +34,7 @@ export const JoinPrivateLeaderboard = () => {
         var uuid_result = true;
         if (newPrivateLeaderboardUUID.length !== 36) {
             uuid_result = false;
+            setErrorMessageColour("red");
             setErrorMessage(
                 "The private leaderboard UUID must be exactly 36 characters long"
             )
@@ -50,9 +52,12 @@ export const JoinPrivateLeaderboard = () => {
         // }
         let already_member_result = TokenService.getPrivateLeaderboardUUIDs().includes(newPrivateLeaderboardUUID);
         if (already_member_result) {
+            setErrorMessageColour("red");
             setErrorMessage("You are already a member of this private leaderboard");
         }
-        if (uuid_result && already_member_result) {
+        if (uuid_result && !already_member_result) {
+            setErrorMessageColour("black");
+            setErrorMessage("Loading..");
             PrivateLeaderboardService.joinPrivateLeaderboard(
                 currentUser.userID,
                 newPrivateLeaderboardUUID
@@ -69,6 +74,11 @@ export const JoinPrivateLeaderboard = () => {
                             }
                         )
                     }
+                }
+            ).catch(
+                (err) => {
+                    setErrorMessageColour("red");
+                    setErrorMessage(err.response.data.message);
                 }
             )
         }
@@ -103,7 +113,10 @@ export const JoinPrivateLeaderboard = () => {
                     />
                 </div>
                 <p
-                    className="new-private-leaderboard-error"
+                    style={{
+                        height: "3vh",
+                        color: errorMessageColour
+                    }}
                 >
                     {errorMessage}
                 </p>

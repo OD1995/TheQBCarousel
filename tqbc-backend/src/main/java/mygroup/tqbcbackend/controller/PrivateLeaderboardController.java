@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -125,24 +126,30 @@ public class PrivateLeaderboardController {
         @Valid @RequestBody PrivateLeaderboardRequest privateLeaderboardRequest,
         @RequestHeader (name = "Authorization") String token
     ) {
-        String requestingUsername = jwtUtils.getUserNameFromJwtToken(token);
-        User requestingUser = userRepository.findByUsername(
-            jwtUtils.getUserNameFromJwtToken(token)
-        ).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + requestingUsername));
-        Long requestingUserID = requestingUser.getUserID();
-        
-        PrivateLeaderboard privateLeaderboard = privateLeaderboardRepository.findByPrivateLeaderboardUUID(
-            privateLeaderboardRequest.getPrivateLeaderboardUUID()
-        );
-        if (privateLeaderboard.getOwnerUser().getUserID() == requestingUserID) {
-            ScoringSetting scoringSetting = scoringSettingService.getScoringSetting(
-                privateLeaderboardRequest.getWeightings()
+        if (StringUtils.hasText(token) && token.startsWith("Bearer ")) {
+            String tokenWithoutBearer = token.substring(7, token.length());
+            String requestingUsername = jwtUtils.getUserNameFromJwtToken(tokenWithoutBearer);
+            User requestingUser = userRepository.findByUsername(
+                requestingUsername
+            ).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + requestingUsername));
+            Long requestingUserID = requestingUser.getUserID();            
+            PrivateLeaderboard privateLeaderboard = privateLeaderboardRepository.findByPrivateLeaderboardUUID(
+                privateLeaderboardRequest.getPrivateLeaderboardUUID()
             );
-            privateLeaderboard.setScoringSetting(scoringSetting);
-            privateLeaderboardRepository.save(privateLeaderboard);
-            return ResponseEntity.ok().build();
+            if (privateLeaderboard.getOwnerUser().getUserID() == requestingUserID) {
+                ScoringSetting scoringSetting = scoringSettingService.getScoringSetting(
+                    privateLeaderboardRequest.getWeightings()
+                );
+                privateLeaderboard.setScoringSetting(scoringSetting);
+                privateLeaderboardRepository.save(privateLeaderboard);
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
         } else {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(
+                new MessageResponse("Bad Request: Invalid bearer")
+            );
         }
     }
 

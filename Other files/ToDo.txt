@@ -23,4 +23,7 @@ Long term
 -X- Clean up admin board
 -X- Bulk reminder email sendouts
 -X- Go through all pages and remove duplicate requests
---- Try to turn off foreign key creation in backend
+-X- Try to turn off foreign key creation in backend
+--- Add a loading bit for join and create new private leaderboard
+--- Deal with situation where no predictions made in private leaderboard, maybe just get current prediction season
+--- Disable button and check why not working, join private leaderboard

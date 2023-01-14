@@ -40,7 +40,6 @@ export const GenericLeaderboard = (props) => {
             if (props.global & (user === null)) {
                 History.push("/nope");
             } else {
-
                 let type = props.global ? "Global" : "Private"
                 document.title = type + " Leaderboard";            
                 if (uniqueSeasons.length === 0) {
@@ -67,20 +66,21 @@ export const GenericLeaderboard = (props) => {
             (leaderboard_season === null) ||
             (!unique_seasons.includes(parseInt(leaderboard_season)))
         ) {
-            AnswerService.getMaxSeasonForAnswers().then(
-                (res2) => {
-                    leaderboard_season = res2.data;
-                    setLeaderboardSeason(leaderboard_season);
-                    let plUUID = params.privateLeaderboardUUID;
-                    var url;
-                    if (props.global) {
-                        url = `/global-leaderboard/${leaderboard_season}?orderBy=1234&page=1`;
-                    } else {
-                        url = `/private-leaderboard/${plUUID}/${leaderboard_season}?orderBy=1234&page=1`
-                    }
-                    History.push(url);
-                }
-            )
+            // AnswerService.getMaxSeasonForAnswers().then(
+            //     (res2) => {
+            // leaderboard_season = res2.data;
+            leaderboard_season = Math.max(unique_seasons);
+            setLeaderboardSeason(leaderboard_season);
+            let plUUID = params.privateLeaderboardUUID;
+            var url;
+            if (props.global) {
+                url = `/global-leaderboard/${leaderboard_season}?orderBy=1234&page=1`;
+            } else {
+                url = `/private-leaderboard/${plUUID}/${leaderboard_season}?orderBy=1234&page=1`
+            }
+            History.push(url);
+            //     }
+            // )
         } else {
             if (searchParams.get('orderBy') === null) {
                 searchParams.set('orderBy', 1234);
@@ -225,6 +225,7 @@ export const GenericLeaderboard = (props) => {
                 <a
                     href={`/prediction-history/${row.username}/${leaderboardSeason}`}
                     target="_blank"
+                    rel="noopener noreferrer"
                     className={row.username === currentUser.username ? 'user-row' : ""}
                 >
                     {row.username}

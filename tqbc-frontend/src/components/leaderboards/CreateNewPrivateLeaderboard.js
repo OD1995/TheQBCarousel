@@ -18,6 +18,7 @@ export const CreateNewPrivateLeaderboard = () => {
     const [weightingValues, setWeightingValues] = useState({});
     const [weightingErrorMessage, setWeightingErrorMessage] = useState("");
     const [nameErrorMessage, setNameErrorMessage] = useState("");
+    const [weightingErrorMessageColour, setWeightingErrorMessageColour] = useState("red");
 	const { user: currentUser } = useSelector((state) => state.auth);
 
     useEffect(
@@ -69,11 +70,12 @@ export const CreateNewPrivateLeaderboard = () => {
         let weightingsSum = sumWeightings(weightingValues);
         let weighting_result = false;
         if (weightingsSum !== 1) {
-            // let rounded = Math.round(Math.round((weightingsSum + Number.EPSILON) * 100) / 100)
             let rounded = round_number(weightingsSum,3);
             let txt = `The sum of your weightings is not 1 (${rounded}), please adjust and re-submit`;
+            setWeightingErrorMessageColour("red");
             setWeightingErrorMessage(txt);
         } else {
+            setWeightingErrorMessageColour("red");
             setWeightingErrorMessage("");
             weighting_result = true;
         }
@@ -84,6 +86,8 @@ export const CreateNewPrivateLeaderboard = () => {
             setNameErrorMessage(txt2);
         }
         if (weighting_result && name_result && name_not_already_used) {
+            setWeightingErrorMessageColour("black");
+            setWeightingErrorMessage("Loading..");
             PrivateLeaderboardService.postPrivateLeaderboardData(
                 currentUser.userID,
                 privateLeaderboardName,
@@ -162,7 +166,8 @@ export const CreateNewPrivateLeaderboard = () => {
                             // validations={[required]}
                             maxLength={20}
                             style={{
-                                width: '16.5vw'
+                                width: '16.5vw',
+                                textAlign: "center"
                             }}
                         />
                     </div>
@@ -269,11 +274,12 @@ export const CreateNewPrivateLeaderboard = () => {
                         )
                     }
                     <p
-                        className="new-private-leaderboard-error"
                         style={{
                             gridRow: 8,
                             gridColumnStart: 1,
-                            gridColumnEnd: 5
+                            gridColumnEnd: 5,
+                            height: "3vh",
+                            color: weightingErrorMessageColour
                         }}
                     >
                         {weightingErrorMessage}

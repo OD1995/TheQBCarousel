@@ -87,6 +87,11 @@ public class AnswerController {
 
     @GetMapping("/get-unique-seasons-for-answers")
     public List<Long> getUniqueSeasonsForAnswers() {
-        return answerRepository.findUniqueSeasons();
+        List<Long> uniqueSeasons = answerRepository.findUniqueSeasons();
+        if (uniqueSeasons.size() == 0) {
+            return List.of((long) 2023);
+        } else {
+            return uniqueSeasons;
+        }
     }
 }
