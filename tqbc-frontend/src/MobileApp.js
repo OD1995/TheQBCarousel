@@ -103,7 +103,13 @@ const MobileApp = () => {
 				<NavigateSetter/>
 				<div className="component-container page-content">
 					{
-						showMenu && <MobileMenu/>
+						showMenu && (
+							<MobileMenu
+								showAdminBoard={showAdminBoard}
+								currentUser={currentUser}
+								setShowMenu={setShowMenu}
+							/>
+						)
 					}
 					<Routes>
 						<Route index element={defaultPage}/>
