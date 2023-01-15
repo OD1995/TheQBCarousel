@@ -42,8 +42,13 @@
     margin-top: 5vh;
 }
 
-#register-error {
-    
+@media only screen and (max-width: 1000px) {
+    #register-input-grid {
+        grid-template-columns: repeat(2,50vw);
+    }
+    .register-input {
+        width: 45vw;
+    }
 }
 
 
