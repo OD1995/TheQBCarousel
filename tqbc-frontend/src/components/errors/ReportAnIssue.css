@@ -13,3 +13,13 @@
     margin-top: 2vh;
     margin-bottom: 2vh;
 }
+
+@media only screen and (max-width: 1000px) {
+    #rai-content-div {
+        font-size: 14px !important;
+    }
+    #rai-input {
+        box-sizing: content-box;
+        height: 35vh;
+    }
+}
