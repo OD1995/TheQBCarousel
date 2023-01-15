@@ -14,7 +14,6 @@
 }
 
 .login-input {
-    /* margin-left: 3vw; */
     width: 20vw;
     text-align: center;
 }
@@ -36,6 +35,15 @@
     align-self: center;
     align-content: center;
     /* border: 1px solid green; */
+}
+
+@media only screen and (max-width: 1000px) {
+    #login-input-grid {
+        grid-template-columns: repeat(2,50vw)
+    }
+    .login-input {
+        width: 45vw;
+    }
 }
 
 #login-button {
