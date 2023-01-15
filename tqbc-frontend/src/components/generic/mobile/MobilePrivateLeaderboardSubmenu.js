@@ -51,12 +51,14 @@ export const MobilePrivateLeaderboardSubmenu = (props) => {
             <div id="mobile-create-join-pl">            
                 <Link
                     to="/create-new-private-leaderboard"
+                    onClick={hideMenu}
                     className="mobile-menu-link"
                 >
                     Create New
                 </Link>
                 <Link
                     to="/join-private-leaderboard"
+                    onClick={hideMenu}
                     className="mobile-menu-link"
                 >
                     Join

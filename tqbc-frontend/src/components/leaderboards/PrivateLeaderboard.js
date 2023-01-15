@@ -82,6 +82,8 @@ export const PrivateLeaderboard = () => {
                     (res) => {
                         let weightingsTable = createWeightingsTable(res.data,"popup-weightings-table");
                         setWeightingsTable(createWeightingsTable(res.data,"right-weightings-table"));
+                        let editWeightingsURL = `/edit-private-leaderboard-weightings/${params.privateLeaderboardUUID}`;
+                        let joinURL = `/join-private-leaderboard`;
                         let msg = (
                             `<div>
                                 <p>
@@ -92,13 +94,14 @@ export const PrivateLeaderboard = () => {
                                 <p>
                                     The overall season score for private leaderboards is calculated by
                                     using weightingss for each season period which were set when the
-                                    private leaderboard was created. The weightings are shown below and
-                                    can be edited ON THIS PAGE.
+                                    private leaderboard was created. The weightings are shown below and,
+                                    if you are the private leaderboard owner, can be edited
+                                    <a href='${editWeightingsURL}'>on this page</a>.
                                 </p>
                                 <p>
                                     To invite people to this private leaderboard, send them the private
                                     leaderboard ID, also shown below. The ID should then be entered
-                                    ON THIS PAGE.
+                                    <a href='${joinURL}'>on this page</a>.
                                 </p>
                                 <p>
                                     <b>Private Leaderboard ID: </b>${params.privateLeaderboardUUID}

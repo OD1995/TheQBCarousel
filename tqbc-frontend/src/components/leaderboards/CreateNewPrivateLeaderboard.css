@@ -1,3 +1,13 @@
+@media only screen and (max-width: 1000px) {
+    #create-new-private-leaderboard-grid {
+        grid-template-columns: 60vw 19vw 2vw 19vw !important;
+        grid-template-rows: 10vh 5vh 7vh repeat(4,9.5vh) 5vh !important;
+    }
+    #weightings-text {
+        margin-left: 3vw;
+    }
+}
+
 #create-new-private-leaderboard-grid {
     display: grid;
     /* grid-template-columns: repeat(4,10vw);

@@ -77,6 +77,9 @@ label {
     .mobile-unpadded {
         margin-top: 0vh;
     }
+    .private-leaderboard-form {
+        margin-top: 2vh !important;
+    }
 }
 
 #mobile-page-content {
@@ -169,6 +172,8 @@ label {
 .disabled-button {
     cursor: not-allowed;
 }
+
+
 
 .private-leaderboard-form {
     display: flex;
