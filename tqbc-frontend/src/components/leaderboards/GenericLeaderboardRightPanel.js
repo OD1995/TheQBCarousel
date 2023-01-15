@@ -1,4 +1,4 @@
-import { SeasonSelector } from "../qbcomponents/components/SeasonSelector";
+import { SeasonSelector } from "../qbcomponents/desktop/components/SeasonSelector";
 
 export const GenericLeaderboardRightPanel = (props) => {
 

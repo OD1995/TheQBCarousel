@@ -1,15 +1,15 @@
 import React, { useEffect,useState } from 'react';
 import QBDisplayer from '../components/QBDisplayer';
-import ConferenceService from '../../../services/ConferenceService';
-import TeamService from '../../../services/TeamService';
-import '../pages/QBPredictions.css';
-import '../pages/QBPredictionHistory.css';
-import PeriodPredictionService from '../../../services/PeriodPredictionService';
+import TeamService from '../../../../services/TeamService';
+import ConferenceService from '../../../../services/ConferenceService'
+import './QBPredictions.css';
+import './QBPredictionHistory.css';
+import PeriodPredictionService from '../../../../services/PeriodPredictionService';
 import { useParams } from 'react-router-dom';
-import History from '../../../helpers/History';
+import History from '../../../../helpers/History';
 import { QBPredictionHistoryRightPanel } from '../components/QBPredictionHistoryRightPanel';
-import { TQBCLoading } from '../../generic/TQBCLoading';
-import PlainPageComponent from '../../generic/PlainPageComponent';
+import { TQBCLoading } from '../../../generic/TQBCLoading';
+import PlainPageComponent from '../../../generic/PlainPageComponent';
 
 const QBPredictionHistoryComponent = () => {
     const params = useParams();
@@ -138,7 +138,7 @@ const QBPredictionHistoryComponent = () => {
                                         predictions={teamIDPeriodPredictionDict[teamID]}
                                         key={teamID}
                                         allLoaded={allLoaded}
-                                    ></QBDisplayer>
+                                    />
                                 )
                             }
                         )

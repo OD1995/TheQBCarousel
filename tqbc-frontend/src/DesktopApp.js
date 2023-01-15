@@ -8,8 +8,8 @@ import {
 } from 'react-router-dom';
 import './DesktopApp.css';
 import "bootstrap/dist/css/bootstrap.min.css";
-import QBPredictionsComponent from './components/qbcomponents/pages/QBPredictions';
-import QBPredictionHistoryComponent from './components/qbcomponents/pages/QBPredictionHistory';
+import QBPredictions from './components/qbcomponents/desktop/pages/QBPredictions';
+import QBPredictionHistoryComponent from './components/qbcomponents/desktop/pages/QBPredictionHistory';
 import Navigator from './components/generic/Navigator';
 import Login from "./components/accountmanagement/Login";
 import Register from "./components/accountmanagement/Register";
@@ -110,7 +110,7 @@ const DesktopApp = () => {
 						{/* <Route exact path="/admin" component={<TestComponent/>} /> */}
 						<Route path="/admin" element={<AdminBoard/>}/>
 						<Route path='/answer-entry/:season' element={<AnswerEntry/>}/>
-						<Route path="/qb-predictions" element={<QBPredictionsComponent/>}/>
+						<Route path="/qb-predictions" element={<QBPredictions/>}/>
 						<Route
 							path="/prediction-history/:username/"
 							element={<QBPredictionHistoryComponent/>}

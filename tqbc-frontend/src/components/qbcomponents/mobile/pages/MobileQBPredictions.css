@@ -1,0 +1,24 @@
+.mobile-conference-logo {
+    height: 5vh;
+    margin-left: 5vw;
+    margin-right: 2vw;
+}
+
+.division-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 2vh;
+}
+
+.division-text-title {
+    margin-bottom: auto;
+    margin-top: auto;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.mobile-division-prediction-div {
+    margin-top: 3vh;
+    /* margin-bottom: 3vh; */
+}

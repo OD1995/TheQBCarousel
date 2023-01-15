@@ -8,8 +8,7 @@ import {
 } from 'react-router-dom';
 import './MobileApp.css';
 import "bootstrap/dist/css/bootstrap.min.css";
-import QBPredictionsComponent from './components/qbcomponents/pages/QBPredictions';
-import QBPredictionHistoryComponent from './components/qbcomponents/pages/QBPredictionHistory';
+import QBPredictionHistoryComponent from './components/qbcomponents/desktop/pages/QBPredictionHistory';
 import Navigator from './components/generic/Navigator';
 import Login from "./components/accountmanagement/Login";
 import Register from "./components/accountmanagement/Register";
@@ -40,6 +39,7 @@ import { QueueEmailSendOuts } from './components/admin/emailsendouts/QueueEmailS
 import { ReportAnIssue } from './components/errors/ReportAnIssue';
 import { MobileMenu } from './components/generic/mobile/MobileMenu';
 import { TQBCLoading } from './components/generic/TQBCLoading';
+import MobileQBPredictions from './components/qbcomponents/mobile/pages/MobileQBPredictions';
 
 const MobileApp = () => {
 	const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -133,7 +133,7 @@ const MobileApp = () => {
 								{/* <Route exact path="/admin" component={<TestComponent/>} /> */}
 								<Route path="/admin" element={<AdminBoard/>}/>
 								<Route path='/answer-entry/:season' element={<AnswerEntry/>}/>
-								<Route path="/qb-predictions" element={<QBPredictionsComponent/>}/>
+								<Route path="/qb-predictions" element={<MobileQBPredictions/>}/>
 								<Route
 									path="/prediction-history/:username/"
 									element={<QBPredictionHistoryComponent/>}

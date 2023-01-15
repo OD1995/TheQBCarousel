@@ -1,5 +1,5 @@
 import Select from 'react-select';
-import { TQBCLoading } from '../../generic/TQBCLoading';
+import { TQBCLoading } from '../../../generic/TQBCLoading';
 import './QBSelector.css';
 
 const QBSelector = (props) => {

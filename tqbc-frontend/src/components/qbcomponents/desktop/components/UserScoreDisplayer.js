@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { formatScore } from "../../../helpers/UsefulFunctions";
-import UserScoreService from "../../../services/UserScoreService";
+import { formatScore } from "../../../../helpers/UsefulFunctions";
+import UserScoreService from "../../../../services/UserScoreService";
 
 export const UserScoreDisplayer = (props) => {
 

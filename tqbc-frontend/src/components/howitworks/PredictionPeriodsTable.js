@@ -20,7 +20,7 @@ export const PredictionPeriodsTable = (props) => {
                 <tr
                     key={predictionPeriodID + "-fromEventRow"}
                     id={predictionPeriodID + "-fromEventRow"}
-                    class="ppt-tr"
+                    className="ppt-tr"
                 >
                     <td dangerouslySetInnerHTML={{__html:"&nbsp;"}} rowSpan={2}></td>
                     <td className="empty-td" dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
@@ -33,7 +33,7 @@ export const PredictionPeriodsTable = (props) => {
                 <tr
                     key={predictionPeriodID + "-imageRow"}
                     id={predictionPeriodID + "-imageRow"}
-                    class="ppt-tr"
+                    className="ppt-tr"
                 >
                     <td className="empty-td" dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
                     <td rowSpan={3}>
@@ -49,7 +49,7 @@ export const PredictionPeriodsTable = (props) => {
                 <tr
                     key={predictionPeriodID + "-ppRow"}
                     id={predictionPeriodID + "-ppRow"}
-                    class="ppt-tr"
+                    className="ppt-tr"
                 >
                     <td className="ps-col ps-val" rowSpan={10}>{element.season}</td>
                     <td className="sp-val">{"SP" + element.seasonPeriodID}</td>
@@ -67,7 +67,7 @@ export const PredictionPeriodsTable = (props) => {
                 <tr
                     key={predictionPeriodID + "-fromEventRow"}
                     id={predictionPeriodID + "-fromEventRow"}
-                    class="ppt-tr"
+                    className="ppt-tr"
                 >
                     <td className="empty-td" dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
                     <td className="border-tlb event-td" rowSpan={2}>{element.fromEvent.eventName}</td>
@@ -78,7 +78,7 @@ export const PredictionPeriodsTable = (props) => {
                 <tr
                     key={predictionPeriodID + "-imageRow"}
                     id={predictionPeriodID + "-imageRow"}
-                    class="ppt-tr"
+                    className="ppt-tr"
                 >
                     <td className="empty-td" dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
                     <td rowSpan={3}>
@@ -94,7 +94,7 @@ export const PredictionPeriodsTable = (props) => {
                 <tr
                     key={predictionPeriodID + "-ppRow"}
                     id={predictionPeriodID + "-ppRow"}
-                    class="ppt-tr"
+                    className="ppt-tr"
                 >
                     <td>{"SP" + element.seasonPeriodID}</td>
                     <td></td>
@@ -111,7 +111,7 @@ export const PredictionPeriodsTable = (props) => {
                     <tr
                         key={predictionPeriodID + "-toEventRow1"}
                         id={predictionPeriodID + "-toEventRow1"}
-                        class="ppt-tr"
+                        className="ppt-tr"
                     >
                         <td dangerouslySetInnerHTML={{__html:"&nbsp;"}} rowSpan={2}></td>
                         <td className="empty-td" dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
@@ -123,7 +123,7 @@ export const PredictionPeriodsTable = (props) => {
                     <tr
                         key={predictionPeriodID + "-toEventRow2"}
                         id={predictionPeriodID + "-toEventRow2"}
-                        class="ppt-tr"
+                        className="ppt-tr"
                     >
                         <td dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
                     </tr>

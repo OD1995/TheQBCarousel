@@ -1,27 +1,27 @@
 import React, { useEffect,useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import QBSelector from '../components/QBSelector';
-import PredictionPeriodChanger from '../../PredictionPeriodChanger';
-import { PopupComponent } from '../../generic/PopUpComponent';
+// import QBSelector from '../components/QBSelector';
+// import PredictionPeriodChanger from '../../../PredictionPeriodChanger';
+// import { PopupComponent } from '../../../generic/PopUpComponent';
 
-import ConferenceService from '../../../services/ConferenceService';
-import TeamService from '../../../services/TeamService';
-import PlayerService from '../../../services/PlayerService';
-import PredictionPeriodService from '../../../services/PredictionPeriodService';
+import ConferenceService from '../../../../services/ConferenceService';
+import TeamService from '../../../../services/TeamService';
+import PlayerService from '../../../../services/PlayerService';
+import PredictionPeriodService from '../../../../services/PredictionPeriodService';
 
-import { postPredictions } from '../../../actions/predictions';
+import { postPredictions } from '../../../../actions/predictions';
+import "./MobileQBPredictions.css";
+// import './QBPage.css';
+import PeriodPredictionService from '../../../../services/PeriodPredictionService';
+import { OutsidePredictionPeriod } from '../../../errors/OutsidePredictionPeriod';
+// import { SocialMediaRequest } from '../components/SocialMediaRequest';
+import TokenService from '../../../../services/Token.service';
+import History from '../../../../helpers/History';
+import { TQBCLoading } from '../../../generic/TQBCLoading';
+import QBSelector from '../../desktop/components/QBSelector';
 
-import '../pages/QBPredictions.css';
-import './QBPage.css';
-import PeriodPredictionService from '../../../services/PeriodPredictionService';
-import { OutsidePredictionPeriod } from '../../errors/OutsidePredictionPeriod';
-import { SocialMediaRequest } from '../components/SocialMediaRequest';
-import TokenService from '../../../services/Token.service';
-import History from '../../../helpers/History';
-import { TQBCLoading } from '../../generic/TQBCLoading';
-
-const QBPredictionsComponent = () => {
+const MobileQBPredictions = () => {
     // const [teamIDList, setTeamIDList] = useState([]);
     const [teams, setTeams] = useState("a");
     const [players, setPlayers] = useState([]);
@@ -48,6 +48,8 @@ const QBPredictionsComponent = () => {
     const [bottomMessageColour, setBottomMessageColour] = useState("black");
     const { user: currentUser } = useSelector((state) => state.auth);
     const [outsidePredictionPeriod, setOutsidePredictionPeriod] = useState(false);
+    // const [pageContent, setPageContent] = useState([]);
+    const [dtad, setDTAD] = useState({});
 
 
     useEffect(() => {
@@ -69,17 +71,28 @@ const QBPredictionsComponent = () => {
                 let teams_dict = {};
                 // defaultPlayerID_teamID_dict -> playerID : teamID (team which player is default player of)
                 let defaultPlayerID_teamID_dict = {};
+                // division_teamArray_dict -> division("AFC North") : [team]
+                let division_teamArray_dict = {};
                 for (const team_obj of res.data) {
                     teams_dict[team_obj.teamID] = team_obj;
                     defaultPlayerID_teamID_dict[team_obj.defaultPlayer.playerID] = team_obj.teamID;
+                    let division = team_obj.conference + " " + team_obj.division
+                    if (division in division_teamArray_dict) {
+                        division_teamArray_dict[division].push(team_obj);
+                    } else {
+                        division_teamArray_dict[division] = [
+                            team_obj
+                        ];
+                    }
                 }
+                setDTAD(division_teamArray_dict);
                 setTeams(teams_dict);
-                callPlayerService(defaultPlayerID_teamID_dict);
+                callPlayerService(defaultPlayerID_teamID_dict,division_teamArray_dict);
             }
         )
     }
 
-    const callPlayerService = (defaultPlayerID_teamID_dict) => {
+    const callPlayerService = (defaultPlayerID_teamID_dict,division_teamArray_dict) => {
         PlayerService.getActivePlayers().then(
             (res) => {
                 let players_array = [];
@@ -97,14 +110,15 @@ const QBPredictionsComponent = () => {
                 }
                 setPlayers(players_array);
                 // callPeriodPredictionService(teamID_dropdownPlayer_dict);
-                callConferenceService(teamID_dropdownPlayer_dict);
+                callConferenceService(teamID_dropdownPlayer_dict,division_teamArray_dict);
             }
         )
     }
 
     const callPeriodPredictionService = (
         teamID_dropdownPlayer_dict,
-        current_prediction_period_ID
+        current_prediction_period_ID,
+        division_teamArray_dict
     ) => {
         PeriodPredictionService.getPredictionPeriodPredictions(
             currentUser.userID,
@@ -118,21 +132,21 @@ const QBPredictionsComponent = () => {
                     }
                 }
                 setCurrentDropdownValues(teamID_dropdownPlayer_dict);
-                callPredictionPeriodService2(current_prediction_period_ID);
+                callPredictionPeriodService2(current_prediction_period_ID,division_teamArray_dict);
             }
         )
     }
 
-    const callConferenceService = (teamID_dropdownPlayer_dict) => {
+    const callConferenceService = (teamID_dropdownPlayer_dict,division_teamArray_dict) => {
         ConferenceService.getActiveConferences().then(
             (res) => {
                 setConferences(res.data);
-                callPredictionPeriodService1(teamID_dropdownPlayer_dict);
+                callPredictionPeriodService1(teamID_dropdownPlayer_dict,division_teamArray_dict);
             }
         )
     }
 
-    const callPredictionPeriodService1 = (teamID_dropdownPlayer_dict) => {
+    const callPredictionPeriodService1 = (teamID_dropdownPlayer_dict,division_teamArray_dict) => {
         PredictionPeriodService.getCurrentPredictionPeriodID().then(
             (res) => {
                 // Deal with null and use setCurrentPredictionPeriodID
@@ -142,13 +156,17 @@ const QBPredictionsComponent = () => {
                 } else {
                     setCurrentPredictionPeriodID(current_prediction_period_ID);
                     setTruePredictionPeriodID(current_prediction_period_ID);
-                    callPeriodPredictionService(teamID_dropdownPlayer_dict,current_prediction_period_ID);
+                    callPeriodPredictionService(
+                        teamID_dropdownPlayer_dict,
+                        current_prediction_period_ID,
+                        division_teamArray_dict
+                    );
                 }
             }
         );
     }
 
-    const callPredictionPeriodService2 = (current_prediction_period_ID) => {
+    const callPredictionPeriodService2 = (current_prediction_period_ID,division_teamArray_dict) => {
         if (currentUser.roles.includes("ROLE_TESTER")) {
             // setShowPredictionPeriodChanger(true);
             PredictionPeriodService.getActivePredictionPeriods().then(
@@ -199,6 +217,53 @@ const QBPredictionsComponent = () => {
         } else {
             setCurrentSeasonPeriodID(null);
         }
+        // generatePageContent(division_teamArray_dict);
+    }
+
+    const generatePageContent = () => {
+        var return_me = [];
+        var directions = ['North','South','East','West'];
+        for (const conf of conferences) {
+            for (const direction of directions) {
+                return_me.push(
+                    <div
+                        className="mobile-division-prediction-div"
+                        id={conf.name + direction}
+                        key={conf.name + direction}    
+                    >
+                        <div className='division-title'>
+                            <img
+                                className='mobile-conference-logo'
+                                src={window.location.origin + '/conference_logos/' + conf.season + '/' + conf.name + '.png' }
+                                alt={conf.name}
+                                key={conf.name + "-logo"}
+                            />
+                            <p className='division-text-title'>
+                                {direction.toUpperCase()}
+                            </p>
+                        </div>
+                        {
+                            dtad[conf.name + " " + direction].map(
+                                (teamObj) => {
+                                    return (
+                                        <QBSelector
+                                            default_player={currentDropdownValues[teamObj.teamID]}
+                                            teamID={teamObj.teamID}
+                                            team={teams[teamObj.teamID]}
+                                            key={teamObj.teamID}
+                                            players={players}
+                                            parentStateUpdater={updateParentStateQBSelector}
+                                        />
+                                    )
+                                }
+                            )
+                        }
+                    </div>
+                )
+            }
+        }
+        // setPageContent(return_me);
+        return return_me;
     }
 
     const resetPredictionPeriodID = () => {
@@ -318,8 +383,11 @@ const QBPredictionsComponent = () => {
         (currentSeasonPeriodID !== "currentSeasonPeriodID")
     ) {
         return (
-            <div className='container qb-predictor-box qb-grid'>
-                <h1 className='area-title' style={{gridRow:1,gridColumn:2}}>NORTH</h1>
+            <div className='container'>
+                {
+                    generatePageContent()
+                }
+                {/* <h1 className='area-title' style={{gridRow:1,gridColumn:2}}>NORTH</h1>
                 <h1 className='area-title' style={{gridRow:1,gridColumn:3}}>EAST</h1>
                 <h1 className='area-title' style={{gridRow:1,gridColumn:4}}>SOUTH</h1>
                 <h1 className='area-title' style={{gridRow:1,gridColumn:5}}>WEST</h1>
@@ -397,7 +465,7 @@ const QBPredictionsComponent = () => {
                     title={popupTitle}
                     subtitle={popupSubtitle}
                     message={popupMessage}
-                />
+                /> */}
             </div>
         );
     } else {
@@ -407,4 +475,4 @@ const QBPredictionsComponent = () => {
 
 
 
-export default QBPredictionsComponent;
+export default MobileQBPredictions;

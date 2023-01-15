@@ -1,4 +1,4 @@
-import { TQBCLoading } from "../../generic/TQBCLoading";
+import { TQBCLoading } from "../../../generic/TQBCLoading";
 
 const QBDisplayer = (props) => {
 

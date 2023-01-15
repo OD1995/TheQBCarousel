@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import Select from 'react-select';
-import History from "../../../helpers/History";
-import { makeValueDropdownFriendly, makeOptionsDropdownFriendly } from "../../../helpers/UsefulFunctions";
+import History from "../../../../helpers/History";
+import { makeValueDropdownFriendly, makeOptionsDropdownFriendly } from "../../../../helpers/UsefulFunctions";
 
 export const SeasonSelector = (props) => {
 
