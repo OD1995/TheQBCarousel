@@ -161,7 +161,8 @@ public class UserScoreController {
 					Long spID = userScoreRequest.getSeasonPeriodID();
 					Float lr1Val;
 					Float lr2Val;
-					if (spID == 1234) {
+					Boolean isSeasonScore = String.valueOf(spID).length() == 4;
+					if (isSeasonScore) {
 						lr1Val = Optional.ofNullable(lr1.getSeasonScore()).orElse(-1.00f);
 						lr2Val = Optional.ofNullable(lr2.getSeasonScore()).orElse(-1.00f);
 					} else {
@@ -196,7 +197,7 @@ public class UserScoreController {
 				// Calculate the requesting user's rank
 				Integer rank = 1;
 				Long spID = userScoreRequest.getSeasonPeriodID();
-				boolean useSeasonScore = spID == 1234;
+				Boolean useSeasonScore = String.valueOf(spID).length() == 4;
 				Float userScore = userScoreService.getRelevantScore(requestingUserRow, useSeasonScore, spID);
 				for (LeaderboardRow leaderboardRow : leaderboardRows) {
 					Float score = userScoreService.getRelevantScore(leaderboardRow, useSeasonScore, spID);
@@ -286,7 +287,8 @@ public class UserScoreController {
 							Long spID = userScoreRequest.getSeasonPeriodID();
 							Float lr1Val;
 							Float lr2Val;
-							if (spID == 1234) {
+							Boolean isSeason = String.valueOf(spID).length() == 4;
+							if (isSeason) {
 								lr1Val = Optional.ofNullable(lr1.getSeasonScore()).orElse(-1.00f);
 								lr2Val = Optional.ofNullable(lr2.getSeasonScore()).orElse(-1.00f);
 							} else {
@@ -321,7 +323,7 @@ public class UserScoreController {
 						// Calculate the requesting user's rank
 						Integer rank = 1;
 						Long spID = userScoreRequest.getSeasonPeriodID();
-						boolean useSeasonScore = spID == 1234;
+						Boolean useSeasonScore = String.valueOf(spID).length() == 4;
 						Float userScore = userScoreService.getRelevantScore(requestingUserRow, useSeasonScore, spID);
 						for (LeaderboardRow leaderboardRow : leaderboardRows) {
 							Float score = userScoreService.getRelevantScore(leaderboardRow, useSeasonScore, spID);

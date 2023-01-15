@@ -69,9 +69,6 @@ export const GenericLeaderboard = (props) => {
             (leaderboard_season == null) ||
             (!unique_seasons.includes(parseInt(leaderboard_season)))
         ) {
-            // AnswerService.getMaxSeasonForAnswers().then(
-            //     (res2) => {
-            // leaderboard_season = res2.data;
             leaderboard_season = Math.max(...unique_seasons);
             setLeaderboardSeason(leaderboard_season);
             let plUUID = params.privateLeaderboardUUID;
@@ -82,8 +79,6 @@ export const GenericLeaderboard = (props) => {
                 url = `/private-leaderboard/${plUUID}/${leaderboard_season}?orderBy=1234&page=1`
             }
             History.push(url);
-            //     }
-            // )
         } else {
             if (searchParams.get('orderBy') === null) {
                 searchParams.set('orderBy', 1234);
