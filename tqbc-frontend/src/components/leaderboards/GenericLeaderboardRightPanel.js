@@ -34,6 +34,9 @@ export const GenericLeaderboardRightPanel = (props) => {
                     uniqueSeasons={props.uniqueSeasons}
                     currentSeason={props.season}
                     username={props.username}
+                    page='leaderboard'
+                    global={props.global}
+                    privateLeaderboardUUID={props.privateLeaderboardUUID}
                 />
 
             }

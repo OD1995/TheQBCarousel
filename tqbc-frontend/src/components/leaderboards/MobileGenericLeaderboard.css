@@ -1,0 +1,42 @@
+#mobile-generic-leaderboard-top-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* border: 1px solid blueviolet; */
+    justify-content: space-around;
+}
+
+#mobile-generic-leaderboard-title {
+    border: 3px solid black;
+    margin-top: revert;
+    margin-bottom: revert;
+}
+
+#mobile-generic-leaderboard-table {
+    /* border: 1px solid black; */
+    border-collapse: collapse;
+    font-size: 12px;
+    /* border: 1px solid red; */
+}
+
+#mobile-leaderboard-title-left {
+    text-align: left;
+    margin-left: 3vw;
+}
+
+#mobile-leaderboard-title-right {
+    /* text-align: right;
+    margin-right: 3vw; */
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+#mobile-subtitle-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#mobile-question-mark-button {
+
+}

@@ -33,9 +33,15 @@ class AnswerService {
         )
     }
 
-    getUniqueSeasonsForAnswers() {
+    getUniqueSeasonsForAnswers(global,privateLeaderboardUUID) {
         return api.get(
-            this.base_url + "get-unique-seasons-for-answers"
+            this.base_url + "get-unique-seasons-for-answers",
+            {
+                params: {
+                    global,
+                    privateLeaderboardUUID
+                }
+            }
         )
     }
 }

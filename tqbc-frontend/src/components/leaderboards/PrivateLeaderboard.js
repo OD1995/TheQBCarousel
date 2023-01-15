@@ -7,6 +7,7 @@ import PrivateLeaderboardService from "../../services/PrivateLeaderboardService"
 import TokenService from "../../services/Token.service";
 import { TQBCLoading } from "../generic/TQBCLoading";
 import { GenericLeaderboard } from "./GenericLeaderboard";
+import { MobileGenericLeaderboard } from "./MobileGenericLeaderboard";
 
 export const PrivateLeaderboard = () => {
     
@@ -119,14 +120,25 @@ export const PrivateLeaderboard = () => {
     
     if (ready) {
         if (isMember) {
-            return (
-                <GenericLeaderboard
-                    global={false}
-                    weightingsTable={weightingsTable}
-                    popupTitle="Private Leaderboard Explainer"
-                    popupMessage={popupMessage}
-                />
-            );
+            if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+                return (
+                    <MobileGenericLeaderboard
+                        global={false}
+                        weightingsTable={weightingsTable}
+                        popupTitle="Private Leaderboard Explainer"
+                        popupMessage={popupMessage}
+                    />
+                );
+            } else {
+                return (
+                    <GenericLeaderboard
+                        global={false}
+                        weightingsTable={weightingsTable}
+                        popupTitle="Private Leaderboard Explainer"
+                        popupMessage={popupMessage}
+                    />
+                );
+            }
         } else {
             History.push("/nope");
             return null;

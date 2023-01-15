@@ -39,6 +39,11 @@ public interface PeriodPredictionRepository extends JpaRepository<PeriodPredicti
 	public List<Long> findDistinctSeasons(long userID);
 
 	@Query(
+		value = "SELECT DISTINCT pp.predictionPeriod.season FROM PeriodPrediction pp WHERE pp.user.userID IN (:userIDs)"
+	)
+	public List<Long> findDistinctSeasonsForUsers(List<Long> userIDs);
+
+	@Query(
 		value = "SELECT 	predictionPeriodID, \n" +
 				"			COUNT(DISTINCT userID) AS distinctUsers \n" +
 				"FROM 		periodpredictions pp \n" +

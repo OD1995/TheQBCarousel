@@ -22,6 +22,7 @@ export const QBPredictionHistoryRightPanel = (props) => {
                     uniqueSeasons={props.uniqueSeasons}
                     currentSeason={props.season}
                     username={props.username}
+                    page='prediction-history'
                 />
 
             }

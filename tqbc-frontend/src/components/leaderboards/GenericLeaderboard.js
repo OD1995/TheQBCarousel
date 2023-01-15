@@ -43,7 +43,10 @@ export const GenericLeaderboard = (props) => {
                 let type = props.global ? "Global" : "Private"
                 document.title = type + " Leaderboard";            
                 if (uniqueSeasons.length === 0) {
-                    AnswerService.getUniqueSeasonsForAnswers().then(
+                    AnswerService.getUniqueSeasonsForAnswers(
+                        props.global,
+                        params.privateLeaderboardUUID
+                    ).then(
                         (res) => {
                             var unique_seasons = res.data;
                             setUniqueSeasons(unique_seasons);
@@ -63,13 +66,13 @@ export const GenericLeaderboard = (props) => {
         var leaderboard_season = params.season;
         setLeaderboardSeason(params.season);
         if (
-            (leaderboard_season === null) ||
+            (leaderboard_season == null) ||
             (!unique_seasons.includes(parseInt(leaderboard_season)))
         ) {
             // AnswerService.getMaxSeasonForAnswers().then(
             //     (res2) => {
             // leaderboard_season = res2.data;
-            leaderboard_season = Math.max(unique_seasons);
+            leaderboard_season = Math.max(...unique_seasons);
             setLeaderboardSeason(leaderboard_season);
             let plUUID = params.privateLeaderboardUUID;
             var url;
@@ -232,16 +235,28 @@ export const GenericLeaderboard = (props) => {
                 </a>
             </td>
         )
+        
         for (const i of [1,2,3,4]) {
-            var td_val = null;
-            if (i in row.seasonPeriodScores) {
-                td_val = formatScore(row.seasonPeriodScores[i]);
+            var td_val;
+            if (row.seasonPeriodScores) {
+                if (i in row.seasonPeriodScores) {
+                    td_val = formatScore(row.seasonPeriodScores[i]);
+                } else {
+                    td_val = "";
+                }
+            } else {
+                td_val = "";
             }
             tds.push(
                 <td key={i}>{td_val}</td>
             )
         }
-        let season_score = formatScore(row.seasonScore);
+        var season_score;
+        if (row.seasonScore) {
+            season_score = formatScore(row.seasonScore);
+        } else {
+            season_score = "";
+        }
         tds.push(
             <td key='season'>{season_score}</td>
         );
@@ -383,6 +398,7 @@ export const GenericLeaderboard = (props) => {
                     uniqueSeasons={uniqueSeasons}
                     setShowPopup={setShowPopup}
                     weightingsTable={props.weightingsTable}
+                    privateLeaderboardUUID={params.privateLeaderboardUUID}
                 />
             </div>
         );

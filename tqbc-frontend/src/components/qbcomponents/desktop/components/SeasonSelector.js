@@ -9,7 +9,16 @@ export const SeasonSelector = (props) => {
     const [selectorSeason,setSelectorSeason] = useState(props.currentSeason);
 
     const updateSeason = () => {
-        let new_url = `/prediction-history/${props.username}/${selectorSeason}`;
+        var new_url;
+        if (props.page === 'prediction-history') {
+            new_url = `/prediction-history/${props.username}/${selectorSeason}`;
+        } else if (props.page === 'leaderboard') {
+            if (props.global) {
+                new_url = `/global-leaderboard/${props.privateLeaderboardUUID}/${selectorSeason}`;
+            } else {
+                new_url = `/private-leaderboard/${props.privateLeaderboardUUID}/${selectorSeason}`;
+            }
+        }
         History.push(new_url);
     }
 

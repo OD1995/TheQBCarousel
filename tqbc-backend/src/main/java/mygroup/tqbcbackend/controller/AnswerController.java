@@ -17,11 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import mygroup.tqbcbackend.model.Answer;
+import mygroup.tqbcbackend.model.PrivateLeaderboard;
 import mygroup.tqbcbackend.payload.request.AnswerPostRequest;
 import mygroup.tqbcbackend.payload.request.AnswerRequest;
 import mygroup.tqbcbackend.repository.AnswerRepository;
 import mygroup.tqbcbackend.repository.AnswerTypeRepository;
+import mygroup.tqbcbackend.repository.PeriodPredictionRepository;
 import mygroup.tqbcbackend.repository.PlayerRepository;
+import mygroup.tqbcbackend.repository.PrivateLeaderboardMemberRepository;
+import mygroup.tqbcbackend.repository.PrivateLeaderboardRepository;
 import mygroup.tqbcbackend.repository.TeamRepository;
 
 @CrossOrigin(origins = "*")
@@ -43,6 +47,15 @@ public class AnswerController {
 
     @Autowired
     private AnswerTypeRepository answerTypeRepository;
+
+    @Autowired
+    private PrivateLeaderboardMemberRepository privateLeaderboardMemberRepository;
+
+    @Autowired
+    private PeriodPredictionRepository periodPredictionRepository;
+
+    @Autowired
+    private PrivateLeaderboardRepository privateLeaderboardRepository;
 
     // Get all answers for a season
     @GetMapping("/get-season-answers")
@@ -86,12 +99,24 @@ public class AnswerController {
     }
 
     @GetMapping("/get-unique-seasons-for-answers")
-    public List<Long> getUniqueSeasonsForAnswers() {
-        List<Long> uniqueSeasons = answerRepository.findUniqueSeasons();
-        if (uniqueSeasons.size() == 0) {
-            return List.of((long) 2023);
+    public List<Long> getUniqueSeasonsForAnswers(
+        AnswerRequest answerRequest
+    ) {
+        List<Long> uniqueSeasons;
+        if (answerRequest.getGlobal()) {
+            uniqueSeasons = answerRepository.findUniqueSeasons();
         } else {
-            return uniqueSeasons;
-        }
+            PrivateLeaderboard privateLeaderboard = privateLeaderboardRepository.findByPrivateLeaderboardUUID(
+                answerRequest.getPrivateLeaderboardUUID()
+            );
+            List<Long> userIDs = privateLeaderboardMemberRepository.getPrivateLeaderboardMemberUserIDs(
+                privateLeaderboard
+            );
+            uniqueSeasons = periodPredictionRepository.findDistinctSeasonsForUsers(userIDs);
+            // // Add the season we're currently making predictions about
+            // long currentSeason = answerRepository.findMaxSeason() + 1;
+            // uniqueSeasons.add(currentSeason);
+        }                        
+        return uniqueSeasons;
     }
 }

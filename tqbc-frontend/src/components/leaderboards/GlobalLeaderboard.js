@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { GenericLeaderboard } from "./GenericLeaderboard";
+import { MobileGenericLeaderboard } from "./MobileGenericLeaderboard";
 
 export const GlobalLeaderboard = () => {
     const [popupMessage, setPopupMessage] = useState("SOME WORDS");
@@ -37,12 +38,23 @@ export const GlobalLeaderboard = () => {
         },
         []
     )
+
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        return (
+            <MobileGenericLeaderboard
+                global={true}
+                popupTitle="Global Leaderboard Explainer"
+                popupMessage={popupMessage}
+            />
+        );
+    } else {
+        return (
+            <GenericLeaderboard
+                global={true}
+                popupTitle="Global Leaderboard Explainer"
+                popupMessage={popupMessage}
+            />
+        );
+    }
     
-    return (
-        <GenericLeaderboard
-            global={true}
-            popupTitle="Global Leaderboard Explainer"
-            popupMessage={popupMessage}
-        />
-    );
 }
