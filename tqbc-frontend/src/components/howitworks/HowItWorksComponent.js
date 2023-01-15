@@ -25,7 +25,7 @@ export const HowItWorksComponent = () => {
     if (exampleSeason !== 0) {
 
         return (
-            <div className="container">
+            <div className="container mobile-padded">
                 <header className="jumbotron">
                     <h1>How It Works</h1>
                     <br></br>

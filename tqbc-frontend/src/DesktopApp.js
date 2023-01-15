@@ -38,6 +38,7 @@ import { ForgottenPasswordEmailEntry } from './components/accountmanagement/Forg
 import { ForgottenPasswordPasswordEntry } from './components/accountmanagement/ForgottenPasswordPasswordEntry';
 import { QueueEmailSendOuts } from './components/admin/emailsendouts/QueueEmailSendOuts';
 import { ReportAnIssue } from './components/errors/ReportAnIssue';
+import { TQBCLoading } from './components/generic/TQBCLoading';
 
 const DesktopApp = () => {
 	const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -104,7 +105,7 @@ const DesktopApp = () => {
 						<Route exact path="/register" element={<Register/>} />
 						<Route exact path="/login" element={<Login/>}></Route>
 						<Route exact path="/profile" element={<Profile/>} />
-						{/* <Route exact path="/test" element={<TestComponent/>} /> */}
+						<Route exact path="/test" element={<TQBCLoading/>} />
 						{/* <Route exact path="/test2" element={<OutsidePredictionPeriod/>} /> */}
 						{/* <Route exact path="/admin" component={<TestComponent/>} /> */}
 						<Route path="/admin" element={<AdminBoard/>}/>

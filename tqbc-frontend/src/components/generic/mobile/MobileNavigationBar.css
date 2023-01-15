@@ -1,4 +1,5 @@
 #mobile-nav-bar {
+    border-bottom: 0.01px solid white;
     list-style: none;
     display: flex;
     flex-direction: row;

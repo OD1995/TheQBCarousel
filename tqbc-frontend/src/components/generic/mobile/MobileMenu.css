@@ -1,6 +1,5 @@
-#mobile-menu-parent-div {
-    height: 100%;
-    width: 100%;
+.mobile-menu-div {
+    flex-grow: 1;
     background-color: black;
     display: flex;
     flex-direction: column;
@@ -8,13 +7,34 @@
     justify-content: space-evenly;
 }
 
-#mobile-private-leaderboard-submenu-parent-div {
+#main-menu-div {
     height: 100%;
     width: 100%;
+}
+
+#mobile-private-leaderboard-submenu-parent-div {
+    height: 92vh;
+    width: 100vw;
     background-color: black;
+    display: flex;
+    flex-direction: column;
 }
 
 .mobile-menu-link {
     color: rgba(255,255,255,.75) !important;
     text-decoration: none;
+}
+
+#mobile-create-join-pl {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 4vh;
+}
+
+#mobile-submenu-back-arrow {
+    color: rgba(255,255,255,0.75);
+    margin-left: 5vw;
+    padding-top: 3vh;
+    font-size: 30px;
 }

@@ -6,7 +6,7 @@ import {
 	Route,
 	Routes
 } from 'react-router-dom';
-import './DesktopApp.css';
+import './MobileApp.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import QBPredictionsComponent from './components/qbcomponents/pages/QBPredictions';
 import QBPredictionHistoryComponent from './components/qbcomponents/pages/QBPredictionHistory';
@@ -39,6 +39,7 @@ import { ForgottenPasswordPasswordEntry } from './components/accountmanagement/F
 import { QueueEmailSendOuts } from './components/admin/emailsendouts/QueueEmailSendOuts';
 import { ReportAnIssue } from './components/errors/ReportAnIssue';
 import { MobileMenu } from './components/generic/mobile/MobileMenu';
+import { TQBCLoading } from './components/generic/TQBCLoading';
 
 const MobileApp = () => {
 	const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -101,8 +102,8 @@ const MobileApp = () => {
 					/>
 				</div>
 				<NavigateSetter/>
-				<div className="component-container page-content">
-					{
+				<div id="mobile-page-content">
+					{/* {
 						showMenu && (
 							<MobileMenu
 								showAdminBoard={showAdminBoard}
@@ -110,84 +111,96 @@ const MobileApp = () => {
 								setShowMenu={setShowMenu}
 							/>
 						)
+					} */}
+					{
+						showMenu ? (
+							<MobileMenu
+								showAdminBoard={showAdminBoard}
+								currentUser={currentUser}
+								setShowMenu={setShowMenu}
+								showMenu={showMenu}
+								logOut={logOut}
+							/>
+						) : (
+							<Routes>
+								<Route index element={defaultPage}/>
+								<Route exact path="/how-it-works" element={<HowItWorksComponent/>}/>
+								<Route exact path="/register" element={<Register/>} />
+								<Route exact path="/login" element={<Login/>}></Route>
+								<Route exact path="/profile" element={<Profile/>} />
+								<Route exact path="/test" element={<TQBCLoading/>} />
+								{/* <Route exact path="/test2" element={<OutsidePredictionPeriod/>} /> */}
+								{/* <Route exact path="/admin" component={<TestComponent/>} /> */}
+								<Route path="/admin" element={<AdminBoard/>}/>
+								<Route path='/answer-entry/:season' element={<AnswerEntry/>}/>
+								<Route path="/qb-predictions" element={<QBPredictionsComponent/>}/>
+								<Route
+									path="/prediction-history/:username/"
+									element={<QBPredictionHistoryComponent/>}
+								/>
+								<Route
+									path="/prediction-history/:username/:season"
+									element={<QBPredictionHistoryComponent/>}
+								/>
+								<Route path="/email-verification" element={<EmailVerification/>}/>
+								{/* <Route path="/global-leaderboard" element={<GlobalLeaderboard/>}/> */}
+								{/* <Route path="/global-leaderboard/:season" element={<GlobalLeaderboard/>}/> */}
+								<Route
+									path="/private-leaderboard/:privateLeaderboardUUID"
+									element={<PrivateLeaderboard/>}
+								/>
+								<Route
+									path="/private-leaderboard/:privateLeaderboardUUID/:season"
+									element={<PrivateLeaderboard/>}
+								/>
+								<Route
+									path="/create-new-private-leaderboard"
+									element={<CreateNewPrivateLeaderboard/>}
+								/>
+								<Route
+									path="/join-private-leaderboard"
+									element={<JoinPrivateLeaderboard/>}
+								/>
+								<Route
+									path="/edit-private-leaderboard-weightings/:privateLeaderboardUUID"
+									element={<EditPrivateLeaderboardWeights/>}
+								/>
+								<Route
+									path="/prediction-marking"
+									element={<PredictionMarking/>}
+								/>
+								<Route
+									path="/email-send-outs"
+									element={<QueueEmailSendOuts/>}
+								/>
+								<Route
+									path="/email-send-outs/:emailSubscriptionTypeID"
+									element={<QueueEmailSendOuts/>}
+								/>
+								<Route
+									path="/send-out-queued-emails"
+									element={<SendOutQueuedEmails/>}
+								/>
+								<Route
+									path="/unsubscribe/:emailSubscriptionType"
+									element={<Unsubscribe/>}
+								/>
+								<Route
+									path="/forgotten-password/email-entry"
+									element={<ForgottenPasswordEmailEntry/>}
+								/>
+								<Route
+									path="/forgotten-password/password-entry"
+									element={<ForgottenPasswordPasswordEntry/>}
+								/>
+								<Route
+									path="/report-an-issue"
+									element={<ReportAnIssue/>}
+								/>
+								<Route path='/*' element={<PageDoesntExist/>}/>
+							</Routes>
+						)
 					}
-					<Routes>
-						<Route index element={defaultPage}/>
-						<Route exact path="/how-it-works" element={<HowItWorksComponent/>}/>
-						<Route exact path="/register" element={<Register/>} />
-						<Route exact path="/login" element={<Login/>}></Route>
-						<Route exact path="/profile" element={<Profile/>} />
-						{/* <Route exact path="/test" element={<TestComponent/>} /> */}
-						{/* <Route exact path="/test2" element={<OutsidePredictionPeriod/>} /> */}
-						{/* <Route exact path="/admin" component={<TestComponent/>} /> */}
-						<Route path="/admin" element={<AdminBoard/>}/>
-						<Route path='/answer-entry/:season' element={<AnswerEntry/>}/>
-						<Route path="/qb-predictions" element={<QBPredictionsComponent/>}/>
-						<Route
-							path="/prediction-history/:username/"
-							element={<QBPredictionHistoryComponent/>}
-						/>
-						<Route
-							path="/prediction-history/:username/:season"
-							element={<QBPredictionHistoryComponent/>}
-						/>
-						<Route path="/email-verification" element={<EmailVerification/>}/>
-						{/* <Route path="/global-leaderboard" element={<GlobalLeaderboard/>}/> */}
-						{/* <Route path="/global-leaderboard/:season" element={<GlobalLeaderboard/>}/> */}
-						<Route
-							path="/private-leaderboard/:privateLeaderboardUUID"
-							element={<PrivateLeaderboard/>}
-						/>
-						<Route
-							path="/private-leaderboard/:privateLeaderboardUUID/:season"
-							element={<PrivateLeaderboard/>}
-						/>
-						<Route
-							path="/create-new-private-leaderboard"
-							element={<CreateNewPrivateLeaderboard/>}
-						/>
-						<Route
-							path="/join-private-leaderboard"
-							element={<JoinPrivateLeaderboard/>}
-						/>
-						<Route
-							path="/edit-private-leaderboard-weightings/:privateLeaderboardUUID"
-							element={<EditPrivateLeaderboardWeights/>}
-						/>
-						<Route
-							path="/prediction-marking"
-							element={<PredictionMarking/>}
-						/>
-						<Route
-							path="/email-send-outs"
-							element={<QueueEmailSendOuts/>}
-						/>
-						<Route
-							path="/email-send-outs/:emailSubscriptionTypeID"
-							element={<QueueEmailSendOuts/>}
-						/>
-						<Route
-							path="/send-out-queued-emails"
-							element={<SendOutQueuedEmails/>}
-						/>
-						<Route
-							path="/unsubscribe/:emailSubscriptionType"
-							element={<Unsubscribe/>}
-						/>
-						<Route
-							path="/forgotten-password/email-entry"
-							element={<ForgottenPasswordEmailEntry/>}
-						/>
-						<Route
-							path="/forgotten-password/password-entry"
-							element={<ForgottenPasswordPasswordEntry/>}
-						/>
-						<Route
-							path="/report-an-issue"
-							element={<ReportAnIssue/>}
-						/>
-						<Route path='/*' element={<PageDoesntExist/>}/>
-					</Routes>
 				</div>
 				{/* <AuthVerify logOut={logOut}/> */}
 			</Router>

@@ -17,16 +17,25 @@ export const PredictionPeriodsTable = (props) => {
     
         if (isFirstPP) {
             let fromEventRow = (
-                <tr key={predictionPeriodID + "-fromEventRow"} id={predictionPeriodID + "-fromEventRow"}>
+                <tr
+                    key={predictionPeriodID + "-fromEventRow"}
+                    id={predictionPeriodID + "-fromEventRow"}
+                    class="ppt-tr"
+                >
                     <td dangerouslySetInnerHTML={{__html:"&nbsp;"}} rowSpan={2}></td>
-                    <td dangerouslySetInnerHTML={{__html:"&nbsp;"}} rowSpan={2}></td>
+                    <td className="empty-td" dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
                     <td></td>
-                    <td className="border-tlb" rowSpan={2}>{element.fromEvent.eventName}</td>
-                    <td className="border-trb" rowSpan={2}>{beautifyDate(element.fromEvent)}</td>
+                    <td className="border-lb event-td" rowSpan={2}>{element.fromEvent.eventName}</td>
+                    <td className="border-rb" rowSpan={2}>{beautifyDate(element.fromEvent)}</td>
                 </tr>
             );
             let imageRow = (
-                <tr key={predictionPeriodID + "-imageRow"} id={predictionPeriodID + "-imageRow"}>
+                <tr
+                    key={predictionPeriodID + "-imageRow"}
+                    id={predictionPeriodID + "-imageRow"}
+                    class="ppt-tr"
+                >
+                    <td className="empty-td" dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
                     <td rowSpan={3}>
                         <img
                             src={window.location.origin + '/arrows.png'}
@@ -37,7 +46,11 @@ export const PredictionPeriodsTable = (props) => {
                 </tr>
             );
             let ppRow = (
-                <tr key={predictionPeriodID + "-ppRow"} id={predictionPeriodID + "-ppRow"}>
+                <tr
+                    key={predictionPeriodID + "-ppRow"}
+                    id={predictionPeriodID + "-ppRow"}
+                    class="ppt-tr"
+                >
                     <td className="ps-col ps-val" rowSpan={10}>{element.season}</td>
                     <td className="sp-val">{"SP" + element.seasonPeriodID}</td>
                     <td></td>
@@ -51,14 +64,23 @@ export const PredictionPeriodsTable = (props) => {
             ];
         } else {
             var fromEventRow = (
-                <tr key={predictionPeriodID + "-fromEventRow"} id={predictionPeriodID + "-fromEventRow"}>
-                    <td dangerouslySetInnerHTML={{__html:"&nbsp;"}} rowSpan={2}></td>
-                    <td className="border-tlb" rowSpan={2}>{element.fromEvent.eventName}</td>
+                <tr
+                    key={predictionPeriodID + "-fromEventRow"}
+                    id={predictionPeriodID + "-fromEventRow"}
+                    class="ppt-tr"
+                >
+                    <td className="empty-td" dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
+                    <td className="border-tlb event-td" rowSpan={2}>{element.fromEvent.eventName}</td>
                     <td className="border-trb" rowSpan={2}>{beautifyDate(element.fromEvent)}</td>
                 </tr>
             );
             var imageRow = (
-                <tr key={predictionPeriodID + "-imageRow"} id={predictionPeriodID + "-imageRow"}>
+                <tr
+                    key={predictionPeriodID + "-imageRow"}
+                    id={predictionPeriodID + "-imageRow"}
+                    class="ppt-tr"
+                >
+                    <td className="empty-td" dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
                     <td rowSpan={3}>
                         <img
                             src={window.location.origin + '/arrows.png'}
@@ -69,7 +91,11 @@ export const PredictionPeriodsTable = (props) => {
                 </tr>
             );
             var ppRow = (
-                <tr key={predictionPeriodID + "-ppRow"} id={predictionPeriodID + "-ppRow"}>
+                <tr
+                    key={predictionPeriodID + "-ppRow"}
+                    id={predictionPeriodID + "-ppRow"}
+                    class="ppt-tr"
+                >
                     <td>{"SP" + element.seasonPeriodID}</td>
                     <td></td>
                     <td></td>
@@ -82,15 +108,23 @@ export const PredictionPeriodsTable = (props) => {
             ];
             if (isLastPP) {
                 let toEventRow1 = (
-                    <tr key={predictionPeriodID + "-toEventRow1"} id={predictionPeriodID + "-toEventRow1"}>
+                    <tr
+                        key={predictionPeriodID + "-toEventRow1"}
+                        id={predictionPeriodID + "-toEventRow1"}
+                        class="ppt-tr"
+                    >
                         <td dangerouslySetInnerHTML={{__html:"&nbsp;"}} rowSpan={2}></td>
-                        <td dangerouslySetInnerHTML={{__html:"&nbsp;"}} rowSpan={2}></td>
-                        <td className="border-tlb" rowSpan={2}>{element.toEvent.eventName}</td>
+                        <td className="empty-td" dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
+                        <td className="border-tlb event-td" rowSpan={2}>{element.toEvent.eventName}</td>
                         <td className="border-trb" rowSpan={2}>{beautifyDate(element.toEvent)}</td>
                     </tr>
                 );
                 let toEventRow2 = (
-                    <tr key={predictionPeriodID + "-toEventRow2"} id={predictionPeriodID + "-toEventRow2"}>
+                    <tr
+                        key={predictionPeriodID + "-toEventRow2"}
+                        id={predictionPeriodID + "-toEventRow2"}
+                        class="ppt-tr"
+                    >
                         <td dangerouslySetInnerHTML={{__html:"&nbsp;"}}></td>
                     </tr>
                 );
@@ -136,11 +170,21 @@ export const PredictionPeriodsTable = (props) => {
             <table id="how-it-works-table" cellSpacing={0} cellPadding={0}>
                 <tbody>
                     <tr key="column-headers">
-                        <th className="display-linebreak ps-col">Prediction{"\n"}Season</th>
-                        <th className="display-linebreak">Season{"\n"}Period</th>
-                        <th className="display-linebreak arrow-col">From{"\n"}To</th>
-                        <th>Event</th>
-                        <th className="display-linebreak">Date{"\n"}(In Your Timezone:{"\n"}{Intl.DateTimeFormat().resolvedOptions().timeZone})</th>
+                        <th className="display-linebreak ps-col heading-tlb-border">
+                            Prediction{"\n"}Season
+                        </th>
+                        <th className="display-linebreak heading-tlb-border">
+                            Season{"\n"}Period
+                        </th>
+                        <th className="display-linebreak arrow-col heading-tlb-border">
+                            From{"\n"}To
+                        </th>
+                        <th className="heading-tlb-border">
+                            Event
+                        </th>
+                        <th className="display-linebreak heading-tbr-border">
+                            Date{"\n"}(In Your Timezone:{"\n"}{Intl.DateTimeFormat().resolvedOptions().timeZone})
+                        </th>
                     </tr>
                     {tableRows}
                 </tbody>

@@ -27,6 +27,20 @@ tr {
     padding-right: 2vw;
 }
 
+.border-rb {
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    padding-left: 2vw;
+    padding-right: 2vw;
+}
+
+.border-lb {
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    padding-left: 2vw;
+    padding-right: 2vw;
+}
+
 .ps-col {
     padding-left: 1vw;
     padding-right: 1vw;
@@ -49,4 +63,43 @@ tr {
 .arrow-col {
     margin-left: 1vw;
     margin-right: 1vw;
+}
+
+.heading-tlb-border {
+    border-top: 0.5px solid black;
+    border-left: 0.5px solid black;
+    border-bottom: 0.5px solid black;
+}
+
+.heading-tlr-border {
+    border-top: 0.5px solid black;
+    border-left: 0.5px solid black;
+    border-right: 0.5px solid black;
+}
+
+.heading-tbr-border {
+    border-top: 0.5px solid black;
+    border-bottom: 0.5px solid black;
+    border-right: 0.5px solid black;
+}
+
+.heading-tl-border {
+    border-top: 0.5px solid black;
+    border-left: 0.5px solid black;
+}
+
+@media only screen and (max-width: 1000px) {
+    #how-it-works-table {
+        font-size: 13px;
+    }
+    /* .ppt-tr {
+        max-height: 1vh;
+        border: 1px solid red;
+    } */
+    /* .event-td {
+
+    } */
+    .empty-td {
+        height: 8vh;
+    }
 }
