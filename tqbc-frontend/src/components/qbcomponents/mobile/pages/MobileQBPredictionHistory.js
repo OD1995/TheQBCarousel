@@ -180,11 +180,15 @@ const MobileQBPredictionHistory = () => {
                     <h1 id="mobile-prediction-history-title">
                         {historySeason}
                     </h1>
-                    <SeasonSelector
-                        uniqueSeasons={uniqueSeasons}
-                        currentSeason={historySeason}
-                        username={params.username}
-                    />
+                    {
+                        (uniqueSeasons.length > 1) && (
+                            <SeasonSelector
+                                uniqueSeasons={uniqueSeasons}
+                                currentSeason={historySeason}
+                                username={params.username}
+                            />                        
+                        )
+                    }
                 </div>
                 <MobileUserScoreDisplayer
                     userID={userID}
