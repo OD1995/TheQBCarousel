@@ -84,3 +84,37 @@
     margin-top: 1vh;
     text-align: center;
 }
+
+@media only screen and (max-width: 1000px) {
+    #social-media-request {
+        display: grid;
+        grid-template-columns: 66vw 1fr;
+        grid-template-rows: 8vh 10vh;
+    }
+    #social-media-text {
+        grid-row: 1;
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+    #social-media-twitter {
+        grid-row: 2;
+        grid-column: 1;
+    }
+    #social-media-reddit {
+        grid-row: 2;
+        grid-column: 2;
+    }
+    #message-and-button {
+        justify-content: space-between;
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+    #qbp-save-button {
+        width: 30vw;
+        margin-right: 3vw;
+    }
+    #bottom-message {
+        width: 25vw;
+        margin-left: 3vw;
+    }
+}

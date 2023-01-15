@@ -1,13 +1,6 @@
 .qb-selector-box {
-    /* border:1px solid black; */
     display: grid;
-    /* grid-template-columns: min(10vw,100%) 15vw; */
-    /* grid-template-columns: 1fr 15vw; */
     grid-template-columns: 1fr 75%;
-    /* grid-template-rows: min(10vw,100%); */
-    /* grid-template-rows: 10vw; */
-    /* height: 10vh; */
-    /* width: 25vw; */
     border-radius: 25px;
 }
 
@@ -19,4 +12,16 @@
     max-height: 100%;
     object-fit: cover;
     overflow: hidden;
+}
+
+@media only screen and (max-width: 1000px) {
+    .qb-selector-box {
+        height: 9vh;
+        border-radius: 20px;
+        font-size: 14px;
+    }
+    
+    .qb-selector-logo {
+
+    }
 }

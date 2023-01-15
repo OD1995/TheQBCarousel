@@ -29,3 +29,12 @@
 #popup-title {
     margin-bottom: 5vh;
 }
+
+@media only screen and (max-width: 1000px) {
+    .popup-inner {
+        max-width: 80vw;
+    }
+    #popup-title {
+        margin-top: 3vh;
+    }
+}

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 // import QBSelector from '../components/QBSelector';
 // import PredictionPeriodChanger from '../../../PredictionPeriodChanger';
 // import { PopupComponent } from '../../../generic/PopUpComponent';
-
+import { PopupComponent } from '../../../generic/PopUpComponent';
 import ConferenceService from '../../../../services/ConferenceService';
 import TeamService from '../../../../services/TeamService';
 import PlayerService from '../../../../services/PlayerService';
@@ -15,7 +15,7 @@ import "./MobileQBPredictions.css";
 // import './QBPage.css';
 import PeriodPredictionService from '../../../../services/PeriodPredictionService';
 import { OutsidePredictionPeriod } from '../../../errors/OutsidePredictionPeriod';
-// import { SocialMediaRequest } from '../components/SocialMediaRequest';
+import { SocialMediaRequest } from '../../desktop/components/SocialMediaRequest';
 import TokenService from '../../../../services/Token.service';
 import History from '../../../../helpers/History';
 import { TQBCLoading } from '../../../generic/TQBCLoading';
@@ -262,7 +262,6 @@ const MobileQBPredictions = () => {
                 )
             }
         }
-        // setPageContent(return_me);
         return return_me;
     }
 
@@ -387,39 +386,6 @@ const MobileQBPredictions = () => {
                 {
                     generatePageContent()
                 }
-                {/* <h1 className='area-title' style={{gridRow:1,gridColumn:2}}>NORTH</h1>
-                <h1 className='area-title' style={{gridRow:1,gridColumn:3}}>EAST</h1>
-                <h1 className='area-title' style={{gridRow:1,gridColumn:4}}>SOUTH</h1>
-                <h1 className='area-title' style={{gridRow:1,gridColumn:5}}>WEST</h1>
-                {
-                    conferences.map(
-                        conf =>
-                        <img
-                        className='conference_logo'
-                        src={window.location.origin + '/conference_logos/' + conf.season + '/' + conf.name + '.png' }
-                        alt={conf.name}
-                        key={conf.name + "-logo"}
-                        style={{gridRowStart:conf.gridRowStart,gridRowEnd:conf.gridRowEnd,gridColumn:conf.gridColumn}}
-                        />
-                    )
-                }
-                {
-                    Object.keys(currentDropdownValues).map(
-                        function(teamID) {
-                            let defaultPlayerID = currentDropdownValues[teamID];
-                            return (
-                                <QBSelector
-                                    default_player={defaultPlayerID}
-                                    teamID={teamID}
-                                    team={teams[teamID]}
-                                    key={teamID}
-                                    players={players}
-                                    parentStateUpdater={updateParentStateQBSelector}
-                                ></QBSelector>
-                            )
-                        }
-                    )
-                }
                 <div id="message-and-button">
                     <button
                         id="qbp-save-button"
@@ -441,31 +407,14 @@ const MobileQBPredictions = () => {
                         )
                     }
                 </div>
-                {
-                    showPredictionPeriodChanger && (
-                        <PredictionPeriodChanger
-                            seasons={uniqueSeasons}
-                            seasonPeriodIDs={uniqueSeasonPeriodIDs}
-                            currentSeason={currentSeason}
-                            currentSeasonPeriodID={currentSeasonPeriodID}
-                            currentPredictionPeriodID={currentPredictionPeriodID}
-                            parentStateUpdater={updateParentStatePredictionPeriodChanger}
-                            predictionPeriodIDResetter={resetPredictionPeriodID}
-                        />
-                    )
-                }
-                {
-                    (!showPredictionPeriodChanger) && (
-                        <SocialMediaRequest/>
-                    )
-                }
+                <SocialMediaRequest/>
                 <PopupComponent
                     trigger={showPopup}
                     setTrigger={setShowPopup}
                     title={popupTitle}
                     subtitle={popupSubtitle}
                     message={popupMessage}
-                /> */}
+                />
             </div>
         );
     } else {
