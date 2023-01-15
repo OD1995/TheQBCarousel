@@ -220,51 +220,6 @@ const MobileQBPredictions = () => {
         // generatePageContent(division_teamArray_dict);
     }
 
-    const generatePageContent = () => {
-        var return_me = [];
-        var directions = ['North','South','East','West'];
-        for (const conf of conferences) {
-            for (const direction of directions) {
-                return_me.push(
-                    <div
-                        className="mobile-division-prediction-div"
-                        id={conf.name + direction}
-                        key={conf.name + direction}    
-                    >
-                        <div className='division-title'>
-                            <img
-                                className='mobile-conference-logo'
-                                src={window.location.origin + '/conference_logos/' + conf.season + '/' + conf.name + '.png' }
-                                alt={conf.name}
-                                key={conf.name + "-logo"}
-                            />
-                            <p className='division-text-title'>
-                                {direction.toUpperCase()}
-                            </p>
-                        </div>
-                        {
-                            dtad[conf.name + " " + direction].map(
-                                (teamObj) => {
-                                    return (
-                                        <QBSelector
-                                            default_player={currentDropdownValues[teamObj.teamID]}
-                                            teamID={teamObj.teamID}
-                                            team={teams[teamObj.teamID]}
-                                            key={teamObj.teamID}
-                                            players={players}
-                                            parentStateUpdater={updateParentStateQBSelector}
-                                        />
-                                    )
-                                }
-                            )
-                        }
-                    </div>
-                )
-            }
-        }
-        return return_me;
-    }
-
     const resetPredictionPeriodID = () => {
         setCurrentPredictionPeriodID(truePredictionPeriodID);
         setCurrentSeason(trueSeason);
@@ -373,6 +328,51 @@ const MobileQBPredictions = () => {
             setShowPopup(true);
         }
     };
+
+    const generatePageContent = () => {
+        var return_me = [];
+        var directions = ['North','South','East','West'];
+        for (const conf of conferences) {
+            for (const direction of directions) {
+                return_me.push(
+                    <div
+                        className="mobile-division-prediction-div"
+                        id={conf.name + direction}
+                        key={conf.name + direction}    
+                    >
+                        <div className='division-title'>
+                            <img
+                                className='mobile-conference-logo'
+                                src={window.location.origin + '/conference_logos/' + conf.season + '/' + conf.name + '.png' }
+                                alt={conf.name}
+                                key={conf.name + "-logo"}
+                            />
+                            <p className='division-text-title'>
+                                {direction.toUpperCase()}
+                            </p>
+                        </div>
+                        {
+                            dtad[conf.name + " " + direction].map(
+                                (teamObj) => {
+                                    return (
+                                        <QBSelector
+                                            default_player={currentDropdownValues[teamObj.teamID]}
+                                            teamID={teamObj.teamID}
+                                            team={teams[teamObj.teamID]}
+                                            key={teamObj.teamID}
+                                            players={players}
+                                            parentStateUpdater={updateParentStateQBSelector}
+                                        />
+                                    )
+                                }
+                            )
+                        }
+                    </div>
+                )
+            }
+        }
+        return return_me;
+    }
 
     if (outsidePredictionPeriod) {
         return (

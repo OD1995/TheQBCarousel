@@ -47,7 +47,7 @@
         grid-template-columns: repeat(2,50vw);
     }
     .register-input {
-        width: 45vw;
+        width: 40vw;
     }
 }
 

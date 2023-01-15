@@ -40,6 +40,7 @@ import { ReportAnIssue } from './components/errors/ReportAnIssue';
 import { MobileMenu } from './components/generic/mobile/MobileMenu';
 import { TQBCLoading } from './components/generic/TQBCLoading';
 import MobileQBPredictions from './components/qbcomponents/mobile/pages/MobileQBPredictions';
+import MobileQBPredictionHistory from './components/qbcomponents/mobile/pages/MobileQBPredictionHistory';
 
 const MobileApp = () => {
 	const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -136,11 +137,11 @@ const MobileApp = () => {
 								<Route path="/qb-predictions" element={<MobileQBPredictions/>}/>
 								<Route
 									path="/prediction-history/:username/"
-									element={<QBPredictionHistoryComponent/>}
+									element={<MobileQBPredictionHistory/>}
 								/>
 								<Route
 									path="/prediction-history/:username/:season"
-									element={<QBPredictionHistoryComponent/>}
+									element={<MobileQBPredictionHistory/>}
 								/>
 								<Route path="/email-verification" element={<EmailVerification/>}/>
 								{/* <Route path="/global-leaderboard" element={<GlobalLeaderboard/>}/> */}

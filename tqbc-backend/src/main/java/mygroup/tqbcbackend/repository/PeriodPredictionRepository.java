@@ -30,7 +30,7 @@ public interface PeriodPredictionRepository extends JpaRepository<PeriodPredicti
 	)
 	public long findMaxSeason(long userID);
 	
-	@EntityGraph(attributePaths = {"player", "team"})
+	@EntityGraph(attributePaths = {"player", "team", "team.defaultPlayer"})
 	public List<PeriodPrediction> findByPredictionPeriod_SeasonAndUser(long season, User user);
 
 	@Query(
