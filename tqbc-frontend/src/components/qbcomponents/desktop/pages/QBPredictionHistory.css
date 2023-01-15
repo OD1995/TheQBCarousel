@@ -13,6 +13,11 @@
         align-self: center;
         align-content: center; */
     }
+    #qb-prediction-history-season-selector-div {
+        display: flex;
+        width: 50vw !important;
+        justify-content: space-around;
+    }
 }
 
 .qb_displayer_box {
@@ -135,6 +140,14 @@
 
 #qb-prediction-history-score-table {
     /* height: 50%; */
+}
+
+.usdt-sp {
+    width: 5vw;
+}
+
+.usdt-val {
+    width: 5vw;
 }
 
 #qb-prediction-history-right-panel {

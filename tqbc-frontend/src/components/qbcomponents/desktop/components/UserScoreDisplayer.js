@@ -22,8 +22,8 @@ export const UserScoreDisplayer = (props) => {
                             let spScore = formatScore(result.data[spID]);
                             scores_array.push(
                                 <tr key={spID}>
-                                    <td><b>{spID}</b></td>
-                                    <td>{spScore}</td>
+                                    <td className="usdt-sp"><b>{spID}</b></td>
+                                    <td className="usdt-val">{spScore}</td>
                                 </tr>
                             );
                         }

@@ -1,5 +1,5 @@
 Short term
-
+Add year title, year changer and transposed score table
 
 Long term
 -X- Have predictions board show predictions if already been made in the prediction period

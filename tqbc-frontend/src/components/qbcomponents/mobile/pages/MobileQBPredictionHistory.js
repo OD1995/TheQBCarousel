@@ -3,6 +3,7 @@ import QBDisplayer from '../../desktop/components/QBDisplayer';
 import TeamService from '../../../../services/TeamService';
 import ConferenceService from '../../../../services/ConferenceService'
 // import './QBPredictions.css';
+import "./MobileQBPredictionHistory.css";
 import '../../desktop/pages/QBPredictionHistory.css';
 import './MobileQBPredictions.css';
 import PeriodPredictionService from '../../../../services/PeriodPredictionService';
@@ -11,6 +12,8 @@ import History from '../../../../helpers/History';
 // import { QBPredictionHistoryRightPanel } from '../components/QBPredictionHistoryRightPanel';
 import { TQBCLoading } from '../../../generic/TQBCLoading';
 import PlainPageComponent from '../../../generic/PlainPageComponent';
+import { MobileUserScoreDisplayer } from '../components/MobileUserScoreDisplayer';
+import { SeasonSelector } from '../../desktop/components/SeasonSelector';
 
 const MobileQBPredictionHistory = () => {
     const params = useParams();
@@ -29,6 +32,7 @@ const MobileQBPredictionHistory = () => {
     useEffect(
         () => {
             document.title = "Prediction History";
+            setAllLoaded(false);
             // If season not in params or season not one of available options,
             //    get max season and redirect to there
             PeriodPredictionService.getUniqueSeasonsAndUserID(params.username).then(
@@ -68,7 +72,7 @@ const MobileQBPredictionHistory = () => {
             )
         },
         // [params]
-        [reload]
+        [reload,params]
     );
 
     const callTeamsService = (history_season) => {
@@ -172,48 +176,23 @@ const MobileQBPredictionHistory = () => {
     } else if (allLoaded) {
         return (
             <div>
+                <div id="mobile-prediction-history-top-div">
+                    <h1 id="mobile-prediction-history-title">
+                        {historySeason}
+                    </h1>
+                    <SeasonSelector
+                        uniqueSeasons={uniqueSeasons}
+                        currentSeason={historySeason}
+                        username={params.username}
+                    />
+                </div>
+                <MobileUserScoreDisplayer
+                    userID={userID}
+                    season={historySeason}
+                />
                 {
                     generatePageContent()
                 }
-                {/* <div className='qb-history-box qb-grid'>
-                    <h1 className='area-title' style={{gridRow:1,gridColumn:2}}>NORTH</h1>
-                    <h1 className='area-title' style={{gridRow:1,gridColumn:3}}>EAST</h1>
-                    <h1 className='area-title' style={{gridRow:1,gridColumn:4}}>SOUTH</h1>
-                    <h1 className='area-title' style={{gridRow:1,gridColumn:5}}>WEST</h1>
-                    {
-                        conferences.map(
-                            conf =>
-                            <img
-                                className='conference_logo'
-                                src={window.location.origin + '/conference_logos/' + conf.season + '/' + conf.name + '.png' }
-                                alt={conf.name}
-                                key={conf.name}
-                                style={{gridRowStart:conf.gridRowStart,gridRowEnd:conf.gridRowEnd,gridColumn:conf.gridColumn}}
-                            />
-                        )
-                    }
-                    {
-                        teamIDList.map(
-                            teamID => {
-                                return (
-                                    <QBDisplayer
-                                        teamID={teamID}
-                                        predictions={teamIDPeriodPredictionDict[teamID]}
-                                        key={teamID}
-                                        allLoaded={allLoaded}
-                                    />
-                                )
-                            }
-                        )
-                    }
-                </div>
-                <QBPredictionHistoryRightPanel
-                    userID={userID}
-                    season={historySeason}
-                    uniqueSeasons={uniqueSeasons}
-                    // uniqueSeasons={[2022,2023]}
-                    username={params.username}
-                /> */}
             </div>
         )
     } else {

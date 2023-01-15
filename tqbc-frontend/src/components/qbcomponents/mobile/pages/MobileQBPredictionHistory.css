@@ -1,0 +1,18 @@
+#mobile-usd-table {
+    width: 100%;
+    font-size: 14px;
+}
+
+#mobile-prediction-history-title {
+    border: 3px solid black;
+    margin-top: revert;
+    margin-bottom: revert;
+}
+
+#mobile-prediction-history-top-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* border: 1px solid blueviolet; */
+    justify-content: space-around;
+}

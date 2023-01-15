@@ -9,7 +9,8 @@ export const SeasonSelector = (props) => {
     const [selectorSeason,setSelectorSeason] = useState(props.currentSeason);
 
     const updateSeason = () => {
-        History.push(`/prediction-history/OliD/${selectorSeason}`)
+        let new_url = `/prediction-history/${props.username}/${selectorSeason}`;
+        History.push(new_url);
     }
 
     return (
