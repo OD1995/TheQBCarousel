@@ -41,6 +41,7 @@ import { MobileMenu } from './components/generic/mobile/MobileMenu';
 import { TQBCLoading } from './components/generic/TQBCLoading';
 import MobileQBPredictions from './components/qbcomponents/mobile/pages/MobileQBPredictions';
 import MobileQBPredictionHistory from './components/qbcomponents/mobile/pages/MobileQBPredictionHistory';
+import { Article } from './components/articles/Article';
 
 const MobileApp = () => {
 	const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -197,6 +198,10 @@ const MobileApp = () => {
 								<Route
 									path="/report-an-issue"
 									element={<ReportAnIssue/>}
+								/>
+								<Route
+									path='/article/:articleID'
+									element={<Article/>}
 								/>
 								<Route path='/*' element={<PageDoesntExist/>}/>
 							</Routes>

@@ -39,6 +39,7 @@ import { ForgottenPasswordPasswordEntry } from './components/accountmanagement/F
 import { QueueEmailSendOuts } from './components/admin/emailsendouts/QueueEmailSendOuts';
 import { ReportAnIssue } from './components/errors/ReportAnIssue';
 import { TQBCLoading } from './components/generic/TQBCLoading';
+import { Article } from './components/articles/Article';
 
 const DesktopApp = () => {
 	const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -173,6 +174,10 @@ const DesktopApp = () => {
 						<Route
 							path="/report-an-issue"
 							element={<ReportAnIssue/>}
+						/>
+						<Route
+							path='/article/:articleID'
+							element={<Article/>}
 						/>
 						<Route path='/*' element={<PageDoesntExist/>}/>
 					</Routes>
