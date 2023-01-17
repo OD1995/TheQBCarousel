@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import History from "../../helpers/History";
 import ArticleService from "../../services/ArticleService";
+import { TQBCLoading } from "../generic/TQBCLoading";
 import "./Article.css";
 import { TQBCArticleFooter } from "./TQBCArticleFooter";
 
@@ -49,19 +50,23 @@ export const Article = () => {
         return returnMe;
     }
 
-    return (
-        <div id="article-parent-div">
-            <h1
-                id="article-title"
-            >
-                {title}
-            </h1>
-            <img
-                id="article-image"
-                src={imageURL}
-            />
-            {content}
-            <TQBCArticleFooter/>
-        </div>
-    );
+    if (title != "") {
+        return (
+            <div id="article-parent-div">
+                <h1
+                    id="article-title"
+                >
+                    {title}
+                </h1>
+                <img
+                    id="article-image"
+                    src={imageURL}
+                />
+                {content}
+                <TQBCArticleFooter/>
+            </div>
+        );
+    } else {
+        return <TQBCLoading/>
+    }
 }
