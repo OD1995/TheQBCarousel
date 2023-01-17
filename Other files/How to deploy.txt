@@ -27,4 +27,4 @@ Run `gcloud app deploy`
 
 
 
-mvnw package && pack build ghcr.io/od1995/tqbc-backend-flyio:latest --builder paketobuildpacks/builder:base --path target\tqbc-backend-0.0.1-SNAPSHOT.jar && pack build ghcr.io/od1995/tqbc-backend-flyio:latest --builder paketobuildpacks/builder:base --path target\tqbc-backend-0.0.1-SNAPSHOT.jar --env "BP_OCI_SOURCE=https://github.com/od1995/TheQBCarousel" --publish && flyctl deploy
+mvnw package && pack build ghcr.io/od1995/tqbc-backend-flyio:latest --builder paketobuildpacks/builder:base --path target\tqbc-backend-0.0.2-SNAPSHOT.jar && pack build ghcr.io/od1995/tqbc-backend-flyio:latest --builder paketobuildpacks/builder:base --path target\tqbc-backend-0.0.2-SNAPSHOT.jar --env "BP_OCI_SOURCE=https://github.com/od1995/TheQBCarousel" --publish && flyctl deploy -a tqbc-backend
