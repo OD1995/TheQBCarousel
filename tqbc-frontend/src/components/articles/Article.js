@@ -19,6 +19,7 @@ export const Article = () => {
             ArticleService.getArticle(params.articleID).then(
                 (res) => {
                     setTitle(res.data.articleTitle);
+                    document.title = res.data.articleTitle;
                     setContent(createContent(res.data.articleText));
                     setImageURL(res.data.imageURL);
                 }
