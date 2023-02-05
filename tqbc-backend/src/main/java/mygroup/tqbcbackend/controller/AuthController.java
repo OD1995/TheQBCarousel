@@ -213,23 +213,6 @@ public class AuthController {
 			user,
 			confirmationToken
 		);
-		// SimpleMailMessage mailMessage = new SimpleMailMessage();
-		// mailMessage.setTo(user.getEmail());
-		// mailMessage.setSubject("The QB Carousel - Email Verification");
-		// mailMessage.setFrom(fromEmailAddress);
-		// mailMessage.setText(
-		// 	"Hi "
-		// 	+ user.getUsername()
-		// 	+ "\n\n"
-		// 	+ "Thank you for registering at TheQBCarousel.com! "
-		// 	+ "Please verify your email address by clicking here: "
-		// 	+ frontEndURL
-		// 	+ "/email-verification?token="
-		// 	+ confirmationToken.getConfirmationToken()
-		// 	+ "\n\n"
-		// 	+ "Thanks"
-		// );
-		// emailSenderService.sendMail(mailMessage);
 
 		// Subscribe user to all subscriptions
 		List<EmailSubscription> newSubscriptions = new ArrayList<EmailSubscription>();

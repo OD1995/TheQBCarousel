@@ -105,7 +105,8 @@ public class EmailBuilderService {
         sendEmail(
             "oliverdernie1@gmail.com",
             "The QB Carousel - " + System.currentTimeMillis(),
-            content
+            content,
+            false
         );
     }
 
@@ -113,12 +114,16 @@ public class EmailBuilderService {
     public MimeMessage createMessage(
         String toEmailAddress,
         String subject,
-        String htmlBody
+        String htmlBody,
+        Boolean bccMe
     ) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
             helper.setTo(toEmailAddress);
+            if (bccMe) {
+                helper.setBcc(fromEmailAddress);
+            }
             helper.setSubject(subject);
             helper.setFrom(fromEmailAddress);
             helper.setText(htmlBody, true);
@@ -131,9 +136,15 @@ public class EmailBuilderService {
     public void sendEmail(
         String toEmailAddress,
         String subject,
-        String htmlBody
+        String htmlBody,
+        Boolean bccMe
     ) {
-        MimeMessage msg = createMessage(toEmailAddress, subject, htmlBody);
+        MimeMessage msg = createMessage(
+            toEmailAddress,
+            subject,
+            htmlBody,
+            bccMe
+        );
         javaMailSender.send(msg);
     }
 
@@ -202,7 +213,8 @@ public class EmailBuilderService {
                         Message msg = createMessage(
                             emailHistory.getToEmailAddress(),
                             emailHistory.getEmailTemplate().getEmailSubject(),
-                            emailBody  
+                            emailBody,
+                            false
                         );
                         // Maybe comment out the line below
                         // msg.saveChanges();
@@ -261,7 +273,9 @@ public class EmailBuilderService {
         sendEmail(
             user.getEmail(),
             emailTemplate.getEmailSubject(),
-            emailBody
+            emailBody,
+            // Only BCC me if new user
+            emailTemplateID == 1
         );
         emailHistory.setEmailSentDateTimeUTC(Instant.now());
         emailHistoryRepository.save(emailHistory);

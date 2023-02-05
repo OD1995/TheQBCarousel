@@ -133,7 +133,8 @@ public class EmailController {
         emailBuilderService.sendEmail(
             "oliverdernie1@gmail.com",
             "Test " + System.currentTimeMillis(),
-            sendEmailRequest.getEmailHtml()
+            sendEmailRequest.getEmailHtml(),
+            false
         );
     }
 
@@ -150,7 +151,8 @@ public class EmailController {
         emailBuilderService.sendEmail(
             "theqbcarousel@gmail.com",
             subject,
-            sendEmailRequest.getEmailHtml()
+            sendEmailRequest.getEmailHtml(),
+                false
         );
     }
 

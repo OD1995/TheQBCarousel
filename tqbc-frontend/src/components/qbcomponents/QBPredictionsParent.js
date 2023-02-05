@@ -1,27 +1,27 @@
 import React, { useEffect,useState } from 'react';
 import { useSelector } from 'react-redux';
 
-// import QBSelector from '../components/QBSelector';
-// import PredictionPeriodChanger from '../../../PredictionPeriodChanger';
-// import { PopupComponent } from '../../../generic/PopUpComponent';
+import QBSelector from '../components/QBSelector';
+import PredictionPeriodChanger from '../../../PredictionPeriodChanger';
 import { PopupComponent } from '../../../generic/PopUpComponent';
+
 import ConferenceService from '../../../../services/ConferenceService';
 import TeamService from '../../../../services/TeamService';
 import PlayerService from '../../../../services/PlayerService';
 import PredictionPeriodService from '../../../../services/PredictionPeriodService';
 
 import { postPredictions } from '../../../../actions/predictions';
-import "./MobileQBPredictions.css";
-// import './QBPage.css';
+
+import './QBPredictions.css';
+import './QBPage.css';
 import PeriodPredictionService from '../../../../services/PeriodPredictionService';
 import { OutsidePredictionPeriod } from '../../../errors/OutsidePredictionPeriod';
-import { SocialMediaRequest } from '../../desktop/components/SocialMediaRequest';
+import { SocialMediaRequest } from '../components/SocialMediaRequest';
 import TokenService from '../../../../services/Token.service';
 import History from '../../../../helpers/History';
 import { TQBCLoading } from '../../../generic/TQBCLoading';
-import QBSelector from '../../desktop/components/QBSelector';
 
-const MobileQBPredictions = () => {
+const QBPredictions = (props) => {
     // const [teamIDList, setTeamIDList] = useState([]);
     const [teams, setTeams] = useState("a");
     const [players, setPlayers] = useState([]);
@@ -48,8 +48,6 @@ const MobileQBPredictions = () => {
     const [bottomMessageColour, setBottomMessageColour] = useState("black");
     const { user: currentUser } = useSelector((state) => state.auth);
     const [outsidePredictionPeriod, setOutsidePredictionPeriod] = useState(false);
-    // const [pageContent, setPageContent] = useState([]);
-    const [dtad, setDTAD] = useState({});
     const [disableButton, setDisableButton] = useState(false);
 
 
@@ -72,28 +70,17 @@ const MobileQBPredictions = () => {
                 let teams_dict = {};
                 // defaultPlayerID_teamID_dict -> playerID : teamID (team which player is default player of)
                 let defaultPlayerID_teamID_dict = {};
-                // division_teamArray_dict -> division("AFC North") : [team]
-                let division_teamArray_dict = {};
                 for (const team_obj of res.data) {
                     teams_dict[team_obj.teamID] = team_obj;
                     defaultPlayerID_teamID_dict[team_obj.defaultPlayer.playerID] = team_obj.teamID;
-                    let division = team_obj.conference + " " + team_obj.division
-                    if (division in division_teamArray_dict) {
-                        division_teamArray_dict[division].push(team_obj);
-                    } else {
-                        division_teamArray_dict[division] = [
-                            team_obj
-                        ];
-                    }
                 }
-                setDTAD(division_teamArray_dict);
                 setTeams(teams_dict);
-                callPlayerService(defaultPlayerID_teamID_dict,division_teamArray_dict);
+                callPlayerService(defaultPlayerID_teamID_dict);
             }
         )
     }
 
-    const callPlayerService = (defaultPlayerID_teamID_dict,division_teamArray_dict) => {
+    const callPlayerService = (defaultPlayerID_teamID_dict) => {
         PlayerService.getActivePlayers().then(
             (res) => {
                 let players_array = [];
@@ -111,15 +98,14 @@ const MobileQBPredictions = () => {
                 }
                 setPlayers(players_array);
                 // callPeriodPredictionService(teamID_dropdownPlayer_dict);
-                callConferenceService(teamID_dropdownPlayer_dict,division_teamArray_dict);
+                callConferenceService(teamID_dropdownPlayer_dict);
             }
         )
     }
 
     const callPeriodPredictionService = (
         teamID_dropdownPlayer_dict,
-        current_prediction_period_ID,
-        division_teamArray_dict
+        current_prediction_period_ID
     ) => {
         PeriodPredictionService.getPredictionPeriodPredictions(
             currentUser.userID,
@@ -133,21 +119,21 @@ const MobileQBPredictions = () => {
                     }
                 }
                 setCurrentDropdownValues(teamID_dropdownPlayer_dict);
-                callPredictionPeriodService2(current_prediction_period_ID,division_teamArray_dict);
+                callPredictionPeriodService2(current_prediction_period_ID);
             }
         )
     }
 
-    const callConferenceService = (teamID_dropdownPlayer_dict,division_teamArray_dict) => {
+    const callConferenceService = (teamID_dropdownPlayer_dict) => {
         ConferenceService.getActiveConferences().then(
             (res) => {
                 setConferences(res.data);
-                callPredictionPeriodService1(teamID_dropdownPlayer_dict,division_teamArray_dict);
+                callPredictionPeriodService1(teamID_dropdownPlayer_dict);
             }
         )
     }
 
-    const callPredictionPeriodService1 = (teamID_dropdownPlayer_dict,division_teamArray_dict) => {
+    const callPredictionPeriodService1 = (teamID_dropdownPlayer_dict) => {
         PredictionPeriodService.getCurrentPredictionPeriodID().then(
             (res) => {
                 // Deal with null and use setCurrentPredictionPeriodID
@@ -157,17 +143,13 @@ const MobileQBPredictions = () => {
                 } else {
                     setCurrentPredictionPeriodID(current_prediction_period_ID);
                     setTruePredictionPeriodID(current_prediction_period_ID);
-                    callPeriodPredictionService(
-                        teamID_dropdownPlayer_dict,
-                        current_prediction_period_ID,
-                        division_teamArray_dict
-                    );
+                    callPeriodPredictionService(teamID_dropdownPlayer_dict,current_prediction_period_ID);
                 }
             }
         );
     }
 
-    const callPredictionPeriodService2 = (current_prediction_period_ID,division_teamArray_dict) => {
+    const callPredictionPeriodService2 = (current_prediction_period_ID) => {
         if (currentUser.roles.includes("ROLE_TESTER")) {
             // setShowPredictionPeriodChanger(true);
             PredictionPeriodService.getActivePredictionPeriods().then(
@@ -218,7 +200,6 @@ const MobileQBPredictions = () => {
         } else {
             setCurrentSeasonPeriodID(null);
         }
-        // generatePageContent(division_teamArray_dict);
     }
 
     const resetPredictionPeriodID = () => {
@@ -252,9 +233,21 @@ const MobileQBPredictions = () => {
         setDisplayBottomMessage(false);
     }
 
-
     const savePredictions = () => {
         setDisableButton(true);
+        savePredictionsInner().then(
+            (res) => {
+                setDisableButton(false);
+            },
+            (err) => {
+                console.log(err);
+                setDisableButton(false);
+            }
+        )
+    }
+
+    async function savePredictionsInner() {
+        // await sleep(3*1000);
         // Make sure no QB has been chosen for two teams
         let selectionsDict = {};
         let selectionsArray = [];
@@ -288,7 +281,6 @@ const MobileQBPredictions = () => {
                     setBottomMessageColour("green");
                     setBottomMessage("Success!");
                     showAndHideBottomMessage();
-                    setDisableButton(false);
                 }
             ).catch(
                 (error) => {
@@ -321,7 +313,6 @@ const MobileQBPredictions = () => {
                     setPopupSubtitle(popup_subtitle);
                     setPopupMessage(popup_message);
                     setShowPopup(true);
-                    setDisableButton(false);
                 }
             );
             console.log("predictions posted");
@@ -330,54 +321,8 @@ const MobileQBPredictions = () => {
             setPopupTitle("Same QB chosen for more than one team");
             setPopupMessage(msg);
             setShowPopup(true);
-            setDisableButton(false);
         }
     };
-
-    const generatePageContent = () => {
-        var return_me = [];
-        var directions = ['North','South','East','West'];
-        for (const conf of conferences) {
-            for (const direction of directions) {
-                return_me.push(
-                    <div
-                        className="mobile-division-prediction-div"
-                        id={conf.name + direction}
-                        key={conf.name + direction}    
-                    >
-                        <div className='division-title'>
-                            <img
-                                className='mobile-conference-logo'
-                                src={window.location.origin + '/conference_logos/' + conf.season + '/' + conf.name + '.png' }
-                                alt={conf.name}
-                                key={conf.name + "-logo"}
-                            />
-                            <p className='division-text-title'>
-                                {direction.toUpperCase()}
-                            </p>
-                        </div>
-                        {
-                            dtad[conf.name + " " + direction].map(
-                                (teamObj) => {
-                                    return (
-                                        <QBSelector
-                                            default_player={currentDropdownValues[teamObj.teamID]}
-                                            teamID={teamObj.teamID}
-                                            team={teams[teamObj.teamID]}
-                                            key={teamObj.teamID}
-                                            players={players}
-                                            parentStateUpdater={updateParentStateQBSelector}
-                                        />
-                                    )
-                                }
-                            )
-                        }
-                    </div>
-                )
-            }
-        }
-        return return_me;
-    }
 
     if (outsidePredictionPeriod) {
         return (
@@ -387,47 +332,33 @@ const MobileQBPredictions = () => {
         (currentSeasonPeriodID !== "currentSeasonPeriodID")
     ) {
         return (
-            <div className='container'>
-                {
-                    generatePageContent()
-                }
-                <div id="message-and-button">
-                    <button
-                        id="qbp-save-button"
-                        className={"tqbc-black-button save-button" + (disableButton ? " disabled-button" : "")}
-                        onClick={savePredictions}
-                        disabled={disableButton}
-                    >
-                        Save
-                    </button>
-                    {
-                        displayBottomMessage && (
-                            <h5
-                                style={{
-                                    color: bottomMessageColour
-                                }}
-                                id="bottom-message"
-                            >
-                                {bottomMessage}
-                            </h5>
-                        )
-                    }
-                </div>
-                <SocialMediaRequest/>
-                <PopupComponent
-                    trigger={showPopup}
-                    setTrigger={setShowPopup}
-                    title={popupTitle}
-                    subtitle={popupSubtitle}
-                    message={popupMessage}
-                />
-            </div>
-        );
+            <props.QBPredictionsDeviceComponent
+                conferences={conferences}
+                currentDropdownValues={currentDropdownValues}
+                teams={teams}
+                players={players}
+                updateParentStateQBSelector={updateParentStateQBSelector}
+                disableButton={disableButton}
+                savePredictions={savePredictions}
+                displayBottomMessage={displayBottomMessage}
+                bottomMessageColour={bottomMessageColour}
+                bottomMessage={bottomMessage}
+                showPredictionPeriodChanger={showPredictionPeriodChanger}
+                uniqueSeasons={uniqueSeasons}
+                uniqueSeasonPeriodIDs={uniqueSeasonPeriodIDs}
+                currentSeason={currentSeason}
+                currentSeasonPeriodID={currentSeasonPeriodID}
+                currentPredictionPeriodID={currentPredictionPeriodID}
+                updateParentStatePredictionPeriodChanger={updateParentStatePredictionPeriodChanger}
+                resetPredictionPeriodID={resetPredictionPeriodID}
+                showPopup={showPopup}
+                setShowPopup={setShowPopup}
+                popupTitle={popupTitle}
+                popupSubtitle={popupSubtitle}
+                popupMessage={popupMessage}
+            />
+        )
     } else {
         return <TQBCLoading/>
     }
 }
-
-
-
-export default MobileQBPredictions;

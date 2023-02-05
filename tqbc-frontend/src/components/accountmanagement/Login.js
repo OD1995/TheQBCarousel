@@ -76,12 +76,6 @@ const Login = () => {
                             }
                         }
                     );
-                    // if (searchParams.get("next") !== null) {
-                    //     History.push(searchParams.get("next"));
-                    // } else {
-                    //     History.push("/qb-predictions");
-                    // }
-                    // History.push("/how-it-works")
                 }
             ).catch(
                 (err) => {
@@ -90,6 +84,7 @@ const Login = () => {
                 }
             )
         }
+        setButtonDisabled(false);
     }
 
     const onChangeUsernameEmail = (e) => {
