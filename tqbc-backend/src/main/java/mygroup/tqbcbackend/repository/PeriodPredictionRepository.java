@@ -13,10 +13,10 @@ import mygroup.tqbcbackend.model.User;
 
 public interface PeriodPredictionRepository extends JpaRepository<PeriodPrediction, Long> {
 
-	@EntityGraph(attributePaths = {"player","team"})
+	@EntityGraph(attributePaths = {"player","team","team.defaultPlayer"})
 	public List<PeriodPrediction> findByUserAndPredictionPeriod(User user, PredictionPeriod predictionPeriod);
 	
-	@EntityGraph(attributePaths = {"player", "team"})
+	@EntityGraph(attributePaths = {"player", "team","team.defaultPlayer"})
 	public List<PeriodPrediction> findByPredictionPeriod_Season(long season);
 		
 	@Query(
