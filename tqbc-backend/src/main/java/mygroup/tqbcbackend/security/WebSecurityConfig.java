@@ -65,7 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/api/v1/period-predictions/**").permitAll()//.hasRole("USER")
 			.antMatchers("/api/v1/user-scores/**").permitAll()//.hasRole("USER")
 			.antMatchers("/api/v1/private-leaderboards/**").hasRole("USER")
-			.antMatchers("/api/v1/analysis/**").hasRole("ADMIN")
+			.antMatchers("/api/v1/analysis/**").permitAll()//.hasRole("ADMIN")
 			.antMatchers("/api/v1/emails/**").permitAll()//hasRole("ADMIN")
 			.antMatchers("/_ah/start").permitAll()
 			.antMatchers("/api/v1/articles/**").permitAll()

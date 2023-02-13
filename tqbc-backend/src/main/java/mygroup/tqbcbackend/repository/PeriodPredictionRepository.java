@@ -52,4 +52,25 @@ public interface PeriodPredictionRepository extends JpaRepository<PeriodPredicti
 		nativeQuery = true
 	)
 	public List<UsersByPredictionPeriod> getUsersByPredictionPeriod();
+
+	@Query(
+		value = "SELECT			p.Name, \n" +
+				"				COUNT(*) as PredictionCount \n" +
+				"FROM 			periodpredictions pepr \n" +
+				"LEFT JOIN 		predictionperiods prpe \n" +
+				"	ON			prpe.PredictionPeriodID = pepr.PredictionPeriodID \n" +
+				"LEFT JOIN 		players p \n" +
+				"	ON			p.PlayerID = pepr.PlayerID \n" +
+				"LEFT JOIN 		teams t \n" +
+				"	ON			t.TeamID = pepr.TeamID \n" +
+				"LEFT JOIN		franchises f \n" +
+				"	ON			f.FranchiseID = t.FranchiseID \n" +
+				"WHERE			prpe.Season = 2023 \n" +
+				"	AND			prpe.PredictionPeriodID = 2 \n" +
+				"	AND			f.FranchiseID = 10 \n" +
+				"GROUP BY		p.Name \n" +
+				"ORDER BY		PredictionCount DESC \n",
+		nativeQuery = true
+	)
+
 }

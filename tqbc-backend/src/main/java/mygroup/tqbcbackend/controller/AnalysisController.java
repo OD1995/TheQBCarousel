@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import mygroup.tqbcbackend.dto.UsersByPredictionPeriod;
+import mygroup.tqbcbackend.payload.request.PredictionSplitsRequest;
 import mygroup.tqbcbackend.payload.response.AdminBoardSummaryStatsResponse;
+import mygroup.tqbcbackend.payload.response.PredictionSplitsResponse;
 import mygroup.tqbcbackend.repository.PeriodPredictionRepository;
 import mygroup.tqbcbackend.repository.UserRepository;
 import mygroup.tqbcbackend.service.AnalysisService;
@@ -26,8 +28,8 @@ public class AnalysisController {
     @Autowired
     private PeriodPredictionRepository periodPredictionRepository;
 
-    // @Autowired
-    // private AnalysisService  analysisService;
+    @Autowired
+    private AnalysisService  analysisService;
     
     @GetMapping("/get-admin-board-summary-stats")
     private AdminBoardSummaryStatsResponse getAdminBoardSummaryStats() {
@@ -37,5 +39,12 @@ public class AnalysisController {
         List<UsersByPredictionPeriod> usersByPredictionPeriod = periodPredictionRepository.getUsersByPredictionPeriod();
 
         return new AdminBoardSummaryStatsResponse(totalUserCount, usersByPredictionPeriod);
+    }
+
+    @GetMapping("/get-prediction-splits")
+    private PredictionSplitsResponse getPredictionSplits(
+        PredictionSplitsRequest predictionSplitsRequest
+    ) {
+        return analysisService.getPredictionSplits(predictionSplitsRequest);
     }
 }
