@@ -1,17 +1,17 @@
 package mygroup.tqbcbackend.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-// import java.util.Map;
-
-// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import mygroup.tqbcbackend.dto.TeamOrPlayerAndCount;
 import mygroup.tqbcbackend.payload.request.PredictionSplitsRequest;
 import mygroup.tqbcbackend.payload.response.PredictionSplitsResponse;
 import mygroup.tqbcbackend.repository.PeriodPredictionRepository;
+import mygroup.tqbcbackend.repository.PredictionPeriodRepository;
 import mygroup.tqbcbackend.repository.TeamRepository;
 
 // import mygroup.tqbcbackend.repository.PeriodPredictionRepository;
@@ -22,6 +22,9 @@ public class AnalysisService {
     @Autowired
     private PeriodPredictionRepository periodPredictionRepository;
 
+    // @Autowired
+    // private PredictionPeriodRepository predictionPeriodRepository;
+
     @Autowired
     private TeamRepository teamRepository;
 
@@ -29,9 +32,13 @@ public class AnalysisService {
         PredictionSplitsRequest predictionSplitsRequest
     ) {
         // Get count of user predictions
-        Integer userCount = 1;
+        // Integer userCount = 1;
+        Integer userCount = periodPredictionRepository.getUserCountForPredictionPeriod(
+            predictionSplitsRequest.getSeason(),
+            predictionSplitsRequest.getSeasonPeriodID()
+        );
         // Get relevant data
-        HashMap<String,Integer> countData;
+        List<TeamOrPlayerAndCount> countData;
         if (predictionSplitsRequest.getTeamID() == null) {
             countData = getPlayerPredictionSplitsData(
                 predictionSplitsRequest
@@ -43,22 +50,30 @@ public class AnalysisService {
         }
         // Divide by `userCount` to get percentages
         HashMap<String,Float> percentageData = new HashMap<String,Float>();
-
-        return new PredictionSplitsResponse(percentageData);
+        for (TeamOrPlayerAndCount topac : countData) {
+            percentageData.put(
+                topac.getName(),
+                (float) topac.getPredictionCount() / userCount
+            );
+        }
+        return new PredictionSplitsResponse(
+            userCount,
+            percentageData
+        );
     }
 
-    private HashMap<String,Integer> getPlayerPredictionSplitsData(
+    private List<TeamOrPlayerAndCount> getPlayerPredictionSplitsData(
         PredictionSplitsRequest predictionSplitsRequest
     ) {
         // e.g.
         //    Ravens : 10
         //    Bills : 8
         //    No Team : 3
-        HashMap<String,Integer> a;
+        List<TeamOrPlayerAndCount> a = new ArrayList<TeamOrPlayerAndCount>();
         return a;
     }
 
-    private HashMap<String,Integer> getTeamPredictionSplitsData(
+    private List<TeamOrPlayerAndCount> getTeamPredictionSplitsData(
         PredictionSplitsRequest predictionSplitsRequest
     ) {
         // e.g.
@@ -70,8 +85,11 @@ public class AnalysisService {
         long franchiseID = teamRepository.findByTeamID(
             predictionSplitsRequest.getTeamID()
         ).getFranchise().getFranchiseID();
-
-        HashMap<String,Integer> a;
-        return a;
+        // Return results from db
+        return periodPredictionRepository.getPlayersAndCounts(
+            predictionSplitsRequest.getSeason(),
+            predictionSplitsRequest.getSeasonPeriodID(),
+            franchiseID
+        );
     }
 }

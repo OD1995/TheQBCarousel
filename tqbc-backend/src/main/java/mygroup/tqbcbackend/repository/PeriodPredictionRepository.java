@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import mygroup.tqbcbackend.dto.UsersByPredictionPeriod;
+import mygroup.tqbcbackend.dto.TeamOrPlayerAndCount;
 import mygroup.tqbcbackend.model.PeriodPrediction;
 import mygroup.tqbcbackend.model.PredictionPeriod;
 import mygroup.tqbcbackend.model.User;
@@ -54,6 +55,19 @@ public interface PeriodPredictionRepository extends JpaRepository<PeriodPredicti
 	public List<UsersByPredictionPeriod> getUsersByPredictionPeriod();
 
 	@Query(
+		value = "SELECT 		COUNT(DISTINCT userID) AS userCount \n" +
+				"FROM 			periodpredictions pp \n" +
+				"LEFT JOIN      predictionperiods prpe \n" +
+				"	ON			pp.PredictionPeriodID = prpe.PredictionPeriodID \n" +
+				"WHERE			prpe.season = ?1 \n" +
+				"	AND			prpe.seasonPeriodID = ?2 \n" +
+				"GROUP BY 		pp.predictionPeriodID \n" +
+				"ORDER BY 		pp.predictionPeriodID ASC",
+		nativeQuery = true
+	)
+	public Integer getUserCountForPredictionPeriod(long season, long seasonPeriodID);
+
+	@Query(
 		value = "SELECT			p.Name, \n" +
 				"				COUNT(*) as PredictionCount \n" +
 				"FROM 			periodpredictions pepr \n" +
@@ -65,12 +79,17 @@ public interface PeriodPredictionRepository extends JpaRepository<PeriodPredicti
 				"	ON			t.TeamID = pepr.TeamID \n" +
 				"LEFT JOIN		franchises f \n" +
 				"	ON			f.FranchiseID = t.FranchiseID \n" +
-				"WHERE			prpe.Season = 2023 \n" +
-				"	AND			prpe.PredictionPeriodID = 2 \n" +
-				"	AND			f.FranchiseID = 10 \n" +
+				"WHERE			prpe.Season = ?1 \n" +
+				"	AND			prpe.SeasonPeriodID = ?2 \n" +
+				"	AND			f.FranchiseID = ?3 \n" +
 				"GROUP BY		p.Name \n" +
 				"ORDER BY		PredictionCount DESC \n",
 		nativeQuery = true
 	)
+	public List<TeamOrPlayerAndCount> getPlayersAndCounts(
+		long season,
+		long seasonPeriodID,
+		long franchiseID
+	);
 
 }
