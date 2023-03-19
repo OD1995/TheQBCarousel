@@ -2,7 +2,6 @@ package mygroup.tqbcbackend.model;
 
 import java.time.Instant;
 
-import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;

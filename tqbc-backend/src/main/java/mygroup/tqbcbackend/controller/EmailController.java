@@ -1,22 +1,14 @@
 package mygroup.tqbcbackend.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.mail.Message;
-import javax.management.RuntimeErrorException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.actuate.autoconfigure.metrics.export.wavefront.WavefrontProperties.Sender;
 import org.springframework.http.ResponseEntity;
-import org.springframework.orm.jpa.JpaSystemException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,21 +16,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.Files;
-
-import mygroup.tqbcbackend.model.ConfirmationToken;
 import mygroup.tqbcbackend.model.EEmailType;
 import mygroup.tqbcbackend.model.EmailHistory;
 import mygroup.tqbcbackend.model.EmailSubscription;
 import mygroup.tqbcbackend.model.EmailTemplate;
 import mygroup.tqbcbackend.model.EmailType;
 import mygroup.tqbcbackend.model.User;
-import mygroup.tqbcbackend.payload.request.PasswordResetRequest;
 import mygroup.tqbcbackend.payload.request.SendEmailRequest;
 import mygroup.tqbcbackend.payload.request.UnsubscribeRequest;
 import mygroup.tqbcbackend.payload.response.SendOutQueuedEmailsResponse;
-import mygroup.tqbcbackend.repository.ConfirmationTokenRepository;
 import mygroup.tqbcbackend.repository.EmailHistoryRepository;
 import mygroup.tqbcbackend.repository.EmailSubscriptionRepository;
 import mygroup.tqbcbackend.repository.EmailTemplateRepository;

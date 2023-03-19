@@ -1,7 +1,6 @@
 package mygroup.tqbcbackend.model;
 
 import java.time.Instant;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.ConstraintMode;

@@ -1,6 +1,5 @@
 package mygroup.tqbcbackend.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,10 +10,7 @@ import mygroup.tqbcbackend.dto.TeamOrPlayerAndCount;
 import mygroup.tqbcbackend.payload.request.PredictionSplitsRequest;
 import mygroup.tqbcbackend.payload.response.PredictionSplitsResponse;
 import mygroup.tqbcbackend.repository.PeriodPredictionRepository;
-import mygroup.tqbcbackend.repository.PredictionPeriodRepository;
 import mygroup.tqbcbackend.repository.TeamRepository;
-
-// import mygroup.tqbcbackend.repository.PeriodPredictionRepository;
 
 @Service
 public class AnalysisService {
