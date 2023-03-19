@@ -222,7 +222,7 @@ const QBPredictions = (props) => {
 
     const sleep = (ms) => {
         return new Promise((resolve) => setTimeout(resolve, ms));
-      }
+    }
 
     const showAndHideBottomMessage = async () => {
         // Not needed anymore because "Loading.." already displayed
