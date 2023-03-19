@@ -6,7 +6,6 @@ import AuthService from "../../services/AuthService";
 import { LOGIN_SUCCESS } from "../../actions/types";
 import TokenService from "../../services/Token.service";
 import './Login.css';
-import { sleep } from "../../helpers/UsefulFunctions";
 
 
 
@@ -41,7 +40,6 @@ const Login = () => {
     const dispatch = useDispatch();
 
     async function loginProcess() {
-        await sleep(3*1000);
         var username_ok = true;
         if (usernameEmail.length === 0) {
             setUsernameError(
