@@ -1,12 +1,16 @@
 package mygroup.tqbcbackend.service;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import javax.mail.Message;
@@ -171,12 +175,24 @@ public class EmailBuilderService {
 
     public String getEmailSubscriptionTypeTemplate(long emailSubscriptionTypeID) {
         try {
-            File file = new File(
-                    "src/main/resources/emails/" + emailSubscriptionTypeID + ".html"
-                    // Charsets.UTF_8
+            // File file = new File(
+            //         "src/main/resources/emails/" + emailSubscriptionTypeID + ".html"
+            //         // Charsets.UTF_8
+            //     );
+            // String content = Files.asCharSource(file, Charsets.UTF_8).read();
+            // return content;
+            try (
+                InputStream inputStream = getClass().getResourceAsStream(
+                    // "/input.txt"
+                    "/emails/" + emailSubscriptionTypeID + ".html"
                 );
-            String content = Files.asCharSource(file, Charsets.UTF_8).read();
-            return content;
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))
+            ) {
+                String contents = reader.lines()
+                    .collect(Collectors.joining(System.lineSeparator()));
+                // System.out.println(contents);
+                return contents;
+            }
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
