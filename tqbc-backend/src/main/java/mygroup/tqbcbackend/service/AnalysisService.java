@@ -32,11 +32,19 @@ public class AnalysisService {
         PredictionSplitsRequest predictionSplitsRequest
     ) {
         // Get count of user predictions
-        // Integer userCount = 1;
-        Integer userCount = periodPredictionRepository.getUserCountForPredictionPeriod(
-            predictionSplitsRequest.getSeason(),
-            predictionSplitsRequest.getSeasonPeriodID()
-        );
+        Integer userCount;
+        if (predictionSplitsRequest.getPrivateLeaderboardUUID() == null) {
+            userCount = periodPredictionRepository.getUserCountForPredictionPeriod(
+                predictionSplitsRequest.getSeason(),
+                predictionSplitsRequest.getSeasonPeriodID()
+            );
+        } else {
+            userCount = periodPredictionRepository.getUserCountForPredictionPeriodWithinPrivateLeaderboard(
+                predictionSplitsRequest.getSeason(),
+                predictionSplitsRequest.getSeasonPeriodID(),
+                predictionSplitsRequest.getPrivateLeaderboardUUID().toString()
+            );
+        }
         // Get relevant data
         List<TeamOrPlayerAndCount> countData;
         if (predictionSplitsRequest.getTeamID() == null) {
@@ -48,12 +56,24 @@ public class AnalysisService {
                 predictionSplitsRequest
             );
         }
+        // Get running count of user accounted for
+        //    some players won't have been predicted to be on a team, so a
+        //    "Not a Starter" value may be necessary
+        Integer runningUserCount = 0;
         // Divide by `userCount` to get percentages
         HashMap<String,Float> percentageData = new HashMap<String,Float>();
         for (TeamOrPlayerAndCount topac : countData) {
             percentageData.put(
                 topac.getName(),
                 (float) topac.getPredictionCount() / userCount
+            );
+            runningUserCount += topac.getPredictionCount();
+        }
+        Integer difference = userCount - runningUserCount;
+        if (difference > 0) {
+            percentageData.put(
+                "Not A Starter",
+                (float) difference / userCount
             );
         }
         return new PredictionSplitsResponse(
@@ -68,9 +88,21 @@ public class AnalysisService {
         // e.g.
         //    Ravens : 10
         //    Bills : 8
-        //    No Team : 3
-        List<TeamOrPlayerAndCount> a = new ArrayList<TeamOrPlayerAndCount>();
-        return a;
+        //    Not A Starter : 3 (added in `getPredictionSplits` above)
+        if (predictionSplitsRequest.getPrivateLeaderboardUUID() == null) {
+            return periodPredictionRepository.getTeamsAndCounts(
+                predictionSplitsRequest.getSeason(),
+                predictionSplitsRequest.getSeasonPeriodID(),
+                predictionSplitsRequest.getPlayerID()
+            );
+        } else {
+            return periodPredictionRepository.getTeamsAndCountsWithinPrivateLeaderboard(
+                predictionSplitsRequest.getSeason(),
+                predictionSplitsRequest.getSeasonPeriodID(),
+                predictionSplitsRequest.getPlayerID(),
+                predictionSplitsRequest.getPrivateLeaderboardUUID().toString()
+            );
+        }
     }
 
     private List<TeamOrPlayerAndCount> getTeamPredictionSplitsData(
@@ -86,10 +118,19 @@ public class AnalysisService {
             predictionSplitsRequest.getTeamID()
         ).getFranchise().getFranchiseID();
         // Return results from db
-        return periodPredictionRepository.getPlayersAndCounts(
-            predictionSplitsRequest.getSeason(),
-            predictionSplitsRequest.getSeasonPeriodID(),
-            franchiseID
-        );
+        if (predictionSplitsRequest.getPrivateLeaderboardUUID() == null) {
+            return periodPredictionRepository.getPlayersAndCounts(
+                predictionSplitsRequest.getSeason(),
+                predictionSplitsRequest.getSeasonPeriodID(),
+                franchiseID
+            );
+        } else {
+            return periodPredictionRepository.getPlayersAndCountsWithinPrivateLeaderboard(
+                predictionSplitsRequest.getSeason(),
+                predictionSplitsRequest.getSeasonPeriodID(),
+                franchiseID,
+                predictionSplitsRequest.getPrivateLeaderboardUUID().toString()
+            );
+        }
     }
 }

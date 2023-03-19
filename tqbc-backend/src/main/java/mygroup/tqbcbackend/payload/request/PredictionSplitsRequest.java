@@ -1,5 +1,7 @@
 package mygroup.tqbcbackend.payload.request;
 
+import java.util.UUID;
+
 public class PredictionSplitsRequest {
     
     private long season;
@@ -9,6 +11,16 @@ public class PredictionSplitsRequest {
     private Long teamID;
 
     private Long playerID;
+
+    private UUID privateLeaderboardUUID;
+
+    public UUID getPrivateLeaderboardUUID() {
+        return this.privateLeaderboardUUID;
+    }
+
+    public void setPrivateLeaderboardUUID(UUID privateLeaderboardUUID) {
+        this.privateLeaderboardUUID = privateLeaderboardUUID;
+    }
 
     public long getSeason() {
         return this.season;
