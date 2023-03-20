@@ -40,6 +40,7 @@ import { QueueEmailSendOuts } from './components/admin/emailsendouts/QueueEmailS
 import { ReportAnIssue } from './components/errors/ReportAnIssue';
 import { TQBCLoading } from './components/generic/TQBCLoading';
 import { Article } from './components/articles/Article';
+import { LizzieBirthday } from './components/other/LizzieBirthday';
 
 const DesktopApp = () => {
 	const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -178,6 +179,10 @@ const DesktopApp = () => {
 						<Route
 							path='/article/:articleID'
 							element={<Article/>}
+						/>
+						<Route
+							path='/HBD-LR'
+							element={<LizzieBirthday/>}
 						/>
 						<Route path='/*' element={<PageDoesntExist/>}/>
 					</Routes>

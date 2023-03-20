@@ -13,7 +13,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 import mygroup.tqbcbackend.security.jwt.AuthEntryPointJwt;
 import mygroup.tqbcbackend.security.jwt.AuthTokenFilter;
@@ -69,6 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/api/v1/emails/**").permitAll()//hasRole("ADMIN")
 			.antMatchers("/_ah/start").permitAll()
 			.antMatchers("/api/v1/articles/**").permitAll()
+			.antMatchers("/api/v1/admin/**").permitAll()
 			.anyRequest().authenticated();
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
