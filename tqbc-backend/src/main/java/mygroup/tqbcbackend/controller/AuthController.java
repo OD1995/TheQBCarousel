@@ -2,7 +2,6 @@ package mygroup.tqbcbackend.controller;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -14,7 +13,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -58,7 +56,6 @@ import mygroup.tqbcbackend.repository.UserRepository;
 import mygroup.tqbcbackend.security.jwt.JwtUtils;
 import mygroup.tqbcbackend.security.service.UserDetailsImpl;
 import mygroup.tqbcbackend.service.EmailBuilderService;
-import mygroup.tqbcbackend.service.EmailSenderService;
 import mygroup.tqbcbackend.service.PrivateLeaderboardService;
 import mygroup.tqbcbackend.service.RefreshTokenService;
 
@@ -93,9 +90,6 @@ public class AuthController {
 
 	@Autowired
 	ConfirmationTokenRepository confirmationTokenRepository;
-	
-	@Autowired
-	private EmailSenderService emailSenderService;	
 	
 	@Value("${spring.mail.username}")
 	private String fromEmailAddress;	
@@ -213,23 +207,6 @@ public class AuthController {
 			user,
 			confirmationToken
 		);
-		// SimpleMailMessage mailMessage = new SimpleMailMessage();
-		// mailMessage.setTo(user.getEmail());
-		// mailMessage.setSubject("The QB Carousel - Email Verification");
-		// mailMessage.setFrom(fromEmailAddress);
-		// mailMessage.setText(
-		// 	"Hi "
-		// 	+ user.getUsername()
-		// 	+ "\n\n"
-		// 	+ "Thank you for registering at TheQBCarousel.com! "
-		// 	+ "Please verify your email address by clicking here: "
-		// 	+ frontEndURL
-		// 	+ "/email-verification?token="
-		// 	+ confirmationToken.getConfirmationToken()
-		// 	+ "\n\n"
-		// 	+ "Thanks"
-		// );
-		// emailSenderService.sendMail(mailMessage);
 
 		// Subscribe user to all subscriptions
 		List<EmailSubscription> newSubscriptions = new ArrayList<EmailSubscription>();

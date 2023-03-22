@@ -48,6 +48,7 @@ const QBPredictions = () => {
     const [bottomMessageColour, setBottomMessageColour] = useState("black");
     const { user: currentUser } = useSelector((state) => state.auth);
     const [outsidePredictionPeriod, setOutsidePredictionPeriod] = useState(false);
+    const [disableButton, setDisableButton] = useState(false);
 
 
     useEffect(() => {
@@ -232,8 +233,21 @@ const QBPredictions = () => {
         setDisplayBottomMessage(false);
     }
 
-
     const savePredictions = () => {
+        setDisableButton(true);
+        savePredictionsInner().then(
+            (res) => {
+                setDisableButton(false);
+            },
+            (err) => {
+                console.log(err);
+                setDisableButton(false);
+            }
+        )
+    }
+
+    async function savePredictionsInner() {
+        // await sleep(3*1000);
         // Make sure no QB has been chosen for two teams
         let selectionsDict = {};
         let selectionsArray = [];
@@ -355,8 +369,9 @@ const QBPredictions = () => {
                 <div id="message-and-button">
                     <button
                         id="qbp-save-button"
-                        className="tqbc-black-button save-button"
+                        className={"tqbc-black-button save-button" + (disableButton ? " disabled-button" : "")}
                         onClick={savePredictions}
+                        disabled={disableButton}
                     >
                         Save
                     </button>

@@ -1,7 +1,5 @@
 package mygroup.tqbcbackend.payload.request;
 
-import java.util.UUID;
-
 public class PasswordResetRequest {
     
     private String email;

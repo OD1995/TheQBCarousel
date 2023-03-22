@@ -39,12 +39,7 @@ const Login = () => {
     
     const dispatch = useDispatch();
 
-    const handleLogin = () => {
-        setButtonDisabled(true);
-        setUsernameError("");
-        setPasswordError("");
-        setLoginErrorColour("black");
-        setLoginError("Loading..");
+    async function loginProcess() {
         var username_ok = true;
         if (usernameEmail.length === 0) {
             setUsernameError(
@@ -60,7 +55,7 @@ const Login = () => {
             password_ok = false;
         }
         if (username_ok && password_ok) {
-            AuthService.login(
+            var loginResult = AuthService.login(
                 usernameEmail,
                 password
             ).then(
@@ -76,12 +71,7 @@ const Login = () => {
                             }
                         }
                     );
-                    // if (searchParams.get("next") !== null) {
-                    //     History.push(searchParams.get("next"));
-                    // } else {
-                    //     History.push("/qb-predictions");
-                    // }
-                    // History.push("/how-it-works")
+                    return true;
                 }
             ).catch(
                 (err) => {
@@ -89,6 +79,19 @@ const Login = () => {
                     setLoginError(err.response.data.message);
                 }
             )
+        }
+        return loginResult ?? false;
+    }
+
+    async function handleLogin() {
+        setButtonDisabled(true);
+        setUsernameError("");
+        setPasswordError("");
+        setLoginErrorColour("black");
+        setLoginError("Loading..");
+        let loginWasSuccess = await loginProcess();
+        if (!loginWasSuccess) {
+            setButtonDisabled(false);
         }
     }
 
@@ -100,6 +103,7 @@ const Login = () => {
         setPassword(e.target.value);
     }
 
+    // This is the part that does the navigation once the login is successful
     if (isLoggedIn) {
         if (searchParams.get("next") !== null) {
             return <Navigate to={searchParams.get("next")}/>
@@ -193,7 +197,7 @@ const Login = () => {
                 <button
                     id="login-button"
                     className={"tqbc-black-button" + (buttonDisabled ? " disabled-button" : "")}
-                    onClick={handleLogin}
+                    onClick={() => handleLogin()}
                     disabled={buttonDisabled}
                 >
                     Login

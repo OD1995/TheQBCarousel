@@ -18,6 +18,10 @@ export const makeOptionsDropdownFriendly = (array) => {
     return returnMe;
 }
 
+export const sleep = (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export const formatScore = (num) => {
     return Number(num).toLocaleString(undefined,{style: 'percent', minimumFractionDigits:1});
 }

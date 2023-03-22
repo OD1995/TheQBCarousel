@@ -1,37 +1,27 @@
 package mygroup.tqbcbackend.service;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.file.Path;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.MailMessage;
 import org.springframework.stereotype.Service;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.Files;
-
-import io.micrometer.core.instrument.util.IOUtils;
 import mygroup.tqbcbackend.model.ConfirmationToken;
 import mygroup.tqbcbackend.model.EmailHistory;
 import mygroup.tqbcbackend.model.EmailTemplate;
@@ -109,7 +99,8 @@ public class EmailBuilderService {
         sendEmail(
             "oliverdernie1@gmail.com",
             "The QB Carousel - " + System.currentTimeMillis(),
-            content
+            content,
+            false
         );
     }
 
@@ -117,12 +108,16 @@ public class EmailBuilderService {
     public MimeMessage createMessage(
         String toEmailAddress,
         String subject,
-        String htmlBody
+        String htmlBody,
+        Boolean bccMe
     ) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
             helper.setTo(toEmailAddress);
+            if (bccMe) {
+                helper.setBcc(fromEmailAddress);
+            }
             helper.setSubject(subject);
             helper.setFrom(fromEmailAddress);
             helper.setText(htmlBody, true);
@@ -135,9 +130,15 @@ public class EmailBuilderService {
     public void sendEmail(
         String toEmailAddress,
         String subject,
-        String htmlBody
+        String htmlBody,
+        Boolean bccMe
     ) {
-        MimeMessage msg = createMessage(toEmailAddress, subject, htmlBody);
+        MimeMessage msg = createMessage(
+            toEmailAddress,
+            subject,
+            htmlBody,
+            bccMe
+        );
         javaMailSender.send(msg);
     }
 
@@ -218,7 +219,8 @@ public class EmailBuilderService {
                         Message msg = createMessage(
                             emailHistory.getToEmailAddress(),
                             emailHistory.getEmailTemplate().getEmailSubject(),
-                            emailBody  
+                            emailBody,
+                            false
                         );
                         // Maybe comment out the line below
                         // msg.saveChanges();
@@ -277,7 +279,9 @@ public class EmailBuilderService {
         sendEmail(
             user.getEmail(),
             emailTemplate.getEmailSubject(),
-            emailBody
+            emailBody,
+            // Only BCC me if new user
+            emailTemplateID == 1
         );
         emailHistory.setEmailSentDateTimeUTC(Instant.now());
         emailHistoryRepository.save(emailHistory);

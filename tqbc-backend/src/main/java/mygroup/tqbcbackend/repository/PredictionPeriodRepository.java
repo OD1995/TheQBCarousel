@@ -23,4 +23,5 @@ public interface PredictionPeriodRepository extends JpaRepository<PredictionPeri
 			ZonedDateTime date1,
 			ZonedDateTime date2
 	);
+	public PredictionPeriod findBySeasonAndSeasonPeriodID(long season, long seasonPeriodID);
 }
