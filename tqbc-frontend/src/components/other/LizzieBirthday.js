@@ -11,7 +11,7 @@ export const LizzieBirthday = () => {
     const [answer, setAnswer] = useState("");
     const [wrongText, setWrongText] = useState("");
 
-    var url = 'https://open.spotify.com/playlist/7dEcEGjTtFOZj62NSCQbUY?si=e0e1c4df9a7f4a47';
+    var url = 'https://open.spotify.com/playlist/07RKyu7G0CtSeBEgOITl0d?si=db42d4c3b51943fe';
     
     async function handleSubmit() {
         setDisableButton(true);
