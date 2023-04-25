@@ -24,6 +24,6 @@ public class AdminController {
             answer,
             false
         );
-        return answer.toLowerCase() == "glovebox";
+        return answer.toLowerCase().equals("glovebox");
     }
 }
