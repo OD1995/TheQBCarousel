@@ -44,6 +44,11 @@ const QBDisplayer = (props) => {
                                 boxColour = "white"
                             }
                             const keyValue = props.teamID + "-" + idx;
+                            const spID = "SP" + 
+                                (
+                                    prediction.periodPredictionCompositeKey.predictionPeriodID -
+                                    (4 * (prediction.team.season - 2022)) + 4 
+                                );
                             return (
                                 [
                                     <p 
@@ -54,7 +59,7 @@ const QBDisplayer = (props) => {
                                         }}
                                         key={keyValue}
                                     >
-                                        {"SP" + (idx + 1)}
+                                        {spID}
                                     </p>,
                                     <p 
                                         className={

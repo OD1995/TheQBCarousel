@@ -22,7 +22,7 @@ import { NavigateSetter } from './helpers/NavigateSetter';
 import { AnswerEntry } from './components/admin/answerentry/AnswerEntry';
 import { HowItWorksComponent } from './components/howitworks/HowItWorksComponent';
 import { PageDoesntExist } from './components/errors/PageDoesntExist';
-// import { GlobalLeaderboard } from './components/leaderboards/GlobalLeaderboard';
+import { GlobalLeaderboard } from './components/leaderboards/GlobalLeaderboard';
 import { CreateNewPrivateLeaderboard } from './components/leaderboards/CreateNewPrivateLeaderboard';
 import { PrivateLeaderboard } from './components/leaderboards/PrivateLeaderboard';
 import { MobileNavigationBar, NavigationBar } from './components/generic/mobile/MobileNavigationBar';
@@ -145,8 +145,8 @@ const MobileApp = () => {
 									element={<MobileQBPredictionHistory/>}
 								/>
 								<Route path="/email-verification" element={<EmailVerification/>}/>
-								{/* <Route path="/global-leaderboard" element={<GlobalLeaderboard/>}/> */}
-								{/* <Route path="/global-leaderboard/:season" element={<GlobalLeaderboard/>}/> */}
+								<Route path="/global-leaderboard" element={<GlobalLeaderboard/>}/>
+								<Route path="/global-leaderboard/:season" element={<GlobalLeaderboard/>}/>
 								<Route
 									path="/private-leaderboard/:privateLeaderboardUUID"
 									element={<PrivateLeaderboard/>}

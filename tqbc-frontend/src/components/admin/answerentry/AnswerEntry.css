@@ -112,6 +112,15 @@
 	margin-right: 5%;
 }
 
+.answer-cell {
+  /* color: green; */
+}
+
+.answer-table-col-header {
+  /* padding-left: 10px;
+  padding-right: 10px; */
+}
+
 .closeBtn {
   cursor: pointer;
   font-weight: 500;

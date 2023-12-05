@@ -80,7 +80,7 @@ const AdminBoard = () => {
                     id="admin-board-links-div"
                 >
                     <a
-                        href="/answer-entry/2022"
+                        href="/answer-entry/2023"
                     >
                         Answer Entry
                     </a>

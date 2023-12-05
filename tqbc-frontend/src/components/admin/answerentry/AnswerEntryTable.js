@@ -1,6 +1,7 @@
 import React from "react"
 import { useState,useEffect } from "react";
 import { TQBCLoading } from "../../generic/TQBCLoading";
+import './AnswerEntry.css';
 
 export const AnswerEntryTable = (props) => {
 
@@ -30,6 +31,7 @@ export const AnswerEntryTable = (props) => {
                 <th
                     id={"header-" + answerTypeTidy}
                     key={"header-" + answerTypeTidy}
+                    className="answer-table-col-header"
                 >
                     {answerTypeTidy}
                 </th>
@@ -81,6 +83,7 @@ export const AnswerEntryTable = (props) => {
                     <td
                         key={teamID + "-" + answerTypeID}
                         id={teamID + "-" + answerTypeID}
+                        className="answer-cell"
                         onClick={() => props.revealModal(team_name,teamID,answerTypeID,pIDs,props.conference)}
                     >
                         {td_value}

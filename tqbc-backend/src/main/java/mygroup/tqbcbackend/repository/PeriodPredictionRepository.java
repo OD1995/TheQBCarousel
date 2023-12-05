@@ -2,8 +2,11 @@ package mygroup.tqbcbackend.repository;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import mygroup.tqbcbackend.dto.UsersByPredictionPeriod;
@@ -196,5 +199,13 @@ public interface PeriodPredictionRepository extends JpaRepository<PeriodPredicti
 		long playerID,
 		String privateLeaderboardID
 	);
+
+	@Transactional
+	@Modifying
+	@Query(
+		value = ":updateString",
+		nativeQuery = true
+	)
+	public int hackyUpdate(String updateString);
 
 }

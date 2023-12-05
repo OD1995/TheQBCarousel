@@ -1,0 +1,56 @@
+New conference logos
+New team logos
+New events
+New predictionperiods
+
+k4duw2k7b1vp92i0b1ke
+pscale_pw_BG5SUnChNU5HLmZYPpckNHEmugq0XW5fFNJxr8oW5lW
+
+UPDATE `theqbcarousel_prod`.`events` SET `DateConfirmed` = 1 WHERE (`EventID` = '6');
+INSERT INTO `theqbcarousel_prod`.`predictionperiods` (`PredictionPeriodID`, `HowItWorks`, `IsActive`, `IsSeasonTotal`, `Season`, `SeasonPeriodID`, `FromEventID`, `ToEventID`) VALUES (5, 1, 1, 0, 2024, 1, 6, 7);
+INSERT INTO `theqbcarousel_prod`.`predictionperiods` (`PredictionPeriodID`, `HowItWorks`, `IsActive`, `IsSeasonTotal`, `Season`, `SeasonPeriodID`, `FromEventID`, `ToEventID`) VALUES (6, 1, 1, 0, 2024, 2, 7,8);
+INSERT INTO `theqbcarousel_prod`.`predictionperiods` (`PredictionPeriodID`, `HowItWorks`, `IsActive`, `IsSeasonTotal`, `Season`, `SeasonPeriodID`, `FromEventID`, `ToEventID`) VALUES (7, 1, 1, 0, 2024, 3, 8,9);
+INSERT INTO `theqbcarousel_prod`.`predictionperiods` (`PredictionPeriodID`, `HowItWorks`, `IsActive`, `IsSeasonTotal`, `Season`, `SeasonPeriodID`, `FromEventID`, `ToEventID`) VALUES (8, 1, 1, 0, 2024, 4, 9,10);
+INSERT INTO `theqbcarousel_prod`.`predictionperiods` (`PredictionPeriodID`, `HowItWorks`, `IsActive`, `IsSeasonTotal`, `Season`) VALUES (5678,0,0,1,2024);
+UPDATE `theqbcarousel_prod`.`predictionperiods` SET `HowItWorks` = 0 WHERE (`PredictionPeriodID` = '1');
+UPDATE `theqbcarousel_prod`.`predictionperiods` SET `HowItWorks` = 0 WHERE (`PredictionPeriodID` = '2');
+UPDATE `theqbcarousel_prod`.`predictionperiods` SET `HowItWorks` = 0 WHERE (`PredictionPeriodID` = '3');
+UPDATE `theqbcarousel_prod`.`predictionperiods` SET `HowItWorks` = 0 WHERE (`PredictionPeriodID` = '4');
+insert into teams
+(conference,division,gridcolumn,gridrow,isactive,location,nickname,season,defaultplayerid,franchiseid)
+select
+conference,division,gridcolumn,gridrow,isactive,location,nickname,season,defaultplayerid,franchiseid
+from teams;
+update teams
+set season = 2024
+where teamid > 32;
+update teams
+set isactive = 0
+where teamid <= 32;
+UPDATE `theqbcarousel_prod`.`teams` SET `DefaultPlayerID` = '1' WHERE (`TeamID` = '40');
+UPDATE `theqbcarousel_prod`.`teams` SET `DefaultPlayerID` = '95' WHERE (`TeamID` = '41');
+UPDATE `theqbcarousel_prod`.`teams` SET `DefaultPlayerID` = '98' WHERE (`TeamID` = '42');
+UPDATE `theqbcarousel_prod`.`teams` SET `DefaultPlayerID` = '96' WHERE (`TeamID` = '44');
+UPDATE `theqbcarousel_prod`.`teams` SET `DefaultPlayerID` = '42' WHERE (`TeamID` = '51');
+UPDATE `theqbcarousel_prod`.`teams` SET `DefaultPlayerID` = '93' WHERE (`TeamID` = '56');
+UPDATE `theqbcarousel_prod`.`teams` SET `DefaultPlayerID` = '89' WHERE (`TeamID` = '57');
+UPDATE `theqbcarousel_prod`.`teams` SET `DefaultPlayerID` = '94' WHERE (`TeamID` = '58');
+UPDATE `theqbcarousel_prod`.`teams` SET `DefaultPlayerID` = '21' WHERE (`TeamID` = '59');
+UPDATE `theqbcarousel_prod`.`teams` SET `DefaultPlayerID` = '3' WHERE (`TeamID` = '60');
+UPDATE `theqbcarousel_prod`.`teams` SET `DefaultPlayerID` = '111' WHERE (`TeamID` = '47');
+UPDATE `theqbcarousel_prod`.`teams` SET `DefaultPlayerID` = '110' WHERE (`TeamID` = '63');
+
+insert into players (playerid,isactive,name) values
+(111,1,'Aidan O''Connell'),
+(112,1,'Caleb Williams'),
+(113,1,'Drake Maye'),
+(114,1,'Bo Nix'),
+(115,1,'Jayden Daniels'),
+(116,1,'Michael Penix Jr'),
+(117,1,'Shedeur Sanders'),
+(118,1,'Carson Beck'),
+(119,1,'JJ McCarthy'),
+(120,1,'Quinn Ewers'),
+(121,1,'Riley Leonard'),
+(122,1,'Jalen Milroe'),
+(123,1,'Michael Pratt');

@@ -374,24 +374,24 @@ public class UserScoreController {
     public int getLeaderboardPageCount(
 		UserScoreRequest userScoreRequest
 	) {
-		// long uniqueUserCount;
-		// if (userScoreRequest.getLeaderboardType().equals("global")) {
-		// 	uniqueUserCount = userScoreRepository.findUniqueUsersForSeason(userScoreRequest.getSeason());
-		// } else {
-		// 	PrivateLeaderboard privateLeaderboard = privateLeaderboardRepository.findByPrivateLeaderboardUUID(
-		// 		userScoreRequest.getPrivateLeaderboardUUID()
-		// 	);
-		// 	uniqueUserCount = userScoreRepository.findUniqueUsersForPrivateLeaderboardSeason(
-		// 		privateLeaderboard.getPrivateLeaderboardID(),
-		// 		userScoreRequest.getSeason()
-		// 	);
-		// }
-		PrivateLeaderboard privateLeaderboard = privateLeaderboardRepository.findByPrivateLeaderboardUUID(
-			userScoreRequest.getPrivateLeaderboardUUID()
-		);
-		long uniqueUserCount = privateLeaderboardMemberRepository.countByPrivateLeaderboard(
-			privateLeaderboard
-		);
+		long uniqueUserCount;
+		if (userScoreRequest.getLeaderboardType().equals("global")) {
+			uniqueUserCount = userScoreRepository.findUniqueUsersForSeason(userScoreRequest.getSeason());
+		} else {
+			PrivateLeaderboard privateLeaderboard = privateLeaderboardRepository.findByPrivateLeaderboardUUID(
+				userScoreRequest.getPrivateLeaderboardUUID()
+			);
+			uniqueUserCount = userScoreRepository.findUniqueUsersForPrivateLeaderboardSeason(
+				privateLeaderboard.getPrivateLeaderboardID(),
+				userScoreRequest.getSeason()
+			);
+		}
+		// PrivateLeaderboard privateLeaderboard = privateLeaderboardRepository.findByPrivateLeaderboardUUID(
+		// 	userScoreRequest.getPrivateLeaderboardUUID()
+		// );
+		// long uniqueUserCount = privateLeaderboardMemberRepository.countByPrivateLeaderboard(
+		// 	privateLeaderboard
+		// );
 		return (int) Math.ceil((float) uniqueUserCount / (float) pageSize);
     }
 }

@@ -45,11 +45,11 @@ export const DesktopNavigationBar = (props) => {
                             My Prediction History
                         </Link>
                     </li>
-                    {/* <li className="nav-item">
+                    <li className="nav-item">
                         <Link to={"/global-leaderboard"} className="nav-link">
                             Global Leaderboard
                         </Link>
-                    </li> */}
+                    </li>
                     <li
                         id="private-leaderboard-link"
                         onMouseEnter={() => setShowPrivateLeaderboardDropdown(true)}

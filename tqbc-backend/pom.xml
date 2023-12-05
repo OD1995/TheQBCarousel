@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>mygroup</groupId>
 	<artifactId>tqbc-backend</artifactId>
-	<version>3.2.0-SNAPSHOT</version>
+	<version>5.0.0-SNAPSHOT</version>
 	<name>tqbc-backend</name>
 	<description>Backend for TheQuarterbackCarousel</description>
 	<packaging>jar</packaging>

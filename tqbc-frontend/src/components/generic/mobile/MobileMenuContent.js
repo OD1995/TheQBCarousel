@@ -52,14 +52,14 @@ export const MobileMenuContent = (props) => {
                         >
                             My Prediction History
                         </Link>,
-                        // <Link
-                        //     to="/global-leaderboard"
-                        //     key="global-leaderboard"
-                        //     className="mobile-menu-link"
-                        //     onClick={hideMenu}
-                        // >
-                        //     Global Leaderboard
-                        // </Link>,
+                        <Link
+                            to="/global-leaderboard"
+                            key="global-leaderboard"
+                            className="mobile-menu-link"
+                            onClick={hideMenu}
+                        >
+                            Global Leaderboard
+                        </Link>,
                         <div
                             onClick={() => props.setShowPrivateLeaderboardSubmenu(true)}
                             key="private-leaderboards"

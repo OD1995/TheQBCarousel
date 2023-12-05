@@ -1,4 +1,4 @@
-Backend
+Backend - possibly ignore this and look at the bottom of this file instead
 
 Go to tqbc-backend folder, make sure application.properties profile is prod
 Run `mvnw package` to creat .jar file, which goes in target folder
@@ -26,5 +26,7 @@ Go to TheQBCarousel folder, where dispatch.yaml is
 Run `gcloud app deploy`
 
 
+Go to tqbc-backend folder, make sure application.properties profile is prod, open cmd
+mvnw package && pack build ghcr.io/od1995/tqbc-backend-flyio:latest --builder paketobuildpacks/builder:base --path target\tqbc-backend-5.0.0-SNAPSHOT.jar && pack build ghcr.io/od1995/tqbc-backend-flyio:latest --builder paketobuildpacks/builder:base --path target\tqbc-backend-5.0.0-SNAPSHOT.jar --env "BP_OCI_SOURCE=https://github.com/od1995/TheQBCarousel" --publish && flyctl deploy -a tqbc-backend
 
-mvnw package && pack build ghcr.io/od1995/tqbc-backend-flyio:latest --builder paketobuildpacks/builder:base --path target\tqbc-backend-3.1.0-SNAPSHOT.jar && pack build ghcr.io/od1995/tqbc-backend-flyio:latest --builder paketobuildpacks/builder:base --path target\tqbc-backend-3.1.0-SNAPSHOT.jar --env "BP_OCI_SOURCE=https://github.com/od1995/TheQBCarousel" --publish && flyctl deploy -a tqbc-backend
+If github personal access token expires, run `docker login ghcr.io -u OD1995 --password [GITHUB_PERSON_ACCESS_TOKEN]`
