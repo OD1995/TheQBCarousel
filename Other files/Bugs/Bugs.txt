@@ -1,0 +1,3 @@
+SP ordering on Prediction History is very wrong
+
+Trying to update season in Prediction History doesn't work
