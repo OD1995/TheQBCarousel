@@ -2,6 +2,12 @@ import { TQBCLoading } from "../../../generic/TQBCLoading";
 
 const QBDisplayer = (props) => {
 
+    const order = (a_obj,b_obj) => {
+        const a = a_obj.periodPredictionCompositeKey.predictionPeriodID;
+        const b = b_obj.periodPredictionCompositeKey.predictionPeriodID;        
+        return a < b ? -1 : (a > b ? 1 : 0);
+    }
+
     const sendToParent = (event) => {
         //here calling Parents changeValue
         props.parentStateUpdater(event,props.teamID);
@@ -33,7 +39,7 @@ const QBDisplayer = (props) => {
                 />
 
                 {
-                    props.predictions.map(
+                    props.predictions.sort(order).map(
                         (prediction, idx) => {
                             var boxColour;
                             if (prediction.correct === true) {
